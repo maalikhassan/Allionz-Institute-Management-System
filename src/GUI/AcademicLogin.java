@@ -4,33 +4,25 @@
  */
 package gui;
 
-import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatLightOwlIJTheme;
+import javax.swing.Icon;
+
+
 
 /**
  *
  * @author Dell
  */
-public class adminlogin extends javax.swing.JFrame {
-    
-        private void image(){
-    
-        FlatSVGIcon icon1 = new FlatSVGIcon("resources//LOGOWHITE.svg", logolabel.getWidth(), logolabel.getHeight());
-        FlatSVGIcon icon2 = new FlatSVGIcon("resources//adminlogo1.svg", adminlabel.getWidth(), adminlabel.getHeight());
+public class AcademicLogin extends javax.swing.JFrame {
 
-        
-        logolabel.setIcon(icon1);
-        adminlabel.setIcon(icon2);
-}
-
-    /**
-     * Creates new form adminlogin
-     */
-    public adminlogin() {
+    
+    public AcademicLogin() {
         initComponents();
         image();
-        rounded();
+        image2();
+
     }
 
     /**
@@ -45,7 +37,7 @@ public class adminlogin extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         logolabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        adminlabel = new javax.swing.JLabel();
+        acl = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
@@ -74,10 +66,14 @@ public class adminlogin extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jTextField1.setText("USERNAME:");
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 52, 101));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ADMIN LOGIN");
+        jLabel1.setText("ACADEMIC LOGIN");
+
+        jPasswordField1.setText("jPasswordField1");
 
         jButton2.setBackground(new java.awt.Color(0, 52, 101));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -93,11 +89,6 @@ public class adminlogin extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Go Back");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -117,7 +108,7 @@ public class adminlogin extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(131, 131, 131)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(adminlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(acl, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -129,7 +120,7 @@ public class adminlogin extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(adminlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(acl, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -163,33 +154,36 @@ public class adminlogin extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        NewDashboard ND = new NewDashboard();
-        ND.setVisible(true);
+        AcademicDashboard ACD = new AcademicDashboard();
+        ACD.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-        userSelection US = new userSelection();
-        US.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        FlatMacLightLaf.setup();
+        FlatLightLaf.setup();        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new adminlogin().setVisible(true);
+                new AcademicLogin().setVisible(true);
             }
         });
     }
+    public void image() {
+        FlatSVGIcon icon1 = new FlatSVGIcon("resources//academic.svg", acl.getWidth(), acl.getHeight());
+        acl.setIcon(icon1);
+    }
+    
+    public void image2() {
+        FlatSVGIcon icon2 = new FlatSVGIcon("resources//LOGOWHITE.svg", logolabel.getWidth(), logolabel.getHeight());
+        logolabel.setIcon(icon2);
+    }
+        
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel adminlabel;
+    private javax.swing.JLabel acl;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -199,15 +193,4 @@ public class adminlogin extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel logolabel;
     // End of variables declaration//GEN-END:variables
-
-    private void rounded() {
-        jTextField1.putClientProperty("JComponent.roundRect", true);
-        jPasswordField1.putClientProperty("JComponent.roundRect", true);
-        
-        jTextField1.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Username");
-        jPasswordField1.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Password");
-        
-        jButton1.putClientProperty("JButton.buttonType", "roundRect");
-        jButton2.putClientProperty("JButton.buttonType", "roundRect");
-    }
 }
