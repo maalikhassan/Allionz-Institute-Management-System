@@ -9,8 +9,14 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
+import java.sql.ResultSet;
+import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import model.MySQL;
 
 /**
  *
@@ -59,7 +65,107 @@ public class FinancialDashboard extends javax.swing.JFrame {
         financialprofilepanel.setVisible(false);
         menu1.setBackground(new Color(5, 93, 165));
 
+        loadAcademicSalary();
+        loadAcademicSalaryDetails();
+        loadTeachersSalary();
+
+        DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+        render.setHorizontalAlignment(SwingConstants.CENTER);
+        jTable3.setDefaultRenderer(Object.class, render);
+
     }
+
+    private void loadAcademicSalary() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `salary` INNER JOIN"
+                    + "`employee` ON `salary`.`employee_user_id`=`employee`.`user_id`"
+                    + "INNER JOIN `month` ON `salary`.`month_id`=`month`.`id`"
+                    + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`"
+                    + ".`id`");
+
+            DefaultTableModel model = (DefaultTableModel) jTable4.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+                int eployeeTypeId = resultSet.getInt("employee_type_id");
+                if (eployeeTypeId == 2) {
+                    Vector<String> vector = new Vector<>();
+                    vector.add(resultSet.getString("id"));
+                    vector.add(resultSet.getString("employee.username"));
+                    vector.add(resultSet.getString("base_salary"));
+                    vector.add(resultSet.getString("net_amount"));
+                    vector.add(resultSet.getString("payment_date"));
+                    vector.add(resultSet.getString("month.month_name"));
+                    vector.add(resultSet.getString("payment_status.status"));
+                    model.addRow(vector);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void loadAcademicSalaryDetails() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `salary` INNER JOIN"
+                    + "`employee` ON `salary`.`employee_user_id`=`employee`.`user_id`"
+                    + "INNER JOIN `month` ON `salary`.`month_id`=`month`.`id`"
+                    + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`"
+                    + ".`id`");
+
+            DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+                int eployeeTypeId = resultSet.getInt("employee_type_id");
+                if (eployeeTypeId == 1) {
+                    Vector<String> vector = new Vector<>();
+                    vector.add(resultSet.getString("id"));
+                    vector.add(resultSet.getString("employee.username"));
+                    vector.add(resultSet.getString("base_salary"));
+                    vector.add(resultSet.getString("net_amount"));
+                    vector.add(resultSet.getString("payment_date"));
+                    vector.add(resultSet.getString("month.month_name"));
+                    vector.add(resultSet.getString("payment_status.status"));
+                    model.addRow(vector);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void loadTeachersSalary() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `salary` INNER JOIN"
+                    + "`employee` ON `salary`.`employee_user_id`=`employee`.`user_id`"
+                    + "INNER JOIN `month` ON `salary`.`month_id`=`month`.`id`"
+                    + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`"
+                    + ".`id`");
+
+            DefaultTableModel model = (DefaultTableModel) jTable5.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+                int eployeeTypeId = resultSet.getInt("employee_type_id");
+                if (eployeeTypeId == 3) {
+                    Vector<String> vector = new Vector<>();
+                    vector.add(resultSet.getString("id"));
+                    vector.add(resultSet.getString("employee.username"));
+                    vector.add(resultSet.getString("base_salary"));
+                    vector.add(resultSet.getString("net_amount"));
+                    vector.add(resultSet.getString("payment_date"));
+                    vector.add(resultSet.getString("month.month_name"));
+                    vector.add(resultSet.getString("payment_status.status"));
+                    model.addRow(vector);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -274,7 +380,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Financial Dashboard");
         setMinimumSize(new java.awt.Dimension(700, 400));
-        setPreferredSize(new java.awt.Dimension(1181, 660));
 
         menupanel.setBackground(new java.awt.Color(0, 51, 102));
 
@@ -757,7 +862,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel68, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel67, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -767,9 +872,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -1475,7 +1580,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel70)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel24Layout.createSequentialGroup()
-                .addContainerGap(661, Short.MAX_VALUE)
+                .addContainerGap(665, Short.MAX_VALUE)
                 .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton16)
@@ -1502,7 +1607,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Name", "Month", "Base Salary", "Net amount", "Payment Date", "Status"
+                "ID", "User Name", "Base Salary", "Net amount", "Payment Date", "Month", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1536,7 +1641,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Name", "Month", "Base Salary", "Net amount", "Payment Date", "Status"
+                "ID", "User Name", "Base Salary", "Net amount", "Payment Date", "Month", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1572,7 +1677,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Name", "Month", "Base Salary", "Net amount", "Payment Date", "Status"
+                "ID", "User Name", "Base Salary", "Net amount", "Payment Date", "Month", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1710,7 +1815,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(jButton17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1728,7 +1833,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+            .addComponent(jTabbedPane2)
         );
 
         salarymanagementpanel.add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -2212,13 +2317,13 @@ public class FinancialDashboard extends javax.swing.JFrame {
             financialprofilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 923, Short.MAX_VALUE)
             .addGroup(financialprofilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 937, Short.MAX_VALUE))
+                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 939, Short.MAX_VALUE))
         );
         financialprofilepanelLayout.setVerticalGroup(
             financialprofilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 570, Short.MAX_VALUE)
             .addGroup(financialprofilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE))
+                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout changingpanelLayout = new javax.swing.GroupLayout(changingpanel);

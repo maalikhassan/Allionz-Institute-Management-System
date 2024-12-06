@@ -10,12 +10,13 @@ public class MySQL {
     private static Connection connection;
     
     
-    public static void createConnection()throws Exception{
-        if (connection==null) {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/conferencedb","root","mysqllol@123");
+     public static void createConnection() throws Exception {
+        if (connection == null) {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://193.203.184.109:3306/u272822984_ims", "u272822984_allionz", "AllionzIMS123");
         }
     }
+
     
     public static ResultSet executeSearch(String query)throws Exception{
         createConnection();

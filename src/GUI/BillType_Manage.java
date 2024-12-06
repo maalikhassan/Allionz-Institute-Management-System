@@ -5,6 +5,12 @@
 package gui;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+import model.MySQL;
 
 /**
  *
@@ -12,11 +18,30 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
  */
 public class BillType_Manage extends javax.swing.JFrame {
 
+     
     /**
      * Creates new form BillType_Manage
      */
     public BillType_Manage() {
         initComponents();
+        loadBillTypes();
+    }
+    
+    private void loadBillTypes() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_type`");
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("id"));
+                vector.add(resultSet.getString("bill_type"));    
+                model.addRow(vector);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
