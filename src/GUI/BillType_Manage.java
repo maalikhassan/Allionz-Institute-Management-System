@@ -9,8 +9,10 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.MySQL;
+import sun.awt.windows.WToolkit;
 
 /**
  *
@@ -18,7 +20,6 @@ import model.MySQL;
  */
 public class BillType_Manage extends javax.swing.JFrame {
 
-     
     /**
      * Creates new form BillType_Manage
      */
@@ -26,7 +27,7 @@ public class BillType_Manage extends javax.swing.JFrame {
         initComponents();
         loadBillTypes();
     }
-    
+
     private void loadBillTypes() {
         try {
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_type`");
@@ -36,7 +37,7 @@ public class BillType_Manage extends javax.swing.JFrame {
             while (resultSet.next()) {
                 Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("id"));
-                vector.add(resultSet.getString("bill_type"));    
+                vector.add(resultSet.getString("bill_type"));
                 model.addRow(vector);
             }
         } catch (Exception e) {
@@ -61,6 +62,7 @@ public class BillType_Manage extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -84,6 +86,11 @@ public class BillType_Manage extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMinWidth(100);
@@ -102,16 +109,31 @@ public class BillType_Manage extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Add New type");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(0, 52, 101));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Update Type");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(0, 52, 101));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Remove Type");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,12 +143,12 @@ public class BillType_Manage extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextField1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
@@ -135,6 +157,8 @@ public class BillType_Manage extends javax.swing.JFrame {
                                 .addGap(18, 18, 18))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -145,7 +169,9 @@ public class BillType_Manage extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -161,12 +187,94 @@ public class BillType_Manage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //Bill type adding
+        try {
+            String TypeName = jTextField1.getText();
+
+            if (TypeName.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Enter Bill Type", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else {
+                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_type` WHERE `bill_type`='" + TypeName + "'");
+                if (resultSet.next()) {
+                    JOptionPane.showMessageDialog(this, "Bill Type Already Exists", "Warning", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    MySQL.executeIUD("INSERT INTO `bill_type`(`bill_type`)"
+                            + "VALUES('" + TypeName + "')");
+                    loadBillTypes();
+                    reset();
+                    JOptionPane.showMessageDialog(this, "Bill Type Added Succesfully", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int row = jTable1.getSelectedRow();
+
+        String BillType = String.valueOf(jTable1.getValueAt(row, 1));
+        jTextField1.setText(BillType);
+
+        String BillId = String.valueOf(jTable1.getValueAt(row, 0));
+        jLabel3.setText(BillId);
+        jLabel3.setVisible(false);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //Bill type update
+        try {
+            String BillType = jTextField1.getText();
+            String BillTypeId = jLabel3.getText();
+
+            if (BillType.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Enter Bill Type To Update");
+            } else {
+                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_type` WHERE `bill_type`='" + BillType + "'");
+                if (resultSet.next()) {
+                    JOptionPane.showMessageDialog(this, "Bill Type Already Exists", "Warning", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    MySQL.executeIUD("UPDATE `bill_type` SET `bill_type`='" + BillType + "' WHERE `id`='" + BillTypeId + "'");
+                    reset();
+                    loadBillTypes();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        //Remove Bill type
+        try {
+            String BillType = jTextField1.getText();
+           
+
+            if (BillType.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Enter Bill Type To Remove", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else {
+                ResultSet resultSet = MySQL.executeSearch("SELECT  * FROM `bill_type` WHERE `bill_type`='" + BillType + "'");
+
+                if (resultSet.next()) {
+
+                    MySQL.executeIUD("Delete FROM `bill_type`  WHERE  `bill_type` = '" + BillType + "' ");
+                    JOptionPane.showMessageDialog(this, "Bill Type Successfully Removed", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    reset();
+                    loadBillTypes();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-         FlatMacLightLaf.setup();
+        FlatMacLightLaf.setup();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -181,8 +289,13 @@ public class BillType_Manage extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    private void reset() {
+        jTextField1.setText("");
+    }
 }

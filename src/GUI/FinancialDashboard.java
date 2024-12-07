@@ -80,6 +80,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(SwingConstants.CENTER);
         jTable3.setDefaultRenderer(Object.class, render);
+        jTable4.setDefaultRenderer(Object.class, render);
+        jTable5.setDefaultRenderer(Object.class, render);
+        jTable6.setDefaultRenderer(Object.class, render);
         jTable1.setDefaultRenderer(Object.class, render);
 
         //Bill Payments
@@ -232,6 +235,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+
     //Bill Payments
     private void LoadVendors() {
         try {
@@ -279,18 +283,18 @@ public class FinancialDashboard extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
 
-            while (resultSet.next()) {  
-     
-                    Vector<String> vector = new Vector<>();
-                    vector.add(resultSet.getString("id"));
-                    vector.add(resultSet.getString("bill_type.bill_type"));
-                    vector.add(resultSet.getString("vendor.vendor_name"));
-                    vector.add(resultSet.getString("description"));
-                    vector.add(resultSet.getString("amount"));
-                    vector.add(resultSet.getString("payment_date"));
-                    vector.add(resultSet.getString("payment_status.status"));
-                    model.addRow(vector);
-                
+            while (resultSet.next()) {
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("id"));
+                vector.add(resultSet.getString("bill_type.bill_type"));
+                vector.add(resultSet.getString("vendor.vendor_name"));
+                vector.add(resultSet.getString("description"));
+                vector.add(resultSet.getString("amount"));
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("payment_status.status"));
+                model.addRow(vector);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1462,7 +1466,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
-                .addComponent(jTabbedPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE)
+                .addComponent(jTabbedPane4)
                 .addContainerGap())
         );
         jPanel15Layout.setVerticalGroup(
