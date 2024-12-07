@@ -272,12 +272,12 @@ public class FinancialDashboard extends javax.swing.JFrame {
         }
     }
 
-    //Bill Payments
+    //Bill Payments table
     private void loadBillPayments() {
         try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_payments` INNER JOIN "
-                    + "`bill_type` ON `bill_payments`.`bill_id`=`bill_type`.`id` INNER JOIN "
-                    + "`vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id` INNER JOIN "
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_payments` INNER JOIN"
+                    + "`bill_type` ON `bill_payments`.`bill_type_id`=`bill_type`.`id` INNER JOIN"
+                    + "`vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id` INNER JOIN"
                     + "`payment_status` ON `bill_payments`.`payment_status_id`=`payment_status`.`id`");
 
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -286,7 +286,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             while (resultSet.next()) {
 
                 Vector<String> vector = new Vector<>();
-                vector.add(resultSet.getString("id"));
+                vector.add(resultSet.getString("bill_id"));
                 vector.add(resultSet.getString("bill_type.bill_type"));
                 vector.add(resultSet.getString("vendor.vendor_name"));
                 vector.add(resultSet.getString("description"));
