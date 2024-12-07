@@ -5,6 +5,17 @@
 package gui;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.mysql.cj.protocol.Resultset;
+import java.awt.Color;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import model.MySQL;
 
 /**
  *
@@ -12,18 +23,69 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
  */
 public class Manage_Vendor extends javax.swing.JFrame {
 
+    HashMap<String, String> LoadBillTypes = new HashMap<>();
+
     /**
      * Creates new form Manage_Vendor
      */
     public Manage_Vendor() {
         initComponents();
+        jTextField1.grabFocus();
         rounded();
+        DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+        render.setHorizontalAlignment(SwingConstants.CENTER);
+        jTable1.setDefaultRenderer(Object.class, render);
+
+        //Load Vendor
+        loadVendorTable();
+        //Load Bill types
+        loadBillTypes();
     }
-    
-    public void rounded(){
-    jTextField1.putClientProperty("JComponent.roundRect", true);
-    jTextField2.putClientProperty("JComponent.roundRect", true);
-    jTextField3.putClientProperty("JComponent.roundRect", true);
+
+    private void loadVendorTable() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `vendor` INNER JOIN `bill_type` ON "
+                    + "`vendor`.`bill_type_id`=`bill_type`.`id`");
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            while (resultSet.next()) {
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("id"));
+                vector.add(resultSet.getString("bill_type.bill_type"));
+                vector.add(resultSet.getString("vendor_name"));
+                vector.add(resultSet.getString("mobile"));
+                vector.add(resultSet.getString("email"));
+
+                model.addRow(vector);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadBillTypes() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_type`");
+            Vector<String> vector = new Vector<>();
+            vector.add("Select Bill Type");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("bill_type"));
+                LoadBillTypes.put(resultSet.getString("bill_type"), resultSet.getString("id"));
+            }
+            DefaultComboBoxModel model = new DefaultComboBoxModel<>(vector);
+            jComboBox1.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void rounded() {
+        jTextField1.putClientProperty("JComponent.roundRect", true);
+        jTextField2.putClientProperty("JComponent.roundRect", true);
+        jTextField3.putClientProperty("JComponent.roundRect", true);
     }
 
     /**
@@ -51,10 +113,11 @@ public class Manage_Vendor extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
-        getContentPane().setLayout(new java.awt.GridLayout());
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("Manage Vendor");
@@ -71,11 +134,23 @@ public class Manage_Vendor extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Mobile Number");
 
-        jTextField1.setText(" ");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
-        jTextField2.setText(" ");
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
 
-        jTextField3.setText(" ");
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -96,23 +171,38 @@ public class Manage_Vendor extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
         }
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Bill Type");
 
         jButton1.setBackground(new java.awt.Color(0, 52, 101));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Add Company");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(0, 52, 101));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Update");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(0, 52, 101));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -123,6 +213,13 @@ public class Manage_Vendor extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Print");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -151,7 +248,8 @@ public class Manage_Vendor extends javax.swing.JFrame {
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 73, Short.MAX_VALUE))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14))))
@@ -160,25 +258,27 @@ public class Manage_Vendor extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
                         .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)
@@ -198,12 +298,110 @@ public class Manage_Vendor extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int row = jTable1.getSelectedRow();
+
+        String CompanyName = String.valueOf(jTable1.getValueAt(row, 2));
+        jTextField1.setText(CompanyName);
+
+        String CompanyEmail = String.valueOf(jTable1.getValueAt(row, 4));
+        jTextField2.setText(CompanyEmail);
+
+        String MobileNumber = String.valueOf(jTable1.getValueAt(row, 3));
+        jTextField3.setText(MobileNumber);
+
+        String Billtype = String.valueOf(jTable1.getValueAt(row, 1));
+        jComboBox1.setSelectedItem(Billtype);
+
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            String CompanyName = jTextField1.getText();
+            String Companyemail = jTextField2.getText();
+            String mobile = jTextField3.getText();
+            String BillType = String.valueOf(jComboBox1.getSelectedIndex());
+
+            if (CompanyName.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Enter Company Name", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else if (Companyemail.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Enter Company Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else if (mobile.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Enter Company Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else if (BillType.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Select Bill Type");
+            } else {
+                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `vendor` WHERE `vendor_name`='" + CompanyName + "'");
+                if (resultSet.next()) {
+                    JOptionPane.showMessageDialog(this, "Company Already Exists", "Warning", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    MySQL.executeIUD("INSERT INTO `vendor`(`bill_type_id`,`vendor_name`,`mobile`,`email`)"
+                            + "VALUES('" + BillType + "','" + CompanyName + "','" + mobile + "','" + Companyemail + "')");
+                    loadVendorTable();
+                    reset();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        jTextField2.grabFocus();
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        jTextField3.grabFocus();
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        jComboBox1.grabFocus();
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        jButton1.grabFocus();
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //Update Vendor
+        try {
+            String CompanyName = jTextField1.getText();
+            String Email = jTextField2.getText();
+            String Mobile = jTextField2.getText();
+            String BillType = String.valueOf(jComboBox1.getSelectedIndex());
+
+            if (CompanyName.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Enter Company Name To Update");
+            } else if (Email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Email To Update");
+            } else if (!Email.matches("^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")) {
+            JOptionPane.showMessageDialog(this, "Please Enter Valid Email Address", "Warning", JOptionPane.WARNING_MESSAGE);
+            }else {
+                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `vendor` WHERE `vendor_name`='" + BillType + "'");
+                if (resultSet.next()) {
+                    JOptionPane.showMessageDialog(this, "Bill Type Already Exists", "Warning", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    MySQL.executeIUD("UPDATE `bill_type` SET `bill_type`='" + BillType + "' WHERE `id`='" + BillTypeId + "'");
+                    reset();
+                    loadBillTypes();
+                }
+            }
+    }
+    catch (Exception e
+
+    
+        ) {
+            e.printStackTrace();
+    }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+/**
+ * @param args the command line arguments
+ */
+public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-         FlatMacLightLaf.setup();
+        FlatMacLightLaf.setup();
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -218,6 +416,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -231,4 +430,11 @@ public class Manage_Vendor extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
+
+    private void reset() {
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jComboBox1.setSelectedIndex(0);
+    }
 }
