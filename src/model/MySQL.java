@@ -13,7 +13,7 @@ public class MySQL {
      public static void createConnection() throws Exception {
         if (connection == null) {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://193.203.184.109:3306/u272822984_ims", "u272822984_allionz", "AllionzIMS123");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/u272822984_ims", "root", "11111");
         }
     }
 
