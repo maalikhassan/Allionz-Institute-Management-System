@@ -1,6 +1,6 @@
 <!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
 <jasperReport name="tech_track" language="java" columnCount="1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc3a3fa9-c2fa-4ed7-a5bd-b7371cfe082f">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<dataset name="Dataset1" uuid="159f9cb6-a7f8-4fca-8d09-1146053765c7">
@@ -33,32 +33,35 @@
 	<field name="COLUMN_5" class="java.lang.String"/>
 	<background splitType="Stretch"/>
 	<title height="147" splitType="Stretch">
-		<element kind="staticText" uuid="d1f850ce-936a-4f01-b0c9-29f488d02a0a" x="2" y="0" width="258" height="40" forecolor="#0000FF" fontSize="26.0" bold="true">
+		<element kind="staticText" uuid="d1f850ce-936a-4f01-b0c9-29f488d02a0a" x="108" y="0" width="258" height="40" forecolor="#0000FF" fontSize="26.0" bold="true">
 			<text><![CDATA[NOVARA INSTITUTE]]></text>
 		</element>
-		<element kind="staticText" uuid="9fcb1061-3253-4ce8-bd2e-0f7e82ed1b3d" x="296" y="0" width="60" height="30" bold="true">
+		<element kind="staticText" uuid="9fcb1061-3253-4ce8-bd2e-0f7e82ed1b3d" x="380" y="0" width="60" height="30" bold="true">
 			<text><![CDATA[Report No]]></text>
 		</element>
-		<element kind="staticText" uuid="63e9288c-8bc6-4170-8caf-2141230d7646" x="296" y="30" width="60" height="30" bold="true">
+		<element kind="staticText" uuid="63e9288c-8bc6-4170-8caf-2141230d7646" x="380" y="30" width="60" height="30" bold="true">
 			<text><![CDATA[Employee]]></text>
 		</element>
-		<element kind="staticText" uuid="0fcb9aeb-45ad-4ee2-ad1d-b51a5ed95988" x="296" y="60" width="60" height="30" bold="true">
+		<element kind="staticText" uuid="0fcb9aeb-45ad-4ee2-ad1d-b51a5ed95988" x="380" y="60" width="60" height="30" bold="true">
 			<text><![CDATA[Date & Time]]></text>
 		</element>
-		<element kind="staticText" uuid="a8b568fe-bf32-4445-8983-20cc7c4120df" x="2" y="50" width="174" height="30" fontSize="14.0" bold="true">
+		<element kind="staticText" uuid="a8b568fe-bf32-4445-8983-20cc7c4120df" x="150" y="50" width="174" height="30" fontSize="14.0" bold="true">
 			<text><![CDATA[Contact : 072 573 3695]]></text>
 		</element>
-		<element kind="staticText" uuid="bfacc031-c177-4c83-a2d8-ca5a4844b027" x="0" y="80" width="210" height="30" fontSize="14.0" bold="true">
+		<element kind="staticText" uuid="bfacc031-c177-4c83-a2d8-ca5a4844b027" x="130" y="80" width="210" height="30" fontSize="14.0" bold="true">
 			<text><![CDATA[161/E, Thalgahawila, Horana.]]></text>
 		</element>
-		<element kind="textField" uuid="bcf93467-3562-46dc-aa46-5a4cabf0d00c" x="370" y="0" width="187" height="30">
+		<element kind="textField" uuid="bcf93467-3562-46dc-aa46-5a4cabf0d00c" x="440" y="0" width="117" height="30">
 			<expression><![CDATA[$P{Parameter3}]]></expression>
 		</element>
-		<element kind="textField" uuid="603893fc-ec48-4304-bf03-5454e4be62e3" x="370" y="30" width="187" height="30">
+		<element kind="textField" uuid="603893fc-ec48-4304-bf03-5454e4be62e3" x="440" y="30" width="117" height="30">
 			<expression><![CDATA[$P{Parameter4}]]></expression>
 		</element>
-		<element kind="textField" uuid="84c90a9d-8752-4973-85af-97de7d640132" x="370" y="60" width="187" height="30">
+		<element kind="textField" uuid="84c90a9d-8752-4973-85af-97de7d640132" x="440" y="60" width="117" height="30">
 			<expression><![CDATA[$P{Parameter5}]]></expression>
+		</element>
+		<element kind="image" uuid="336fffe8-809b-463e-8c5f-643d173c6789" x="10" y="0" width="80" height="70">
+			<expression><![CDATA["D:\\java project\\Allionz-IMS\\src\\resources\\LOGO.png"]]></expression>
 		</element>
 	</title>
 	<columnHeader height="40" splitType="Stretch">

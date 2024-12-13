@@ -12,7 +12,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.MySQL;
-import sun.awt.windows.WToolkit;
+//import sun.awt.windows.WToolkit;
 
 /**
  *
