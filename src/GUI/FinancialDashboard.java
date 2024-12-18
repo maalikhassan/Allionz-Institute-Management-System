@@ -89,7 +89,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         loadTeachersSalary();
         loadMiantenanceSalary();
         loadEmployee();
-        loadBaseslary();
+        loadBaseSalary();
         LoadEmployeeType();
 
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
@@ -100,7 +100,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jTable6.setDefaultRenderer(Object.class, render);
         jTable1.setDefaultRenderer(Object.class, render);
         jTable18.setDefaultRenderer(Object.class, render);
-         jTable19.setDefaultRenderer(Object.class, render);
+        jTable19.setDefaultRenderer(Object.class, render);
 
         //Bill Payments
         LoadBillTypes();
@@ -233,8 +233,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+
     //Salary manage
-    private void loadBaseslary() {
+    private void loadBaseSalary() {
         try {
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `salary_details` INNER JOIN `employee_type`"
                     + "ON `salary_details`.`employee_type_id`=`employee_type`.`id`");
@@ -243,13 +244,13 @@ public class FinancialDashboard extends javax.swing.JFrame {
             model.setRowCount(0);
 
             while (resultSet.next()) {
-                
-                    Vector<String> vector = new Vector<>();
-                    vector.add(resultSet.getString("id"));
-                    vector.add(resultSet.getString("base_salary"));
-                    vector.add(resultSet.getString("employee_type.type"));
-                    model.addRow(vector);
-                 
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("id"));
+                vector.add(resultSet.getString("base_salary"));
+                vector.add(resultSet.getString("employee_type.type"));
+                model.addRow(vector);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -339,8 +340,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-    
+
     private void loadEmployee() {
         try {
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `employee` INNER JOIN `employee_type` ON"
@@ -350,21 +350,22 @@ public class FinancialDashboard extends javax.swing.JFrame {
             model.setRowCount(0);
 
             while (resultSet.next()) {
-                
-                    Vector<String> vector = new Vector<>();
-                    vector.add(resultSet.getString("user_id"));
-                    vector.add(resultSet.getString("nic"));
-                    vector.add(resultSet.getString("first_name"));
-                    vector.add(resultSet.getString("employee_type.type"));
-                    model.addRow(vector);
-                
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("user_id"));
+                vector.add(resultSet.getString("nic"));
+                vector.add(resultSet.getString("first_name"));
+                vector.add(resultSet.getString("employee_type.type"));
+                model.addRow(vector);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     //LoadRmployeeType in salary manage
-     private void LoadEmployeeType() {
+    private void LoadEmployeeType() {
         try {
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `employee_type`");
             Vector<String> vector = new Vector<>();
@@ -380,7 +381,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1909,6 +1909,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jFormattedTextField9.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
+        jButton20.setBackground(new java.awt.Color(0, 51, 101));
+        jButton20.setForeground(new java.awt.Color(255, 255, 255));
         jButton20.setText("Add");
         jButton20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1916,6 +1918,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
+        jButton21.setBackground(new java.awt.Color(0, 51, 101));
+        jButton21.setForeground(new java.awt.Color(255, 255, 255));
         jButton21.setText("Update");
         jButton21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1923,6 +1927,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
+        jButton22.setBackground(new java.awt.Color(0, 51, 101));
+        jButton22.setForeground(new java.awt.Color(255, 255, 255));
         jButton22.setText("Remove");
         jButton22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1930,7 +1936,14 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
+        jButton23.setBackground(new java.awt.Color(0, 51, 101));
+        jButton23.setForeground(new java.awt.Color(255, 255, 255));
         jButton23.setText("Reset");
+        jButton23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton23ActionPerformed(evt);
+            }
+        });
 
         jComboBox14.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -3126,7 +3139,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-         //Add Bill
+        //Add Bill
         try {
             String BillId = String.valueOf(jLabel13.getText());
             String BillType = String.valueOf(jComboBox7.getSelectedItem());
@@ -3135,7 +3148,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String Amount = String.valueOf(jFormattedTextField1.getText());
 //            Date date = jDateChooser1.getDate();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-           String date = dateFormat.format(new Date());
+            String date = dateFormat.format(new Date());
             String Status = String.valueOf(jComboBox12.getSelectedIndex());
 
             if (BillType.isEmpty()) {
@@ -3285,7 +3298,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton41ActionPerformed
-       
+
     }//GEN-LAST:event_jButton41ActionPerformed
 
     private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
@@ -3297,7 +3310,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jFormattedTextField3ActionPerformed
 
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
-      //Remove salary details
+        //Remove salary details
         try {
             String Id = jLabel75.getText();
             String Salary = jFormattedTextField9.getText();
@@ -3320,7 +3333,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                         MySQL.executeIUD("Delete FROM `salary_details`  WHERE  `id` = '" + Id + "' ");
                         JOptionPane.showMessageDialog(this, "Slary Details Successfully Removed", "Success", JOptionPane.INFORMATION_MESSAGE);
                         reset();
-                        loadBaseslary();
+                        loadBaseSalary();
                     }
                 }
             }
@@ -3331,15 +3344,14 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         //Add base salary
-          try {
-            String BaseSalary  = String.valueOf(jFormattedTextField9.getText());
-            String Employeetype = String.valueOf(jComboBox14.getSelectedItem()); 
-             
+        try {
+            String BaseSalary = String.valueOf(jFormattedTextField9.getText());
+            String Employeetype = String.valueOf(jComboBox14.getSelectedItem());
 
             if (BaseSalary.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Base Salary", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (Employeetype.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please Select Employee Type", "Warning", JOptionPane.WARNING_MESSAGE); 
+                JOptionPane.showMessageDialog(this, "Please Select Employee Type", "Warning", JOptionPane.WARNING_MESSAGE);
             } else {
                 ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `salary_details` WHERE `base_salary`='" + BaseSalary + "'");
                 if (resultSet.next()) {
@@ -3347,14 +3359,14 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 } else {
 //                     
                     MySQL.executeIUD("INSERT INTO `salary_details`(`base_salary`,`employee_type_id`) "
-                            + "VALUES ('"+BaseSalary+"',+'"+ LoadEmployeeType.get(Employeetype) + "')");
+                            + "VALUES ('" + BaseSalary + "',+'" + LoadEmployeeType.get(Employeetype) + "')");
 
                     loadBillPayments();
                     reset();
                     JOptionPane.showMessageDialog(this, "Salary Added Succesfully", "Warning", JOptionPane.WARNING_MESSAGE);
                 }
-                
-                loadBaseslary();
+
+                loadBaseSalary();
                 reset();
 //                
             }
@@ -3364,34 +3376,57 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
-      //update basesalary
+        //update basesalary
+//        try {
+//            String Id = jLabel75.getText();
+//            String Salary = jTextField1.getText();
+//            String EmployeeType = String.valueOf(jComboBox1.getSelectedIndex());
+//
+//            if (Salary.isEmpty()) {
+//                JOptionPane.showMessageDialog(this, "Please Enter Slary  To Update", "Warning", JOptionPane.WARNING_MESSAGE);
+//            } else if (EmployeeType.isEmpty()) {
+//                JOptionPane.showMessageDialog(this, "Please Select Employee Type To Update", "Warning", JOptionPane.WARNING_MESSAGE);
+//            } else {
+//                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `salary_details` WHERE `base_salary`='" + Salary + "'"
+//                        + "AND `employee_type_id`='" + EmployeeType + "'");
+//                if (resultSet.next()) {
+//                    JOptionPane.showMessageDialog(this, "This Salary Details Already Exists", "Warning", JOptionPane.WARNING_MESSAGE);
+//                } else {
+//                    int showConfirm = JOptionPane.showConfirmDialog(this, "Do you want to Update Salary Details?",
+//                            "Salary Update", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+//
+//                    if (showConfirm == JOptionPane.YES_OPTION) {
+//
+//                        MySQL.executeIUD("UPDATE `salary_details` SET `base_salary`='" + Salary + "' "
+//                                + ",`employee_type_id`='" +  EmployeeType + "' WHERE `id`='" + Id + "'");
+//                        reset();
+//                        loadBaseslary();
+//                        
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
         try {
             String Id = jLabel75.getText();
-            String Salary = jTextField1.getText();
-            String EmployeeType = String.valueOf(jComboBox1.getSelectedIndex());
+            String Salary = jFormattedTextField9.getText();
+            String EmployeeType = String.valueOf(jComboBox14.getSelectedItem());
 
             if (Salary.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please Enter Slary  To Update", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please Enter  Salary To Update");
             } else if (EmployeeType.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please Select Employee Type", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please Enter  Employee Type To Update");
             } else {
-                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `salary_details` WHERE `base_salary`='" + Salary + "'"
-                        + "AND `employee_type_id`='" + EmployeeType + "'");
-                if (resultSet.next()) {
-                    JOptionPane.showMessageDialog(this, "This Salary Details Already Exists", "Warning", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    int showConfirm = JOptionPane.showConfirmDialog(this, "Do you want to Update Salary Details?",
-                            "Update Company", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
-                    if (showConfirm == JOptionPane.YES_OPTION) {
-
-                        MySQL.executeIUD("UPDATE `salary_details` SET `base_salary`='" + Salary + "' "
-                                + ",`employee_type_id`='" +  EmployeeType + "' WHERE `id`='" + Id + "'");
-                        reset();
-                        loadBaseslary();
-                        
-                    }
-                }
+//                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `salary_details` WHERE `employee_type_id`='" + EmployeeType + "'");
+//                if (resultSet.next()) {
+//                    JOptionPane.showMessageDialog(this, "Salary Details Already Exists", "Warning", JOptionPane.WARNING_MESSAGE);
+//                } else {
+                    MySQL.executeIUD("UPDATE `salary_details` SET `base_salary`='" + Salary + "',`employee_type_id`='"+ LoadEmployeeType.get(EmployeeType) +"' WHERE `id`='" + Id + "'");
+                    reset();
+                    loadBaseSalary();
+//                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -3399,7 +3434,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jTable19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable19MouseClicked
-         int row = jTable19.getSelectedRow();
+        int row = jTable19.getSelectedRow();
         String Id = String.valueOf(jTable19.getValueAt(row, 0));
         jLabel75.setText(Id);
         jLabel75.setVisible(false);
@@ -3412,6 +3447,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jTable19MouseClicked
+
+    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+        reset();
+    }//GEN-LAST:event_jButton23ActionPerformed
 
     /**
      * @param args the command line arguments
