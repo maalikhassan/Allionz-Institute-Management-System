@@ -7,27 +7,31 @@ package gui;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import javax.swing.JOptionPane;
+import model.AdminUserHandler;
+import model.AdminUserSession;
 
 /**
  *
  * @author Dell
  */
-public class adminlogin extends javax.swing.JFrame {
-    
-        private void image(){
-    
+public class AdminLogin extends javax.swing.JFrame {
+
+    private static String fullname;
+
+    private void image() {
+
         FlatSVGIcon icon1 = new FlatSVGIcon("resources//LOGOWHITE.svg", logolabel.getWidth(), logolabel.getHeight());
         FlatSVGIcon icon2 = new FlatSVGIcon("resources//adminlogo1.svg", adminlabel.getWidth(), adminlabel.getHeight());
 
-        
         logolabel.setIcon(icon1);
         adminlabel.setIcon(icon2);
-}
+    }
 
     /**
-     * Creates new form adminlogin
+     * Creates new form AdminLogin
      */
-    public adminlogin() {
+    public AdminLogin() {
         initComponents();
         image();
         rounded();
@@ -116,11 +120,14 @@ public class adminlogin extends javax.swing.JFrame {
                             .addGap(86, 86, 86)))))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(131, 131, 131)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(adminlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(adminlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -161,17 +168,33 @@ public class adminlogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-        NewDashboard ND = new NewDashboard();
-        ND.setVisible(true);
+        String username = jTextField1.getText();
+        String password = String.valueOf(jPasswordField1.getPassword());
+
+        if (username.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter Username", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter Password", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            AdminUserHandler adminUserHandler = new AdminUserHandler();
+            if (adminUserHandler.adminlogin(username, fullname, password)) {
+                JOptionPane.showMessageDialog(this, "Welcome, '" + AdminUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
+                NewDashboard FD = new NewDashboard();
+                FD.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Warning", JOptionPane.WARNING_MESSAGE);
+                jPasswordField1.setText("");
+            }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        this.dispose();
         userSelection US = new userSelection();
         US.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -183,7 +206,7 @@ public class adminlogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new adminlogin().setVisible(true);
+                new AdminLogin().setVisible(true);
             }
         });
     }
@@ -203,10 +226,10 @@ public class adminlogin extends javax.swing.JFrame {
     private void rounded() {
         jTextField1.putClientProperty("JComponent.roundRect", true);
         jPasswordField1.putClientProperty("JComponent.roundRect", true);
-        
+
         jTextField1.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Username");
         jPasswordField1.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Password");
-        
+
         jButton1.putClientProperty("JButton.buttonType", "roundRect");
         jButton2.putClientProperty("JButton.buttonType", "roundRect");
     }

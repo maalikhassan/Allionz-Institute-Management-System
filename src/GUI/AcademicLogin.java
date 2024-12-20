@@ -8,6 +8,9 @@ import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatLightOwlIJTheme;
 import javax.swing.Icon;
+import javax.swing.JOptionPane;
+import model.AcademicUserHandler;
+import model.AcademicUserSession;
 
 
 
@@ -16,6 +19,8 @@ import javax.swing.Icon;
  * @author Dell
  */
 public class AcademicLogin extends javax.swing.JFrame {
+    
+        private static String fullname;
 
     
     public AcademicLogin() {
@@ -89,6 +94,11 @@ public class AcademicLogin extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Go Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -152,11 +162,33 @@ public class AcademicLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-        AcademicDashboard ACD = new AcademicDashboard();
-        ACD.setVisible(true);
+        String username = jTextField1.getText();
+        String password = String.valueOf(jPasswordField1.getPassword());
+
+        if (username.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter Username", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter Password", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            AcademicUserHandler academicUserHandler = new AcademicUserHandler();
+            if (academicUserHandler.academiclogin(username, fullname, password)) {
+                JOptionPane.showMessageDialog(this, "Welcome, '" + AcademicUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
+                AcademicDashboard AD = new AcademicDashboard();
+                AD.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Warning", JOptionPane.WARNING_MESSAGE);
+                jPasswordField1.setText("");
+            }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        userSelection US = new userSelection();
+        US.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
