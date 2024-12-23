@@ -82,7 +82,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     public FinancialDashboard() {
         initComponents();
         image();
-        
+
         jLabel27.setText(FinancialUserSession.getInstance().getName());
 
         //EPF and ETF presantages
@@ -108,7 +108,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         loadMonth();
         LoadPaymentSatus();
         Loadpaysheet();
-//        loadUserProfile();
+        loadUserProfile();
 
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(SwingConstants.CENTER);
@@ -130,7 +130,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }
 
     // salary management
-
     private void loadAcademicSalary() {
         try {
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `salary`"
@@ -473,6 +472,27 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
                 model.addRow(vector);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadUserProfile() {
+        try {
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` WHERE `username`='" + userName + "'");
+
+            if (resultSet.next()) {
+                jTextField18.setText(resultSet.getString("first_name"));
+                jTextField19.setText(resultSet.getString("last_name"));
+                jPasswordField1.setText(resultSet.getString("password_hash"));
+                jTextField4.setText(resultSet.getString("mobile"));
+                jTextField3.setText(resultSet.getString("email"));
+                jTextField5.setText(resultSet.getString("nic"));
+                jTextField5.setEnabled(false);
+
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -2970,6 +2990,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jButton29.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton29.setForeground(new java.awt.Color(255, 255, 255));
         jButton29.setText("Change Password");
+        jButton29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton29ActionPerformed(evt);
+            }
+        });
 
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -3670,7 +3695,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable19MouseClicked
 
     private void jTable18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable18MouseClicked
-           int row = jTable18.getSelectedRow();
+        int row = jTable18.getSelectedRow();
 
         String Id = String.valueOf(jTable18.getValueAt(row, 0));
         jLabel80.setText(Id);
@@ -3694,7 +3719,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
 
-       try {
+        try {
             String baseSalaryAmount = jFormattedTextField4.getText().trim();
             String allowanceAmount = jFormattedTextField3.getText().trim();
 
@@ -3788,6 +3813,30 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
         reset();
     }//GEN-LAST:event_jButton23ActionPerformed
+
+    private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
+        String password = String.valueOf(jPasswordField1.getPassword());
+
+        try {
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` WHERE `username`='" + userName + "'");
+
+            if (resultSet.next()) {
+
+                if (password.equals(resultSet.getString("password_hash"))) {
+                    JOptionPane.showMessageDialog(this, "Password is entered previously!", "Warning", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    MySQL.executeIUD("UPDATE `users` SET `password_hash`='" + password + "' "
+                            + "WHERE `username`='" + userName + "'");
+                    JOptionPane.showMessageDialog(this, "Password Changed!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton29ActionPerformed
 
     /**
      * @param args the command line arguments
