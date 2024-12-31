@@ -18,6 +18,17 @@ import model.FinancialUserSession;
 public class Financelogin extends javax.swing.JFrame {
 
     private static String fullname;
+    
+    //employee email
+    private static String employeeusername;
+
+    public static String getEmployeeuserName() {
+        return employeeusername;
+    }
+
+    public static void setEmployeeUserName(String employeeEmali) {
+        Financelogin.employeeusername = employeeusername;
+    }
 
     /**
      * Creates new form login

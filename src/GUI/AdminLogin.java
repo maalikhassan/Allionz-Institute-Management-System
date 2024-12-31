@@ -27,6 +27,8 @@ public class AdminLogin extends javax.swing.JFrame {
         logolabel.setIcon(icon1);
         adminlabel.setIcon(icon2);
     }
+    
+    
 
     /**
      * Creates new form AdminLogin

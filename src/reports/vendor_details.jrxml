@@ -1,5 +1,5 @@
 <!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
-<jasperReport name="tech_track" language="java" columnCount="1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc3a3fa9-c2fa-4ed7-a5bd-b7371cfe082f">
+<jasperReport name="vendor_table" language="java" columnCount="1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc3a3fa9-c2fa-4ed7-a5bd-b7371cfe082f">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
@@ -19,11 +19,11 @@
 	<parameter name="Parameter2" class="java.lang.String"/>
 	<parameter name="Parameter3" class="java.lang.String"/>
 	<query language="sql"><![CDATA[]]></query>
+	<field name="COLUMN_0" class="java.lang.String"/>
 	<field name="COLUMN_1" class="java.lang.String"/>
 	<field name="COLUMN_2" class="java.lang.String"/>
 	<field name="COLUMN_3" class="java.lang.String"/>
 	<field name="COLUMN_4" class="java.lang.String"/>
-	<field name="COLUMN_5" class="java.lang.String"/>
 	<background splitType="Stretch"/>
 	<title height="147" splitType="Stretch">
 		<element kind="staticText" uuid="d1f850ce-936a-4f01-b0c9-29f488d02a0a" x="108" y="0" width="258" height="40" forecolor="#0000FF" fontSize="26.0" bold="true">
@@ -44,7 +44,7 @@
 		<element kind="staticText" uuid="bfacc031-c177-4c83-a2d8-ca5a4844b027" x="130" y="80" width="210" height="30" fontSize="14.0" bold="true">
 			<text><![CDATA[161/E, Thalgahawila, Horana.]]></text>
 		</element>
-		<element kind="image" uuid="336fffe8-809b-463e-8c5f-643d173c6789" x="10" y="0" width="80" height="70">
+		<element kind="image" uuid="336fffe8-809b-463e-8c5f-643d173c6789" x="0" y="0" width="108" height="110">
 			<expression><![CDATA["D:\\java project\\Allionz-IMS\\src\\resources\\LOGO.png"]]></expression>
 		</element>
 		<element kind="textField" uuid="784a4b83-e580-45b3-84e6-85a0b146edf8" x="440" y="0" width="110" height="30">
@@ -79,27 +79,27 @@
 	</columnHeader>
 	<detail>
 		<band height="42" splitType="Stretch">
-			<element kind="textField" uuid="0303ff13-fd9f-4232-adfa-2bcbae39b087" x="0" y="7" width="36" height="28" fontSize="9.0" hTextAlign="Center" vTextAlign="Top">
+			<element kind="textField" uuid="0303ff13-fd9f-4232-adfa-2bcbae39b087" x="2" y="7" width="36" height="28" fontSize="9.0" hTextAlign="Center" vTextAlign="Top">
 				<expression><![CDATA[$V{PAGE_NUMBER}]]></expression>
 			</element>
 			<element kind="textField" uuid="c057db5a-909b-4d29-a658-b9ea6046804f" x="54" y="6" width="87" height="30" hTextAlign="Center">
-				<expression><![CDATA[$F{COLUMN_1}]]></expression>
+				<expression><![CDATA[$F{COLUMN_0}]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="28bcd8af-91ce-4edd-933f-bc8ce9aca4a7"/>
 			</element>
 			<element kind="textField" uuid="58e25d6d-35cd-42c2-9ccc-137ac577f13a" x="152" y="6" width="60" height="30" hTextAlign="Center">
-				<expression><![CDATA[$F{COLUMN_2}]]></expression>
+				<expression><![CDATA[$F{COLUMN_0}]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="be78f064-00bd-4a8b-a299-e6ec29eec7e9"/>
 			</element>
 			<element kind="textField" uuid="56c1ed07-7bb6-400d-b5c4-bb76eb926680" x="220" y="6" width="100" height="30" hTextAlign="Center">
-				<expression><![CDATA[$F{COLUMN_3}]]></expression>
+				<expression><![CDATA[$F{COLUMN_1}]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b14fa895-6586-4674-ade3-816f7a0797a8"/>
 			</element>
 			<element kind="textField" uuid="86345f01-8e1c-4b94-be1d-5fc79a8ff11a" x="340" y="6" width="100" height="30" hTextAlign="Center">
-				<expression><![CDATA[$F{COLUMN_4}]]></expression>
+				<expression><![CDATA[$F{COLUMN_2}]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d633e85e-92e0-43f2-bf9c-bd6d7ca82fb0"/>
 			</element>
 			<element kind="textField" uuid="e02fa5e4-7d29-4baf-b7ef-cbaf0aaf637d" x="460" y="6" width="75" height="30" hTextAlign="Center">
-				<expression><![CDATA[$F{COLUMN_5}]]></expression>
+				<expression><![CDATA[$F{COLUMN_3}]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="117f2194-8a87-4c79-afd4-1c690c80e363"/>
 			</element>
 		</band>
@@ -107,7 +107,7 @@
 	<columnFooter height="25" splitType="Stretch"/>
 	<pageFooter height="40" splitType="Stretch">
 		<element kind="staticText" uuid="ddd22c88-3c82-4175-b0f7-4ec0893ca42a" x="100" y="5" width="360" height="30" forecolor="#0000FF" fontSize="16.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[*******Academic Department*******]]></text>
+			<text><![CDATA[*******Financial Department*******]]></text>
 		</element>
 	</pageFooter>
 </jasperReport>
