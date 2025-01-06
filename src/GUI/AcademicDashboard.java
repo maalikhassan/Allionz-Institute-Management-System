@@ -38,7 +38,7 @@ import model.FinancialUserSession;
 public class AcademicDashboard extends javax.swing.JFrame {
 
     private static String userName = AcademicUserSession.getInstance().getUsername();
-    
+
     HashMap<String, String> BatchMap = new HashMap<>();
     HashMap<String, String> StreamMap = new HashMap<>();
     HashMap<String, String> SubjectMap = new HashMap<>();
@@ -97,6 +97,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         loadMaterialLibraryTable();
         loadTeacherAssignmentTable();
         loadTeacherViewTable();
+        loadUserProfile();
 
         overviewpanel.setVisible(true);
         studentmanagement.setVisible(false);
@@ -131,6 +132,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         menu5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         Dashboardconstantpanel = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -647,10 +649,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         menu5.setLayout(menu5Layout);
         menu5Layout.setHorizontalGroup(
             menu5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menu5Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menu5Layout.setVerticalGroup(
             menu5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -659,6 +658,16 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
+
+        jButton5.setBackground(new java.awt.Color(0, 102, 255));
+        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setText("Log Out");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout menupanelLayout = new javax.swing.GroupLayout(menupanel);
         menupanel.setLayout(menupanelLayout);
@@ -673,6 +682,10 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
             .addComponent(menu5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(menupanelLayout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addComponent(jButton5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         menupanelLayout.setVerticalGroup(
             menupanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -689,7 +702,9 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addComponent(menu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(menu5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(jButton5)
+                .addGap(16, 16, 16))
         );
 
         Dashboardconstantpanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -4380,7 +4395,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                     .addComponent(jTextField18))
                 .addGap(36, 36, 36)
                 .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addGap(76, 76, 76))
         );
 
         jButton12.setBackground(new java.awt.Color(0, 52, 101));
@@ -4684,20 +4699,20 @@ public class AcademicDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     private void loadUserProfile() {
         try {
 
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` WHERE `username`='" + userName + "'");
 
             if (resultSet.next()) {
-                jTextField18.setText(resultSet.getString("first_name"));
-                jTextField19.setText(resultSet.getString("last_name"));
+                jTextField3.setText(resultSet.getString("first_name"));
+                jTextField10.setText(resultSet.getString("last_name"));
                 jTextField16.setText(resultSet.getString("password_hash"));
-                jTextField4.setText(resultSet.getString("mobile"));
-                jTextField3.setText(resultSet.getString("email"));
-                jTextField5.setText(resultSet.getString("nic"));
-                jTextField5.setEnabled(false);
+                jTextField17.setText(resultSet.getString("mobile"));
+                jTextField15.setText(resultSet.getString("email"));
+                jTextField18.setText(resultSet.getString("nic"));
+                jTextField18.setEnabled(false);
 
             }
 
@@ -5936,40 +5951,40 @@ public class AcademicDashboard extends javax.swing.JFrame {
             String EndTime = jTextField46.getText();
 
             // Confirmation dialog
-        int confirmation = JOptionPane.showConfirmDialog(this, 
-                "Are you sure you want to delete this attendance record?", 
-                "Delete Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (confirmation != JOptionPane.YES_OPTION) {
-            return;
-        }
+            int confirmation = JOptionPane.showConfirmDialog(this,
+                    "Are you sure you want to delete this attendance record?",
+                    "Delete Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (confirmation != JOptionPane.YES_OPTION) {
+                return;
+            }
 
-                try {
-                    String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(sheduleDate);
+            try {
+                String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(sheduleDate);
 
-                    String scheduleIDQuery = "SELECT schedule_id FROM `schedule` WHERE `sheduled_date`='" + formattedDate
-                            + "' AND `AL_batch_batch_id`='" + BatchMap.get(Batch)
-                            + "' AND `subject_id`='" + SubjectMap.get(Subject)
-                            + "' AND `teacher_id`='" + TeachersMap.get(Teacher)
-                            + "' AND `start_time`='" + startTime
-                            + "' AND `end_time`='" + EndTime + "'";
+                String scheduleIDQuery = "SELECT schedule_id FROM `schedule` WHERE `sheduled_date`='" + formattedDate
+                        + "' AND `AL_batch_batch_id`='" + BatchMap.get(Batch)
+                        + "' AND `subject_id`='" + SubjectMap.get(Subject)
+                        + "' AND `teacher_id`='" + TeachersMap.get(Teacher)
+                        + "' AND `start_time`='" + startTime
+                        + "' AND `end_time`='" + EndTime + "'";
 
-                    ResultSet rs = MySQL.executeSearch(scheduleIDQuery);
+                ResultSet rs = MySQL.executeSearch(scheduleIDQuery);
 
-                    if (rs.next()) {
-                        String scheduleID = rs.getString("schedule_id");
+                if (rs.next()) {
+                    String scheduleID = rs.getString("schedule_id");
 
-                        //                MySQL.executeIUD("DELETE FROM `student_attendance` WHERE `schedule_id`='" + scheduleID + "'");
-                        MySQL.executeIUD("DELETE FROM `schedule` WHERE `schedule_id`='" + scheduleID + "'");
+                    //                MySQL.executeIUD("DELETE FROM `student_attendance` WHERE `schedule_id`='" + scheduleID + "'");
+                    MySQL.executeIUD("DELETE FROM `schedule` WHERE `schedule_id`='" + scheduleID + "'");
 
-                        loadshedule();
-                        resetScheduleSubject();
-                        JOptionPane.showMessageDialog(this, "Schedule deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    loadshedule();
+                    resetScheduleSubject();
+                    JOptionPane.showMessageDialog(this, "Schedule deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 }
-        }     
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
     }//GEN-LAST:event_jButton74ActionPerformed
 
@@ -6269,103 +6284,103 @@ public class AcademicDashboard extends javax.swing.JFrame {
     }
 
     private void jButton77ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton77ActionPerformed
-       // Update material button
-    int selectedRow = jTable19.getSelectedRow();
+        // Update material button
+        int selectedRow = jTable19.getSelectedRow();
 
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a row to update!", "Selection Error", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // Retrieve input values
-    Date uploadedDate = jDateChooser3.getDate();
-    String documentName = jTextField49.getText().trim();
-    String description = jTextArea1.getText().trim();
-    String fileType = String.valueOf(jComboBox30.getSelectedItem()).trim();
-    String filePath = jTextField9.getText().trim();
-    String id = String.valueOf(jTable19.getValueAt(selectedRow, 0));
-
-    // Validate inputs
-    if (uploadedDate == null) {
-        JOptionPane.showMessageDialog(this, "Please select the upload date!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    if (documentName.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please enter the document name!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    if (description.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please enter the document description!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    if (fileType.equals("Select File Type")) {
-        JOptionPane.showMessageDialog(this, "Please select the file type!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    if (filePath.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please enter the file path!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to update this document?", "Confirm Update", JOptionPane.YES_NO_OPTION);
-    if (confirm != JOptionPane.YES_OPTION) {
-        return;
-    }
-
-    try {
-        // Format the date
-        String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(uploadedDate);
-
-        // Check for duplicate document
-        ResultSet rs = model.MySQL.executeSearch("SELECT * FROM `documents` WHERE `document_type` = '" + fileType + "' "
-                + "AND `file_name` = '" + documentName + "' AND `file_path` = '" + filePath + "' "
-                + "AND `upload_date` = '" + formattedDate + "' AND `id` != '" + id + "'");
-        if (rs.next()) {
-            JOptionPane.showMessageDialog(this, "A document with the same details already exists!", "Duplicate Found", JOptionPane.WARNING_MESSAGE);
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a row to update!", "Selection Error", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // File copying process
-        String filePathToSave = filePath;
-        if (!filePath.isEmpty()) {
-            try {
-                String resourcesPath = "src/documents";
-                String newFileName = UUID.randomUUID().toString() + "." + fileType;
-                File saveDir = new File(resourcesPath);
+        // Retrieve input values
+        Date uploadedDate = jDateChooser3.getDate();
+        String documentName = jTextField49.getText().trim();
+        String description = jTextArea1.getText().trim();
+        String fileType = String.valueOf(jComboBox30.getSelectedItem()).trim();
+        String filePath = jTextField9.getText().trim();
+        String id = String.valueOf(jTable19.getValueAt(selectedRow, 0));
 
-                if (!saveDir.exists()) {
-                    saveDir.mkdirs();
-                }
-
-                File fileToSave = new File(saveDir, newFileName);
-                Path sourcePath = new File(filePath).toPath();
-                Path destinationPath = fileToSave.toPath();
-
-                Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-                filePathToSave = fileToSave.getAbsolutePath().replace("\\", "/");
-
-            } catch (IOException ioException) {
-                JOptionPane.showMessageDialog(this, "Error saving the file: " + ioException.getMessage(), "File Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+        // Validate inputs
+        if (uploadedDate == null) {
+            JOptionPane.showMessageDialog(this, "Please select the upload date!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (documentName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter the document name!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (description.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter the document description!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (fileType.equals("Select File Type")) {
+            JOptionPane.showMessageDialog(this, "Please select the file type!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (filePath.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter the file path!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            return;
         }
 
-        // Update the document in the database
-        model.MySQL.executeIUD("UPDATE `documents` SET `file_name` = '" + documentName + "', "
-                + "`description` = '" + description + "', `document_type` = '" + fileType + "', "
-                + "`file_path` = '" + filePathToSave + "', `upload_date` = '" + formattedDate + "' WHERE `id` = '" + id + "'");
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to update this document?", "Confirm Update", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
 
-        JOptionPane.showMessageDialog(this, "Document updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        try {
+            // Format the date
+            String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(uploadedDate);
 
-        // Refresh table and reset form
-        loadMaterialLibraryTable();
-        resetMaterial();
-        jButton78.setEnabled(true);
+            // Check for duplicate document
+            ResultSet rs = model.MySQL.executeSearch("SELECT * FROM `documents` WHERE `document_type` = '" + fileType + "' "
+                    + "AND `file_name` = '" + documentName + "' AND `file_path` = '" + filePath + "' "
+                    + "AND `upload_date` = '" + formattedDate + "' AND `id` != '" + id + "'");
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(this, "A document with the same details already exists!", "Duplicate Found", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error updating the document: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-    }
+            // File copying process
+            String filePathToSave = filePath;
+            if (!filePath.isEmpty()) {
+                try {
+                    String resourcesPath = "src/documents";
+                    String newFileName = UUID.randomUUID().toString() + "." + fileType;
+                    File saveDir = new File(resourcesPath);
+
+                    if (!saveDir.exists()) {
+                        saveDir.mkdirs();
+                    }
+
+                    File fileToSave = new File(saveDir, newFileName);
+                    Path sourcePath = new File(filePath).toPath();
+                    Path destinationPath = fileToSave.toPath();
+
+                    Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+                    filePathToSave = fileToSave.getAbsolutePath().replace("\\", "/");
+
+                } catch (IOException ioException) {
+                    JOptionPane.showMessageDialog(this, "Error saving the file: " + ioException.getMessage(), "File Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            // Update the document in the database
+            model.MySQL.executeIUD("UPDATE `documents` SET `file_name` = '" + documentName + "', "
+                    + "`description` = '" + description + "', `document_type` = '" + fileType + "', "
+                    + "`file_path` = '" + filePathToSave + "', `upload_date` = '" + formattedDate + "' WHERE `id` = '" + id + "'");
+
+            JOptionPane.showMessageDialog(this, "Document updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            // Refresh table and reset form
+            loadMaterialLibraryTable();
+            resetMaterial();
+            jButton78.setEnabled(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error updating the document: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton77ActionPerformed
 
     private void jTable19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable19MouseClicked
@@ -7204,10 +7219,10 @@ public class AcademicDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField11ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        String firstName = jTextField18.getText();
-        String lastName = jTextField19.getText();
-        String email = jTextField3.getText();
-        String mobile = jTextField4.getText();
+        String firstName = jTextField3.getText();
+        String lastName = jTextField10.getText();
+        String email = jTextField15.getText();
+        String mobile = jTextField17.getText();
 
         if (firstName.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter First Name", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -7235,6 +7250,15 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        
+        AcademicUserSession.getInstance().logout();
+        this.dispose();
+        userSelection us = new userSelection();
+        us.setVisible(true);
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void filterStudentsComboBox(String searchText) {
         try {
@@ -7331,6 +7355,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton47;
     private javax.swing.JButton jButton48;
     private javax.swing.JButton jButton49;
+    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton50;
     private javax.swing.JButton jButton51;
     private javax.swing.JButton jButton52;

@@ -8,8 +8,9 @@ import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatLightOwlIJTheme;
 import javax.swing.Icon;
-
-
+import javax.swing.JOptionPane;
+import model.AcademicUserHandler;
+import model.AcademicUserSession;
 
 /**
  *
@@ -17,7 +18,8 @@ import javax.swing.Icon;
  */
 public class AcademicLogin extends javax.swing.JFrame {
 
-    
+    private static String fullname;
+
     public AcademicLogin() {
         initComponents();
         image();
@@ -66,14 +68,10 @@ public class AcademicLogin extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTextField1.setText("USERNAME:");
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 52, 101));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ACADEMIC LOGIN");
-
-        jPasswordField1.setText("jPasswordField1");
 
         jButton2.setBackground(new java.awt.Color(0, 52, 101));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -152,17 +150,33 @@ public class AcademicLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-        AcademicDashboard ACD = new AcademicDashboard();
-        ACD.setVisible(true);
+        String username = jTextField1.getText();
+        String password = String.valueOf(jPasswordField1.getPassword());
+
+        if (username.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter Username", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter Password", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            AcademicUserHandler financialUserHandler = new AcademicUserHandler();
+            if (financialUserHandler.academiclogin(username, fullname, password)) {
+                JOptionPane.showMessageDialog(this, "Welcome, '" + AcademicUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
+                AcademicDashboard ACD = new AcademicDashboard();
+                ACD.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Warning", JOptionPane.WARNING_MESSAGE);
+                jPasswordField1.setText("");
+            }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        FlatLightLaf.setup();        
+        FlatLightLaf.setup();
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -171,16 +185,17 @@ public class AcademicLogin extends javax.swing.JFrame {
             }
         });
     }
+
     public void image() {
         FlatSVGIcon icon1 = new FlatSVGIcon("resources//academic.svg", acl.getWidth(), acl.getHeight());
         acl.setIcon(icon1);
     }
-    
+
     public void image2() {
         FlatSVGIcon icon2 = new FlatSVGIcon("resources//LOGOWHITE.svg", logolabel.getWidth(), logolabel.getHeight());
         logolabel.setIcon(icon2);
     }
-        
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel acl;
