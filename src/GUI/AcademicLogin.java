@@ -175,16 +175,16 @@ public class AcademicLogin extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        FlatLightLaf.setup();
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AcademicLogin().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        FlatLightLaf.setup();
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new AcademicLogin().setVisible(true);
+//            }
+//        });
+//    }
 
     public void image() {
         FlatSVGIcon icon1 = new FlatSVGIcon("resources//academic.svg", acl.getWidth(), acl.getHeight());

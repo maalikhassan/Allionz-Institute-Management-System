@@ -7294,17 +7294,17 @@ public class AcademicDashboard extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-
-        FlatMacLightLaf.setup();
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AcademicDashboard().setVisible(true);
-
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//
+//        FlatMacLightLaf.setup();
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new AcademicDashboard().setVisible(true);
+//
+//            }
+//        });
+//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Dashboardconstantpanel;
     private javax.swing.JButton browseButton;
