@@ -262,6 +262,7 @@ public class NewDashboard extends javax.swing.JFrame {
         menu5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jButton32 = new javax.swing.JButton();
         Dashboardconstantpanel = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -610,6 +611,17 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jButton32.setBackground(new java.awt.Color(0, 102, 255));
+        jButton32.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton32.setForeground(new java.awt.Color(255, 255, 255));
+        jButton32.setText("Log Out");
+        jButton32.setToolTipText("");
+        jButton32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton32ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout menupanelLayout = new javax.swing.GroupLayout(menupanel);
         menupanel.setLayout(menupanelLayout);
         menupanelLayout.setHorizontalGroup(
@@ -622,6 +634,10 @@ public class NewDashboard extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menupanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(menupanelLayout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(jButton32)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         menupanelLayout.setVerticalGroup(
@@ -639,7 +655,9 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addComponent(menu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(menu5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addComponent(jButton32)
+                .addGap(20, 20, 20))
         );
 
         Dashboardconstantpanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -2938,6 +2956,15 @@ public class NewDashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton29ActionPerformed
 
+    private void jButton32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton32ActionPerformed
+        
+        AdminUserSession.getInstance().logout();
+        this.dispose();
+        userSelection us = new userSelection();
+        us.setVisible(true);
+        
+    }//GEN-LAST:event_jButton32ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2984,6 +3011,7 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton30;
     private javax.swing.JButton jButton31;
+    private javax.swing.JButton jButton32;
     private javax.swing.JButton jButton34;
     private javax.swing.JButton jButton35;
     private javax.swing.JButton jButton36;
