@@ -117,16 +117,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel27.setText(FinancialUserSession.getInstance().getName());
 
         //EPF and ETF presantages
-        jFormattedTextField6.setText("4");
-        jFormattedTextField6.setEditable(false);
-        jFormattedTextField7.setText("4");
-        jFormattedTextField7.setEditable(false);
+        jLabel103.setText("4");
+        jLabel75.setText("4");
 
         //None Editable/Visible Fields
         jFormattedTextField4.setEditable(false);
-        jFormattedTextField5.setEditable(false);
-        jFormattedTextField6.setEditable(false);
-        jFormattedTextField7.setEditable(false);
         financialoverviewpanel.setVisible(true);
         salarymanagementpanel.setVisible(false);
         billspanel.setVisible(false);
@@ -1132,7 +1127,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jButton22 = new javax.swing.JButton();
         jButton23 = new javax.swing.JButton();
         jComboBox14 = new javax.swing.JComboBox<>();
-        jLabel75 = new javax.swing.JLabel();
         jButton18 = new javax.swing.JButton();
         jPanel28 = new javax.swing.JPanel();
         jTabbedPane3 = new javax.swing.JTabbedPane();
@@ -1167,13 +1161,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel39 = new javax.swing.JLabel();
         jFormattedTextField4 = new javax.swing.JFormattedTextField();
         jFormattedTextField3 = new javax.swing.JFormattedTextField();
-        jFormattedTextField5 = new javax.swing.JFormattedTextField();
         jLabel61 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
         jLabel60 = new javax.swing.JLabel();
         jLabel62 = new javax.swing.JLabel();
-        jFormattedTextField6 = new javax.swing.JFormattedTextField();
-        jFormattedTextField7 = new javax.swing.JFormattedTextField();
         jLabel72 = new javax.swing.JLabel();
         jLabel71 = new javax.swing.JLabel();
         jLabel77 = new javax.swing.JLabel();
@@ -1191,6 +1182,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel80 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
         jLabel83 = new javax.swing.JLabel();
+        jLabel75 = new javax.swing.JLabel();
+        jLabel103 = new javax.swing.JLabel();
+        jLabel104 = new javax.swing.JLabel();
         financialreportpanel = new javax.swing.JPanel();
         jLabel100 = new javax.swing.JLabel();
         jTabbedPane5 = new javax.swing.JTabbedPane();
@@ -2634,8 +2628,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jComboBox14.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel75.setText(" ");
-
         jButton18.setBackground(new java.awt.Color(0, 51, 101));
         jButton18.setForeground(new java.awt.Color(255, 255, 255));
         jButton18.setText("Print");
@@ -2656,7 +2648,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel74, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE))
                 .addGap(37, 37, 37)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel75, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox14, 0, 175, Short.MAX_VALUE)
                     .addComponent(jFormattedTextField9)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
@@ -2694,9 +2685,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addComponent(jButton22, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                             .addComponent(jButton23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel75))
+                        .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane20, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -3031,8 +3020,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
-        jFormattedTextField5.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
-
         jLabel61.setText("Search Pay Sheet Details");
 
         jTextField10.addActionListener(new java.awt.event.ActionListener() {
@@ -3049,12 +3036,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel60.setText("EPF(%)");
 
         jLabel62.setText("ETF(%)");
-
-        jFormattedTextField6.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0%"))));
-        jFormattedTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        jFormattedTextField7.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0%"))));
-        jFormattedTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel72.setText("Print all paysheets details -->");
 
@@ -3109,6 +3090,14 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jLabel83.setText("Search Employee");
 
+        jLabel75.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel75.setText(" ");
+
+        jLabel103.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel103.setText(" ");
+
+        jLabel104.setText(" ");
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -3121,41 +3110,34 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addComponent(jLabel77, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel15))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(jLabel71, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(4, 4, 4))
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 720, Short.MAX_VALUE))))
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel71, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 720, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel82, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel60, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-                                        .addComponent(jLabel81, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel62, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jLabel16)
-                                    .addComponent(jLabel78, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(9, 9, 9)
-                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jComboBox16, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                                    .addComponent(jFormattedTextField7, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jFormattedTextField6, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel80, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel79, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jFormattedTextField3, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox17, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel82, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel60, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                                .addComponent(jLabel81, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel62, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel78, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(9, 9, 9)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jComboBox16, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel80, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel79, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jFormattedTextField3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox17, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel75, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel103, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel104, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(33, 33, 33)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane18)
@@ -3181,19 +3163,20 @@ public class FinancialDashboard extends javax.swing.JFrame {
                                                 .addComponent(jLabel72)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 132, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(0, 1, Short.MAX_VALUE)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel80, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel83)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel82))
-                .addGap(9, 9, 9)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel83)
+                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel82))
+                    .addComponent(jLabel80, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3215,18 +3198,16 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel60)
-                    .addComponent(jFormattedTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel61)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel75))
+                .addGap(12, 12, 12)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel62))
-                            .addComponent(jFormattedTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel62)
+                            .addComponent(jLabel103))
+                        .addGap(15, 15, 15)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel14))
@@ -3245,9 +3226,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     .addComponent(jButton16)
                     .addComponent(jLabel72)
                     .addComponent(jButton17)
-                    .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel39))
-                .addContainerGap(8, Short.MAX_VALUE))
+                    .addComponent(jLabel39)
+                    .addComponent(jLabel104))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Pay Sheets", jPanel10);
@@ -4333,7 +4314,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
         //Remove salary details
         try {
-            String Id = jLabel75.getText();
+            String Id = jLabel85.getText();
             String Salary = jFormattedTextField9.getText();
             String EmployeeId = String.valueOf(jComboBox14.getSelectedIndex());
 
@@ -4366,6 +4347,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         //Add base salary
         try {
+
             String BaseSalary = String.valueOf(jFormattedTextField9.getText());
             String Employeetype = String.valueOf(jComboBox14.getSelectedItem());
 
@@ -4373,8 +4355,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Please Enter Base Salary", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (Employeetype.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Select Employee Type", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else if (BaseSalary.matches("/^(0|[1-9]\\d*)$/")) {
+                JOptionPane.showMessageDialog(this, "Please Enter Valid Base Salary", "Warning", JOptionPane.WARNING_MESSAGE);
             } else {
-                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `salary_details` WHERE `base_salary`='" + BaseSalary + "'");
+                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `salary_details` WHERE `employee_type_id`='" + LoadEmployeeType.get(Employeetype) + "'");
                 if (resultSet.next()) {
                     JOptionPane.showMessageDialog(this, "Salary Details Already Exists", "Warning", JOptionPane.WARNING_MESSAGE);
                 } else {
@@ -4400,7 +4384,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         //update basesalary
 
         try {
-            String Id = jLabel75.getText();
+            String Id = jLabel85.getText();
             String Salary = jFormattedTextField9.getText();
             String EmployeeType = String.valueOf(jComboBox14.getSelectedItem());
 
@@ -4426,8 +4410,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private void jTable19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable19MouseClicked
         int row = jTable19.getSelectedRow();
         String Id = String.valueOf(jTable19.getValueAt(row, 0));
-        jLabel75.setText(Id);
-        jLabel75.setVisible(false);
+        jLabel85.setText(Id);
+        jLabel85.setVisible(false);
 
         String CompanyName = String.valueOf(jTable19.getValueAt(row, 1));
         jFormattedTextField9.setText(CompanyName);
@@ -4472,8 +4456,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 String Month = String.valueOf(jComboBox16.getSelectedItem());
                 String Status = String.valueOf(jComboBox17.getSelectedItem());
 
-                String EPF = jFormattedTextField6.getText().trim();
-                String ETF = jFormattedTextField7.getText().trim();
+                String EPF = jLabel75.getText().trim();
+                String ETF = jLabel103.getText().trim();
 
                 // Validate Month selection
                 if (Month == null || Month.equals("Select Month")) {
@@ -4499,7 +4483,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     salaryCalculation.setAllowance(allowance);
 
                     double totalSalary = salaryCalculation.calculateTotal();
-                    jFormattedTextField5.setText(String.valueOf(totalSalary));
+                    jLabel104.setText(String.valueOf(totalSalary));
 
                     double epfValue = Double.parseDouble(EPF);
                     double etfValue = Double.parseDouble(ETF);
@@ -4521,46 +4505,51 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     MySQL.executeIUD("INSERT INTO `salary`(`employee_user_id`,`salary_details_id`,`net_amount`,`payment_date`,`month_id`,`payment_status_id`,`epf_etf_balance`) "
                             + "VALUES('" + employee_user_id + "','" + SalaryDetailsId + "','" + totalSalary + "','" + date + "','" + LoadMonthMap.get(Month) + "','" + LoadStatusmap.get(Status) + "','" + saving + "')");
 
-                    //Print report
-                    long invoiceid1 = System.currentTimeMillis();
-                    jLabel85.setText(String.valueOf(invoiceid1));
-                    String InvoiceId2 = jLabel85.getText();
-                    String FinancialOfficer = jLabel27.getText();
-                    String EmployeeName = jLabel79.getText();
-                    String Department = jLabel71.getText();
-                    String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-                    String UserID = jLabel80.getText();
-                    String PaidMonth = String.valueOf(jComboBox16.getSelectedItem());
-                    String BaseSalary = jFormattedTextField4.getText();
+                    int showConfirm = JOptionPane.showConfirmDialog(this, "Do you want print paysheet now?",
+                            "Print paysheet", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                    if (showConfirm == JOptionPane.YES_OPTION) {
+                        //Print report
+                        long invoiceid1 = System.currentTimeMillis();
+                        jLabel85.setText(String.valueOf(invoiceid1));
+                        String InvoiceId2 = jLabel85.getText();
+                        String FinancialOfficer = jLabel27.getText();
+                        String EmployeeName = jLabel79.getText();
+                        String Department = jLabel71.getText();
+                        String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                        String UserID = jLabel80.getText();
+                        String PaidMonth = String.valueOf(jComboBox16.getSelectedItem());
+                        String BaseSalary = jFormattedTextField4.getText();
 
-                    jLabel86.setText(String.valueOf(saving));
-                    String EPF_ETFSavings = jLabel86.getText();
+                        jLabel86.setText(String.valueOf(saving));
+                        String EPF_ETFSavings = jLabel86.getText();
 
-                    String NetTotal = jFormattedTextField5.getText();
-                    String StatusOfPayment = String.valueOf(jComboBox17.getSelectedItem());
-                    // Load report file
+                        String NetTotal = jLabel104.getText();
+                        String StatusOfPayment = String.valueOf(jComboBox17.getSelectedItem());
+                        // Load report file
 
-                    InputStream path = this.getClass().getResourceAsStream("/reports/paysheet_1.jasper");
+                        InputStream path = this.getClass().getResourceAsStream("/reports/paysheet_1.jasper");
 
-                    // Parameters for the report
-                    HashMap<String, Object> params = new HashMap<>();
-                    params.put("Parameter1", InvoiceId2);
-                    params.put("Parameter2", FinancialOfficer);
-                    params.put("Parameter3", dateTime);
-                    params.put("Parameter4", UserID);
-                    params.put("Parameter5", EmployeeName);
-                    params.put("Parameter6", Department);
-                    params.put("Parameter7", dateTime);
-                    params.put("Parameter8", PaidMonth);
-                    params.put("Parameter9", BaseSalary);
-                    params.put("Parameter10", EPF_ETFSavings);
-                    params.put("Parameter11", NetTotal);
-                    params.put("Parameter12", StatusOfPayment);
+                        // Parameters for the report
+                        HashMap<String, Object> params = new HashMap<>();
+                        params.put("Parameter1", InvoiceId2);
+                        params.put("Parameter2", FinancialOfficer);
+                        params.put("Parameter3", dateTime);
+                        params.put("Parameter4", UserID);
+                        params.put("Parameter5", EmployeeName);
+                        params.put("Parameter6", Department);
+                        params.put("Parameter7", dateTime);
+                        params.put("Parameter8", PaidMonth);
+                        params.put("Parameter9", BaseSalary);
+                        params.put("Parameter10", EPF_ETFSavings);
+                        params.put("Parameter11", NetTotal);
+                        params.put("Parameter12", StatusOfPayment);
 
-                    JasperPrint report = JasperFillManager.fillReport(path, params, new JREmptyDataSource());
+                        JasperPrint report = JasperFillManager.fillReport(path, params, new JREmptyDataSource());
 
-                    JasperPrintManager.printReport(report, false);
-
+                        JasperPrintManager.printReport(report, false);
+                    }else{
+                    JOptionPane.showMessageDialog(this, "paysheet details updated", "Success ", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
                 Loadpaysheet();
                 reset();
@@ -5397,15 +5386,14 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;
     private javax.swing.JFormattedTextField jFormattedTextField4;
-    private javax.swing.JFormattedTextField jFormattedTextField5;
-    private javax.swing.JFormattedTextField jFormattedTextField6;
-    private javax.swing.JFormattedTextField jFormattedTextField7;
     private javax.swing.JFormattedTextField jFormattedTextField9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel100;
     private javax.swing.JLabel jLabel101;
     private javax.swing.JLabel jLabel102;
+    private javax.swing.JLabel jLabel103;
+    private javax.swing.JLabel jLabel104;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -5614,7 +5602,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel71.setText("");
         jFormattedTextField4.setText("");
         jFormattedTextField3.setText("");
-        jFormattedTextField5.setText("");
+        jLabel104.setText("");
         jLabel80.setText("");
         jDateChooser1.setDate(null);
         jComboBox16.setSelectedIndex(0);
