@@ -1,0 +1,115 @@
+<!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
+<jasperReport name="ClassShedule" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ddd56a03-e304-4396-9a18-877681e621c0">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="Parameter1" class="java.lang.String"/>
+	<query language="sql"><![CDATA[]]></query>
+	<field name="COLUMN_0" class="java.lang.String"/>
+	<field name="COLUMN_1" class="java.lang.String"/>
+	<field name="COLUMN_2" class="java.lang.String"/>
+	<field name="COLUMN_3" class="java.lang.String"/>
+	<field name="COLUMN_4" class="java.lang.String"/>
+	<field name="COLUMN_5" class="java.lang.String"/>
+	<field name="COLUMN_6" class="java.lang.String"/>
+	<background splitType="Stretch"/>
+	<title height="119" splitType="Stretch">
+		<element kind="staticText" uuid="b2b943f1-ca1d-4568-8244-b43d7bd61dc1" x="140" y="10" width="250" height="30" forecolor="#4321BF" fontSize="22.0" bold="true" hTextAlign="Center">
+			<text><![CDATA[NOVARA INSTITUTE]]></text>
+		</element>
+		<element kind="image" uuid="8bbcdb7b-76fd-4a9d-a9ef-e7f139733270" x="0" y="0" width="81" height="80">
+			<expression><![CDATA["C:/Users/Anuradha/Documents/NetBeansProjects/Allionz-IMS/src/resources/Novara logo.jpeg"]]></expression>
+		</element>
+		<element kind="staticText" uuid="303fe237-a218-47aa-8ded-3dbbe502eb0d" x="140" y="50" width="250" height="22" fontSize="13.0" bold="true" hTextAlign="Center">
+			<text><![CDATA[Contact: 072 573 3695]]></text>
+		</element>
+		<element kind="staticText" uuid="7ea82c22-356c-44de-98dc-949432ea8d9a" x="140" y="80" width="250" height="22" fontSize="13.0" bold="true" hTextAlign="Center">
+			<text><![CDATA[161/E, Thalgahawila, Horana.]]></text>
+		</element>
+		<element kind="textField" uuid="7ce5934c-2f08-4ec4-9603-12e02b13bc41" x="483" y="10" width="77" height="30">
+			<expression><![CDATA[$P{Parameter1}]]></expression>
+		</element>
+		<element kind="staticText" uuid="776e1cfb-a037-49a3-a14a-89a85bf45cb6" x="420" y="10" width="54" height="30" fontSize="14.0" bold="true">
+			<text><![CDATA[Date]]></text>
+		</element>
+	</title>
+	<pageHeader height="50">
+		<element kind="staticText" uuid="6af20b21-6e9e-4db2-862b-1288ccf5eb79" mode="Opaque" x="0" y="10" width="560" height="30" forecolor="#FFFFFF" backcolor="#4321BF" fontSize="16.0" bold="true" hTextAlign="Center">
+			<text><![CDATA[Class Schedule Report]]></text>
+		</element>
+	</pageHeader>
+	<columnHeader height="42" splitType="Stretch">
+		<element kind="staticText" uuid="b2dd7783-290a-43ff-897c-1e05505886b5" x="0" y="0" width="70" height="30" fontSize="12.0" bold="true">
+			<text><![CDATA[Schedule Id]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a15a63f5-c497-4a3a-a4b1-bb38dcf2c7a8"/>
+		</element>
+		<element kind="staticText" uuid="32c3f696-9e6a-44ef-b44c-ee46e6b543a9" x="81" y="0" width="69" height="30" fontSize="12.0" bold="true">
+			<text><![CDATA[ Date]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="73c07b17-41f1-4878-8128-2d84168bb3ad"/>
+		</element>
+		<element kind="staticText" uuid="f4d3d58b-60b2-4a99-8d37-0681fa8b8f1e" x="160" y="0" width="70" height="30" fontSize="12.0" bold="true">
+			<text><![CDATA[Batch]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e57a5dbf-4afe-409f-95d5-d51a946a883f"/>
+		</element>
+		<element kind="staticText" uuid="124f8916-df73-4f0d-8557-9447ce9ff82d" x="239" y="0" width="71" height="30" fontSize="12.0" bold="true">
+			<text><![CDATA[Subject]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="827c235f-ba1c-4d3e-a73b-f3ffaed8f217"/>
+		</element>
+		<element kind="staticText" uuid="0d839b3f-5537-499c-80d4-7e872d40caeb" x="318" y="0" width="82" height="30" fontSize="12.0" bold="true">
+			<text><![CDATA[Teacher]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cc0d53f9-23e4-496c-b840-6b2e1d608938"/>
+		</element>
+		<element kind="staticText" uuid="38ebce7a-0b5d-4c9c-88ba-59cedca4d339" x="410" y="0" width="73" height="30" fontSize="12.0" bold="true">
+			<text><![CDATA[Start Time]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8c311bdc-d9e8-41a3-80f2-ac66b8fd175c"/>
+		</element>
+		<element kind="staticText" uuid="b57b57a4-446e-4c36-9675-14ccc01eae24" x="490" y="0" width="70" height="30" fontSize="12.0" bold="true">
+			<text><![CDATA[End Time]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="88fee227-5e08-4628-8c3e-79d89768d58a"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="46" splitType="Stretch">
+			<element kind="textField" uuid="31f3ed5d-97b3-4e56-9cb6-4ff6c8060693" x="0" y="0" width="70" height="30">
+				<expression><![CDATA[$F{COLUMN_0}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a15a63f5-c497-4a3a-a4b1-bb38dcf2c7a8"/>
+			</element>
+			<element kind="textField" uuid="34100dcd-89ca-4691-9cf4-2afb1f2aaf3b" x="81" y="0" width="69" height="30">
+				<expression><![CDATA[$F{COLUMN_1}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="73c07b17-41f1-4878-8128-2d84168bb3ad"/>
+			</element>
+			<element kind="textField" uuid="0ff3f50f-b747-4d0e-bd16-53ada4cdc559" x="160" y="0" width="70" height="30">
+				<expression><![CDATA[$F{COLUMN_2}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e57a5dbf-4afe-409f-95d5-d51a946a883f"/>
+			</element>
+			<element kind="textField" uuid="94a176b1-8af9-4971-b9a4-e03abc423ee6" x="239" y="0" width="71" height="30">
+				<expression><![CDATA[$F{COLUMN_3}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="827c235f-ba1c-4d3e-a73b-f3ffaed8f217"/>
+			</element>
+			<element kind="textField" uuid="8fa3fa67-4b82-45fb-bcf4-3cd2c034b559" x="318" y="0" width="82" height="30">
+				<expression><![CDATA[$F{COLUMN_4}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cc0d53f9-23e4-496c-b840-6b2e1d608938"/>
+			</element>
+			<element kind="textField" uuid="392adfd7-3703-4160-80b6-d2be36b791a5" x="410" y="0" width="73" height="30">
+				<expression><![CDATA[$F{COLUMN_5}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8c311bdc-d9e8-41a3-80f2-ac66b8fd175c"/>
+			</element>
+			<element kind="textField" uuid="eeaf2b0e-e4f7-4bad-aca0-c1dbee5b63a0" x="490" y="0" width="70" height="30">
+				<expression><![CDATA[$F{COLUMN_6}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="88fee227-5e08-4628-8c3e-79d89768d58a"/>
+			</element>
+		</band>
+	</detail>
+	<pageFooter height="55">
+		<element kind="staticText" uuid="066b0864-0eba-412e-9edf-d381efe2e07c" x="130" y="20" width="260" height="25" forecolor="#4321BF" fontSize="14.0" bold="true" hTextAlign="Center">
+			<text><![CDATA[*******Academic Department*******]]></text>
+		</element>
+	</pageFooter>
+</jasperReport>
