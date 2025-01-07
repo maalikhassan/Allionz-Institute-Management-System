@@ -47,13 +47,14 @@ public class Manage_Vendor extends javax.swing.JFrame {
         loadVendorTable();
         //Load Bill types
         loadBillTypes();
-        
+
         //Load Employee Username
         jLabel8.setText(Financelogin.getEmployeeuserName());
-        
+
         //None Visible Fields
         jLabel10.setVisible(false);
         jLabel7.setVisible(false);
+//        jButton2.setEnabled(false);
     }
 
     private void loadVendorTable() {
@@ -132,6 +133,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
 
         jLabel9.setText("jLabel9");
 
@@ -202,7 +204,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
         jLabel6.setText("Bill Type");
 
         jButton1.setBackground(new java.awt.Color(0, 52, 101));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Add Company");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -212,7 +214,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
         });
 
         jButton2.setBackground(new java.awt.Color(0, 52, 101));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Update");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -222,7 +224,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
         });
 
         jButton3.setBackground(new java.awt.Color(0, 52, 101));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Remove");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -232,7 +234,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
         });
 
         jButton4.setBackground(new java.awt.Color(0, 52, 101));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Print");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -256,6 +258,16 @@ public class Manage_Vendor extends javax.swing.JFrame {
 
         jLabel10.setText(" ");
 
+        jButton5.setBackground(new java.awt.Color(0, 52, 101));
+        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setText("Reset");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -273,25 +285,34 @@ public class Manage_Vendor extends javax.swing.JFrame {
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(272, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField3)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 73, Short.MAX_VALUE))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
+                                    .addComponent(jTextField1)
+                                    .addComponent(jTextField2)
+                                    .addComponent(jTextField3)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                                                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(13, 13, 13))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14))))
         );
@@ -304,31 +325,33 @@ public class Manage_Vendor extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel8)
                     .addComponent(jLabel10))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3)
-                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
@@ -367,12 +390,12 @@ public class Manage_Vendor extends javax.swing.JFrame {
             String CompanyName = jTextField1.getText();
             String Companyemail = jTextField2.getText();
             String mobile = jTextField3.getText();
-            String BillType = String.valueOf(jComboBox1.getSelectedIndex());
+            String BillType = String.valueOf(jComboBox1.getSelectedItem());
 
             if (CompanyName.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Company Name", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (Companyemail.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please Enter Company Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please Enter Company Email", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (!Companyemail.matches("^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")) {
                 JOptionPane.showMessageDialog(this, "Please Enter Valid Email Address", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (mobile.isEmpty()) {
@@ -392,7 +415,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
                     if (showConfirm == JOptionPane.YES_OPTION) {
 
                         MySQL.executeIUD("INSERT INTO `vendor`(`bill_type_id`,`vendor_name`,`mobile`,`email`)"
-                                + "VALUES('" + BillType + "','" + CompanyName + "','" + mobile + "','" + Companyemail + "')");
+                                + "VALUES('" + LoadBillTypes.get(BillType) + "','" + CompanyName + "','" + mobile + "','" + Companyemail + "')");
                         loadVendorTable();
                         reset();
                     }
@@ -422,13 +445,18 @@ public class Manage_Vendor extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Update Vendor
+        int selectedRow = jTable1.getSelectedRow();
         try {
             String CompanyName = jTextField1.getText();
             String Email = jTextField2.getText();
             String Mobile = jTextField3.getText();
             String vendorId = jLabel7.getText();
-            String BillType = String.valueOf(jComboBox1.getSelectedIndex());
-
+            String BillType = String.valueOf(jComboBox1.getSelectedItem());
+            if (selectedRow == -1) {
+                 
+                JOptionPane.showMessageDialog(this,"Please select a row to update.","No Row Selected",JOptionPane.WARNING_MESSAGE);  
+            }else
+                
             if (CompanyName.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Company Name To Update", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (Email.isEmpty()) {
@@ -437,8 +465,8 @@ public class Manage_Vendor extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Please Enter Valid Email Address", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (Mobile.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Mobile Number To Update", "Warning", JOptionPane.WARNING_MESSAGE);
-//            } else if (!Mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
-//                JOptionPane.showMessageDialog(this, "Please Enter Valid Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else if (!Mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
+                JOptionPane.showMessageDialog(this, "Please Enter Valid Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (BillType.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Select Bill Type", "Warning", JOptionPane.WARNING_MESSAGE);
             } else {
@@ -452,7 +480,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
 
                     if (showConfirm == JOptionPane.YES_OPTION) {
 
-                        MySQL.executeIUD("UPDATE `vendor` SET `bill_type_id`='" + BillType + "' "
+                        MySQL.executeIUD("UPDATE `vendor` SET `bill_type_id`='" + LoadBillTypes.get(BillType) + "' "
                                 + ",`vendor_name`='" + CompanyName + "', `mobile`='" + Mobile + "',`email`='" + Email + "' WHERE `id`='" + vendorId + "'");
                         reset();
                         loadVendorTable();
@@ -467,6 +495,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         //Remove Company
         try {
+            String Id = jLabel7.getText();
             String CompanyName = jTextField1.getText();
             String Email = jTextField2.getText();
             String Mobile = jTextField2.getText();
@@ -490,7 +519,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
 
                     if (showConfirm == JOptionPane.YES_OPTION) {
 
-                        MySQL.executeIUD("Delete FROM `vendor`  WHERE  `vendor_name` = '" + CompanyName + "' ");
+                        MySQL.executeIUD("Delete FROM `vendor`  WHERE  `id` = '" + Id + "' ");
                         JOptionPane.showMessageDialog(this, "Company Successfully Removed", "Success", JOptionPane.INFORMATION_MESSAGE);
                         reset();
                         loadVendorTable();
@@ -498,19 +527,17 @@ public class Manage_Vendor extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "This vendor cannot be deleted as it is referenced in other records (e.g., bill payments).", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-         try {
+        try {
             long invoiceid1 = System.currentTimeMillis();
             jLabel10.setText(String.valueOf(invoiceid1));
             String invoiceid2 = jLabel10.getText();
             String EmployeeUserName = jLabel8.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
-           
 
             // Load report file
             InputStream path = this.getClass().getResourceAsStream("/reports/vendor_details.jasper");
@@ -539,6 +566,10 @@ public class Manage_Vendor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        reset();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -559,6 +590,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.MySQL;
 //import sun.awt.windows.WToolkit;
@@ -26,6 +28,10 @@ public class BillType_Manage extends javax.swing.JFrame {
     public BillType_Manage() {
         initComponents();
         loadBillTypes();
+        
+        DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+        render.setHorizontalAlignment(SwingConstants.CENTER);
+        jTable1.setDefaultRenderer(Object.class, render);
     }
 
     private void loadBillTypes() {
