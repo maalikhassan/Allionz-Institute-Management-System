@@ -58,6 +58,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private static HashMap<String, String> LoadMonthMap = new HashMap<>();
     private static HashMap<String, String> LoadStatusmap = new HashMap<>();
     private static HashMap<String, String> MonthMap = new HashMap<>();
+
     private void image() {
 
         FlatSVGIcon icon1 = new FlatSVGIcon("resources//LOGOWHITE.svg", jLabel6.getWidth(), jLabel6.getHeight());
@@ -158,7 +159,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         LoadVendors();
         LoadPaymentStatus();
         loadBillPayments();
-        
+
         //Financial Reports
         LoadMonth();
         loadIncomeTable();
@@ -803,9 +804,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     //Financial report month load
-     private void LoadMonth() {
+    private void LoadMonth() {
         try {
             ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `month`");
 
@@ -827,10 +828,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-     
-      //Income table in finnacial report
+
+    //Income table in finnacial report
     private void loadIncomeTable() {
-        try {       
+        try {
 
             DefaultTableModel model2 = (DefaultTableModel) jTable11.getModel();
             model2.setRowCount(0);
@@ -854,10 +855,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-     getSum();
+        getSum();
     }
-    
-     // LoadFessDetails in financial report 
+
+    // LoadFessDetails in financial report 
     private void LoadFessDetails() {
         try {
             ResultSet resultSet = MySQL.executeSearch(" SELECT * FROM `feepayments` "
@@ -886,7 +887,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     //Load dues table in financila report
     private void LoadDuesTable() {
         try {
@@ -909,7 +910,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     //Load expenses table in financila report
     private void LoadExpensesTable() {
         try {
@@ -932,7 +933,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     //Load salary in financial report  
     private void loadSalaryDetails() {
         try {
@@ -951,7 +952,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 vector.add(resultSet.getString("id"));
                 vector.add(resultSet.getString("employee_user_id"));
                 vector.add(resultSet.getString("salary_details.base_salary"));
-                vector.add(resultSet.getString("net_amount"));         
+                vector.add(resultSet.getString("net_amount"));
                 vector.add(resultSet.getString("month.month_name"));
                 vector.add(resultSet.getString("payment_date"));
                 vector.add(resultSet.getString("payment_status.status"));
@@ -961,15 +962,15 @@ public class FinancialDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } 
-     
-       public void getSum() {
-            int sum = 0;
-            for (int i = 0; i < jTable11.getRowCount(); i++) {
-                sum += Double.parseDouble(jTable11.getValueAt(i, 3).toString());
-            }
-            jLabel102.setText(Integer.toString(sum));
+    }
+
+    public void getSum() {
+        int sum = 0;
+        for (int i = 0; i < jTable11.getRowCount(); i++) {
+            sum += Double.parseDouble(jTable11.getValueAt(i, 3).toString());
         }
+        jLabel102.setText(Integer.toString(sum));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -4131,11 +4132,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String BillType = String.valueOf(jComboBox7.getSelectedItem());
             String Vendor = String.valueOf(jComboBox11.getSelectedIndex());
             String Description = String.valueOf(jTextArea1.getText());
-            String Amount = String.valueOf(jFormattedTextField1.getText());
-//            Date date = jDateChooser1.getDate();
+            String Amount = String.valueOf(jFormattedTextField2.getText());
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String date = dateFormat.format(new Date());
-            String Status = String.valueOf(jComboBox12.getSelectedIndex());
+            String Status = String.valueOf(jComboBox12.getSelectedItem());
 
             if (BillType.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Bill Type", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -4148,20 +4148,20 @@ public class FinancialDashboard extends javax.swing.JFrame {
             } else {
                 ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_type` WHERE `bill_type`='" + BillId + "'");
                 if (resultSet.next()) {
-                    JOptionPane.showMessageDialog(this, "Bill Type Already Exists", "Warning", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Bill Already Exists", "Warning", JOptionPane.WARNING_MESSAGE);
                 } else {
-//                    int showConfirm = JOptionPane.showConfirmDialog(this, "Do you want to add new bill",
-//                            "Add new Bill Payment", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-//
-//                    if (showConfirm == JOptionPane.YES_OPTION) {
-                    MySQL.executeIUD("INSERT INTO `bill_payments`(`bill_type_id`, `vendor_id`, `description`, `amount`, `payment_date`, `payment_status_id`) "
-                            + "VALUES ('" + LoadBillType.get(BillType) + "', '" + Vendor + "', '" + Description + "', " + Amount + ", '" + date + "', '" + Status + "')");
+                    int showConfirm = JOptionPane.showConfirmDialog(this, "Do you want to add new bill",
+                            "Add new Bill Payment", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
-                    loadBillPayments();
-                    reset();
-                    JOptionPane.showMessageDialog(this, "Bill Type Added Succesfully", "Warning", JOptionPane.WARNING_MESSAGE);
+                    if (showConfirm == JOptionPane.YES_OPTION) {
+                        MySQL.executeIUD("INSERT INTO `bill_payments`(`bill_type_id`, `vendor_id`, `description`, `amount`, `payment_date`, `payment_status_id`) "
+                                + "VALUES ('" + LoadBillType.get(BillType) + "', '" + Vendor + "', '" + Description + "', " + Amount + ", '" + date + "', '" + Status + "')");
+
+                        loadBillPayments();
+                        reset();
+                        JOptionPane.showMessageDialog(this, "Bill Type Added Succesfully", "Warning", JOptionPane.WARNING_MESSAGE);
+                    }
                 }
-//                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -4173,10 +4173,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
         try {
             String BillId = String.valueOf(jLabel13.getText());
             String BillType = String.valueOf(jComboBox7.getSelectedItem());
-            String Vendor = String.valueOf(jComboBox11.getSelectedIndex());
+            String Vendor = String.valueOf(jComboBox11.getSelectedItem());
             String Description = String.valueOf(jTextArea1.getText());
-            String Amount = String.valueOf(jFormattedTextField1.getText());
-            String Status = String.valueOf(jComboBox12.getSelectedIndex());
+            String Amount = String.valueOf(jFormattedTextField2.getText());
+            String Status = String.valueOf(jComboBox12.getSelectedItem());
 
             if (BillType.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Bill Type", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -4191,11 +4191,16 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 if (resultSet.next()) {
                     JOptionPane.showMessageDialog(this, "Bill Type Already Exists", "Warning", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    MySQL.executeIUD("UPDATE `bill_payments` SET `bill_type_id`='" + LoadBillType.get(BillType) + "',`vendor_id`='" + Vendor + "',`description`='" + Description + "',"
-                            + "`amount`='" + Amount + "',`payment_status_id`='" + Status + "' "
-                            + "WHERE `bill_id`='" + BillId + "'");
-                    reset();
-                    loadBillPayments();
+                    int showConfirm = JOptionPane.showConfirmDialog(this, "Do you want to update this bill",
+                            "Add new Bill Payment", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+                    if (showConfirm == JOptionPane.YES_OPTION) {
+                        MySQL.executeIUD("UPDATE `bill_payments` SET `bill_type_id`='" + LoadBillType.get(BillType) + "',`vendor_id`='" + LoadVendorMap.get(Vendor) + "',`description`='" + Description + "',"
+                                + "`amount`='" + Amount + "',`payment_status_id`='" + LoadStatusmap.get(Status) + "' "
+                                + "WHERE `bill_id`='" + BillId + "'");
+                        reset();
+                        loadBillPayments();
+                    }
                 }
             }
         } catch (Exception e) {
@@ -4536,7 +4541,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     // Load report file
 
                     InputStream path = this.getClass().getResourceAsStream("/reports/paysheet_1.jasper");
-                     
 
                     // Parameters for the report
                     HashMap<String, Object> params = new HashMap<>();
@@ -4897,11 +4901,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
             params.put("Parameter3", dateTime);
 
             // Data source
-             if (jTable17.getRowCount() == 0) {
-                
+            if (jTable17.getRowCount() == 0) {
+
                 JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
             }
-             
+
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable17.getModel());
 
             JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
@@ -4914,7 +4918,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-          try {
+        try {
             long invoiceid1 = System.currentTimeMillis();
             jLabel85.setText(String.valueOf(invoiceid1));
             String invoiceid2 = jLabel85.getText();
@@ -4935,7 +4939,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
             // Data source
             if (jTable19.getRowCount() == 0) {
-                
+
                 JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
             }
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable19.getModel());
@@ -4961,7 +4965,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jFormattedTextField4ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-         try {
+        try {
             long invoiceid1 = System.currentTimeMillis();
             jLabel85.setText(String.valueOf(invoiceid1));
             String invoiceid2 = jLabel85.getText();
@@ -4981,7 +4985,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             params.put("Parameter3", dateTime);
 
             // Data source
-            if (jTable5.getRowCount() == 0) {         
+            if (jTable5.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
             }
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable5.getModel());
@@ -4995,7 +4999,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-          try {
+        try {
             long invoiceid1 = System.currentTimeMillis();
             jLabel85.setText(String.valueOf(invoiceid1));
             String invoiceid2 = jLabel85.getText();
@@ -5015,7 +5019,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             params.put("Parameter3", dateTime);
 
             // Data source
-            if (jTable3.getRowCount() == 0) {         
+            if (jTable3.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
             }
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable3.getModel());
@@ -5049,7 +5053,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             params.put("Parameter3", dateTime);
 
             // Data source
-            if (jTable4.getRowCount() == 0) {         
+            if (jTable4.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
             }
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable4.getModel());
@@ -5063,7 +5067,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-      try {
+        try {
             long invoiceid1 = System.currentTimeMillis();
             jLabel85.setText(String.valueOf(invoiceid1));
             String invoiceid2 = jLabel85.getText();
@@ -5083,7 +5087,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             params.put("Parameter3", dateTime);
 
             // Data source
-            if (jTable6.getRowCount() == 0) {         
+            if (jTable6.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
             }
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable6.getModel());
@@ -5097,7 +5101,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jComboBox9ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox9ItemStateChanged
-      try {
+        try {
 
             String selectedMonthName = String.valueOf(jComboBox9.getSelectedItem());
 
@@ -5121,7 +5125,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             ResultSet resultSet = MySQL.executeSearch(query);
 
             while (resultSet.next()) {
-                
+
                 Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("bill_id"));
                 vector.add(resultSet.getString("amount"));
@@ -5132,11 +5136,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
- getSum();
+        getSum();
     }//GEN-LAST:event_jComboBox9ItemStateChanged
 
     private void jComboBox8ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox8ItemStateChanged
-      try {
+        try {
 
             String selectedMonthName = String.valueOf(jComboBox9.getSelectedItem());
 
@@ -5170,7 +5174,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
- getSum();
+        getSum();
     }//GEN-LAST:event_jComboBox8ItemStateChanged
 
     private void jComboBox10ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox10ItemStateChanged
@@ -5200,7 +5204,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             ResultSet resultSet = MySQL.executeSearch(query);
 
             while (resultSet.next()) {
-               
+
                 Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("bill_id"));
                 vector.add(resultSet.getString("amount"));
@@ -5211,7 +5215,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
- getSum();
+        getSum();
     }//GEN-LAST:event_jComboBox10ItemStateChanged
 
     private void jComboBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox4ItemStateChanged
@@ -5227,30 +5231,30 @@ public class FinancialDashboard extends javax.swing.JFrame {
             if (selectedMonthName.equals("Select")) {
 
                 query = "SELECT * FROM `salary`"
-                    + "INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id`"
-                    + "INNER JOIN `month` ON `salary`.`month_id` = `month`.`id`"
-                    + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id`"
-                    + "INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`";
+                        + "INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id`"
+                        + "INNER JOIN `month` ON `salary`.`month_id` = `month`.`id`"
+                        + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id`"
+                        + "INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`";
             } else {
 
                 String selectedMonthId = MonthMap.get(selectedMonthName);
                 query = "SELECT * FROM `salary`"
-                    + "INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id`"
-                    + "INNER JOIN `month` ON `salary`.`month_id` = `month`.`id`"
-                    + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id`"
-                    + "INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
-                    + "WHERE `month`.`id` = '" + selectedMonthId + "'";
+                        + "INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id`"
+                        + "INNER JOIN `month` ON `salary`.`month_id` = `month`.`id`"
+                        + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id`"
+                        + "INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
+                        + "WHERE `month`.`id` = '" + selectedMonthId + "'";
             }
 
             ResultSet resultSet = MySQL.executeSearch(query);
 
             while (resultSet.next()) {
-               
-               Vector<String> vector = new Vector<>();
+
+                Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("id"));
                 vector.add(resultSet.getString("employee_user_id"));
                 vector.add(resultSet.getString("salary_details.base_salary"));
-                vector.add(resultSet.getString("net_amount"));         
+                vector.add(resultSet.getString("net_amount"));
                 vector.add(resultSet.getString("month.month_name"));
                 vector.add(resultSet.getString("payment_date"));
                 vector.add(resultSet.getString("payment_status.status"));
@@ -5259,11 +5263,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
- getSum();
+        getSum();
     }//GEN-LAST:event_jComboBox4ItemStateChanged
 
     private void jComboBox6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox6ItemStateChanged
-       try {
+        try {
 
             String selectedMonthName = String.valueOf(jComboBox9.getSelectedItem());
 
@@ -5275,25 +5279,25 @@ public class FinancialDashboard extends javax.swing.JFrame {
             if (selectedMonthName.equals("Select")) {
 
                 query = "SELECT * FROM `feepayments` "
-                    + "INNER JOIN `payment_status` ON `feepayments`.`payment_status_id` = `payment_status`.`id` "
-                    + "INNER JOIN `subjects` ON `feepayments`.`subjects_subject_id` = `subjects`.`subject_id` "
-                    + "INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id` "
-                    + "INNER JOIN `stream` ON `feepayments`.`stream_stream_id` = `stream`.`stream_id`";
+                        + "INNER JOIN `payment_status` ON `feepayments`.`payment_status_id` = `payment_status`.`id` "
+                        + "INNER JOIN `subjects` ON `feepayments`.`subjects_subject_id` = `subjects`.`subject_id` "
+                        + "INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id` "
+                        + "INNER JOIN `stream` ON `feepayments`.`stream_stream_id` = `stream`.`stream_id`";
             } else {
 
                 String selectedMonthId = MonthMap.get(selectedMonthName);
                 query = "SELECT * FROM `feepayments` "
-                    + "INNER JOIN `payment_status` ON `feepayments`.`payment_status_id` = `payment_status`.`id` "
-                    + "INNER JOIN `subjects` ON `feepayments`.`subjects_subject_id` = `subjects`.`subject_id` "
-                    + "INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id` "
-                    + "INNER JOIN `stream` ON `feepayments`.`stream_stream_id` = `stream`.`stream_id`"
+                        + "INNER JOIN `payment_status` ON `feepayments`.`payment_status_id` = `payment_status`.`id` "
+                        + "INNER JOIN `subjects` ON `feepayments`.`subjects_subject_id` = `subjects`.`subject_id` "
+                        + "INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id` "
+                        + "INNER JOIN `stream` ON `feepayments`.`stream_stream_id` = `stream`.`stream_id`"
                         + "WHERE `month`.`id` = '" + selectedMonthId + "'";
             }
 
             ResultSet resultSet = MySQL.executeSearch(query);
 
             while (resultSet.next()) {
-              
+
                 Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("payment_id"));
                 vector.add(resultSet.getString("students_student_id"));
@@ -5308,7 +5312,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
- getSum();
+        getSum();
     }//GEN-LAST:event_jComboBox6ItemStateChanged
 
     /**

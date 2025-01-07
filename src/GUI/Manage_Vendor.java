@@ -54,7 +54,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
         //None Visible Fields
         jLabel10.setVisible(false);
         jLabel7.setVisible(false);
-        jButton2.setEnabled(false);
+//        jButton2.setEnabled(false);
     }
 
     private void loadVendorTable() {
@@ -456,7 +456,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
                  
                 JOptionPane.showMessageDialog(this,"Please select a row to update.","No Row Selected",JOptionPane.WARNING_MESSAGE);  
             }else
-                jButton2.setEnabled(true);
+                
             if (CompanyName.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Company Name To Update", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (Email.isEmpty()) {
