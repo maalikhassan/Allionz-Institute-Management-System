@@ -6062,25 +6062,25 @@ public class FinancialDashboard extends javax.swing.JFrame {
         
         int row1 = jTable8.getSelectedRow();
         
-        String nic = String.valueOf(jTable18.getValueAt(row1, 1));
-        jTextField2.setText(userName);
+        String nic = String.valueOf(jTable8.getValueAt(row1, 1));
+        jTextField2.setText(nic);
         
-        String status = String.valueOf(jTable18.getValueAt(row1, 2));
+        String status = String.valueOf(jTable8.getValueAt(row1, 2));
         jComboBox21.setSelectedItem(status);
                
-        String amount = String.valueOf(jTable18.getValueAt(row1, 4));
+        String amount = String.valueOf(jTable8.getValueAt(row1, 4));
         jTextField7.setText(amount);
         
-        String subject = String.valueOf(jTable18.getValueAt(row1, 5));
+        String subject = String.valueOf(jTable8.getValueAt(row1, 5));
         jComboBox25.setSelectedItem(subject);
         
-        String stream = String.valueOf(jTable18.getValueAt(row1, 6));
-        jComboBox25.setSelectedItem(stream);
+        String stream = String.valueOf(jTable8.getValueAt(row1, 6));
+        jComboBox26.setSelectedItem(stream);
         
-         String desc = String.valueOf(jTable18.getValueAt(row1, 7));
+         String desc = String.valueOf(jTable8.getValueAt(row1, 7));
         jTextArea3.setText(desc);
         
-        String month = String.valueOf(jTable18.getValueAt(row1, 6));
+        String month = String.valueOf(jTable8.getValueAt(row1, 8));
         jComboBox24.setSelectedItem(month);
         
         
@@ -6448,11 +6448,12 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
     private void clear() {
 
-        jComboBox6.setSelectedIndex(0);
-        jComboBox13.setSelectedIndex(0);
-        jComboBox14.setSelectedIndex(0);
-        jComboBox17.setSelectedIndex(0);
-        jComboBox16.setSelectedIndex(0);
+        jComboBox23.setSelectedIndex(0);
+        jComboBox22.setSelectedIndex(0);
+        jComboBox26.setSelectedIndex(0);
+        jComboBox25.setSelectedIndex(0);
+        jComboBox24.setSelectedIndex(0);
+        jComboBox21.setSelectedIndex(0);
         jComboBox15.setSelectedIndex(0);
         jTextArea3.setText("");
         jTextField7.setText("");
