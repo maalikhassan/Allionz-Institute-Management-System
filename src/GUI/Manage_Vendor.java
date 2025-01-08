@@ -538,6 +538,8 @@ public class Manage_Vendor extends javax.swing.JFrame {
             String invoiceid2 = jLabel10.getText();
             String EmployeeUserName = jLabel8.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String imagePath = getClass().getResource("/resources/LOGO.svg").toString();
+ 
 
             // Load report file
             InputStream path = this.getClass().getResourceAsStream("/reports/vendor_details.jasper");
@@ -550,6 +552,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
             params.put("Parameter1", invoiceid2);
             params.put("Parameter2", EmployeeUserName);
             params.put("Parameter3", dateTime);
+            params.put("IMAGE_PATH", imagePath);
 
             // Data source
             if (jTable1.getRowCount() == 0) {
