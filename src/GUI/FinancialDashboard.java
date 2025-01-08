@@ -20,6 +20,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -854,7 +856,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             while (resultSet.next()) {
                 Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("payment_id"));
-                vector.add(resultSet.getString("first_name")+ " " + (resultSet.getString("last_name")));
+                vector.add(resultSet.getString("first_name") + " " + (resultSet.getString("last_name")));
                 vector.add(resultSet.getString("stream_name"));
                 vector.add(resultSet.getString("subject_name"));
                 vector.add(resultSet.getString("amount_paid"));
@@ -1316,6 +1318,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel114 = new javax.swing.JLabel();
         jComboBox25 = new javax.swing.JComboBox<>();
         jComboBox26 = new javax.swing.JComboBox<>();
+        jButton36 = new javax.swing.JButton();
         jPanel19 = new javax.swing.JPanel();
         jScrollPane11 = new javax.swing.JScrollPane();
         jTable10 = new javax.swing.JTable();
@@ -2335,6 +2338,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable8MouseClicked(evt);
+            }
+        });
         jScrollPane9.setViewportView(jTable8);
 
         jTextField2.setText(" ");
@@ -2435,6 +2443,15 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
+        jButton36.setBackground(new java.awt.Color(0, 51, 102));
+        jButton36.setForeground(new java.awt.Color(255, 255, 255));
+        jButton36.setText("Update");
+        jButton36.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton36ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
@@ -2481,7 +2498,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton36, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(10, 10, 10))
         );
         jPanel16Layout.setVerticalGroup(
@@ -2525,9 +2543,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
                         .addComponent(jScrollPane24))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel16Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton34, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton36)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton34)))
                 .addGap(15, 15, 15)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -6032,6 +6052,65 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
+    private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton36ActionPerformed
+
+    private void jTable8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable8MouseClicked
+        // TODO add your handling code here:
+        
+        
+        int row1 = jTable8.getSelectedRow();
+        
+        String nic = String.valueOf(jTable18.getValueAt(row1, 1));
+        jTextField2.setText(userName);
+        
+        String status = String.valueOf(jTable18.getValueAt(row1, 2));
+        jComboBox21.setSelectedItem(status);
+               
+        String amount = String.valueOf(jTable18.getValueAt(row1, 4));
+        jTextField7.setText(amount);
+        
+        String subject = String.valueOf(jTable18.getValueAt(row1, 5));
+        jComboBox25.setSelectedItem(subject);
+        
+        String stream = String.valueOf(jTable18.getValueAt(row1, 6));
+        jComboBox25.setSelectedItem(stream);
+        
+         String desc = String.valueOf(jTable18.getValueAt(row1, 7));
+        jTextArea3.setText(desc);
+        
+        String month = String.valueOf(jTable18.getValueAt(row1, 6));
+        jComboBox24.setSelectedItem(month);
+        
+        
+        
+//        delete the rcord
+        if (evt.getClickCount() == 2) {
+
+            int row = jTable8.getSelectedRow();
+
+            String id = String.valueOf(jTable8.getValueAt(row, 0));
+
+            int confirm = JOptionPane.showConfirmDialog(null,
+                    "Are you sure you want to delete the payment entry?",
+                    "Delete Confirmation", JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+
+                try {
+                    MySQL.executeIUD("DELETE FROM feepayments WHERE payment_id = '" + id + "'");
+                    loadViewFeePayment();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                JOptionPane.showMessageDialog(null, "Deleted successfully!");
+            }
+
+        }
+    }//GEN-LAST:event_jTable8MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -6082,6 +6161,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton33;
     private javax.swing.JButton jButton34;
     private javax.swing.JButton jButton35;
+    private javax.swing.JButton jButton36;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton40;
     private javax.swing.JButton jButton41;

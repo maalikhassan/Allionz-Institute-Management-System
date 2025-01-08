@@ -1580,6 +1580,7 @@
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jButton34" alignment="0" min="-2" pref="214" max="-2" attributes="0"/>
                                                   <Component id="jButton14" alignment="0" min="-2" pref="214" max="-2" attributes="0"/>
+                                                  <Component id="jButton36" min="-2" pref="214" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -1639,9 +1640,11 @@
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                              <Component id="jButton14" min="-2" pref="50" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="jButton34" max="32767" attributes="0"/>
+                                              <Component id="jButton14" min="-2" pref="41" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="jButton36" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Component id="jButton34" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
@@ -1747,6 +1750,9 @@
                                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                                     </Property>
                                   </Properties>
+                                  <Events>
+                                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable8MouseClicked"/>
+                                  </Events>
                                 </Component>
                               </SubComponents>
                             </Container>
@@ -1938,6 +1944,20 @@
                               <AuxValues>
                                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                               </AuxValues>
+                            </Component>
+                            <Component class="javax.swing.JButton" name="jButton36">
+                              <Properties>
+                                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="66" green="33" red="0" type="rgb"/>
+                                </Property>
+                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Update"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton36ActionPerformed"/>
+                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
