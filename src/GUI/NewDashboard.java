@@ -9,9 +9,12 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
+import java.io.InputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -20,6 +23,10 @@ import javax.swing.table.DefaultTableModel;
 import model.AdminUserSession;
 import model.FinancialUserSession;
 import model.MySQL;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 
 /**
  *
@@ -76,7 +83,10 @@ public class NewDashboard extends javax.swing.JFrame {
         activitypanel.setVisible(false);
         profilepanel.setVisible(false);
         menu1.setBackground(new Color(5, 93, 165));
-
+        loadAdminStudentEnrollmentReport();
+        loadAdminSheduleForSubject();
+        loadAdminSheduleForReport();
+        loadAdminStudentAttendanceReportTable() ;
     }
 
     private void time() {
@@ -361,22 +371,22 @@ public class NewDashboard extends javax.swing.JFrame {
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel15 = new javax.swing.JPanel();
         jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
         jTextField9 = new javax.swing.JTextField();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable6 = new javax.swing.JTable();
+        jLabel27 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jTextField2 = new javax.swing.JTextField();
-        jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
+        jLabel45 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jTextField10 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
+        jLabel46 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jTextField11 = new javax.swing.JTextField();
         jButton14 = new javax.swing.JButton();
@@ -385,10 +395,10 @@ public class NewDashboard extends javax.swing.JFrame {
         jTable5 = new javax.swing.JTable();
         jPanel29 = new javax.swing.JPanel();
         jTextField12 = new javax.swing.JTextField();
-        jButton16 = new javax.swing.JButton();
         jButton17 = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTable7 = new javax.swing.JTable();
+        jLabel47 = new javax.swing.JLabel();
         jPanel30 = new javax.swing.JPanel();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel31 = new javax.swing.JPanel();
@@ -1348,10 +1358,11 @@ public class NewDashboard extends javax.swing.JFrame {
         jButton10.setBackground(new java.awt.Color(0, 52, 101));
         jButton10.setForeground(new java.awt.Color(255, 255, 255));
         jButton10.setText("Print");
-
-        jButton11.setBackground(new java.awt.Color(0, 52, 101));
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("Search");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jTextField9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1364,11 +1375,11 @@ public class NewDashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Enrollment ID", "Student ID", "Teacher", "A/L Batch", "Stream", "Subject", "Date"
+                "Student ID", "First Name", "Last Name", "NIC", "Mobile", "Date of Birth", "Gurdian Mobile", "Enrollment Date", "Gender", "Address line 1", "Address line2", "Batch", "Stream"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1376,6 +1387,8 @@ public class NewDashboard extends javax.swing.JFrame {
             }
         });
         jScrollPane6.setViewportView(jTable6);
+
+        jLabel27.setText("Search");
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -1385,12 +1398,12 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE))
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE))
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton10)
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton11)
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel27)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -1401,8 +1414,8 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27))
                 .addGap(25, 25, 25)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(111, Short.MAX_VALUE))
@@ -1416,20 +1429,21 @@ public class NewDashboard extends javax.swing.JFrame {
             }
         });
 
-        jButton12.setBackground(new java.awt.Color(0, 52, 101));
-        jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setText("Search");
-
         jButton13.setBackground(new java.awt.Color(0, 52, 101));
         jButton13.setForeground(new java.awt.Color(255, 255, 255));
         jButton13.setText("Print");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Schedule ID", "Teacher", "A/L Batch", "Subject", "Day", "Start Time", "End Time"
+                "Schedule ID", "Schedule Date", "A/L Batch", "Subject", "Teacher", "Start Time", "End Time"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1442,6 +1456,8 @@ public class NewDashboard extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jTable3);
 
+        jLabel45.setText("Search");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -1452,11 +1468,11 @@ public class NewDashboard extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton13)
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton12)
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel45)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -1464,9 +1480,9 @@ public class NewDashboard extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton13)
+                    .addComponent(jLabel45))
                 .addGap(25, 25, 25)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1480,24 +1496,25 @@ public class NewDashboard extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(0, 52, 101));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Search");
-
         jButton6.setBackground(new java.awt.Color(0, 52, 101));
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("Print");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Subject ID", "Subject Name", "Schedule ID", "Teacher ", "A/L Batch"
+                "Subject ID", "Subject Name", "Schedule ID", "Schedule Date", "Stream", "A/L Batch", "Teacher "
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1505,6 +1522,8 @@ public class NewDashboard extends javax.swing.JFrame {
             }
         });
         jScrollPane4.setViewportView(jTable4);
+
+        jLabel46.setText("Search");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -1514,13 +1533,13 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 496, Short.MAX_VALUE)
+                        .addGap(0, 553, Short.MAX_VALUE)
                         .addComponent(jButton6)
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton5)
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel46)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -1528,11 +1547,11 @@ public class NewDashboard extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6)
+                    .addComponent(jLabel46))
                 .addGap(25, 25, 25)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
                 .addGap(26, 26, 26))
         );
 
@@ -1608,24 +1627,25 @@ public class NewDashboard extends javax.swing.JFrame {
             }
         });
 
-        jButton16.setBackground(new java.awt.Color(0, 52, 101));
-        jButton16.setForeground(new java.awt.Color(255, 255, 255));
-        jButton16.setText("Search");
-
         jButton17.setBackground(new java.awt.Color(0, 52, 101));
         jButton17.setForeground(new java.awt.Color(255, 255, 255));
         jButton17.setText("Print");
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton17ActionPerformed(evt);
+            }
+        });
 
         jTable7.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Schedule ID", "Teacher", "A/L Batch", "Subject", "Month", "Percentage Attendance", "Percentage Absent"
+                "Year", "Month", "A/L Batch", "Subject", "Teacher", "Total Records", "Tota_Present", "Total_Absent", " Attendance %"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1633,6 +1653,8 @@ public class NewDashboard extends javax.swing.JFrame {
             }
         });
         jScrollPane7.setViewportView(jTable7);
+
+        jLabel47.setText("Search");
 
         javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
         jPanel29.setLayout(jPanel29Layout);
@@ -1642,13 +1664,13 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel29Layout.createSequentialGroup()
-                        .addGap(0, 496, Short.MAX_VALUE)
+                        .addGap(0, 553, Short.MAX_VALUE)
                         .addComponent(jButton17)
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton16)
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel47)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel29Layout.setVerticalGroup(
@@ -1656,11 +1678,11 @@ public class NewDashboard extends javax.swing.JFrame {
             .addGroup(jPanel29Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton17)
+                    .addComponent(jLabel47))
                 .addGap(25, 25, 25)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
                 .addGap(40, 40, 40))
         );
 
@@ -2993,6 +3015,155 @@ public class NewDashboard extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton32ActionPerformed
 
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+
+        //print Report button enrollment:
+        try {
+//            long invoiceid = System.currentTimeMillis();
+//            jLabel84.setText(String.valueOf(invoiceid));
+//            String EmployeeUserName = jLabel85.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/StudentEnrollmentTest.jasper");
+            if (path == null) {
+                throw new RuntimeException("Report file not found at /reports/StudentEnrollmentTest.jasper");
+            }
+
+            // Parameters for the report
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("Parameter1", dateTime);
+            parameters.put("IMAGE_PATH", imagePath);
+//            params.put("Parameter2", Department);
+//            params.put("Parameter3", Basesalary);
+            // Data source
+            if (jTable6.getRowCount() == 0) {
+                System.out.println("Table is empty.");
+                throw new RuntimeException("Table has no data to generate the report.");
+            }
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable6.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
+
+            JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        // Class Schedule Report:
+
+        try {
+//            long invoiceid = System.currentTimeMillis();
+//            jLabel84.setText(String.valueOf(invoiceid));
+//            String EmployeeUserName = jLabel85.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/ClassSheduleTest.jasper");
+            if (path == null) {
+                throw new RuntimeException("Report file not found at /reports/ClassSheduleTest.jasper");
+            }
+
+            // Parameters for the report
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("Parameter1", dateTime);
+            parameters.put("IMAGE_PATH", imagePath);
+//            params.put("Parameter2", Department);
+//            params.put("Parameter3", Basesalary);
+            // Data source
+            if (jTable3.getRowCount() == 0) {
+                System.out.println("Table is empty.");
+                throw new RuntimeException("Table has no data to generate the report.");
+            }
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable3.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
+
+            JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // Subject Management Report:
+
+        try {
+//            long invoiceid = System.currentTimeMillis();
+//            jLabel84.setText(String.valueOf(invoiceid));
+//            String EmployeeUserName = jLabel85.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/SubjectManagementReportTest.jasper");
+            if (path == null) {
+                throw new RuntimeException("Report file not found at /reports/SubjectManagementReportTest.jasper");
+            }
+
+            // Parameters for the report
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("Parameter1", dateTime);
+            parameters.put("IMAGE_PATH", imagePath);
+//            params.put("Parameter2", Department);
+//            params.put("Parameter3", Basesalary);
+            // Data source
+            if (jTable4.getRowCount() == 0) {
+                System.out.println("Table is empty.");
+                throw new RuntimeException("Table has no data to generate the report.");
+            }
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable4.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
+
+            JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+              // Class Attendence Report :
+
+        try {
+//            long invoiceid = System.currentTimeMillis();
+//            jLabel84.setText(String.valueOf(invoiceid));
+//            String EmployeeUserName = jLabel85.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/StudentAttendenceTest.jasper");
+            if (path == null) {
+                throw new RuntimeException("Report file not found at /reports/StudentAttendenceTest.jasper");
+            }
+
+            // Parameters for the report
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("Parameter1", dateTime);
+            parameters.put("IMAGE_PATH", imagePath);
+//            params.put("Parameter2", Department);
+//            params.put("Parameter3", Basesalary);
+            // Data source
+            if (jTable7.getRowCount() == 0) {
+                System.out.println("Table is empty.");
+                throw new RuntimeException("Table has no data to generate the report.");
+            }
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable7.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
+
+            JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton17ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -3016,12 +3187,9 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel duepiclabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
@@ -3047,7 +3215,6 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton38;
     private javax.swing.JButton jButton39;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
@@ -3074,6 +3241,7 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
@@ -3093,6 +3261,9 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -3214,4 +3385,151 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel subjectpiclabel;
     private javax.swing.JLabel teacherpiclabel;
     // End of variables declaration//GEN-END:variables
+
+    private void loadAdminStudentEnrollmentReport() {
+
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `students` "
+                    + "INNER JOIN `gender` ON `students`.`gender_id`=`gender`.`id` "
+                    + "INNER JOIN `AL_batch` ON `students`.`AL_batch_batch_id`=`AL_batch`.`batch_id` "
+                    + "INNER JOIN `stream` ON `students`.`stream_stream_id`=`stream`.`stream_id` ");
+
+            DefaultTableModel model = (DefaultTableModel) jTable6.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+                Vector vector = new Vector();
+                vector.add(resultSet.getString("student_id"));
+                vector.add(resultSet.getString("first_name"));
+                vector.add(resultSet.getString("last_name"));
+                vector.add(resultSet.getString("nic"));
+                vector.add(resultSet.getString("mobile"));
+                vector.add(resultSet.getString("dob"));
+                vector.add(resultSet.getString("guardian_mobile"));
+                vector.add(resultSet.getString("enrollment_date"));
+                vector.add(resultSet.getString("gender.type"));
+                vector.add(resultSet.getString("address_line_1"));
+                vector.add(resultSet.getString("address_line_2"));
+                vector.add(resultSet.getString("AL_batch.batch_name"));
+                vector.add(resultSet.getString("stream.stream_name"));
+                //  vector.add(resultSet.getString("barcode_id"));
+
+                model.addRow(vector);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void loadAdminSheduleForReport() {
+
+        try {
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `schedule` INNER JOIN `AL_batch`"
+                    + "ON `schedule`.`AL_batch_batch_id` = `AL_batch`.`batch_id` INNER JOIN `subjects` "
+                    + "ON `schedule`.`subject_id` = `subjects`.`subject_id` INNER JOIN `teachers` "
+                    + "ON `schedule`.`teacher_id` = `teachers`.`teacher_id`");
+
+            DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("schedule_id"));
+                vector.add(resultSet.getString("sheduled_date"));
+                vector.add(resultSet.getString("AL_batch.batch_name"));
+                vector.add(resultSet.getString("subjects.subject_name"));
+                vector.add(resultSet.getString("teachers.first_name") + " " + resultSet.getString("teachers.last_name"));
+                vector.add(resultSet.getString("start_time"));
+                vector.add(resultSet.getString("end_time"));
+
+                model.addRow(vector);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadAdminSheduleForSubject() {
+
+        try {
+
+//            
+            ResultSet resultSet = MySQL.executeSearch("SELECT *FROM subjects INNER JOIN stream_subject ON"
+                    + " stream_subject.subjects_subject_id=subjects.subject_id INNER JOIN"
+                    + " AL_batch ON AL_batch.batch_id=stream_subject.AL_batch_batch_id INNER JOIN "
+                    + "stream ON stream.stream_id=stream_subject.stream_stream_id INNER JOIN "
+                    + "schedule ON schedule.schedule_id=stream_subject.id INNER JOIN "
+                    + "teachers ON teachers.teacher_id=schedule.teacher_id");
+
+            DefaultTableModel model = (DefaultTableModel) jTable4.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("subject_id"));
+                vector.add(resultSet.getString("subjects.subject_name"));
+                vector.add(resultSet.getString("schedule_id"));
+                vector.add(resultSet.getString("sheduled_date"));
+                vector.add(resultSet.getString("stream_name"));
+                vector.add(resultSet.getString("AL_batch.batch_name"));
+                vector.add(resultSet.getString("teachers.first_name") + " " + resultSet.getString("teachers.last_name"));
+
+                model.addRow(vector);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    private void loadAdminStudentAttendanceReportTable() {
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) jTable7.getModel();
+            dtm.setRowCount(0);
+
+            ResultSet rs = model.MySQL.executeSearch("SELECT YEAR(student_attendance.attendance_date) "
+                    + "AS year, MONTH(student_attendance.attendance_date) AS month, "
+                    + "AL_batch.batch_name, subjects.subject_name, CONCAT(teachers.first_name, ' ', "
+                    + "teachers.last_name) AS teacher_name, COUNT(*) AS total_records, "
+                    + "SUM(CASE WHEN student_attendance.status = 'Present' THEN 1 ELSE 0 END) AS"
+                    + " total_present, SUM(CASE WHEN student_attendance.status = 'Absent' THEN 1 ELSE "
+                    + "0 END) AS total_absent, ROUND((SUM(CASE WHEN student_attendance.status = 'Present' "
+                    + "THEN 1 ELSE 0 END) * 100.0 / COUNT(*)), 2) AS percentage_present, "
+                    + "ROUND((SUM(CASE WHEN student_attendance.status = 'Absent' THEN 1 ELSE 0 END) * 100.0 / COUNT(*)"
+                    + "), 2) AS percentage_absent FROM student_attendance INNER JOIN `schedule` ON "
+                    + "`schedule`.schedule_id = student_attendance.schedule_id INNER JOIN stream_subject ON "
+                    + "stream_subject.id = `schedule`.stream_subject_id INNER JOIN subjects ON"
+                    + " subjects.subject_id = stream_subject.subjects_subject_id INNER JOIN AL_batch ON "
+                    + "AL_batch.batch_id = stream_subject.AL_batch_batch_id INNER JOIN teachers_has_stream_subject"
+                    + " ON teachers_has_stream_subject.stream_subject_id = stream_subject.stream_stream_id "
+                    + "INNER JOIN teachers ON teachers.teacher_id = teachers_has_stream_subject.teachers_teacher_id"
+                    + " GROUP BY YEAR(student_attendance.attendance_date), MONTH(student_attendance.attendance_date), "
+                    + "AL_batch.batch_name, subjects.subject_name, teacher_name ORDER BY year, month");
+
+            while (rs.next()) {
+                Vector<String> v = new Vector<>();
+
+                v.add(rs.getString("year"));
+                v.add(rs.getString("month"));
+                v.add(rs.getString("batch_name"));
+                v.add(rs.getString("subject_name"));
+                v.add(rs.getString("teacher_name"));
+                v.add(rs.getString("total_records"));
+                v.add(rs.getString("total_absent"));
+                v.add(rs.getString("total_present"));
+                v.add(rs.getString("percentage_present"));
+                v.add(rs.getString("percentage_absent"));
+
+                dtm.addRow(v);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Print error details
+        }
+    }
+
 }
