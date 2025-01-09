@@ -69,13 +69,39 @@ public class NewDashboard extends javax.swing.JFrame {
         loadStream();
         loadUserProfile();
         jLabel44.setText(AdminUserSession.getInstance().getName());
-
+        time();
         overviewpanel.setVisible(true);
         managementpanel.setVisible(false);
         reportspanel.setVisible(false);
         activitypanel.setVisible(false);
         profilepanel.setVisible(false);
         menu1.setBackground(new Color(5, 93, 165));
+
+    }
+
+    private void time() {
+
+        java.lang.Runnable runnable = new java.lang.Runnable() {
+
+            @Override
+
+            public void run() {
+
+                while (true) {
+
+                    java.util.Date date1 = new java.util.Date();
+
+                    java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("EEE, d MMM yyyy hh:mm:ss");
+
+                    String finaldate = dateFormat.format(date1);
+                    jLabel10.setText(finaldate);
+                }
+            }
+        };
+
+        java.lang.Thread thread = new java.lang.Thread(runnable);
+
+        thread.start();
 
     }
 
@@ -218,7 +244,7 @@ public class NewDashboard extends javax.swing.JFrame {
         }
 
     }
-    
+
     private void loadUserProfile() {
         try {
 
@@ -668,6 +694,8 @@ public class NewDashboard extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Welcome Admin,");
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 51, 102));
         jLabel10.setText("Date: 2024-11-29");
 
         jLabel44.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -688,8 +716,8 @@ public class NewDashboard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel44)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31))))
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))))
         );
         DashboardconstantpanelLayout.setVerticalGroup(
             DashboardconstantpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1156,7 +1184,7 @@ public class NewDashboard extends javax.swing.JFrame {
             profilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 500, Short.MAX_VALUE)
             .addGroup(profilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE))
+                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE))
         );
 
         jButton1.setBackground(new java.awt.Color(0, 52, 101));
@@ -2607,7 +2635,7 @@ public class NewDashboard extends javax.swing.JFrame {
         );
         changingpanelLayout.setVerticalGroup(
             changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 509, Short.MAX_VALUE)
+            .addGap(0, 517, Short.MAX_VALUE)
             .addGroup(changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(changingpanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -2629,7 +2657,7 @@ public class NewDashboard extends javax.swing.JFrame {
                     .addComponent(managementpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
             .addGroup(changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(overviewpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE))
+                .addComponent(overviewpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -2957,12 +2985,12 @@ public class NewDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton29ActionPerformed
 
     private void jButton32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton32ActionPerformed
-        
+
         AdminUserSession.getInstance().logout();
         this.dispose();
         userSelection us = new userSelection();
         us.setVisible(true);
-        
+
     }//GEN-LAST:event_jButton32ActionPerformed
 
     /**
