@@ -11,6 +11,9 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="Parameter1" class="java.lang.String"/>
+	<parameter name="IMAGE_PATH" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{IMAGE_PATH}]]></defaultValueExpression>
+	</parameter>
 	<query language="sql"><![CDATA[]]></query>
 	<field name="COLUMN_0" class="java.lang.String"/>
 	<field name="COLUMN_1" class="java.lang.String"/>
@@ -34,12 +37,12 @@
 			<text><![CDATA[Conatact : 072 573 3695]]></text>
 		</element>
 		<element kind="image" uuid="e33bceba-8908-41ee-9edb-5855f2c634f1" x="200" y="3" width="82" height="80">
-			<expression><![CDATA["C:/Users/Anuradha/Documents/NetBeansProjects/Allionz-IMS/src/resources/Novara logo.jpeg"]]></expression>
+			<expression><![CDATA[$P{IMAGE_PATH}]]></expression>
 		</element>
-		<element kind="textField" uuid="55b72765-1c50-4c80-8d02-fe18375b5e0f" x="714" y="10" width="88" height="30">
+		<element kind="textField" uuid="55b72765-1c50-4c80-8d02-fe18375b5e0f" x="690" y="10" width="112" height="30">
 			<expression><![CDATA[$P{Parameter1}]]></expression>
 		</element>
-		<element kind="staticText" uuid="3cf45667-46e0-4a3e-9a0f-b5e3a1932182" x="650" y="10" width="58" height="30" fontSize="14.0" bold="true">
+		<element kind="staticText" uuid="3cf45667-46e0-4a3e-9a0f-b5e3a1932182" x="630" y="10" width="58" height="30" fontSize="14.0" bold="true">
 			<text><![CDATA[Date]]></text>
 		</element>
 	</title>
@@ -135,7 +138,7 @@
 		</band>
 	</detail>
 	<pageFooter height="37" splitType="Stretch">
-		<element kind="staticText" uuid="274c50b2-70f6-48e4-b796-cbea9795db4c" x="300" y="10" width="269" height="20" fontSize="14.0" bold="true" hTextAlign="Center">
+		<element kind="staticText" uuid="274c50b2-70f6-48e4-b796-cbea9795db4c" x="300" y="10" width="269" height="20" forecolor="#4321BF" fontSize="14.0" bold="true" hTextAlign="Center">
 			<text><![CDATA[******Academic Department******]]></text>
 		</element>
 	</pageFooter>

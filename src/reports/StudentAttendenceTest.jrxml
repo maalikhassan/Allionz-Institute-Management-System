@@ -11,6 +11,9 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="Parameter1" class="java.lang.String"/>
+	<parameter name="IMAGE_PATH" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{IMAGE_PATH}]]></defaultValueExpression>
+	</parameter>
 	<query language="sql"><![CDATA[]]></query>
 	<field name="COLUMN_0" class="java.lang.String"/>
 	<field name="COLUMN_1" class="java.lang.String"/>
@@ -34,7 +37,7 @@
 			<text><![CDATA[Conatact : 072 573 3695]]></text>
 		</element>
 		<element kind="image" uuid="e33bceba-8908-41ee-9edb-5855f2c634f1" x="170" y="0" width="82" height="80">
-			<expression><![CDATA["C:/Users/Anuradha/Documents/NetBeansProjects/Allionz-IMS/src/resources/Novara logo.jpeg"]]></expression>
+			<expression><![CDATA[$P{IMAGE_PATH}]]></expression>
 		</element>
 		<element kind="textField" uuid="55b72765-1c50-4c80-8d02-fe18375b5e0f" x="700" y="10" width="88" height="30">
 			<expression><![CDATA[$P{Parameter1}]]></expression>

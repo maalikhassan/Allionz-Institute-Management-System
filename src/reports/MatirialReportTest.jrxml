@@ -11,6 +11,9 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="Parameter1" class="java.lang.String"/>
+	<parameter name="IMAGE_PATH" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{IMAGE_PATH}]]></defaultValueExpression>
+	</parameter>
 	<query language="sql"><![CDATA[]]></query>
 	<field name="COLUMN_0" class="java.lang.String"/>
 	<field name="COLUMN_1" class="java.lang.String"/>
@@ -23,7 +26,7 @@
 			<text><![CDATA[NOVARA INSTITUTE]]></text>
 		</element>
 		<element kind="image" uuid="8bbcdb7b-76fd-4a9d-a9ef-e7f139733270" x="0" y="0" width="81" height="80">
-			<expression><![CDATA["C:/Users/Anuradha/Documents/NetBeansProjects/Allionz-IMS/src/resources/Novara logo.jpeg"]]></expression>
+			<expression><![CDATA[$P{IMAGE_PATH}]]></expression>
 		</element>
 		<element kind="staticText" uuid="303fe237-a218-47aa-8ded-3dbbe502eb0d" x="140" y="50" width="250" height="22" fontSize="13.0" bold="true" hTextAlign="Center">
 			<text><![CDATA[Contact: 072 573 3695]]></text>

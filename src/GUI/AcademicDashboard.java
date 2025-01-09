@@ -1066,7 +1066,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addComponent(menu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(menu5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addComponent(jButton5)
                 .addGap(16, 16, 16))
         );
@@ -1079,6 +1079,8 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Welcome Admin");
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 51, 102));
         jLabel10.setText("Date: 2024-11-29");
 
         javax.swing.GroupLayout DashboardconstantpanelLayout = new javax.swing.GroupLayout(Dashboardconstantpanel);
@@ -1090,12 +1092,12 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addGroup(DashboardconstantpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DashboardconstantpanelLayout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(573, Short.MAX_VALUE))
                     .addGroup(DashboardconstantpanelLayout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 525, Short.MAX_VALUE)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))))
         );
         DashboardconstantpanelLayout.setVerticalGroup(
             DashboardconstantpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2642,7 +2644,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             studentmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentmanagementLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 479, Short.MAX_VALUE))
         );
 
         teachermanagement.setPreferredSize(new java.awt.Dimension(764, 427));
@@ -9187,22 +9189,23 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
         //print Report button enrollment:
         try {
-            //            long invoiceid = System.currentTimeMillis();
-            //            jLabel84.setText(String.valueOf(invoiceid));
-            //            String EmployeeUserName = jLabel85.getText();
+//            long invoiceid = System.currentTimeMillis();
+//            jLabel84.setText(String.valueOf(invoiceid));
+//            String EmployeeUserName = jLabel85.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
             // Load report file
-            InputStream path = this.getClass().getResourceAsStream("/reports/StudentEnrollment.jasper");
+            InputStream path = this.getClass().getResourceAsStream("/reports/StudentEnrollmentTest.jasper");
             if (path == null) {
-                throw new RuntimeException("Report file not found at /reports/StudentEnrollment.jasper");
+                throw new RuntimeException("Report file not found at /reports/StudentEnrollmentTest.jasper");
             }
 
             // Parameters for the report
             HashMap<String, Object> parameters = new HashMap<>();
             parameters.put("Parameter1", dateTime);
-            //            params.put("Parameter2", Department);
-            //            params.put("Parameter3", Basesalary);
+            parameters.put("IMAGE_PATH", imagePath);
+//            params.put("Parameter2", Department);
+//            params.put("Parameter3", Basesalary);
             // Data source
             if (jTable4.getRowCount() == 0) {
                 System.out.println("Table is empty.");
@@ -9216,6 +9219,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
     }//GEN-LAST:event_jButton27ActionPerformed
 
@@ -9242,25 +9246,27 @@ public class AcademicDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField22KeyReleased
 
     private void jButton61ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton61ActionPerformed
-        // Class Attendence Report :
+          // Class Attendence Report :
 
         try {
-            //            long invoiceid = System.currentTimeMillis();
-            //            jLabel84.setText(String.valueOf(invoiceid));
-            //            String EmployeeUserName = jLabel85.getText();
+//            long invoiceid = System.currentTimeMillis();
+//            jLabel84.setText(String.valueOf(invoiceid));
+//            String EmployeeUserName = jLabel85.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
 
             // Load report file
-            InputStream path = this.getClass().getResourceAsStream("/reports/StudentAttendence.jasper");
+            InputStream path = this.getClass().getResourceAsStream("/reports/StudentAttendenceTest.jasper");
             if (path == null) {
-                throw new RuntimeException("Report file not found at /reports/StudentAttendence.jasper");
+                throw new RuntimeException("Report file not found at /reports/StudentAttendenceTest.jasper");
             }
 
             // Parameters for the report
             HashMap<String, Object> parameters = new HashMap<>();
             parameters.put("Parameter1", dateTime);
-            //            params.put("Parameter2", Department);
-            //            params.put("Parameter3", Basesalary);
+            parameters.put("IMAGE_PATH", imagePath);
+//            params.put("Parameter2", Department);
+//            params.put("Parameter3", Basesalary);
             // Data source
             if (jStudentAttendanceReportTable.getRowCount() == 0) {
                 System.out.println("Table is empty.");
@@ -9299,25 +9305,26 @@ public class AcademicDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField41KeyReleased
 
     private void jButton50ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton50ActionPerformed
-        // Teacher Enrollment Report:
+           // Teacher Enrollment Report:
 
         try {
-            //            long invoiceid = System.currentTimeMillis();
-            //            jLabel84.setText(String.valueOf(invoiceid));
-            //            String EmployeeUserName = jLabel85.getText();
+//            long invoiceid = System.currentTimeMillis();
+//            jLabel84.setText(String.valueOf(invoiceid));
+//            String EmployeeUserName = jLabel85.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
             // Load report file
-            InputStream path = this.getClass().getResourceAsStream("/reports/TeacherEnrollment.jasper");
+            InputStream path = this.getClass().getResourceAsStream("/reports/TeacherEnrollmentTest.jasper");
             if (path == null) {
-                throw new RuntimeException("Report file not found at /reports/TeacherEnrollment.jasper");
+                throw new RuntimeException("Report file not found at /reports/TeacherEnrollmentTest.jasper");
             }
 
             // Parameters for the report
             HashMap<String, Object> parameters = new HashMap<>();
             parameters.put("Parameter1", dateTime);
-            //            params.put("Parameter2", Department);
-            //            params.put("Parameter3", Basesalary);
+             parameters.put("IMAGE_PATH", imagePath);
+//            params.put("Parameter2", Department);
+//            params.put("Parameter3", Basesalary);
             // Data source
             if (jTable11.getRowCount() == 0) {
                 System.out.println("Table is empty.");
@@ -9325,12 +9332,13 @@ public class AcademicDashboard extends javax.swing.JFrame {
             }
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable11.getModel());
 
-            JasperPrint report = JasperFillManager.fillReport(path,parameters , dataSource);
+            JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
             JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
     }//GEN-LAST:event_jButton50ActionPerformed
 
@@ -9357,25 +9365,26 @@ public class AcademicDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField35KeyReleased
 
     private void jButton54ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton54ActionPerformed
-        // Teacher Class Attendence:
+       // Teacher Class Attendence:
 
         try {
-            //            long invoiceid = System.currentTimeMillis();
-            //            jLabel84.setText(String.valueOf(invoiceid));
-            //            String EmployeeUserName = jLabel85.getText();
+//            long invoiceid = System.currentTimeMillis();
+//            jLabel84.setText(String.valueOf(invoiceid));
+//            String EmployeeUserName = jLabel85.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
             // Load report file
-            InputStream path = this.getClass().getResourceAsStream("/reports/TeacherAttendence.jasper");
+            InputStream path = this.getClass().getResourceAsStream("/reports/TeacherAttendenceTest.jasper");
             if (path == null) {
-                throw new RuntimeException("Report file not found at /reports/TeacherAttendence.jasper");
+                throw new RuntimeException("Report file not found at /reports/TeacherAttendenceTest.jasper");
             }
 
             // Parameters for the report
             HashMap<String, Object> parameters = new HashMap<>();
             parameters.put("Parameter1", dateTime);
-            //            params.put("Parameter2", Department);
-            //            params.put("Parameter3", Basesalary);
+             parameters.put("IMAGE_PATH", imagePath);
+//            params.put("Parameter2", Department);
+//            params.put("Parameter3", Basesalary);
             // Data source
             if (jTattReportsTable.getRowCount() == 0) {
                 System.out.println("Table is empty.");
@@ -9389,6 +9398,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
     }//GEN-LAST:event_jButton54ActionPerformed
 
@@ -9410,61 +9420,28 @@ public class AcademicDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField37KeyReleased
 
     private void jButton68ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton68ActionPerformed
-        // Class Schedule Report:
+          // Class Schedule Report:
 
-        //          try {
-            //            HashMap<String,Object> map = new HashMap<>();
-            //            String reportPath = "src//reports//ClassShedule.jasper";
-            //
-            ////            Class.forName("com.mysql.cj.jdbc.Driver");
-            ////            Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://avnadmin:AVNS_bLl3HiSKuA5KERCnvCK@mysql-2058cc20-maalikhassan132-a8e9.b.aivencloud.com:22390/u272822984_ims?ssl-mode=REQUIRED", "avnadmin", "AVNS_bLl3HiSKuA5KERCnvCK");
-            //
-            //            JRDataSource dataSource = new JRTableModelDataSource(jTable15.getModel());
-            //
-            //            JasperPrint jasperPrint = JasperFillManager.fillReport(reportPath,map,dataSource);
-            //            JasperViewer.viewReport(jasperPrint,false);
-            //
-            //        } catch (Exception e) {
-            //            e.printStackTrace();
-            //        }
-        //try {
-            //    HashMap<String, Object> map = new HashMap<>();
-            //    String reportPath = "src/reports/ClassShedule.jasper";
-            //
-            //    File file = new File(reportPath);
-            //    if (!file.exists()) {
-                //        throw new FileNotFoundException("Report file not found at: " + reportPath);
-                //    }
-            //
-            //    JRDataSource dataSource = new JRTableModelDataSource(jTable15.getModel());
-            //    JasperPrint jasperPrint = JasperFillManager.fillReport(file.getAbsolutePath(), map, dataSource);
-            //
-            //    if (jasperPrint.getPages().isEmpty()) {
-                //        throw new IllegalStateException("The report contains no pages.");
-                //    }
-            //
-            //    JasperViewer.viewReport(jasperPrint, false);
-            //} catch (Exception e) {
-            //    e.printStackTrace();
-            //    JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Report Error", JOptionPane.ERROR_MESSAGE);
-            //}
+
+
         try {
-            //            long invoiceid = System.currentTimeMillis();
-            //            jLabel84.setText(String.valueOf(invoiceid));
-            //            String EmployeeUserName = jLabel85.getText();
+//            long invoiceid = System.currentTimeMillis();
+//            jLabel84.setText(String.valueOf(invoiceid));
+//            String EmployeeUserName = jLabel85.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();  
             // Load report file
-            InputStream path = this.getClass().getResourceAsStream("/reports/ClassShedule.jasper");
+            InputStream path = this.getClass().getResourceAsStream("/reports/ClassSheduleTest.jasper");
             if (path == null) {
-                throw new RuntimeException("Report file not found at /reports/paysheet.jasper");
+                throw new RuntimeException("Report file not found at /reports/ClassSheduleTest.jasper");
             }
 
             // Parameters for the report
             HashMap<String, Object> parameters = new HashMap<>();
-            parameters.put("Parameter1",dateTime );
-            //            params.put("Parameter2", Department);
-            //            params.put("Parameter3", Basesalary);
+            parameters.put("Parameter1", dateTime);
+             parameters.put("IMAGE_PATH", imagePath);
+//            params.put("Parameter2", Department);
+//            params.put("Parameter3", Basesalary);
             // Data source
             if (jTable15.getRowCount() == 0) {
                 System.out.println("Table is empty.");
@@ -9485,22 +9462,23 @@ public class AcademicDashboard extends javax.swing.JFrame {
         // Subject Management Report:
 
         try {
-            //            long invoiceid = System.currentTimeMillis();
-            //            jLabel84.setText(String.valueOf(invoiceid));
-            //            String EmployeeUserName = jLabel85.getText();
+//            long invoiceid = System.currentTimeMillis();
+//            jLabel84.setText(String.valueOf(invoiceid));
+//            String EmployeeUserName = jLabel85.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
+             String imagePath = getClass().getResource("/resources/LOGO.png").toString();        
             // Load report file
-            InputStream path = this.getClass().getResourceAsStream("/reports/SubjectManagementReport.jasper");
+            InputStream path = this.getClass().getResourceAsStream("/reports/SubjectManagementReportTest.jasper");
             if (path == null) {
-                throw new RuntimeException("Report file not found at /reports/SubjectManagementReport.jasper");
+                throw new RuntimeException("Report file not found at /reports/SubjectManagementReportTest.jasper");
             }
 
             // Parameters for the report
             HashMap<String, Object> parameters = new HashMap<>();
             parameters.put("Parameter1", dateTime);
-            //            params.put("Parameter2", Department);
-            //            params.put("Parameter3", Basesalary);
+            parameters.put("IMAGE_PATH", imagePath);
+//            params.put("Parameter2", Department);
+//            params.put("Parameter3", Basesalary);
             // Data source
             if (jTable18.getRowCount() == 0) {
                 System.out.println("Table is empty.");
@@ -9521,22 +9499,24 @@ public class AcademicDashboard extends javax.swing.JFrame {
         // Matirial Report:
 
         try {
-            //            long invoiceid = System.currentTimeMillis();
-            //            jLabel84.setText(String.valueOf(invoiceid));
-            //            String EmployeeUserName = jLabel85.getText();
+//            long invoiceid = System.currentTimeMillis();
+//            jLabel84.setText(String.valueOf(invoiceid));
+//            String EmployeeUserName = jLabel85.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
 
             // Load report file
-            InputStream path = this.getClass().getResourceAsStream("/reports/MatirialReport.jasper");
+            InputStream path = this.getClass().getResourceAsStream("/reports/MatirialReportTest.jasper");
             if (path == null) {
-                throw new RuntimeException("Report file not found at /reports/MatirialReport.jasper");
+                throw new RuntimeException("Report file not found at /reports/MatirialReportTest.jasper");
             }
 
             // Parameters for the report
             HashMap<String, Object> parameters = new HashMap<>();
             parameters.put("Parameter1", dateTime);
-            //            params.put("Parameter2", Department);
-            //            params.put("Parameter3", Basesalary);
+            parameters.put("IMAGE_PATH", imagePath);
+//            params.put("Parameter2", Department);
+//            params.put("Parameter3", Basesalary);
             // Data source
             if (jTable20.getRowCount() == 0) {
                 System.out.println("Table is empty.");
