@@ -171,6 +171,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jTable13.setDefaultRenderer(Object.class, render);
         jTable15.setDefaultRenderer(Object.class, render);
         jTable16.setDefaultRenderer(Object.class, render);
+        jTable14.setDefaultRenderer(Object.class, render);
+        jTable20.setDefaultRenderer(Object.class, render);
         //Bill Payments
         LoadBillTypes();
         LoadVendors();
@@ -178,13 +180,26 @@ public class FinancialDashboard extends javax.swing.JFrame {
         loadBillPayments();
 
         //Financial Reports
-        LoadMonth();
+        //MonthLoad
+        ReportLoadMonth1();
+        ReportLoadMonth2();
+        ReportLoadMonth3();
+        ReportLoadMonth4();
+        ReportLoadMonth5();
+        ReportLoadMonth6();
+//        ReportLoadMonth7();
+        ReportLoadMonth8();
+        ReportLoadMonth9();
+        ReportLoadMonth10();
+        ReportLoadMonth11();
         loadIncomeTable();
         LoadFessDetails();
         LoadDuesTable();
         LoadExpensesTable();
         loadSalaryDetails();
-
+        //Profit cal
+        LoadExpensesTableProfitCal();
+        loadIncomeTableProfitCal();
     }
 
     //   Financial Overview
@@ -1036,30 +1051,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
         }
     }
 
-    //Financial report month load
-    private void LoadMonth() {
-        try {
-            ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `month`");
-
-            Vector<String> vector1 = new Vector<>();
-            vector1.add("Select");
-
-            while (resultSet1.next()) {
-                vector1.add(resultSet1.getString("month_name"));
-                MonthMap.put(resultSet1.getString("month_name"), resultSet1.getString("id"));
-
-            }
-            DefaultComboBoxModel model1 = new DefaultComboBoxModel(vector1);
-            jComboBox8.setModel(model1);
-            jComboBox9.setModel(model1);
-            jComboBox10.setModel(model1);
-            jComboBox4.setModel(model1);
-            jComboBox6.setModel(model1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     //Income table in finnacial report
     private void loadIncomeTable() {
         try {
@@ -1086,7 +1077,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        getSum();
+        getSum1();
+
     }
 
     // LoadFessDetails in financial report 
@@ -1122,7 +1114,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
     //Load dues table in financila report
     private void LoadDuesTable() {
         try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_payments` INNER JOIN `bill_type` ON `bill_payments`.`bill_type_id`=`bill_type`.`id` WHERE `payment_status_id` = '2'");
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_payments` INNER JOIN `bill_type` ON "
+                    + "`bill_payments`.`bill_type_id`=`bill_type`.`id` "
+                    + "INNER JOIN `month` ON `bill_payments`.`month_id`=`month`.`id`"
+                    + "INNER JOIN `vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id`"
+                    + "WHERE `payment_status_id` = '2'");
 
             DefaultTableModel model = (DefaultTableModel) jTable13.getModel();
             model.setRowCount(0);
@@ -1131,15 +1127,17 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
                 Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("bill_id"));
-                vector.add(resultSet.getString("amount"));
-                vector.add(resultSet.getString("bill_type.bill_type"));
+                vector.add(resultSet.getString("vendor.vendor_name"));
                 vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("amount"));
+                vector.add(resultSet.getString("month.month_name"));
                 model.addRow(vector);
 
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        getSum3();
     }
 
     //Load expenses table in financila report
@@ -1148,6 +1146,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_payments` INNER JOIN "
                     + "`bill_type` ON `bill_payments`.`bill_type_id`=`bill_type`.`id` "
                     + "INNER JOIN `vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id`"
+                    + "INNER JOIN `month` ON `bill_payments`.`month_id`=`month`.`id`"
                     + "WHERE `payment_status_id` = '1'");
 
             DefaultTableModel model = (DefaultTableModel) jTable12.getModel();
@@ -1160,12 +1159,15 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 vector.add(resultSet.getString("vendor.vendor_name"));
                 vector.add(resultSet.getString("payment_date"));
                 vector.add(resultSet.getString("amount"));
+                vector.add(resultSet.getString("month.month_name"));
                 model.addRow(vector);
 
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        getSum2();
+
     }
 
     //Load salary in financial report  
@@ -1184,7 +1186,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
                 Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("id"));
-                vector.add(resultSet.getString("employee_user_id"));
+                vector.add(resultSet.getString("employee.first_name") + " " + (resultSet.getString("employee.last_name")));
                 vector.add(resultSet.getString("salary_details.base_salary"));
                 vector.add(resultSet.getString("net_amount"));
                 vector.add(resultSet.getString("month.month_name"));
@@ -1193,19 +1195,400 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 model.addRow(vector);
 
             }
+            getSum5();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void getSum() {
+    //<--Profit calculation(Income and expense tables load)-->
+    //Load expenses table in financila report
+    private void LoadExpensesTableProfitCal() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_payments` INNER JOIN "
+                    + "`bill_type` ON `bill_payments`.`bill_type_id`=`bill_type`.`id` "
+                    + "INNER JOIN `vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id`"
+                    + "INNER JOIN `month` ON `bill_payments`.`month_id`=`month`.`id`"
+                    + "WHERE `payment_status_id` = '1'");
+
+            DefaultTableModel model = (DefaultTableModel) jTable20.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("bill_id"));
+                vector.add(resultSet.getString("vendor.vendor_name"));
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("amount"));
+                vector.add(resultSet.getString("month.month_name"));
+                model.addRow(vector);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        getSumProfitCal2();
+        SumOfProfit();
+    }
+
+    //Income table in finnacial report
+    private void loadIncomeTableProfitCal() {
+        try {
+
+            ResultSet resultSet3 = MySQL.executeSearch("SELECT * FROM `feepayments` INNER JOIN `students` ON `feepayments`.`students_student_id`=`students`.`student_id`"
+                    + "INNER JOIN `month` ON `feepayments`.`month_id`=`month`.`id`");
+
+            DefaultTableModel model = (DefaultTableModel) jTable14.getModel();
+            model.setRowCount(0);
+
+            while (resultSet3.next()) {
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet3.getString("payment_id"));
+                vector.add(resultSet3.getString("students.first_name") + " " + (resultSet3.getString("students.last_name")));
+                vector.add(resultSet3.getString("month.month_name"));
+                vector.add(resultSet3.getString("amount_paid"));
+                model.addRow(vector);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        getSumProfitCal1();
+        SumOfProfit();
+    }
+
+    public void getSumProfitCal1() {
+        int sum = 0;
+        for (int i = 0; i < jTable14.getRowCount(); i++) {
+            sum += Double.parseDouble(jTable14.getValueAt(i, 3).toString());
+        }
+        jLabel119.setText(Integer.toString(sum));
+    }
+
+    public void getSumProfitCal2() {
+        int sum = 0;
+        for (int i = 0; i < jTable20.getRowCount(); i++) {
+            sum += Double.parseDouble(jTable20.getValueAt(i, 3).toString());
+        }
+        jLabel120.setText(Integer.toString(sum));
+    }
+
+    public void SumOfProfit() {
+        try {
+            double total = 0;
+            double incomeValue = 0;
+            double expenseValue = 0;
+
+            // Retrieve text
+            String income = jLabel119.getText().trim();
+            String expense = jLabel120.getText().trim();
+
+            // Check for empty strings and handle them
+            if (!income.isEmpty()) {
+                incomeValue = Double.parseDouble(income);
+            }
+            if (!expense.isEmpty()) {
+                expenseValue = Double.parseDouble(expense);
+            }
+
+            // Calculate total
+            total = incomeValue - expenseValue;
+
+            // Convert result to String and display it
+            String profit = String.valueOf(total);
+            jLabel121.setText(profit);
+
+            // Optional: Display the result in the console
+            System.out.println("Total Profit: " + total);
+        } catch (NumberFormatException e) {
+            // Handle invalid input
+            System.out.println("Invalid input. Please enter numeric values.");
+            e.printStackTrace();
+        }
+    }
+
+    //<--Profit calculation(Income and expense tables load)-->
+    //<--Financial report month load-->
+    //1
+    private void ReportLoadMonth1() {
+        try {
+            ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector1 = new Vector<>();
+            vector1.add("All Months");
+
+            while (resultSet1.next()) {
+                vector1.add(resultSet1.getString("month_name"));
+                LoadMonthMap.put(resultSet1.getString("month_name"), resultSet1.getString("id"));
+
+            }
+            DefaultComboBoxModel model1 = new DefaultComboBoxModel(vector1);
+            jComboBox8.setModel(model1);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //2
+    private void ReportLoadMonth2() {
+        try {
+            ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector1 = new Vector<>();
+            vector1.add("All Months");
+
+            while (resultSet1.next()) {
+                vector1.add(resultSet1.getString("month_name"));
+                LoadMonthMap.put(resultSet1.getString("month_name"), resultSet1.getString("id"));
+
+            }
+            DefaultComboBoxModel model1 = new DefaultComboBoxModel(vector1);
+
+            jComboBox9.setModel(model1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //3
+    private void ReportLoadMonth3() {
+        try {
+            ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector1 = new Vector<>();
+            vector1.add("All Months");
+
+            while (resultSet1.next()) {
+                vector1.add(resultSet1.getString("month_name"));
+                LoadMonthMap.put(resultSet1.getString("month_name"), resultSet1.getString("id"));
+
+            }
+            DefaultComboBoxModel model1 = new DefaultComboBoxModel(vector1);
+            jComboBox20.setModel(model1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //4
+    private void ReportLoadMonth4() {
+        try {
+            ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector1 = new Vector<>();
+            vector1.add("All Months");
+
+            while (resultSet1.next()) {
+                vector1.add(resultSet1.getString("month_name"));
+                LoadMonthMap.put(resultSet1.getString("month_name"), resultSet1.getString("id"));
+
+            }
+            DefaultComboBoxModel model1 = new DefaultComboBoxModel(vector1);
+            jComboBox10.setModel(model1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //5
+    private void ReportLoadMonth5() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector1 = new Vector<>();
+            vector1.add("All Months");
+
+            while (resultSet.next()) {
+                vector1.add(resultSet.getString("month_name"));
+                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+
+            }
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector1);
+            jComboBox4.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //6
+    private void ReportLoadMonth6() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector = new Vector<>();
+            vector.add("All Months");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("month_name"));
+                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+
+            }
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox6.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //7
+//    private void ReportLoadMonth7() {
+//        try {
+//            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+//
+//            Vector<String> vector = new Vector<>();
+//            vector.add("All Months");
+//
+//            while (resultSet.next()) {
+//                vector.add(resultSet.getString("month_name"));
+//                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+//
+//            }
+//            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+//            jComboBox20.setModel(model);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+    //Salary department month
+    //8
+    private void ReportLoadMonth8() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector = new Vector<>();
+            vector.add("All Months");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("month_name"));
+                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+
+            }
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox22.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //9
+    private void ReportLoadMonth9() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector = new Vector<>();
+            vector.add("All Months");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("month_name"));
+                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+
+            }
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox24.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //10
+    private void ReportLoadMonth10() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector = new Vector<>();
+            vector.add("All Months");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("month_name"));
+                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+
+            }
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox25.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //11
+    private void ReportLoadMonth11() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector = new Vector<>();
+            vector.add("All Months");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("month_name"));
+                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+
+            }
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox26.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    //<--Financial report month load-->
+
+    //<--Calculate total-->
+    //1
+    public void getSum1() {
         int sum = 0;
         for (int i = 0; i < jTable11.getRowCount(); i++) {
             sum += Double.parseDouble(jTable11.getValueAt(i, 3).toString());
         }
-        jLabel102.setText(Integer.toString(sum));
-
+        jLabel122.setText(Integer.toString(sum));
     }
+
+    //2
+    public void getSum2() {
+        int sum = 0;
+        for (int i = 0; i < jTable12.getRowCount(); i++) {
+            sum += Double.parseDouble(jTable12.getValueAt(i, 3).toString());
+        }
+        jLabel123.setText(Integer.toString(sum));
+    }
+
+    //3
+    public void getSum3() {
+        int sum = 0;
+        for (int i = 0; i < jTable13.getRowCount(); i++) {
+            sum += Double.parseDouble(jTable13.getValueAt(i, 3).toString());
+        }
+        jLabel124.setText(Integer.toString(sum));
+    }
+
+    //4
+    public void getSum4() {
+        int sum = 0;
+        for (int i = 0; i < jTable15.getRowCount(); i++) {
+            sum += Double.parseDouble(jTable15.getValueAt(i, 3).toString());
+        }
+        jLabel112.setText(Integer.toString(sum));
+    }
+
+    //5
+    public void getSum5() {
+        int sum = 0;
+        for (int i = 0; i < jTable15.getRowCount(); i++) {
+            sum += Double.parseDouble(jTable15.getValueAt(i, 3).toString());
+        }
+        jLabel125.setText(Integer.toString(sum));
+    }
+
+    //6
+    public void getSum6() {
+        int sum = 0;
+        for (int i = 0; i < jTable16.getRowCount(); i++) {
+            sum += Double.parseDouble(jTable16.getValueAt(i, 7).toString());
+        }
+        jLabel126.setText(Integer.toString(sum));
+    }
+    //<--Calculate total-->
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1319,6 +1702,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jComboBox25 = new javax.swing.JComboBox<>();
         jComboBox26 = new javax.swing.JComboBox<>();
         jButton36 = new javax.swing.JButton();
+        jLabel127 = new javax.swing.JLabel();
         jPanel19 = new javax.swing.JPanel();
         jScrollPane11 = new javax.swing.JScrollPane();
         jTable10 = new javax.swing.JTable();
@@ -1385,21 +1769,29 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jTable3 = new javax.swing.JTable();
         jLabel96 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
+        jLabel41 = new javax.swing.JLabel();
+        jComboBox5 = new javax.swing.JComboBox<>();
         jPanel30 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
         jLabel97 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
+        jLabel55 = new javax.swing.JLabel();
+        jComboBox18 = new javax.swing.JComboBox<>();
         jPanel31 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
         jLabel87 = new javax.swing.JLabel();
         jButton13 = new javax.swing.JButton();
+        jLabel117 = new javax.swing.JLabel();
+        jComboBox19 = new javax.swing.JComboBox<>();
         jPanel34 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable6 = new javax.swing.JTable();
         jLabel101 = new javax.swing.JLabel();
         jButton15 = new javax.swing.JButton();
+        jLabel118 = new javax.swing.JLabel();
+        jComboBox27 = new javax.swing.JComboBox<>();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane18 = new javax.swing.JScrollPane();
         jTable17 = new javax.swing.JTable();
@@ -1445,6 +1837,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel50 = new javax.swing.JLabel();
         jScrollPane12 = new javax.swing.JScrollPane();
         jTable11 = new javax.swing.JTable();
+        jLabel122 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jLabel58 = new javax.swing.JLabel();
         jComboBox9 = new javax.swing.JComboBox<>();
@@ -1452,6 +1845,15 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jTable12 = new javax.swing.JTable();
         jLabel84 = new javax.swing.JLabel();
         jButton31 = new javax.swing.JButton();
+        jLabel123 = new javax.swing.JLabel();
+        jPanel20 = new javax.swing.JPanel();
+        jLabel59 = new javax.swing.JLabel();
+        jComboBox10 = new javax.swing.JComboBox<>();
+        jScrollPane14 = new javax.swing.JScrollPane();
+        jTable13 = new javax.swing.JTable();
+        jLabel90 = new javax.swing.JLabel();
+        jButton12 = new javax.swing.JButton();
+        jLabel124 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane15 = new javax.swing.JScrollPane();
         jTable14 = new javax.swing.JTable();
@@ -1461,19 +1863,13 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jComboBox20 = new javax.swing.JComboBox<>();
         jLabel106 = new javax.swing.JLabel();
         jLabel107 = new javax.swing.JLabel();
-        jFormattedTextField5 = new javax.swing.JFormattedTextField();
         jLabel108 = new javax.swing.JLabel();
-        jFormattedTextField6 = new javax.swing.JFormattedTextField();
         jLabel109 = new javax.swing.JLabel();
-        jFormattedTextField7 = new javax.swing.JFormattedTextField();
         jLabel110 = new javax.swing.JLabel();
-        jPanel20 = new javax.swing.JPanel();
-        jLabel59 = new javax.swing.JLabel();
-        jComboBox10 = new javax.swing.JComboBox<>();
-        jScrollPane14 = new javax.swing.JScrollPane();
-        jTable13 = new javax.swing.JTable();
-        jLabel90 = new javax.swing.JLabel();
-        jButton12 = new javax.swing.JButton();
+        jLabel119 = new javax.swing.JLabel();
+        jLabel120 = new javax.swing.JLabel();
+        jLabel121 = new javax.swing.JLabel();
+        jButton25 = new javax.swing.JButton();
         jPanel22 = new javax.swing.JPanel();
         jScrollPane16 = new javax.swing.JScrollPane();
         jTable15 = new javax.swing.JTable();
@@ -1481,6 +1877,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jButton32 = new javax.swing.JButton();
         jLabel93 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
+        jLabel125 = new javax.swing.JLabel();
         jPanel23 = new javax.swing.JPanel();
         jScrollPane17 = new javax.swing.JScrollPane();
         jTable16 = new javax.swing.JTable();
@@ -1488,6 +1885,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
         jLabel95 = new javax.swing.JLabel();
         jComboBox6 = new javax.swing.JComboBox<>();
+        jLabel126 = new javax.swing.JLabel();
         financialprofilepanel = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
         profilepiclabel = new javax.swing.JLabel();
@@ -2037,9 +2435,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -2452,55 +2850,63 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
+        jLabel127.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel127.setText("Double click to delete");
+
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane9)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel44)
-                            .addComponent(jLabel46)
-                            .addComponent(jLabel49)
-                            .addComponent(jLabel114))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox21, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField2)
-                            .addComponent(jComboBox23, 0, 147, Short.MAX_VALUE)
-                            .addComponent(jComboBox22, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel127)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane9)
                             .addGroup(jPanel16Layout.createSequentialGroup()
-                                .addComponent(jLabel47)
+                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel44)
+                                    .addComponent(jLabel46)
+                                    .addComponent(jLabel49)
+                                    .addComponent(jLabel114))
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox26, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel16Layout.createSequentialGroup()
-                                    .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel69)
-                                        .addComponent(jLabel113))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jComboBox21, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextField2)
+                                    .addComponent(jComboBox23, 0, 147, Short.MAX_VALUE)
+                                    .addComponent(jComboBox22, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel16Layout.createSequentialGroup()
+                                        .addComponent(jLabel47)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jComboBox26, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jComboBox24, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)))
-                                .addGroup(jPanel16Layout.createSequentialGroup()
-                                    .addComponent(jLabel48)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jComboBox25, 0, 157, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel112)
-                            .addComponent(jScrollPane24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton36, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(10, 10, 10))
+                                        .addGroup(jPanel16Layout.createSequentialGroup()
+                                            .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel69)
+                                                .addComponent(jLabel113))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jComboBox24, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)))
+                                        .addGroup(jPanel16Layout.createSequentialGroup()
+                                            .addComponent(jLabel48)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jComboBox25, 0, 157, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel112)
+                                    .addComponent(jScrollPane24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton34, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton36, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(10, 10, 10))))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2540,16 +2946,19 @@ public class FinancialDashboard extends javax.swing.JFrame {
                         .addGap(4, 4, 4)
                         .addComponent(jLabel112)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane24))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel16Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton36)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton34)))
+                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel16Layout.createSequentialGroup()
+                                .addComponent(jButton14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton36)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton34)
+                                .addGap(6, 6, 6))
+                            .addComponent(jScrollPane24, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))))
                 .addGap(15, 15, 15)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel127)
                 .addContainerGap())
         );
 
@@ -2868,7 +3277,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                                .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -2941,7 +3350,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addComponent(jButton41)
                             .addComponent(jButton19))))
                 .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -3149,6 +3558,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
+        jLabel41.setText("Select Month");
+
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
         jPanel29.setLayout(jPanel29Layout);
         jPanel29Layout.setHorizontalGroup(
@@ -3156,11 +3569,15 @@ public class FinancialDashboard extends javax.swing.JFrame {
             .addGroup(jPanel29Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
                     .addGroup(jPanel29Layout.createSequentialGroup()
                         .addComponent(jLabel96)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(jLabel41)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -3172,7 +3589,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel96))
+                    .addComponent(jLabel96)
+                    .addComponent(jLabel41)
+                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -3210,6 +3629,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
+        jLabel55.setText("Select Month");
+
+        jComboBox18.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel30Layout = new javax.swing.GroupLayout(jPanel30);
         jPanel30.setLayout(jPanel30Layout);
         jPanel30Layout.setHorizontalGroup(
@@ -3221,8 +3644,12 @@ public class FinancialDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel97)
                         .addGap(18, 18, 18)
                         .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)
+                        .addComponent(jLabel55)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox18, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 928, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)))
         );
         jPanel30Layout.setVerticalGroup(
             jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3232,7 +3659,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel97)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel55)
+                    .addComponent(jComboBox18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -3270,6 +3699,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
+        jLabel117.setText("Select Month");
+
+        jComboBox19.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel31Layout = new javax.swing.GroupLayout(jPanel31);
         jPanel31.setLayout(jPanel31Layout);
         jPanel31Layout.setHorizontalGroup(
@@ -3277,11 +3710,15 @@ public class FinancialDashboard extends javax.swing.JFrame {
             .addGroup(jPanel31Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 928, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
                     .addGroup(jPanel31Layout.createSequentialGroup()
                         .addComponent(jLabel87)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel117, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox19, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel31Layout.setVerticalGroup(
@@ -3292,7 +3729,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel87))
+                    .addComponent(jLabel87)
+                    .addComponent(jLabel117)
+                    .addComponent(jComboBox19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -3330,6 +3769,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
+        jLabel118.setText("Select Month");
+
+        jComboBox27.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel34Layout = new javax.swing.GroupLayout(jPanel34);
         jPanel34.setLayout(jPanel34Layout);
         jPanel34Layout.setHorizontalGroup(
@@ -3337,11 +3780,15 @@ public class FinancialDashboard extends javax.swing.JFrame {
             .addGroup(jPanel34Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
                     .addGroup(jPanel34Layout.createSequentialGroup()
                         .addComponent(jLabel101)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68)
+                        .addComponent(jLabel118)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox27, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -3353,7 +3800,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel101)
-                    .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel118)
+                    .addComponent(jComboBox27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -3491,50 +3940,87 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jLabel104.setText(" ");
 
+        jButton24.setBackground(new java.awt.Color(0, 52, 101));
+        jButton24.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton24.setForeground(new java.awt.Color(255, 255, 255));
+        jButton24.setText("Calculate");
+        jButton24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton24ActionPerformed(evt);
+            }
+        });
+
+        jButton16.setBackground(new java.awt.Color(0, 52, 101));
+        jButton16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton16.setForeground(new java.awt.Color(255, 255, 255));
+        jButton16.setText("Reset");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
+
+        jLabel72.setText("Print all paysheets details -->");
+
+        jButton17.setBackground(new java.awt.Color(0, 52, 101));
+        jButton17.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        jButton17.setForeground(new java.awt.Color(255, 255, 255));
+        jButton17.setText("Print");
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton17ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addGap(19, 19, 19)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel10Layout.createSequentialGroup()
+                            .addComponent(jLabel82, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(11, 11, 11)
+                            .addComponent(jLabel80, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel10Layout.createSequentialGroup()
+                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel78, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel77, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel15)
+                                .addComponent(jLabel16))
+                            .addGap(6, 6, 6)
+                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel79, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel71, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel10Layout.createSequentialGroup()
+                            .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(22, 22, 22)
+                            .addComponent(jLabel75, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel10Layout.createSequentialGroup()
+                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel62, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel81, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel39))
+                            .addGap(22, 22, 22)
+                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel103, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBox16, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBox17, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel104, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(jButton24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(41, 41, 41)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel82, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel80, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel78, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel77, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel16))
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel79, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel71, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel75, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel62, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel81, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel39))
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel103, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox16, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox17, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel104, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(54, 54, 54)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+                    .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
                     .addComponent(jScrollPane19)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3545,7 +4031,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addGroup(jPanel10Layout.createSequentialGroup()
                                 .addComponent(jLabel83, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jLabel72)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -3590,89 +4080,50 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel62)
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel14)
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel40)
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel81)
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel39))
+                        .addComponent(jScrollPane18, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel72)
+                            .addComponent(jButton17)))
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel103)
-                        .addGap(15, 15, 15)
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBox16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBox17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel104))
-                    .addComponent(jScrollPane18, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jLabel62)
+                                .addGap(21, 21, 21)
+                                .addComponent(jLabel14)
+                                .addGap(21, 21, 21)
+                                .addComponent(jLabel40)
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabel81)
+                                .addGap(30, 30, 30)
+                                .addComponent(jLabel39))
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jLabel103)
+                                .addGap(15, 15, 15)
+                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboBox16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboBox17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(jLabel104)))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton16)))))
         );
 
         jTabbedPane2.addTab("Pay Sheets", jPanel10);
-
-        jButton24.setBackground(new java.awt.Color(0, 52, 101));
-        jButton24.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton24.setForeground(new java.awt.Color(255, 255, 255));
-        jButton24.setText("Calculate");
-        jButton24.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton24ActionPerformed(evt);
-            }
-        });
-
-        jButton16.setBackground(new java.awt.Color(0, 52, 101));
-        jButton16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton16.setForeground(new java.awt.Color(255, 255, 255));
-        jButton16.setText("Reset");
-        jButton16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton16ActionPerformed(evt);
-            }
-        });
-
-        jLabel72.setText("Print all paysheets details -->");
-
-        jButton17.setBackground(new java.awt.Color(0, 52, 101));
-        jButton17.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        jButton17.setForeground(new java.awt.Color(255, 255, 255));
-        jButton17.setText("Print");
-        jButton17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton17ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTabbedPane2)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(260, 260, 260)
-                .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel72)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton16)
-                    .addComponent(jLabel72)
-                    .addComponent(jButton17))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jTabbedPane2)
         );
 
         salarymanagementpanel.add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -3696,6 +4147,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jButton27.setBackground(new java.awt.Color(0, 52, 101));
         jButton27.setForeground(new java.awt.Color(255, 255, 255));
         jButton27.setText("Print Report");
+        jButton27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton27ActionPerformed(evt);
+            }
+        });
 
         jLabel50.setText("Print monthly income report -->");
 
@@ -3720,6 +4176,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
         });
         jScrollPane12.setViewportView(jTable11);
 
+        jLabel122.setText("jLabel122");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -3727,6 +4185,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -3736,9 +4195,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel50)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton27)))
-                        .addGap(0, 651, Short.MAX_VALUE))
-                    .addComponent(jScrollPane12))
+                                .addComponent(jButton27)
+                                .addGap(35, 35, 35)
+                                .addComponent(jLabel122, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -3753,7 +4213,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel50)
-                    .addComponent(jButton27))
+                    .addComponent(jButton27)
+                    .addComponent(jLabel122))
                 .addContainerGap(377, Short.MAX_VALUE))
         );
 
@@ -3770,17 +4231,17 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jTable12.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Vendor", "Settle Date", "Total Amount"
+                "ID", "Vendor", "Settle Date", "Total Amount", "Month"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -3800,6 +4261,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
+        jLabel123.setText("jLabel123");
+
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
@@ -3808,19 +4271,21 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addComponent(jLabel58)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(659, 701, Short.MAX_VALUE))
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addComponent(jLabel58)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
                             .addGroup(jPanel12Layout.createSequentialGroup()
                                 .addComponent(jLabel84)
                                 .addGap(6, 6, 6)
-                                .addComponent(jButton31)))
-                        .addGap(659, 659, 659))))
+                                .addComponent(jButton31)
+                                .addGap(43, 43, 43)
+                                .addComponent(jLabel123, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3838,10 +4303,97 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel84))
-                    .addComponent(jButton31)))
+                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton31)
+                        .addComponent(jLabel123))))
         );
 
         jTabbedPane5.addTab("Monthly Expense Report", jPanel12);
+
+        jLabel59.setText("Select Month");
+
+        jComboBox10.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox10.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox10ItemStateChanged(evt);
+            }
+        });
+
+        jTable13.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Vendor", "Payment Due Date", "Total Amount", "Month"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane14.setViewportView(jTable13);
+
+        jLabel90.setText("Print dues report -->");
+
+        jButton12.setBackground(new java.awt.Color(0, 52, 101));
+        jButton12.setForeground(new java.awt.Color(255, 255, 255));
+        jButton12.setText("Print Report");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+
+        jLabel124.setText("jLabel124");
+
+        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
+        jPanel20.setLayout(jPanel20Layout);
+        jPanel20Layout.setHorizontalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel20Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
+                    .addGroup(jPanel20Layout.createSequentialGroup()
+                        .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel20Layout.createSequentialGroup()
+                                .addComponent(jLabel59)
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel20Layout.createSequentialGroup()
+                                .addComponent(jLabel90)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton12)
+                                .addGap(62, 62, 62)
+                                .addComponent(jLabel124, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel20Layout.setVerticalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel20Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel59))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel90)
+                    .addComponent(jButton12)
+                    .addComponent(jLabel124))
+                .addContainerGap(400, Short.MAX_VALUE))
+        );
+
+        jTabbedPane5.addTab("Dues Report", jPanel20);
 
         jTable14.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -3866,17 +4418,17 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jTable20.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Id", "Vendor", "Date", "Amount"
+                "Id", "Vendor", "Date", "Amount", "Month"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -3888,22 +4440,36 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel105.setText("Income table");
 
         jComboBox20.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox20.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox20ItemStateChanged(evt);
+            }
+        });
 
         jLabel106.setText("Select month");
 
         jLabel107.setText("Income");
 
-        jFormattedTextField5.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
-
         jLabel108.setText("Expenses");
-
-        jFormattedTextField6.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
         jLabel109.setText("Profit");
 
-        jFormattedTextField7.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
-
         jLabel110.setText("Expense table");
+
+        jLabel119.setText(" ");
+
+        jLabel120.setText(" ");
+
+        jLabel121.setText(" ");
+
+        jButton25.setBackground(new java.awt.Color(0, 52, 101));
+        jButton25.setForeground(new java.awt.Color(255, 255, 255));
+        jButton25.setText("Print Report");
+        jButton25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton25ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -3914,8 +4480,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jScrollPane22, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane22, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel106, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -3924,17 +4490,18 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addComponent(jLabel109, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jComboBox20, 0, 148, Short.MAX_VALUE)
-                            .addComponent(jFormattedTextField5)
-                            .addComponent(jFormattedTextField6)
-                            .addComponent(jFormattedTextField7))))
-                .addContainerGap(22, Short.MAX_VALUE))
+                            .addComponent(jLabel119, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel120, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel121, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(188, 188, 188)
                 .addComponent(jLabel105, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel110, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(197, 197, 197))
+                .addGap(216, 216, 216))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3954,108 +4521,35 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel107)
-                    .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel119))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel108)
-                    .addComponent(jFormattedTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel120))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel109)
-                    .addComponent(jFormattedTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(356, Short.MAX_VALUE))
+                    .addComponent(jLabel121))
+                .addGap(26, 26, 26)
+                .addComponent(jButton25)
+                .addContainerGap(325, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Profit Calculate", jPanel5);
 
-        jLabel59.setText("Select Month");
-
-        jComboBox10.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox10.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox10ItemStateChanged(evt);
-            }
-        });
-
-        jTable13.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "ID", "Amount", "Payment Due Date", "Month"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane14.setViewportView(jTable13);
-
-        jLabel90.setText("Print dues report -->");
-
-        jButton12.setBackground(new java.awt.Color(0, 52, 101));
-        jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setText("Print Report");
-
-        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
-        jPanel20.setLayout(jPanel20Layout);
-        jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
-                    .addGroup(jPanel20Layout.createSequentialGroup()
-                        .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel20Layout.createSequentialGroup()
-                                .addComponent(jLabel90)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton12))
-                            .addGroup(jPanel20Layout.createSequentialGroup()
-                                .addComponent(jLabel59)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel59))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel90)
-                    .addComponent(jButton12))
-                .addContainerGap(400, Short.MAX_VALUE))
-        );
-
-        jTabbedPane5.addTab("Dues Report", jPanel20);
-
         jTable15.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Employee Id", "First Name", "Last Name", "Base Salary", "Net Amount", "Month", "Payment Date", "Status"
+                "Employee Id", "Employee Name", "Base Salary", "Net Amount", "Month", "Payment Date", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -4063,9 +4557,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
         jScrollPane16.setViewportView(jTable15);
-        if (jTable15.getColumnModel().getColumnCount() > 0) {
-            jTable15.getColumnModel().getColumn(7).setHeaderValue("Status");
-        }
 
         jLabel91.setText("Print salary payment report -->");
 
@@ -4087,6 +4578,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
+        jLabel125.setText("jLabel125");
+
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
         jPanel22Layout.setHorizontalGroup(
@@ -4104,7 +4597,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addGroup(jPanel22Layout.createSequentialGroup()
                                 .addComponent(jLabel91)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton32)))
+                                .addComponent(jButton32)
+                                .addGap(52, 52, 52)
+                                .addComponent(jLabel125, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -4120,7 +4615,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel91)
-                    .addComponent(jButton32))
+                    .addComponent(jButton32)
+                    .addComponent(jLabel125))
                 .addContainerGap(394, Short.MAX_VALUE))
         );
 
@@ -4152,6 +4648,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jButton9.setBackground(new java.awt.Color(0, 52, 101));
         jButton9.setForeground(new java.awt.Color(255, 255, 255));
         jButton9.setText("Print Report");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jLabel95.setText("Select Month");
 
@@ -4161,6 +4662,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 jComboBox6ItemStateChanged(evt);
             }
         });
+
+        jLabel126.setText("jLabel126");
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
@@ -4179,7 +4682,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addGroup(jPanel23Layout.createSequentialGroup()
                                 .addComponent(jLabel92)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton9)))
+                                .addComponent(jButton9)
+                                .addGap(51, 51, 51)
+                                .addComponent(jLabel126, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -4190,12 +4695,14 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel95)
                     .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane17, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane17, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel92)
-                    .addComponent(jButton9))
+                .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel92)
+                        .addComponent(jLabel126))
+                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(391, Short.MAX_VALUE))
         );
 
@@ -4365,7 +4872,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             financialprofilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 929, Short.MAX_VALUE)
             .addGroup(financialprofilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 959, Short.MAX_VALUE))
+                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 960, Short.MAX_VALUE))
         );
         financialprofilepanelLayout.setVerticalGroup(
             financialprofilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -5157,11 +5664,83 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton31ActionPerformed
-        // TODO add your handling code here:
+       boolean isPrinted = false;
+        try {
+            long invoiceid1 = System.currentTimeMillis();
+            jLabel85.setText(String.valueOf(invoiceid1));
+            String invoiceid2 = jLabel85.getText();
+            String EmployeeUserName = jLabel27.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String Total = jLabel123.getText();
+            String Month = String.valueOf(jComboBox9.getSelectedItem());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/Monthly_expense.jasper");
+            
+
+            // Parameters for the report
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("Parameter1", invoiceid2);
+            params.put("Parameter2", EmployeeUserName);
+            params.put("Parameter3", dateTime);
+            params.put("Parameter4", Month);
+            params.put("Parameter5", Total);
+            params.put("IMAGE_PATH", imagePath);
+
+            // Data source
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable12.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
+
+            isPrinted = JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            if (jTable12.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+ 
+
+        }
     }//GEN-LAST:event_jButton31ActionPerformed
 
     private void jButton32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton32ActionPerformed
-        // TODO add your handling code here:
+       boolean isPrinted = false;
+        try {
+            long invoiceid1 = System.currentTimeMillis();
+            jLabel85.setText(String.valueOf(invoiceid1));
+            String invoiceid2 = jLabel85.getText();
+            String EmployeeUserName = jLabel27.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String total = jLabel125.getText();
+            String month = String.valueOf(jComboBox4.getSelectedItem());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/Monthly_salaryDetails.jasper");
+
+            // Parameters for the report
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("Parameter1", invoiceid2);
+            params.put("Parameter2", EmployeeUserName);
+            params.put("Parameter3", dateTime);
+            params.put("Parameter4", month);
+            params.put("Parameter5", total);
+            params.put("IMAGE_PATH", imagePath);
+
+            // Data source
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable15.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
+
+            isPrinted = JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            if (jTable15.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
     }//GEN-LAST:event_jButton32ActionPerformed
 
     private void jFormattedTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField4ActionPerformed
@@ -5326,39 +5905,41 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
             String query;
 
-            if (selectedMonthName.isEmpty()) {
+            if (selectedMonthName.equals("All Months")) {
 
                 query = "SELECT * FROM `bill_payments` INNER JOIN "
                         + "`bill_type` ON `bill_payments`.`bill_type_id`=`bill_type`.`id` "
                         + "INNER JOIN `vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id`"
+                        + "INNER JOIN `month` ON `bill_payments`.`month_id`=`month`.`id`"
                         + "WHERE `payment_status_id` = '1'";
             } else {
 
                 String selectedMonthId = MonthMap.get(selectedMonthName);
-                query = " SELECT * FROM `bill_payments` INNER JOIN `bill_type` ON `bill_payments`.`bill_type_id`=`bill_type`.`id` INNER JOIN `vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id`"
-                        + "WHERE `month`.`id` = '" + selectedMonthId + "'";
+                query = "SELECT * FROM `bill_payments` INNER JOIN `bill_type` ON "
+                        + "`bill_payments`.`bill_type_id`=`bill_type`.`id` INNER JOIN "
+                        + "`vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id` INNER JOIN `month` ON "
+                        + "`bill_payments`.`month_id`=`month`.`id` WHERE `payment_status_id` = '1' AND `month_id`='" + selectedMonthId + "'";
             }
 
             ResultSet resultSet = MySQL.executeSearch(query);
-            Vector<String> vector = new Vector<>();
-            vector.add(resultSet.getString("Select"));
+
             while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("bill_id"));
                 vector.add(resultSet.getString("vendor.vendor_name"));
-                vector.add(resultSet.getString("month.month_name"));
                 vector.add(resultSet.getString("payment_date"));
                 vector.add(resultSet.getString("amount"));
-
+                vector.add(resultSet.getString("month.month_name"));
                 model.addRow(vector);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        getSum();
+        getSum2();
     }//GEN-LAST:event_jComboBox9ItemStateChanged
 
     private void jComboBox8ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox8ItemStateChanged
-        try {
+         try {
 
             String selectedMonthName = String.valueOf(jComboBox8.getSelectedItem());
 
@@ -5367,21 +5948,19 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
             String query;
 
-            if (selectedMonthName.isBlank()) {
+            if (selectedMonthName.equals("All Months")) {
 
-                query = "SELECT * FROM `feepayments` INNER JOIN `students` ON `feepayments`.`students_student_id`=`students`.`student_id`"
-                        + "INNER JOIN `month` ON `feepayments`.`month_id`=`month`.`id`";
+                query = "SELECT * FROM `feepayments` INNER JOIN `students` ON `feepayments`.`students_student_id` = `students`.`student_id` INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id`";
             } else {
 
                 String selectedMonthId = MonthMap.get(selectedMonthName);
-                query = "SELECT * FROM `feepayments`INNER JOIN `students` ON `feepayments`.`students_student_id` = `students`.`student_id` INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id` WHERE `month`.`id` = '" + selectedMonthId + "'";
+                query = "SELECT * FROM `feepayments` INNER JOIN `students` ON `feepayments`.`students_student_id` = `students`.`student_id` INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id` WHERE `month`.`id` = '" + selectedMonthId + "'";
             }
 
             ResultSet resultSet = MySQL.executeSearch(query);
-            Vector<String> vector = new Vector<>();
-            vector.add("Select");
 
             while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("payment_id"));
                 vector.add(resultSet.getString("students.first_name") + " " + resultSet.getString("students.last_name"));
                 vector.add(resultSet.getString("month.month_name"));
@@ -5391,47 +5970,54 @@ public class FinancialDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        getSum();
+        getSum1();
     }//GEN-LAST:event_jComboBox8ItemStateChanged
 
     private void jComboBox10ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox10ItemStateChanged
         try {
 
-            String selectedMonthName = String.valueOf(jComboBox9.getSelectedItem());
+            String selectedMonthName = String.valueOf(jComboBox10.getSelectedItem());
 
-            DefaultTableModel model = (DefaultTableModel) jTable11.getModel();
+            DefaultTableModel model = (DefaultTableModel) jTable13.getModel();
             model.setRowCount(0);
 
             String query;
 
-            if (selectedMonthName.isBlank()) {
+            if (selectedMonthName.equals("All Months")) {
 
-                query = "SELECT * FROM `feepayments`INNER JOIN `students` ON `feepayments`.`students_student_id` = `students`.`student_id` INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id";
+                query = "SELECT * FROM `bill_payments` INNER JOIN "
+                        + "`bill_type` ON `bill_payments`.`bill_type_id`=`bill_type`.`id` "
+                        + "INNER JOIN `vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id`"
+                        + "INNER JOIN `month` ON `bill_payments`.`month_id`=`month`.`id`"
+                        + "WHERE `payment_status_id` = '2'";
             } else {
 
                 String selectedMonthId = MonthMap.get(selectedMonthName);
-                query = "SELECT * FROM `feepayments`INNER JOIN `students` ON `feepayments`.`students_student_id` = `students`.`student_id` INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id` WHERE `month`.`id` = '" + selectedMonthId + "'";
+                query = "SELECT * FROM `bill_payments` INNER JOIN `bill_type` ON "
+                        + "`bill_payments`.`bill_type_id`=`bill_type`.`id` INNER JOIN "
+                        + "`vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id` INNER JOIN `month` ON "
+                        + "`bill_payments`.`month_id`=`month`.`id` WHERE `payment_status_id` = '2' AND `month_id`='" + selectedMonthId + "'";
             }
 
             ResultSet resultSet = MySQL.executeSearch(query);
-            Vector<String> vector = new Vector<>();
-            vector.add("Select");
 
             while (resultSet.next()) {
-                vector.add(resultSet.getString("payment_id"));
-                vector.add(resultSet.getString("students.first_name") + " " + resultSet.getString("students.last_name"));
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("bill_id"));
+                vector.add(resultSet.getString("vendor.vendor_name"));          
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("amount"));
                 vector.add(resultSet.getString("month.month_name"));
-                vector.add(resultSet.getString("amount_paid"));
                 model.addRow(vector);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        getSum();
+        getSum3();
     }//GEN-LAST:event_jComboBox10ItemStateChanged
 
     private void jComboBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox4ItemStateChanged
-        try {
+         try {
 
             String selectedMonthName = String.valueOf(jComboBox4.getSelectedItem());
 
@@ -5440,21 +6026,13 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
             String query;
 
-            if (selectedMonthName.isBlank()) {
+            if (selectedMonthName.equals("All Months")) {
 
-                query = "SELECT * FROM `salary`"
-                        + "INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id`"
-                        + "INNER JOIN `month` ON `salary`.`month_id` = `month`.`id`"
-                        + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id`"
-                        + "INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`";
+                query = " SELECT * FROM `salary` INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id` INNER JOIN `month` ON `salary`.`month_id` = `month`.`id` INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id` INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`";
             } else {
 
                 String selectedMonthId = MonthMap.get(selectedMonthName);
-                query = "SELECT * FROM `salary`"
-                        + "INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id`"
-                        + "INNER JOIN `month` ON `salary`.`month_id` = `month`.`id`"
-                        + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id`"
-                        + "INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
+                query = " SELECT * FROM `salary` INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id` INNER JOIN `month` ON `salary`.`month_id` = `month`.`id` INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id` INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
                         + "WHERE `month`.`id` = '" + selectedMonthId + "'";
             }
 
@@ -5463,7 +6041,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             while (resultSet.next()) {
                 Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("id"));
-                vector.add(resultSet.getString("employee_user_id"));
+                vector.add(resultSet.getString("employee.first_name") + " " + (resultSet.getString("employee.last_name")));
                 vector.add(resultSet.getString("salary_details.base_salary"));
                 vector.add(resultSet.getString("net_amount"));
                 vector.add(resultSet.getString("month.month_name"));
@@ -5471,23 +6049,25 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 vector.add(resultSet.getString("payment_status.status"));
                 model.addRow(vector);
             }
+            getSum5();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        getSum();
+        getSum5();
+
     }//GEN-LAST:event_jComboBox4ItemStateChanged
 
     private void jComboBox6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox6ItemStateChanged
-        try {
+       try {
 
-            String selectedMonthName = String.valueOf(jComboBox9.getSelectedItem());
+            String selectedMonthName = String.valueOf(jComboBox6.getSelectedItem());
 
-            DefaultTableModel model = (DefaultTableModel) jTable12.getModel();
+            DefaultTableModel model = (DefaultTableModel) jTable16.getModel();
             model.setRowCount(0);
 
             String query;
 
-            if (selectedMonthName.equals("Select")) {
+            if (selectedMonthName.equals("All Months")) {
 
                 query = "SELECT * FROM `feepayments` "
                         + "INNER JOIN `payment_status` ON `feepayments`.`payment_status_id` = `payment_status`.`id` "
@@ -5523,7 +6103,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        getSum();
+        getSum6();
     }//GEN-LAST:event_jComboBox6ItemStateChanged
 
 
@@ -5541,32 +6121,29 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String invoiceid2 = jLabel85.getText();
             String EmployeeUserName = jLabel27.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
+            String total = jLabel122.getText();
+            String month = String.valueOf(jComboBox8.getSelectedItem());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
             // Load report file
-            InputStream path = this.getClass().getResourceAsStream("/reports/paysheet_2.jasper");
-            if (path == null) {
-                throw new RuntimeException("Report file not found at /reports/paysheet.jasper");
-            }
+            InputStream path = this.getClass().getResourceAsStream("/reports/Monthly_income.jasper");
 
             // Parameters for the report
             HashMap<String, Object> params = new HashMap<>();
             params.put("Parameter1", invoiceid2);
             params.put("Parameter2", EmployeeUserName);
             params.put("Parameter3", dateTime);
+            params.put("Parameter4", month);
+            params.put("Parameter5", total);
+            params.put("IMAGE_PATH", imagePath);
 
             // Data source
-            if (jTable17.getRowCount() == 0) {
-
-                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
-            }
-
-            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable17.getModel());
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable11.getModel());
 
             JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
 
             isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            if (jTable17.getRowCount() == 0) {
+            if (jTable11.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
@@ -6023,7 +6600,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
     private void jTabbedPane4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane4MouseClicked
         // TODO add your handling code here:
+           // TODO add your handling code here:
         loadViewFeePayment();
+        jLabel41.setVisible(false);
+
     }//GEN-LAST:event_jTabbedPane4MouseClicked
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
@@ -6053,44 +6633,103 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
-        // TODO add your handling code here:
+           // TODO add your handling code here:
+
+        String studentName = String.valueOf(jComboBox22.getSelectedItem());
+        String stream = String.valueOf(jComboBox26.getSelectedItem());
+        String subjectName = String.valueOf(jComboBox25.getSelectedItem());
+        String status = String.valueOf(jComboBox21.getSelectedItem());
+        String fee_id = String.valueOf(jComboBox23.getSelectedIndex());
+        String month = String.valueOf(jComboBox24.getSelectedItem());
+        String amount = jTextField7.getText();
+        String nic = jTextField2.getText();
+        String desc = jTextArea3.getText();
+        String payId = jLabel41.getText();
+
+//        if (studentName.equals("Select")) {
+//            JOptionPane.showMessageDialog(this, "Please select a Student Name", "Warning", JOptionPane.WARNING_MESSAGE);
+//        } else
+        if (nic.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter the Student NIC", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (stream.equals("Select")) {
+            JOptionPane.showMessageDialog(this, "Please select a Stream", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (subjectName.equals("Select")) {
+            JOptionPane.showMessageDialog(this, "Please select a Subject", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (amount.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Amount", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (desc.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Description", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (status.equals("Select")) {
+            JOptionPane.showMessageDialog(this, "Please select a Status", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (month.equals("Select")) {
+            JOptionPane.showMessageDialog(this, "Please select a Month", "Warning", JOptionPane.WARNING_MESSAGE);
+//        } else if (fee_id.equals("-1")) {
+//            JOptionPane.showMessageDialog(this, "Please select a Fee", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+                String statusId = loadStatusMap.get(status);
+                String monthId = MonthMap.get(month);
+
+                MySQL.executeIUD("UPDATE `feepayments` SET "
+                        + " `amount_paid` = '" + amount + "' , `payment_status_id` = '" + statusId + "' , "
+                        + "`description`='" + desc + "' , `month_id` = '" + monthId + "'"
+                        + "WHERE `payment_id` = '" + payId + "' ");
+                loadViewFeePayment();
+                loadPendingFees();
+                loadFeePayment();
+                clear();
+                JOptionPane.showMessageDialog(this, "Fee payment updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                jButton14.setEnabled(true);
+                jComboBox22.setEnabled(true);
+                jComboBox23.setEnabled(true);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }//GEN-LAST:event_jButton36ActionPerformed
 
     private void jTable8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable8MouseClicked
         // TODO add your handling code here:
-        
+        jButton14.setEnabled(false);
+        jComboBox22.setEnabled(false);
+        jComboBox23.setEnabled(false);
         
         int row1 = jTable8.getSelectedRow();
-        
-        String nic = String.valueOf(jTable8.getValueAt(row1, 1));
+
+        String id = String.valueOf(jTable8.getValueAt(row1, 0));
+        jLabel41.setText(id);
+
+        String student = String.valueOf(jTable8.getValueAt(row1, 1));
+        jComboBox22.setSelectedItem(student);
+
+        String nic = String.valueOf(jTable8.getValueAt(row1, 2));
         jTextField2.setText(nic);
-        
-        String status = String.valueOf(jTable8.getValueAt(row1, 2));
+
+        String status = String.valueOf(jTable8.getValueAt(row1, 3));
         jComboBox21.setSelectedItem(status);
-               
-        String amount = String.valueOf(jTable8.getValueAt(row1, 4));
+        
+//         String amount = String.valueOf(jTable8.getValueAt(row1, 4));
+//        jTextField7.getText(amount);
+
+        String amount = String.valueOf(jTable8.getValueAt(row1, 5));
         jTextField7.setText(amount);
-        
-        String subject = String.valueOf(jTable8.getValueAt(row1, 5));
+
+        String subject = String.valueOf(jTable8.getValueAt(row1, 6));
         jComboBox25.setSelectedItem(subject);
-        
-        String stream = String.valueOf(jTable8.getValueAt(row1, 6));
+
+        String stream = String.valueOf(jTable8.getValueAt(row1, 7));
         jComboBox26.setSelectedItem(stream);
-        
-         String desc = String.valueOf(jTable8.getValueAt(row1, 7));
+
+        String desc = String.valueOf(jTable8.getValueAt(row1, 8));
         jTextArea3.setText(desc);
-        
-        String month = String.valueOf(jTable8.getValueAt(row1, 8));
+
+        String month = String.valueOf(jTable8.getValueAt(row1, 9));
         jComboBox24.setSelectedItem(month);
-        
-        
-        
+
 //        delete the rcord
         if (evt.getClickCount() == 2) {
-
-            int row = jTable8.getSelectedRow();
-
-            String id = String.valueOf(jTable8.getValueAt(row, 0));
 
             int confirm = JOptionPane.showConfirmDialog(null,
                     "Are you sure you want to delete the payment entry?",
@@ -6109,7 +6748,212 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
 
         }
+    
+
     }//GEN-LAST:event_jTable8MouseClicked
+
+    private void jComboBox20ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox20ItemStateChanged
+        try {
+
+            String selectedMonthName1 = String.valueOf(jComboBox20.getSelectedItem());
+
+            DefaultTableModel model = (DefaultTableModel) jTable14.getModel();
+            model.setRowCount(0);
+
+            String query1;
+
+            if (selectedMonthName1.equals("All Months")) {
+
+                query1 = "SELECT * FROM `feepayments` "
+                        + "INNER JOIN `students` ON `feepayments`.`students_student_id` = `students`.`student_id` "
+                        + "INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id`";
+            } else {
+
+                String selectedMonthId = LoadMonthMap.get(selectedMonthName1);
+                query1 = "SELECT * FROM `feepayments` "
+                        + "INNER JOIN `students` ON `feepayments`.`students_student_id` = `students`.`student_id` "
+                        + "INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id` "
+                        + "WHERE `month`.`id` = '" + selectedMonthId + "'";
+            }
+
+            ResultSet resultSet1 = MySQL.executeSearch(query1);
+
+            while (resultSet1.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet1.getString("payment_id"));
+                vector.add(resultSet1.getString("students.first_name") + " " + resultSet1.getString("students.last_name"));
+                vector.add(resultSet1.getString("month.month_name"));
+                vector.add(resultSet1.getString("amount_paid"));
+                model.addRow(vector);
+            }
+            getSumProfitCal1();
+            SumOfProfit();
+
+            String selectedMonthName2 = String.valueOf(jComboBox20.getSelectedItem());
+
+            DefaultTableModel model2 = (DefaultTableModel) jTable20.getModel();
+            model2.setRowCount(0);
+
+            String query2;
+
+            if (selectedMonthName2.equals("All Months")) {
+
+                query2 = "SELECT * FROM `bill_payments` INNER JOIN "
+                        + "`bill_type` ON `bill_payments`.`bill_type_id`=`bill_type`.`id` "
+                        + "INNER JOIN `vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id`"
+                        + "INNER JOIN `month` ON `bill_payments`.`month_id`=`month`.`id`"
+                        + "WHERE `payment_status_id` = '1'";
+            } else {
+
+                String selectedMonthId2 = LoadMonthMap.get(selectedMonthName2);
+                query2 = "SELECT * FROM `bill_payments` INNER JOIN `bill_type` ON "
+                        + "`bill_payments`.`bill_type_id`=`bill_type`.`id` INNER JOIN "
+                        + "`vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id` INNER JOIN `month` ON "
+                        + "`bill_payments`.`month_id`=`month`.`id` WHERE `payment_status_id` = '1' AND `month_id`='" + selectedMonthId2 + "'";
+            }
+
+            ResultSet resultSet2 = MySQL.executeSearch(query2);
+
+            while (resultSet2.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet2.getString("bill_id"));
+                vector.add(resultSet2.getString("vendor.vendor_name"));
+                vector.add(resultSet2.getString("payment_date"));
+                vector.add(resultSet2.getString("amount"));
+                vector.add(resultSet2.getString("month.month_name"));
+                model2.addRow(vector);
+            }
+            getSumProfitCal2();
+            SumOfProfit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jComboBox20ItemStateChanged
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        boolean isPrinted = false;
+        try {
+            long invoiceid1 = System.currentTimeMillis();
+            jLabel85.setText(String.valueOf(invoiceid1));
+            String invoiceid2 = jLabel85.getText();
+            String EmployeeUserName = jLabel27.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String Total = jLabel124.getText();
+            String Month = String.valueOf(jComboBox10.getSelectedItem());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/Dues_Report.jasper");
+
+            // Parameters for the report
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("Parameter1", invoiceid2);
+            params.put("Parameter2", EmployeeUserName);
+            params.put("Parameter3", dateTime);
+            params.put("Parameter4", Month);
+            params.put("Parameter5", Total);
+            params.put("IMAGE_PATH", imagePath);
+
+            // Data source
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable13.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
+
+            isPrinted = JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            if (jTable13.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+ 
+        }
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+        boolean isPrinted = false;
+        try {
+            long invoiceid1 = System.currentTimeMillis();
+            jLabel85.setText(String.valueOf(invoiceid1));
+            String invoiceid2 = jLabel85.getText();
+            String EmployeeUserName = jLabel27.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String income = jLabel119.getText();
+            String expense = jLabel120.getText();
+            String profit_loss = jLabel121.getText();
+            String month = String.valueOf(jComboBox20.getSelectedItem());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            
+            MySQL.executeIUD("INSERT INTO `profit`(`income`,`expenses`,`profit`,`month`) "
+                    + "VALUES('"+income+"','"+expense+"','"+profit_loss+"','"+month+"')"); 
+            
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/Profit_report.jasper");
+
+            // Parameters for the report
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("Parameter1", invoiceid2);
+            params.put("Parameter2", EmployeeUserName);
+            params.put("Parameter3", dateTime);
+            params.put("Parameter4", income);
+            params.put("Parameter5", expense);
+            params.put("Parameter6", profit_loss);
+            params.put("Parameter7", month);
+            params.put("IMAGE_PATH", imagePath);
+
+            // Data source
+            JREmptyDataSource emptyDataSource = new JREmptyDataSource();
+
+
+            JasperPrint report = JasperFillManager.fillReport(path, params, emptyDataSource);
+
+            isPrinted = JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+             if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+         boolean isPrinted = false;
+        try {
+            long invoiceid1 = System.currentTimeMillis();
+            jLabel85.setText(String.valueOf(invoiceid1));
+            String invoiceid2 = jLabel85.getText();
+            String EmployeeUserName = jLabel27.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String total = jLabel126.getText();
+            String month = String.valueOf(jComboBox6.getSelectedItem());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/ClassFeesReport.jasper");
+
+            // Parameters for the report
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("Parameter1", invoiceid2);
+            params.put("Parameter2", EmployeeUserName);
+            params.put("Parameter3", dateTime);
+            params.put("Parameter4", month);
+            params.put("Parameter5", total);
+            params.put("IMAGE_PATH", imagePath);
+
+            // Data source
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable16.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
+
+            isPrinted = JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            if (jTable16.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -6151,6 +6995,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
+    private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton28;
     private javax.swing.JButton jButton29;
@@ -6179,6 +7024,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox15;
     private javax.swing.JComboBox<String> jComboBox16;
     private javax.swing.JComboBox<String> jComboBox17;
+    private javax.swing.JComboBox<String> jComboBox18;
+    private javax.swing.JComboBox<String> jComboBox19;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox20;
     private javax.swing.JComboBox<String> jComboBox21;
@@ -6187,8 +7034,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox24;
     private javax.swing.JComboBox<String> jComboBox25;
     private javax.swing.JComboBox<String> jComboBox26;
+    private javax.swing.JComboBox<String> jComboBox27;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JComboBox<String> jComboBox8;
@@ -6199,9 +7048,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField3;
     private javax.swing.JFormattedTextField jFormattedTextField4;
-    private javax.swing.JFormattedTextField jFormattedTextField5;
-    private javax.swing.JFormattedTextField jFormattedTextField6;
-    private javax.swing.JFormattedTextField jFormattedTextField7;
     private javax.swing.JFormattedTextField jFormattedTextField9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -6223,7 +7069,18 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel114;
     private javax.swing.JLabel jLabel115;
     private javax.swing.JLabel jLabel116;
+    private javax.swing.JLabel jLabel117;
+    private javax.swing.JLabel jLabel118;
+    private javax.swing.JLabel jLabel119;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel120;
+    private javax.swing.JLabel jLabel121;
+    private javax.swing.JLabel jLabel122;
+    private javax.swing.JLabel jLabel123;
+    private javax.swing.JLabel jLabel124;
+    private javax.swing.JLabel jLabel125;
+    private javax.swing.JLabel jLabel126;
+    private javax.swing.JLabel jLabel127;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -6255,6 +7112,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
@@ -6269,6 +7127,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;

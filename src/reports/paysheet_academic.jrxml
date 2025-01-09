@@ -25,6 +25,9 @@
 	<parameter name="Parameter1" class="java.lang.String"/>
 	<parameter name="Parameter2" class="java.lang.String"/>
 	<parameter name="Parameter3" class="java.lang.String"/>
+	<parameter name="IMAGE_PATH" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{IMAGE_PATH}]]></defaultValueExpression>
+	</parameter>
 	<query language="sql"><![CDATA[]]></query>
 	<field name="COLUMN_0" class="java.lang.String"/>
 	<field name="COLUMN_1" class="java.lang.String"/>
@@ -35,37 +38,43 @@
 	<field name="COLUMN_6" class="java.lang.String"/>
 	<background splitType="Stretch"/>
 	<title height="116" splitType="Stretch">
-		<element kind="staticText" uuid="d1f850ce-936a-4f01-b0c9-29f488d02a0a" x="150" y="0" width="258" height="40" forecolor="#0000FF" fontSize="26.0" bold="true">
+		<element kind="staticText" uuid="d1f850ce-936a-4f01-b0c9-29f488d02a0a" x="272" y="10" width="258" height="40" forecolor="#0000FF" fontSize="26.0" bold="true">
 			<text><![CDATA[NOVARA INSTITUTE]]></text>
 		</element>
-		<element kind="staticText" uuid="9fcb1061-3253-4ce8-bd2e-0f7e82ed1b3d" x="610" y="0" width="60" height="30" bold="true">
+		<element kind="staticText" uuid="9fcb1061-3253-4ce8-bd2e-0f7e82ed1b3d" x="610" y="0" width="60" height="30" bold="true" vTextAlign="Middle">
 			<text><![CDATA[Report No :]]></text>
 		</element>
-		<element kind="staticText" uuid="63e9288c-8bc6-4170-8caf-2141230d7646" x="610" y="30" width="60" height="30" bold="true">
+		<element kind="staticText" uuid="63e9288c-8bc6-4170-8caf-2141230d7646" x="610" y="30" width="60" height="30" bold="true" vTextAlign="Middle">
 			<text><![CDATA[Employee :]]></text>
 		</element>
-		<element kind="staticText" uuid="0fcb9aeb-45ad-4ee2-ad1d-b51a5ed95988" x="610" y="60" width="70" height="30" bold="true">
+		<element kind="staticText" uuid="0fcb9aeb-45ad-4ee2-ad1d-b51a5ed95988" x="610" y="60" width="70" height="30" bold="true" vTextAlign="Middle">
 			<text><![CDATA[Date & Time :]]></text>
 		</element>
-		<element kind="staticText" uuid="a8b568fe-bf32-4445-8983-20cc7c4120df" x="150" y="43" width="174" height="30" fontSize="14.0" bold="true">
+		<element kind="staticText" uuid="a8b568fe-bf32-4445-8983-20cc7c4120df" x="300" y="50" width="174" height="30" fontSize="14.0" bold="true">
 			<text><![CDATA[Contact : 072 573 3695]]></text>
 		</element>
-		<element kind="staticText" uuid="bfacc031-c177-4c83-a2d8-ca5a4844b027" x="150" y="73" width="210" height="30" fontSize="14.0" bold="true">
+		<element kind="staticText" uuid="bfacc031-c177-4c83-a2d8-ca5a4844b027" x="295" y="80" width="210" height="30" fontSize="14.0" bold="true">
 			<text><![CDATA[161/E, Thalgahawila, Horana.]]></text>
 		</element>
 		<element kind="image" uuid="336fffe8-809b-463e-8c5f-643d173c6789" x="46" y="0" width="100" height="89">
-			<expression><![CDATA["D:\\java project\\Allionz-IMS\\src\\resources\\LOGO.png"]]></expression>
+			<expression><![CDATA[$P{IMAGE_PATH}]]></expression>
 		</element>
-		<element kind="textField" uuid="784a4b83-e580-45b3-84e6-85a0b146edf8" x="680" y="0" width="119" height="30" hTextAlign="Center">
+		<element kind="textField" uuid="784a4b83-e580-45b3-84e6-85a0b146edf8" x="680" y="0" width="119" height="30" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter1}]]></expression>
 		</element>
-		<element kind="textField" uuid="89da5032-3e60-49dd-81b8-c4d3e275828e" x="680" y="30" width="119" height="30" hTextAlign="Center">
+		<element kind="textField" uuid="89da5032-3e60-49dd-81b8-c4d3e275828e" x="680" y="30" width="119" height="30" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter2}]]></expression>
 		</element>
-		<element kind="textField" uuid="95f21ade-2c80-4cee-9dea-d0c42cf673c6" x="680" y="60" width="119" height="30" hTextAlign="Center">
+		<element kind="textField" uuid="95f21ade-2c80-4cee-9dea-d0c42cf673c6" x="680" y="60" width="119" height="30" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter3}]]></expression>
 		</element>
 	</title>
+	<pageHeader height="45">
+		<element kind="rectangle" uuid="1eb38831-f13f-4fbd-8ad0-af5a3f71d5ba" x="-10" y="7" width="797" height="30" backcolor="#0000FF"/>
+		<element kind="staticText" uuid="29e71909-9f07-479c-80c9-5d3b06005514" x="310" y="7" width="180" height="30" forecolor="#FFFFFF" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Academic Salary Details]]></text>
+		</element>
+	</pageHeader>
 	<columnHeader height="40" splitType="Stretch">
 		<element kind="staticText" uuid="25131f2c-1a30-4d7a-b00e-4c89e194e40c" x="46" y="5" width="36" height="30" fontSize="16.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[#]]></text>
@@ -131,7 +140,7 @@
 		</band>
 	</detail>
 	<pageFooter height="30" splitType="Stretch">
-		<element kind="staticText" uuid="ddd22c88-3c82-4175-b0f7-4ec0893ca42a" x="250" y="0" width="310" height="30" forecolor="#0000FF" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="ddd22c88-3c82-4175-b0f7-4ec0893ca42a" x="232" y="0" width="310" height="30" forecolor="#0000FF" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[*******Financial Department*******]]></text>
 		</element>
 	</pageFooter>

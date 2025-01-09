@@ -1,15 +1,8 @@
 <!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
-<jasperReport name="Monthly_expense" language="groovy" columnCount="1" pageWidth="620" pageHeight="842" orientation="Landscape" columnWidth="580" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc3a3fa9-c2fa-4ed7-a5bd-b7371cfe082f">
+<jasperReport name="Monthly_expense" language="java" columnCount="1" pageWidth="600" pageHeight="620" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc3a3fa9-c2fa-4ed7-a5bd-b7371cfe082f">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<dataset name="Dataset1" uuid="159f9cb6-a7f8-4fca-8d09-1146053765c7">
 		<query language="sql"><![CDATA[]]></query>
 		<field name="COLUMN_1" class="java.lang.String"/>
@@ -27,28 +20,28 @@
 	<parameter name="Parameter3" class="java.lang.String"/>
 	<parameter name="Parameter4" class="java.lang.String"/>
 	<parameter name="Parameter5" class="java.lang.String"/>
+	<parameter name="IMAGE_PATH" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{IMAGE_PATH}]]></defaultValueExpression>
+	</parameter>
 	<query language="sql"><![CDATA[]]></query>
 	<field name="COLUMN_0" class="java.lang.String"/>
 	<field name="COLUMN_1" class="java.lang.String"/>
 	<field name="COLUMN_2" class="java.lang.String"/>
 	<field name="COLUMN_3" class="java.lang.String"/>
 	<field name="COLUMN_4" class="java.lang.String"/>
-	<field name="COLUMN_5" class="java.lang.String"/>
-	<field name="COLUMN_6" class="java.lang.String"/>
-	<field name="COLUMN_7" class="java.lang.String"/>
 	<background splitType="Stretch"/>
 	<title height="116" splitType="Stretch">
 		<element kind="staticText" uuid="d1f850ce-936a-4f01-b0c9-29f488d02a0a" x="110" y="0" width="258" height="40" forecolor="#0000FF" fontSize="26.0" bold="true">
 			<text><![CDATA[NOVARA INSTITUTE]]></text>
 		</element>
 		<element kind="staticText" uuid="9fcb1061-3253-4ce8-bd2e-0f7e82ed1b3d" x="380" y="0" width="60" height="30" bold="true" vTextAlign="Middle">
-			<text><![CDATA[Report No]]></text>
+			<text><![CDATA[Report No :]]></text>
 		</element>
 		<element kind="staticText" uuid="63e9288c-8bc6-4170-8caf-2141230d7646" x="380" y="30" width="60" height="30" bold="true" vTextAlign="Middle">
-			<text><![CDATA[Employee]]></text>
+			<text><![CDATA[Employee :]]></text>
 		</element>
-		<element kind="staticText" uuid="0fcb9aeb-45ad-4ee2-ad1d-b51a5ed95988" x="380" y="60" width="60" height="30" bold="true" vTextAlign="Middle">
-			<text><![CDATA[Date & Time]]></text>
+		<element kind="staticText" uuid="0fcb9aeb-45ad-4ee2-ad1d-b51a5ed95988" x="380" y="60" width="70" height="30" bold="true" vTextAlign="Middle">
+			<text><![CDATA[Date & Time :]]></text>
 		</element>
 		<element kind="staticText" uuid="a8b568fe-bf32-4445-8983-20cc7c4120df" x="110" y="43" width="174" height="30" fontSize="14.0" bold="true">
 			<text><![CDATA[Contact : 072 573 3695]]></text>
@@ -57,18 +50,24 @@
 			<text><![CDATA[161/E, Thalgahawila, Horana.]]></text>
 		</element>
 		<element kind="image" uuid="336fffe8-809b-463e-8c5f-643d173c6789" x="10" y="0" width="100" height="89">
-			<expression><![CDATA["D:\\java project\\Allionz-IMS\\src\\resources\\LOGO.png"]]></expression>
+			<expression><![CDATA[$P{IMAGE_PATH}]]></expression>
 		</element>
-		<element kind="textField" uuid="784a4b83-e580-45b3-84e6-85a0b146edf8" x="440" y="0" width="140" height="30" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="784a4b83-e580-45b3-84e6-85a0b146edf8" x="450" y="0" width="130" height="30" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter1}]]></expression>
 		</element>
-		<element kind="textField" uuid="89da5032-3e60-49dd-81b8-c4d3e275828e" x="440" y="30" width="140" height="30" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="89da5032-3e60-49dd-81b8-c4d3e275828e" x="450" y="30" width="130" height="30" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter2}]]></expression>
 		</element>
-		<element kind="textField" uuid="95f21ade-2c80-4cee-9dea-d0c42cf673c6" x="440" y="60" width="140" height="30" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="95f21ade-2c80-4cee-9dea-d0c42cf673c6" x="450" y="60" width="130" height="30" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter3}]]></expression>
 		</element>
 	</title>
+	<pageHeader height="35">
+		<element kind="rectangle" uuid="fd6d007d-2f15-4369-99c3-1a00184308fe" x="10" y="0" width="569" height="30" backcolor="#0000FF"/>
+		<element kind="staticText" uuid="1a5e7acf-1eb1-4341-9ad2-96d7496bba1d" x="200" y="0" width="180" height="30" forecolor="#FFFFFF" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Monthly Expense Report]]></text>
+		</element>
+	</pageHeader>
 	<columnHeader height="40" splitType="Stretch">
 		<element kind="staticText" uuid="25131f2c-1a30-4d7a-b00e-4c89e194e40c" x="10" y="5" width="36" height="30" fontSize="16.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[#]]></text>
@@ -82,10 +81,10 @@
 		<element kind="staticText" uuid="2325cd08-f51a-423b-8681-fe6c930b3345" x="250" y="5" width="90" height="30" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Amount]]></text>
 		</element>
-		<element kind="staticText" uuid="2874af27-ab31-45b7-ad50-f2bd98c313a5" x="350" y="5" width="80" height="30" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="2874af27-ab31-45b7-ad50-f2bd98c313a5" x="350" y="5" width="90" height="30" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Bill Type]]></text>
 		</element>
-		<element kind="staticText" uuid="1c795d82-1425-4386-9416-3df53b08c64a" x="440" y="5" width="130" height="30" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="1c795d82-1425-4386-9416-3df53b08c64a" x="450" y="5" width="120" height="30" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Settle Date]]></text>
 			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3dcffa0d-e712-403c-b294-e410f78e7239"/>
 		</element>
@@ -107,11 +106,11 @@
 				<expression><![CDATA[$F{COLUMN_2}]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b14fa895-6586-4674-ade3-816f7a0797a8"/>
 			</element>
-			<element kind="textField" uuid="86345f01-8e1c-4b94-be1d-5fc79a8ff11a" x="350" y="3" width="80" height="30" hTextAlign="Center">
+			<element kind="textField" uuid="86345f01-8e1c-4b94-be1d-5fc79a8ff11a" x="350" y="3" width="90" height="30" hTextAlign="Center">
 				<expression><![CDATA[$F{COLUMN_3}]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d633e85e-92e0-43f2-bf9c-bd6d7ca82fb0"/>
 			</element>
-			<element kind="textField" uuid="83b3dd50-84ba-45dd-bafe-9b9ed8b55918" x="440" y="5" width="130" height="30">
+			<element kind="textField" uuid="83b3dd50-84ba-45dd-bafe-9b9ed8b55918" x="450" y="5" width="120" height="30" hTextAlign="Center">
 				<expression><![CDATA[$F{COLUMN_4}]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3dcffa0d-e712-403c-b294-e410f78e7239"/>
 			</element>
@@ -122,13 +121,13 @@
 			<expression><![CDATA[$P{Parameter4}]]></expression>
 		</element>
 		<element kind="staticText" uuid="0b4a7a4b-9a9d-474f-a8da-4606400f378a" x="10" y="10" width="60" height="30" fontSize="14.0" hTextAlign="Left" vTextAlign="Middle">
-			<text><![CDATA[Month]]></text>
+			<text><![CDATA[Month :]]></text>
 		</element>
 		<element kind="textField" uuid="00e19349-faa5-46c7-b27c-ce4a3c7a4e47" x="70" y="40" width="110" height="30" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter5}]]></expression>
 		</element>
 		<element kind="staticText" uuid="f1240899-f9e5-4a51-9b6c-af712580c998" x="10" y="40" width="60" height="30" fontSize="14.0" vTextAlign="Middle">
-			<text><![CDATA[Total :]]></text>
+			<text><![CDATA[Total   :]]></text>
 		</element>
 	</columnFooter>
 	<pageFooter height="30" splitType="Stretch">
