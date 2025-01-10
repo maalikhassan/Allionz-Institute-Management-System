@@ -2488,8 +2488,8 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addComponent(jButton36)
                 .addGap(25, 25, 25)
-                .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(178, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Profit Loss Report", jPanel12);
