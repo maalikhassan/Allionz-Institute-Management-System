@@ -189,10 +189,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
         ReportLoadMonth5();
         ReportLoadMonth6();
         ReportLoadMonth7();
-//        ReportLoadMonth8();
-//        ReportLoadMonth9();
-//        ReportLoadMonth10();
-//        ReportLoadMonth11();
+        ReportLoadMonth8();
+        ReportLoadMonth9();
+        ReportLoadMonth10();
+        ReportLoadMonth11();
         loadIncomeTable();
         LoadFessDetails();
         LoadDuesTable();
@@ -640,7 +640,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
             ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_payments` INNER JOIN"
                     + "`bill_type` ON `bill_payments`.`bill_type_id`=`bill_type`.`id` INNER JOIN"
                     + "`vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id` INNER JOIN"
-                    + "`payment_status` ON `bill_payments`.`payment_status_id`=`payment_status`.`id`");
+                    + "`payment_status` ON `bill_payments`.`payment_status_id`=`payment_status`.`id`"
+                    + "INNER JOIN `month` ON `bill_payments`.`month_id`=`month`.`id`");
 
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
@@ -655,6 +656,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 vector.add(resultSet.getString("amount"));
                 vector.add(resultSet.getString("payment_date"));
                 vector.add(resultSet.getString("payment_status.status"));
+                 vector.add(resultSet.getString("month.month_name"));
                 model.addRow(vector);
 
             }
@@ -1456,81 +1458,81 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }
     //Salary department month
     //8
-//    private void ReportLoadMonth8() {
-//        try {
-//            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
-//
-//            Vector<String> vector = new Vector<>();
-//            vector.add("All Months");
-//
-//            while (resultSet.next()) {
-//                vector.add(resultSet.getString("month_name"));
-//                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
-//
-//            }
-//            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-//            jComboBox22.setModel(model);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void ReportLoadMonth8() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector = new Vector<>();
+            vector.add("All Months");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("month_name"));
+                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+
+            }
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox29.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     //9
-//    private void ReportLoadMonth9() {
-//        try {
-//            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
-//
-//            Vector<String> vector = new Vector<>();
-//            vector.add("All Months");
-//
-//            while (resultSet.next()) {
-//                vector.add(resultSet.getString("month_name"));
-//                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
-//
-//            }
-//            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-//            jComboBox24.setModel(model);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void ReportLoadMonth9() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector = new Vector<>();
+            vector.add("All Months");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("month_name"));
+                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+
+            }
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox30.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     //10
-//    private void ReportLoadMonth10() {
-//        try {
-//            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
-//
-//            Vector<String> vector = new Vector<>();
-//            vector.add("All Months");
-//
-//            while (resultSet.next()) {
-//                vector.add(resultSet.getString("month_name"));
-//                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
-//
-//            }
-//            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-//            jComboBox25.setModel(model);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void ReportLoadMonth10() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector = new Vector<>();
+            vector.add("All Months");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("month_name"));
+                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+
+            }
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox31.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     //11
-//    private void ReportLoadMonth11() {
-//        try {
-//            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
-//
-//            Vector<String> vector = new Vector<>();
-//            vector.add("All Months");
-//
-//            while (resultSet.next()) {
-//                vector.add(resultSet.getString("month_name"));
-//                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
-//
-//            }
-//            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-//            jComboBox26.setModel(model);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void ReportLoadMonth11() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector = new Vector<>();
+            vector.add("All Months");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("month_name"));
+                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+
+            }
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox32.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     //<--Financial report month load-->
     //<--Calculate total-->
     //1
@@ -1770,28 +1772,28 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel96 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
         jLabel41 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox<>();
+        jComboBox29 = new javax.swing.JComboBox<>();
         jPanel30 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
         jLabel97 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
         jLabel55 = new javax.swing.JLabel();
-        jComboBox18 = new javax.swing.JComboBox<>();
+        jComboBox30 = new javax.swing.JComboBox<>();
         jPanel31 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
         jLabel87 = new javax.swing.JLabel();
         jButton13 = new javax.swing.JButton();
         jLabel117 = new javax.swing.JLabel();
-        jComboBox19 = new javax.swing.JComboBox<>();
+        jComboBox31 = new javax.swing.JComboBox<>();
         jPanel34 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable6 = new javax.swing.JTable();
         jLabel101 = new javax.swing.JLabel();
         jButton15 = new javax.swing.JButton();
         jLabel118 = new javax.swing.JLabel();
-        jComboBox27 = new javax.swing.JComboBox<>();
+        jComboBox32 = new javax.swing.JComboBox<>();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane18 = new javax.swing.JScrollPane();
         jTable17 = new javax.swing.JTable();
@@ -3414,6 +3416,12 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         salarymanagementpanel.add(jPanel24, java.awt.BorderLayout.PAGE_START);
 
+        jTabbedPane2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane2StateChanged(evt);
+            }
+        });
+
         jTable19.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -3548,6 +3556,12 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Manage Salary Details", jPanel4);
 
+        jTabbedPane3.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane3StateChanged(evt);
+            }
+        });
+
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -3582,7 +3596,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jLabel41.setText("Select Month");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox29.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
         jPanel29.setLayout(jPanel29Layout);
@@ -3591,15 +3605,15 @@ public class FinancialDashboard extends javax.swing.JFrame {
             .addGroup(jPanel29Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 910, Short.MAX_VALUE)
                     .addGroup(jPanel29Layout.createSequentialGroup()
                         .addComponent(jLabel96)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(52, 52, 52)
                         .addComponent(jLabel41)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(jComboBox29, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -3613,7 +3627,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel96)
                     .addComponent(jLabel41)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -3653,7 +3667,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jLabel55.setText("Select Month");
 
-        jComboBox18.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox30.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel30Layout = new javax.swing.GroupLayout(jPanel30);
         jPanel30.setLayout(jPanel30Layout);
@@ -3669,9 +3683,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
                         .addGap(55, 55, 55)
                         .addComponent(jLabel55)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox18, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBox30, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 916, Short.MAX_VALUE)))
         );
         jPanel30Layout.setVerticalGroup(
             jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3683,7 +3697,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel97)
                     .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel55)
-                    .addComponent(jComboBox18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox30, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -3723,7 +3737,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jLabel117.setText("Select Month");
 
-        jComboBox19.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox31.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel31Layout = new javax.swing.GroupLayout(jPanel31);
         jPanel31.setLayout(jPanel31Layout);
@@ -3732,7 +3746,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             .addGroup(jPanel31Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 916, Short.MAX_VALUE)
                     .addGroup(jPanel31Layout.createSequentialGroup()
                         .addComponent(jLabel87)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -3740,7 +3754,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                         .addGap(50, 50, 50)
                         .addComponent(jLabel117, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox19, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBox31, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel31Layout.setVerticalGroup(
@@ -3753,7 +3767,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel87)
                     .addComponent(jLabel117)
-                    .addComponent(jComboBox19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox31, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -3793,7 +3807,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jLabel118.setText("Select Month");
 
-        jComboBox27.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox32.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel34Layout = new javax.swing.GroupLayout(jPanel34);
         jPanel34.setLayout(jPanel34Layout);
@@ -3802,15 +3816,15 @@ public class FinancialDashboard extends javax.swing.JFrame {
             .addGroup(jPanel34Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 910, Short.MAX_VALUE)
                     .addGroup(jPanel34Layout.createSequentialGroup()
                         .addComponent(jLabel101)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(68, 68, 68)
                         .addComponent(jLabel118)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox27, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox32, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -3824,7 +3838,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel101)
                     .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel118)
-                    .addComponent(jComboBox27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -3834,7 +3848,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jPanel28.setLayout(jPanel28Layout);
         jPanel28Layout.setHorizontalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel28Layout.setVerticalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -4042,7 +4059,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                         .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(41, 41, 41)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
+                    .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
                     .addComponent(jScrollPane19)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -4141,7 +4158,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -5155,7 +5172,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
                     if (showConfirm == JOptionPane.YES_OPTION) {
                         MySQL.executeIUD("INSERT INTO `bill_payments`(`bill_type_id`, `vendor_id`, `description`, `amount`, `payment_date`, `payment_status_id`,`month_id`) "
-                                + "VALUES ('" + LoadBillType.get(BillType) + "', '" + LoadVendorMap.get(Vendor) + "', '" + Description + "', " + Amount + ", '" + date + "', '" + LoadStatusmap.get(status) + "','"+LoadMonthMap.get(month)+"')");
+                                + "VALUES ('" + LoadBillType.get(BillType) + "', '" + LoadVendorMap.get(Vendor) + "', '" + Description + "', " + Amount + ","
+                                        + " '" + date + "', '" + LoadStatusmap.get(status) + "','"+LoadMonthMap.get(month)+"')");
 
                         loadBillPayments();
                         reset();
@@ -5255,18 +5273,14 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String BillId = String.valueOf(jLabel13.getText());
             String BillType = String.valueOf(jComboBox7.getSelectedIndex());
             String Vendor = String.valueOf(jComboBox11.getSelectedIndex());
-            String Amount = String.valueOf(jFormattedTextField1.getText());
-            String Status = String.valueOf(jComboBox12.getSelectedIndex());
-
+//            String Amount = String.valueOf(jFormattedTextField1.getText());
+//            String Status = String.valueOf(jComboBox12.getSelectedIndex());
+//            String month = String.valueOf(jComboBox28.getSelectedIndex());
             if (BillType.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Bill Type To Remove", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (Vendor.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Vendor To Remove", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else if (Amount.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please Enter Amount To Remove", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else if (Status.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please Select Status To Remove", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else {
+            } else  {
                 ResultSet resultSet = MySQL.executeSearch("SELECT  * FROM `bill_payments` WHERE `bill_id`='" + BillId + "'");
 
                 if (resultSet.next()) {
@@ -6135,6 +6149,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private void jTabbedPane2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane2StateChanged
         loadBaseSalary();
         loadEmployee();
+        loadAcademicSalary();
+       loadFinanceSalaryDetails();
+        loadTeachersSalary();
+        loadMaintenanceSalary();
 
     }//GEN-LAST:event_jTabbedPane2StateChanged
 
@@ -6986,6 +7004,13 @@ public class FinancialDashboard extends javax.swing.JFrame {
         LoadVendors();
     }//GEN-LAST:event_jComboBox11MouseClicked
 
+    private void jTabbedPane3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane3StateChanged
+       loadAcademicSalary();
+       loadFinanceSalaryDetails();
+        loadTeachersSalary();
+        loadMaintenanceSalary();
+    }//GEN-LAST:event_jTabbedPane3StateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -7055,8 +7080,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox15;
     private javax.swing.JComboBox<String> jComboBox16;
     private javax.swing.JComboBox<String> jComboBox17;
-    private javax.swing.JComboBox<String> jComboBox18;
-    private javax.swing.JComboBox<String> jComboBox19;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox20;
     private javax.swing.JComboBox<String> jComboBox21;
@@ -7065,11 +7088,13 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox24;
     private javax.swing.JComboBox<String> jComboBox25;
     private javax.swing.JComboBox<String> jComboBox26;
-    private javax.swing.JComboBox<String> jComboBox27;
     private javax.swing.JComboBox<String> jComboBox28;
+    private javax.swing.JComboBox<String> jComboBox29;
     private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox30;
+    private javax.swing.JComboBox<String> jComboBox31;
+    private javax.swing.JComboBox<String> jComboBox32;
     private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JComboBox<String> jComboBox8;

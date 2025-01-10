@@ -2778,7 +2778,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jTabbedPane2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jTabbedPane2" alignment="0" pref="934" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -2789,6 +2789,9 @@
               </Layout>
               <SubComponents>
                 <Container class="javax.swing.JTabbedPane" name="jTabbedPane2">
+                  <Events>
+                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPane2StateChanged"/>
+                  </Events>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                   <SubComponents>
@@ -3030,7 +3033,11 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jTabbedPane3" alignment="1" max="32767" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jTabbedPane3" pref="922" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -3045,6 +3052,9 @@
                       </Layout>
                       <SubComponents>
                         <Container class="javax.swing.JTabbedPane" name="jTabbedPane3">
+                          <Events>
+                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPane3StateChanged"/>
+                          </Events>
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                           <SubComponents>
@@ -3063,15 +3073,15 @@
                                       <Group type="102" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jScrollPane3" pref="948" max="32767" attributes="0"/>
+                                              <Component id="jScrollPane3" pref="910" max="32767" attributes="0"/>
                                               <Group type="102" attributes="0">
                                                   <Component id="jLabel96" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jButton11" min="-2" pref="127" max="-2" attributes="0"/>
                                                   <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                                                   <Component id="jLabel41" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="jComboBox5" min="-2" pref="134" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                                  <Component id="jComboBox29" min="-2" pref="135" max="-2" attributes="0"/>
                                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -3089,7 +3099,7 @@
                                               <Component id="jButton11" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                                               <Component id="jLabel96" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel41" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jComboBox5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jComboBox29" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace pref="18" max="32767" attributes="0"/>
                                       </Group>
@@ -3187,7 +3197,7 @@
                                     <Property name="text" type="java.lang.String" value="Select Month"/>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JComboBox" name="jComboBox5">
+                                <Component class="javax.swing.JComboBox" name="jComboBox29">
                                   <Properties>
                                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                                       <StringArray count="4">
@@ -3226,10 +3236,10 @@
                                                   <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                                                   <Component id="jLabel55" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Component id="jComboBox18" min="-2" pref="132" max="-2" attributes="0"/>
+                                                  <Component id="jComboBox30" min="-2" pref="129" max="-2" attributes="0"/>
                                                   <EmptySpace max="32767" attributes="0"/>
                                               </Group>
-                                              <Component id="jScrollPane4" alignment="1" pref="954" max="32767" attributes="0"/>
+                                              <Component id="jScrollPane4" alignment="1" pref="916" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -3244,7 +3254,7 @@
                                               <Component id="jLabel97" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="jButton10" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                                               <Component id="jLabel55" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jComboBox18" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jComboBox30" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace pref="15" max="32767" attributes="0"/>
                                       </Group>
@@ -3342,7 +3352,7 @@
                                     <Property name="text" type="java.lang.String" value="Select Month"/>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JComboBox" name="jComboBox18">
+                                <Component class="javax.swing.JComboBox" name="jComboBox30">
                                   <Properties>
                                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                                       <StringArray count="4">
@@ -3374,7 +3384,7 @@
                                       <Group type="102" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jScrollPane5" pref="954" max="32767" attributes="0"/>
+                                              <Component id="jScrollPane5" pref="916" max="32767" attributes="0"/>
                                               <Group type="102" attributes="0">
                                                   <Component id="jLabel87" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
@@ -3382,7 +3392,7 @@
                                                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                                                   <Component id="jLabel117" min="-2" pref="80" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jComboBox19" min="-2" pref="132" max="-2" attributes="0"/>
+                                                  <Component id="jComboBox31" min="-2" pref="124" max="-2" attributes="0"/>
                                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -3399,7 +3409,7 @@
                                               <Component id="jButton13" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                                               <Component id="jLabel87" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel117" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jComboBox19" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jComboBox31" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace pref="12" max="32767" attributes="0"/>
                                       </Group>
@@ -3497,7 +3507,7 @@
                                     <Property name="text" type="java.lang.String" value="Select Month"/>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JComboBox" name="jComboBox19">
+                                <Component class="javax.swing.JComboBox" name="jComboBox31">
                                   <Properties>
                                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                                       <StringArray count="4">
@@ -3529,15 +3539,15 @@
                                       <Group type="102" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jScrollPane6" pref="948" max="32767" attributes="0"/>
+                                              <Component id="jScrollPane6" pref="910" max="32767" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="jLabel101" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                                   <Component id="jButton15" min="-2" pref="122" max="-2" attributes="0"/>
                                                   <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                                                   <Component id="jLabel118" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Component id="jComboBox27" min="-2" pref="147" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="jComboBox32" min="-2" pref="127" max="-2" attributes="0"/>
                                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -3555,7 +3565,7 @@
                                               <Component id="jLabel101" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="jButton15" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                                               <Component id="jLabel118" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jComboBox27" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jComboBox32" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace pref="15" max="32767" attributes="0"/>
                                       </Group>
@@ -3653,7 +3663,7 @@
                                     <Property name="text" type="java.lang.String" value="Select Month"/>
                                   </Properties>
                                 </Component>
-                                <Component class="javax.swing.JComboBox" name="jComboBox27">
+                                <Component class="javax.swing.JComboBox" name="jComboBox32">
                                   <Properties>
                                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                                       <StringArray count="4">
@@ -3741,7 +3751,7 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jScrollPane18" alignment="0" pref="692" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane18" alignment="0" pref="666" max="32767" attributes="0"/>
                                       <Component id="jScrollPane19" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
