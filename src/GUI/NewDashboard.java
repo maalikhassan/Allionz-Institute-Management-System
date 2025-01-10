@@ -2445,17 +2445,22 @@ public class NewDashboard extends javax.swing.JFrame {
         jButton36.setBackground(new java.awt.Color(0, 52, 101));
         jButton36.setForeground(new java.awt.Color(255, 255, 255));
         jButton36.setText("Print");
+        jButton36.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton36ActionPerformed(evt);
+            }
+        });
 
         jTable16.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Income", "Expense", "Profit / Loss", "Month"
+                "Description", "Current Month", "Previous Month", "Budgeted Amount", "Variance / Due Amount", "%Difference"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -3552,6 +3557,44 @@ public class NewDashboard extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jTextField9KeyReleased
+
+    private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
+            // profit loss Report:
+
+        try {
+//            long invoiceid = System.currentTimeMillis();
+//            jLabel84.setText(String.valueOf(invoiceid));
+//            String EmployeeUserName = jLabel85.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/ProfitLostTest.jasper");
+            if (path == null) {
+                throw new RuntimeException("Report file not found at /reports/ProfitLostTest.jasper");
+            }
+
+            // Parameters for the report
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("Parameter1", dateTime);
+            parameters.put("IMAGE_PATH", imagePath);
+//            params.put("Parameter2", Department);
+//            params.put("Parameter3", Basesalary);
+            // Data source
+            if (jTable16.getRowCount() == 0) {
+                System.out.println("Table is empty.");
+                throw new RuntimeException("Table has no data to generate the report.");
+            }
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable16.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
+
+            JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }//GEN-LAST:event_jButton36ActionPerformed
 
     /**
      * @param args the command line arguments
