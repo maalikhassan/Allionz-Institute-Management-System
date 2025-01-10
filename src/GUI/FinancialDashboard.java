@@ -118,7 +118,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
         loadoverview();
         loadoverviewAnual();
         loadProgressBar();
-        loadoverviewAnual();
         loadChartIntoPanel();
 
         loadAcademicSalary();
@@ -250,8 +249,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private void loadoverview() {
         ResultSet resultSet = null;
         try {
-            resultSet = MySQL.executeSearch("SELECT SUM(amount_paid) AS total_paid FROM feepayments"
-                    + " WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE());");
+            resultSet = MySQL.executeSearch("SELECT SUM(amount_paid) AS total_paid FROM feepayments "
+                    + " INNER JOIN `payment_status` ON `feepayments`.`payment_status_id` = `payment_status`.`id` "
+                    + " WHERE `payment_status`.`status` = 'paid' AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE());");
 
             if (resultSet.next()) {
                 String sum = resultSet.getString("total_paid");
@@ -269,8 +269,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private void loadoverviewAnual() {
         ResultSet resultSet = null;
         try {
-            resultSet = MySQL.executeSearch("SELECT SUM(amount_paid) AS total_paid "
-                    + "FROM feepayments WHERE YEAR(payment_date) = YEAR(CURDATE());");
+            resultSet = MySQL.executeSearch("SELECT SUM(amount_paid) AS total_paid FROM `feepayments` "
+                    + "INNER JOIN `payment_status` ON `feepayments`.`payment_status_id` = `payment_status`.`id`"
+                    + "WHERE `payment_status`.`status` = 'paid' AND YEAR(payment_date) = YEAR(CURDATE());");
 
             if (resultSet.next()) {
                 String sum = resultSet.getString("total_paid");
@@ -525,8 +526,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-    
 
     // salary management   
     private void loadMaintenanceSalary() {
@@ -659,7 +658,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 vector.add(resultSet.getString("amount"));
                 vector.add(resultSet.getString("payment_date"));
                 vector.add(resultSet.getString("payment_status.status"));
-                 vector.add(resultSet.getString("month.month_name"));
+                vector.add(resultSet.getString("month.month_name"));
                 model.addRow(vector);
 
             }
@@ -1197,7 +1196,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 vector.add(resultSet.getString("salary_details.base_salary"));
                 vector.add(resultSet.getString("net_amount"));
                 vector.add(resultSet.getString("payment_date"));
-                vector.add(resultSet.getString("month.month_name"));  
+                vector.add(resultSet.getString("month.month_name"));
                 vector.add(resultSet.getString("payment_status.status"));
                 model.addRow(vector);
 
@@ -1459,6 +1458,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+
     //Salary department month
     //8
     private void ReportLoadMonth8() {
@@ -1479,6 +1479,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+
     //9
     private void ReportLoadMonth9() {
         try {
@@ -1498,6 +1499,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+
     //10
     private void ReportLoadMonth10() {
         try {
@@ -1517,6 +1519,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+
     //11
     private void ReportLoadMonth11() {
         try {
@@ -1536,6 +1539,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+
     //<--Financial report month load-->
     //<--Calculate total-->
     //1
@@ -5016,6 +5020,13 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private void menu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu1MouseClicked
         // TODO add your handling code here:
 
+        loadoverviewAnual();
+        loadoverview();
+        loadProgressBar();
+        loadExpenses();
+        loadDues();
+        loadChartIntoPanel();
+
         financialoverviewpanel.setVisible(true);
         salarymanagementpanel.setVisible(false);
         billspanel.setVisible(false);
@@ -5177,7 +5188,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     if (showConfirm == JOptionPane.YES_OPTION) {
                         MySQL.executeIUD("INSERT INTO `bill_payments`(`bill_type_id`, `vendor_id`, `description`, `amount`, `payment_date`, `payment_status_id`,`month_id`) "
                                 + "VALUES ('" + LoadBillType.get(BillType) + "', '" + LoadVendorMap.get(Vendor) + "', '" + Description + "', " + Amount + ","
-                                        + " '" + date + "', '" + LoadStatusmap.get(status) + "','"+LoadMonthMap.get(month)+"')");
+                                + " '" + date + "', '" + LoadStatusmap.get(status) + "','" + LoadMonthMap.get(month) + "')");
 
                         loadBillPayments();
                         reset();
@@ -5219,7 +5230,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
                     if (showConfirm == JOptionPane.YES_OPTION) {
                         MySQL.executeIUD("UPDATE `bill_payments` SET `bill_type_id`='" + LoadBillType.get(BillType) + "',`vendor_id`='" + LoadVendorMap.get(Vendor) + "',`description`='" + Description + "',"
-                                + "`amount`='" + Amount + "',`payment_status_id`='" + LoadStatusmap.get(Status) + "','"+LoadMonthMap.get(month)+"' "
+                                + "`amount`='" + Amount + "',`payment_status_id`='" + LoadStatusmap.get(Status) + "','" + LoadMonthMap.get(month) + "' "
                                 + "WHERE `bill_id`='" + BillId + "'");
                         reset();
                         loadBillPayments();
@@ -5265,7 +5276,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         String Status = String.valueOf(jTable1.getValueAt(row, 6));
         jComboBox12.setSelectedItem(Status);
-        
+
         String month = String.valueOf(jTable1.getValueAt(row, 7));
         jComboBox28.setSelectedItem(month);
 
@@ -5284,7 +5295,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Please Enter Bill Type To Remove", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (Vendor.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Vendor To Remove", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else  {
+            } else {
                 ResultSet resultSet = MySQL.executeSearch("SELECT  * FROM `bill_payments` WHERE `bill_id`='" + BillId + "'");
 
                 if (resultSet.next()) {
@@ -6088,7 +6099,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 vector.add(resultSet.getString("salary_details.base_salary"));
                 vector.add(resultSet.getString("net_amount"));
                 vector.add(resultSet.getString("payment_date"));
-                vector.add(resultSet.getString("month.month_name"));              
+                vector.add(resultSet.getString("month.month_name"));
                 vector.add(resultSet.getString("payment_status.status"));
                 model.addRow(vector);
             }
@@ -6154,7 +6165,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         loadBaseSalary();
         loadEmployee();
         loadAcademicSalary();
-       loadFinanceSalaryDetails();
+        loadFinanceSalaryDetails();
         loadTeachersSalary();
         loadMaintenanceSalary();
 
@@ -7009,8 +7020,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox11MouseClicked
 
     private void jTabbedPane3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane3StateChanged
-       loadAcademicSalary();
-       loadFinanceSalaryDetails();
+        loadAcademicSalary();
+        loadFinanceSalaryDetails();
         loadTeachersSalary();
         loadMaintenanceSalary();
     }//GEN-LAST:event_jTabbedPane3StateChanged
@@ -7366,7 +7377,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel85.setText("");
         jLabel86.setText("");
         jComboBox28.setSelectedIndex(0);
-         
+
     }
 
     private void clear() {
