@@ -7,6 +7,8 @@ package gui;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.Image;
 import java.io.File;
 import java.io.InputStream;
@@ -14,11 +16,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -91,7 +100,7 @@ public class NewDashboard extends javax.swing.JFrame {
         loadAdminSheduleForSubject();
         loadAdminSheduleForReport();
         loadAdminStudentAttendanceReportTable() ;
-        
+        loadAdminStudentAttendanceReportTable();
         //Financial report load 
         loadIncomeTable();
         LoadExpensesTable();
@@ -99,8 +108,9 @@ public class NewDashboard extends javax.swing.JFrame {
         loadSalaryDetailsTeacher();
         LoadFessDetails();
         LoadDuesTable();
-        
-        
+        loadProfitLoss();
+        loadAdminTeacherEnrollmenrt();
+        loadProfitLoss();
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(SwingConstants.CENTER);
         jTable12.setDefaultRenderer(Object.class, render);
@@ -633,10 +643,10 @@ public class NewDashboard extends javax.swing.JFrame {
         jLabel46 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jTextField11 = new javax.swing.JTextField();
-        jButton14 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
+        jLabel33 = new javax.swing.JLabel();
         jPanel29 = new javax.swing.JPanel();
         jTextField12 = new javax.swing.JTextField();
         jButton17 = new javax.swing.JButton();
@@ -697,12 +707,8 @@ public class NewDashboard extends javax.swing.JFrame {
         jComboBox8 = new javax.swing.JComboBox<>();
         jPanel12 = new javax.swing.JPanel();
         jButton36 = new javax.swing.JButton();
-        jButton37 = new javax.swing.JButton();
-        jTextField23 = new javax.swing.JTextField();
         jScrollPane16 = new javax.swing.JScrollPane();
         jTable16 = new javax.swing.JTable();
-        jLabel52 = new javax.swing.JLabel();
-        jComboBox9 = new javax.swing.JComboBox<>();
         managementpanel = new javax.swing.JPanel();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jPanel13 = new javax.swing.JPanel();
@@ -1610,9 +1616,9 @@ public class NewDashboard extends javax.swing.JFrame {
             }
         });
 
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
+        jTextField9.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField9KeyReleased(evt);
             }
         });
 
@@ -1644,7 +1650,7 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE))
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE))
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton10)
@@ -1659,19 +1665,19 @@ public class NewDashboard extends javax.swing.JFrame {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton10)
                     .addComponent(jLabel27))
                 .addGap(25, 25, 25)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Student Enrollment Reports", jPanel15);
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField2KeyReleased(evt);
             }
         });
 
@@ -1718,7 +1724,7 @@ public class NewDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel45)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -1736,9 +1742,9 @@ public class NewDashboard extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Class Schedule Report", jPanel4);
 
-        jTextField10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField10ActionPerformed(evt);
+        jTextField10.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField10KeyReleased(evt);
             }
         });
 
@@ -1779,13 +1785,13 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 553, Short.MAX_VALUE)
+                        .addGap(0, 549, Short.MAX_VALUE)
                         .addComponent(jButton6)
                         .addGap(61, 61, 61)
                         .addComponent(jLabel46)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -1803,19 +1809,20 @@ public class NewDashboard extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Subject Management Report", jPanel5);
 
-        jTextField11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField11ActionPerformed(evt);
+        jTextField11.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField11KeyReleased(evt);
             }
         });
-
-        jButton14.setBackground(new java.awt.Color(0, 52, 101));
-        jButton14.setForeground(new java.awt.Color(255, 255, 255));
-        jButton14.setText("Search");
 
         jButton15.setBackground(new java.awt.Color(0, 52, 101));
         jButton15.setForeground(new java.awt.Color(255, 255, 255));
         jButton15.setText("Print");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
 
         jTable5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1835,6 +1842,8 @@ public class NewDashboard extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(jTable5);
 
+        jLabel33.setText("Search");
+
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
@@ -1843,13 +1852,13 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                        .addGap(0, 496, Short.MAX_VALUE)
+                        .addGap(0, 549, Short.MAX_VALUE)
                         .addComponent(jButton15)
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton14)
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel33)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
@@ -1857,19 +1866,19 @@ public class NewDashboard extends javax.swing.JFrame {
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton15)
+                    .addComponent(jLabel33))
                 .addGap(25, 25, 25)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
                 .addGap(33, 33, 33))
         );
 
         jTabbedPane2.addTab("Teacher List", jPanel16);
 
-        jTextField12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField12ActionPerformed(evt);
+        jTextField12.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField12KeyReleased(evt);
             }
         });
 
@@ -1887,11 +1896,11 @@ public class NewDashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Year", "Month", "A/L Batch", "Subject", "Teacher", "Total Records", "Tota_Present", "Total_Absent", " Attendance %"
+                "Year", "Month", "A/L Batch", "Subject", "Teacher", "Total Records", "Tota_Present", "Total_Absent", "Present %", "Absent %"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1910,13 +1919,13 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel29Layout.createSequentialGroup()
-                        .addGap(0, 553, Short.MAX_VALUE)
+                        .addGap(0, 549, Short.MAX_VALUE)
                         .addComponent(jButton17)
                         .addGap(61, 61, 61)
                         .addComponent(jLabel47)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel29Layout.setVerticalGroup(
@@ -2001,7 +2010,7 @@ public class NewDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 298, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 294, Short.MAX_VALUE)
                         .addComponent(jButton18)
                         .addGap(30, 30, 30)
                         .addComponent(jButton19)
@@ -2085,7 +2094,7 @@ public class NewDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
                         .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 294, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 290, Short.MAX_VALUE)
                         .addComponent(jButton20)
                         .addGap(18, 18, 18)
                         .addComponent(jButton21)
@@ -2162,7 +2171,7 @@ public class NewDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel49)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 316, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 313, Short.MAX_VALUE)
                         .addComponent(jButton34)
                         .addGap(18, 18, 18)
                         .addComponent(jButton35)
@@ -2235,7 +2244,7 @@ public class NewDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel50)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 302, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 299, Short.MAX_VALUE)
                         .addComponent(jButton22)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton23)
@@ -2335,7 +2344,7 @@ public class NewDashboard extends javax.swing.JFrame {
                         .addComponent(jButton25)
                         .addGap(18, 18, 18)
                         .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE))
+                    .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel34Layout.setVerticalGroup(
@@ -2402,7 +2411,7 @@ public class NewDashboard extends javax.swing.JFrame {
             jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel35Layout.createSequentialGroup()
                 .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 935, Short.MAX_VALUE)
+                    .addComponent(jScrollPane18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 931, Short.MAX_VALUE)
                     .addGroup(jPanel35Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2437,22 +2446,9 @@ public class NewDashboard extends javax.swing.JFrame {
         jButton36.setForeground(new java.awt.Color(255, 255, 255));
         jButton36.setText("Print");
 
-        jButton37.setBackground(new java.awt.Color(0, 52, 101));
-        jButton37.setForeground(new java.awt.Color(255, 255, 255));
-        jButton37.setText("Search");
-
-        jTextField23.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField23ActionPerformed(evt);
-            }
-        });
-
         jTable16.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Id", "Income", "Expense", "Profit / Loss", "Month"
@@ -2468,43 +2464,27 @@ public class NewDashboard extends javax.swing.JFrame {
         });
         jScrollPane16.setViewportView(jTable16);
 
-        jLabel52.setText("Select Month");
-
-        jComboBox9.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+            .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane16)
-                    .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addComponent(jLabel52)
-                        .addGap(20, 20, 20)
-                        .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 306, Short.MAX_VALUE)
-                        .addComponent(jButton36)
-                        .addGap(28, 28, 28)
-                        .addComponent(jButton37)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton36, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel52)
-                    .addComponent(jButton36, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton37, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(25, 25, 25)
+                .addComponent(jButton36)
+                .addGap(25, 25, 25)
                 .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Profit Loss Report", jPanel12);
@@ -3059,26 +3039,6 @@ public class NewDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
-
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
-
-    private void jTextField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField12ActionPerformed
-
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -3416,10 +3376,6 @@ public class NewDashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton17ActionPerformed
 
-    private void jTextField23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField23ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField23ActionPerformed
-
     private void jTextField13KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField13KeyReleased
        String searchString = jTextField13.getText();
         searchincome(searchString);
@@ -3450,6 +3406,153 @@ public class NewDashboard extends javax.swing.JFrame {
        searchoutstanding(searchString);
     }//GEN-LAST:event_jTextField17KeyReleased
 
+    private void jTextField12KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField12KeyReleased
+               // search
+
+        try {
+            String searchText = jTextField12.getText().trim().toLowerCase();
+
+            DefaultTableModel dtm = (DefaultTableModel) jTable7.getModel();
+            TableRowSorter<DefaultTableModel> rowSorter = new TableRowSorter<>(dtm);
+
+            jTable7.setRowSorter(rowSorter);
+
+            if (searchText.isEmpty()) {
+                rowSorter.setRowFilter(null);
+            } else {
+                rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+          
+    }//GEN-LAST:event_jTextField12KeyReleased
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+         // Teacher Enrollment Report:
+
+        try {
+//            long invoiceid = System.currentTimeMillis();
+//            jLabel84.setText(String.valueOf(invoiceid));
+//            String EmployeeUserName = jLabel85.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/TeacherEnrollmentTest.jasper");
+            if (path == null) {
+                throw new RuntimeException("Report file not found at /reports/TeacherEnrollmentTest.jasper");
+            }
+
+            // Parameters for the report
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("Parameter1", dateTime);
+            parameters.put("IMAGE_PATH", imagePath);
+//            params.put("Parameter2", Department);
+//            params.put("Parameter3", Basesalary);
+            // Data source
+            if (jTable5.getRowCount() == 0) {
+                System.out.println("Table is empty.");
+                throw new RuntimeException("Table has no data to generate the report.");
+            }
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable5.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
+
+            JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jTextField11KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField11KeyReleased
+        // search
+
+        try {
+            String searchText = jTextField11.getText().trim().toLowerCase();
+
+            DefaultTableModel dtm = (DefaultTableModel) jTable5.getModel();
+            TableRowSorter<DefaultTableModel> rowSorter = new TableRowSorter<>(dtm);
+
+            jTable5.setRowSorter(rowSorter);
+
+            if (searchText.isEmpty()) {
+                rowSorter.setRowFilter(null);
+            } else {
+                rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jTextField11KeyReleased
+
+    private void jTextField10KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField10KeyReleased
+         // search
+
+        try {
+            String searchText = jTextField10.getText().trim().toLowerCase();
+
+            DefaultTableModel dtm = (DefaultTableModel) jTable4.getModel();
+            TableRowSorter<DefaultTableModel> rowSorter = new TableRowSorter<>(dtm);
+
+            jTable4.setRowSorter(rowSorter);
+
+            if (searchText.isEmpty()) {
+                rowSorter.setRowFilter(null);
+            } else {
+                rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jTextField10KeyReleased
+
+    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
+         // search
+
+        try {
+            String searchText = jTextField2.getText().trim().toLowerCase();
+
+            DefaultTableModel dtm = (DefaultTableModel) jTable3.getModel();
+            TableRowSorter<DefaultTableModel> rowSorter = new TableRowSorter<>(dtm);
+
+            jTable3.setRowSorter(rowSorter);
+
+            if (searchText.isEmpty()) {
+                rowSorter.setRowFilter(null);
+            } else {
+                rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jTextField2KeyReleased
+
+    private void jTextField9KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField9KeyReleased
+         // search
+
+        try {
+            String searchText = jTextField9.getText().trim().toLowerCase();
+
+            DefaultTableModel dtm = (DefaultTableModel) jTable6.getModel();
+            TableRowSorter<DefaultTableModel> rowSorter = new TableRowSorter<>(dtm);
+
+            jTable6.setRowSorter(rowSorter);
+
+            if (searchText.isEmpty()) {
+                rowSorter.setRowFilter(null);
+            } else {
+                rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jTextField9KeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -3474,7 +3577,6 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
@@ -3497,7 +3599,6 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton34;
     private javax.swing.JButton jButton35;
     private javax.swing.JButton jButton36;
-    private javax.swing.JButton jButton37;
     private javax.swing.JButton jButton38;
     private javax.swing.JButton jButton39;
     private javax.swing.JButton jButton4;
@@ -3513,7 +3614,6 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JComboBox<String> jComboBox8;
-    private javax.swing.JComboBox<String> jComboBox9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -3539,6 +3639,7 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel42;
@@ -3551,7 +3652,6 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
-    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -3648,7 +3748,6 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField20;
     private javax.swing.JTextField jTextField22;
-    private javax.swing.JTextField jTextField23;
     private javax.swing.JTextField jTextField24;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
@@ -3774,6 +3873,139 @@ public class NewDashboard extends javax.swing.JFrame {
     }
     
     
+       
+ private void loadProfitLoss() {
+    // Row headers as descriptions
+    String[] rowHeaders = {
+        "Total Class Fees",
+        "Total Registration Fees",
+        "Total Revenue",
+        "Total Salaries",
+        "Total Utilities",
+        "Total Expenses",
+        "Net Profit / Loss"
+    };
+
+    // Table column headers
+    String[] columnHeaders = {
+        "Description", "Current Month", "Previous Month", "Budgeted Amount", "Variance / Due Amount", "% Change"
+    };
+
+    // Rows to highlight with bold text
+    Set<String> boldHeaders = new HashSet<>(Arrays.asList(
+        "Total Revenue",
+        "Total Expenses",
+        "Net Profit / Loss"
+    ));
+
+    try {
+        // Initialize table model
+        DefaultTableModel tableModel = new DefaultTableModel(columnHeaders, 0);
+        jTable16.setModel(tableModel);
+
+        // SQL queries for data
+        String[] queries = {
+            "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id != 7 AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Class Fees
+            "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id = 7 AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Registration Fees
+            "SELECT SUM(amount_paid) AS total FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Revenue
+            "SELECT SUM(net_amount) AS total FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Salaries
+            "SELECT SUM(amount) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Utilities
+            "SELECT SUM(amount) + (SELECT SUM(net_amount) FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Expenses
+            "SELECT ((SELECT SUM(amount_paid) FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) - (SELECT SUM(amount) FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) - (SELECT SUM(net_amount) FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE()))) AS total" // Net Profit/Loss
+        };
+
+        // Retrieve budgeted amounts
+        double budgetClassFees = 0;
+        double budgetRegFees = 0;
+        double budgetSalary = 0;
+        double budgetUtilities = 20000.0; // Fixed value
+        double budgetTotalRevenue;
+        double budgetTotalExpenses;
+
+        ResultSet rs = MySQL.executeSearch("SELECT SUM(amount) AS total FROM feestructure WHERE subjects_subject_id != 8");
+        if (rs.next()) budgetClassFees = rs.getDouble("total");
+        rs.close();
+
+        rs = MySQL.executeSearch("SELECT SUM(amount) AS total FROM feestructure WHERE subjects_subject_id = 8");
+        if (rs.next()) budgetRegFees = rs.getDouble("total");
+        rs.close();
+
+        rs = MySQL.executeSearch("SELECT COUNT(user_id) * 50000 AS total FROM employee");
+        if (rs.next()) budgetSalary = rs.getDouble("total");
+        rs.close();
+
+        budgetTotalRevenue = budgetClassFees + budgetRegFees;
+        budgetTotalExpenses = budgetSalary + budgetUtilities;
+
+        // Load data into the table
+        for (int i = 0; i < rowHeaders.length; i++) {
+            rs = MySQL.executeSearch(queries[i]);
+            if (rs.next()) {
+                double currentMonth = rs.getDouble("total");
+                double previousMonth = 0; // Placeholder for the previous month's data
+                double budgeted = 0;
+
+                // Assign budgeted data
+                if (i == 0) budgeted = budgetClassFees; // Total Class Fees
+                else if (i == 1) budgeted = budgetRegFees; // Total Registration Fees
+                else if (i == 2) budgeted = budgetTotalRevenue; // Total Revenue
+                else if (i == 3) budgeted = budgetSalary; // Total Salaries
+                else if (i == 4) budgeted = budgetUtilities; // Total Utilities
+                else if (i == 5) budgeted = budgetTotalExpenses; // Total Expenses
+
+                double variance = currentMonth - budgeted;
+                double percentageChange = (budgeted != 0) ? (variance / budgeted) * 100 : 0;
+
+                // Add row to table
+                tableModel.addRow(new Object[]{
+                    rowHeaders[i], 
+                    currentMonth, 
+                    previousMonth, 
+                    budgeted, 
+                    variance, 
+                    percentageChange
+                });
+            }
+            rs.close();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    // Set row headers with bold styling and background highlighting
+    JList<String> rowHeaderList = new JList<>(rowHeaders);
+    rowHeaderList.setFixedCellWidth(150);
+    rowHeaderList.setFixedCellHeight(jTable16.getRowHeight());
+    rowHeaderList.setCellRenderer(new DefaultListCellRenderer(){
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            label.setFont(label.getFont().deriveFont(boldHeaders.contains(value) ? Font.BOLD : Font.PLAIN));
+            label.setBackground(Color.LIGHT_GRAY); // Highlight background
+            label.setOpaque(true);
+            return label;
+        }
+    });
+
+    // Set the row header view for the table
+    jScrollPane1.setRowHeaderView(rowHeaderList);
+
+    // Highlight Description Column
+    jTable16.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            if (boldHeaders.contains(value)) {
+                component.setFont(component.getFont().deriveFont(Font.BOLD));
+            }
+            component.setBackground(Color.LIGHT_GRAY); // Set background color
+            return component;
+        }
+    });
+}
+
+
+
     private void loadAdminStudentAttendanceReportTable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) jTable7.getModel();
@@ -3818,5 +4050,49 @@ public class NewDashboard extends javax.swing.JFrame {
             e.printStackTrace(); // Print error details
         }
     }
+
+    private void loadAdminTeacherEnrollmenrt() {
+
+        try {
+//            ResultSet rs = MySQL.executeSearch("SELECT *From `teachers` INNER JOIN `gender` ON `teachers`.`gender_id`= `gender`.`id`"
+//                    + "INNER JOIN `teachers_has_stream_subject` ON `teachers`.`teacher_id` = `teachers_has_stream_subject`.`id`"
+//                    + "INNER JOIN `stream_subject` ON `stream_subject`.`id` = `teachers_has_stream_subject`.`id`");
+//            
+//            
+
+            ResultSet rs = MySQL.executeSearch("SELECT *From teachers INNER JOIN gender ON teachers.gender_id= gender.id INNER JOIN teachers_has_stream_subject ON teachers.teacher_id = teachers_has_stream_subject.id INNER JOIN stream_subject ON stream_subject.id = teachers_has_stream_subject.id INNER JOIN stream ON stream.stream_id=stream_subject.stream_stream_id INNER JOIN subjects ON subjects.subject_id=stream_subject.subjects_subject_id");
+
+            DefaultTableModel model = (DefaultTableModel) jTable5.getModel();
+            model.setRowCount(0);
+
+            while (rs.next()) {
+
+                Vector v = new Vector();
+                v.add(rs.getString("teacher_id"));
+                v.add(rs.getString("first_name"));
+                v.add(rs.getString("last_name"));
+                v.add(rs.getString("nic"));
+                v.add(rs.getString("mobile"));
+                v.add(rs.getString("email"));
+                v.add(rs.getString("dob"));
+                v.add(rs.getString("enrollment_date"));
+                v.add(rs.getString("type"));
+                v.add(rs.getString("address_line_2"));
+                v.add(rs.getString("address_line_2"));
+                v.add(rs.getString("stream_name"));
+                v.add(rs.getString("subject_name"));
+
+                model.addRow(v);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    
 
 }
