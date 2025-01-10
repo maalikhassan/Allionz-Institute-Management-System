@@ -493,6 +493,31 @@ public class NewDashboard extends javax.swing.JFrame {
         jTable9.setRowSorter(trs);
         trs.setRowFilter(RowFilter.regexFilter(str));
     }
+     public void searchsalaryteacher(String str) {
+        DefaultTableModel model = (DefaultTableModel) jTable10.getModel();
+        TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+        jTable10.setRowSorter(trs);
+        trs.setRowFilter(RowFilter.regexFilter(str));
+    }
+     public void searchsalarystaff(String str) {
+        DefaultTableModel model = (DefaultTableModel) jTable8.getModel();
+        TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+        jTable8.setRowSorter(trs);
+        trs.setRowFilter(RowFilter.regexFilter(str));
+    }
+     public void searchclassfees(String str) {
+        DefaultTableModel model = (DefaultTableModel) jTable17.getModel();
+        TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+        jTable17.setRowSorter(trs);
+        trs.setRowFilter(RowFilter.regexFilter(str));
+    }
+     
+      public void searchoutstanding(String str) {
+        DefaultTableModel model = (DefaultTableModel) jTable18.getModel();
+        TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+        jTable18.setRowSorter(trs);
+        trs.setRowFilter(RowFilter.regexFilter(str));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -2115,6 +2140,12 @@ public class NewDashboard extends javax.swing.JFrame {
         jButton35.setForeground(new java.awt.Color(255, 255, 255));
         jButton35.setText("Search");
 
+        jTextField22.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField22KeyReleased(evt);
+            }
+        });
+
         jLabel49.setText("Select Month");
 
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -2181,6 +2212,12 @@ public class NewDashboard extends javax.swing.JFrame {
         jButton23.setBackground(new java.awt.Color(0, 52, 101));
         jButton23.setForeground(new java.awt.Color(255, 255, 255));
         jButton23.setText("Search");
+
+        jTextField15.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField15KeyReleased(evt);
+            }
+        });
 
         jLabel50.setText("Select Month");
 
@@ -2251,6 +2288,11 @@ public class NewDashboard extends javax.swing.JFrame {
         jTextField16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField16ActionPerformed(evt);
+            }
+        });
+        jTextField16.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField16KeyReleased(evt);
             }
         });
 
@@ -2324,6 +2366,11 @@ public class NewDashboard extends javax.swing.JFrame {
         jTextField17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField17ActionPerformed(evt);
+            }
+        });
+        jTextField17.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField17KeyReleased(evt);
             }
         });
 
@@ -3382,6 +3429,26 @@ public class NewDashboard extends javax.swing.JFrame {
         String searchString = jTextField14.getText();
         searchexpense(searchString);
     }//GEN-LAST:event_jTextField14KeyReleased
+
+    private void jTextField22KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField22KeyReleased
+     String searchString = jTextField22.getText();
+        searchsalaryteacher(searchString);
+    }//GEN-LAST:event_jTextField22KeyReleased
+
+    private void jTextField15KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField15KeyReleased
+      String searchString = jTextField15.getText();
+        searchsalarystaff(searchString);
+    }//GEN-LAST:event_jTextField15KeyReleased
+
+    private void jTextField16KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField16KeyReleased
+        String searchString = jTextField16.getText();
+        searchclassfees(searchString);
+    }//GEN-LAST:event_jTextField16KeyReleased
+
+    private void jTextField17KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField17KeyReleased
+       String searchString = jTextField17.getText();
+       searchoutstanding(searchString);
+    }//GEN-LAST:event_jTextField17KeyReleased
 
     /**
      * @param args the command line arguments

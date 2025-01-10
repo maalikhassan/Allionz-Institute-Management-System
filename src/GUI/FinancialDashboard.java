@@ -69,6 +69,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private static HashMap<String, String> LoadMonthMap = new HashMap<>();
     private static HashMap<String, String> LoadStatusmap = new HashMap<>();
     private static HashMap<String, String> MonthMap = new HashMap<>();
+     private static HashMap<String, String> MonthMapFeePayment = new HashMap<>();
 
     private void image() {
 
@@ -188,10 +189,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
         ReportLoadMonth5();
         ReportLoadMonth6();
 //        ReportLoadMonth7();
-        ReportLoadMonth8();
-        ReportLoadMonth9();
-        ReportLoadMonth10();
-        ReportLoadMonth11();
+//        ReportLoadMonth8();
+//        ReportLoadMonth9();
+//        ReportLoadMonth10();
+//        ReportLoadMonth11();
         loadIncomeTable();
         LoadFessDetails();
         LoadDuesTable();
@@ -726,7 +727,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
             while (resultSet.next()) {
                 vector.add(resultSet.getString("month_name"));
-                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+                 MonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
             }
             DefaultComboBoxModel model = new DefaultComboBoxModel<>(vector);
             jComboBox16.setModel(model);
@@ -1454,84 +1455,84 @@ public class FinancialDashboard extends javax.swing.JFrame {
 //    }
     //Salary department month
     //8
-    private void ReportLoadMonth8() {
-        try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
-
-            Vector<String> vector = new Vector<>();
-            vector.add("All Months");
-
-            while (resultSet.next()) {
-                vector.add(resultSet.getString("month_name"));
-                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
-
-            }
-            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-            jComboBox22.setModel(model);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    private void ReportLoadMonth8() {
+//        try {
+//            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+//
+//            Vector<String> vector = new Vector<>();
+//            vector.add("All Months");
+//
+//            while (resultSet.next()) {
+//                vector.add(resultSet.getString("month_name"));
+//                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+//
+//            }
+//            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+//            jComboBox22.setModel(model);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     //9
-    private void ReportLoadMonth9() {
-        try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
-
-            Vector<String> vector = new Vector<>();
-            vector.add("All Months");
-
-            while (resultSet.next()) {
-                vector.add(resultSet.getString("month_name"));
-                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
-
-            }
-            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-            jComboBox24.setModel(model);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    private void ReportLoadMonth9() {
+//        try {
+//            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+//
+//            Vector<String> vector = new Vector<>();
+//            vector.add("All Months");
+//
+//            while (resultSet.next()) {
+//                vector.add(resultSet.getString("month_name"));
+//                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+//
+//            }
+//            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+//            jComboBox24.setModel(model);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     //10
-    private void ReportLoadMonth10() {
-        try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
-
-            Vector<String> vector = new Vector<>();
-            vector.add("All Months");
-
-            while (resultSet.next()) {
-                vector.add(resultSet.getString("month_name"));
-                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
-
-            }
-            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-            jComboBox25.setModel(model);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    private void ReportLoadMonth10() {
+//        try {
+//            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+//
+//            Vector<String> vector = new Vector<>();
+//            vector.add("All Months");
+//
+//            while (resultSet.next()) {
+//                vector.add(resultSet.getString("month_name"));
+//                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+//
+//            }
+//            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+//            jComboBox25.setModel(model);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     //11
-    private void ReportLoadMonth11() {
-        try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
-
-            Vector<String> vector = new Vector<>();
-            vector.add("All Months");
-
-            while (resultSet.next()) {
-                vector.add(resultSet.getString("month_name"));
-                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
-
-            }
-            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-            jComboBox26.setModel(model);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    private void ReportLoadMonth11() {
+//        try {
+//            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+//
+//            Vector<String> vector = new Vector<>();
+//            vector.add("All Months");
+//
+//            while (resultSet.next()) {
+//                vector.add(resultSet.getString("month_name"));
+//                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+//
+//            }
+//            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+//            jComboBox26.setModel(model);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
     //<--Financial report month load-->
 
     //<--Calculate total-->
@@ -4185,7 +4186,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
+                    .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -4274,7 +4275,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel58)
                         .addGap(18, 18, 18)
                         .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(659, 701, Short.MAX_VALUE))
+                        .addGap(659, 697, Short.MAX_VALUE))
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
@@ -4481,7 +4482,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane22, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE))
+                        .addComponent(jScrollPane22, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel106, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -6542,10 +6543,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox25ActionPerformed
 
-    private void jComboBox26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox26ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox26ActionPerformed
-
     private void jTable10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable10MouseClicked
         // TODO add your handling code here:
         jLabel116.setVisible(false);
@@ -6635,11 +6632,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
            // TODO add your handling code here:
 
-        String studentName = String.valueOf(jComboBox22.getSelectedItem());
+//        String studentName = String.valueOf(jComboBox22.getSelectedItem());
         String stream = String.valueOf(jComboBox26.getSelectedItem());
         String subjectName = String.valueOf(jComboBox25.getSelectedItem());
         String status = String.valueOf(jComboBox21.getSelectedItem());
-        String fee_id = String.valueOf(jComboBox23.getSelectedIndex());
+//        String fee_id = String.valueOf(jComboBox23.getSelectedIndex());
         String month = String.valueOf(jComboBox24.getSelectedItem());
         String amount = jTextField7.getText();
         String nic = jTextField2.getText();
@@ -6668,11 +6665,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
         } else {
             try {
                 String statusId = loadStatusMap.get(status);
-                String monthId = MonthMap.get(month);
+//                String monthId = MonthMap.get(month);
 
                 MySQL.executeIUD("UPDATE `feepayments` SET "
                         + " `amount_paid` = '" + amount + "' , `payment_status_id` = '" + statusId + "' , "
-                        + "`description`='" + desc + "' , `month_id` = '" + monthId + "'"
+                        + "`description`='" + desc + "' , `month_id` = '" +   MonthMap.get(month) + "'"
                         + "WHERE `payment_id` = '" + payId + "' ");
                 loadViewFeePayment();
                 loadPendingFees();
@@ -6701,31 +6698,28 @@ public class FinancialDashboard extends javax.swing.JFrame {
         String id = String.valueOf(jTable8.getValueAt(row1, 0));
         jLabel41.setText(id);
 
-        String student = String.valueOf(jTable8.getValueAt(row1, 1));
-        jComboBox22.setSelectedItem(student);
-
-        String nic = String.valueOf(jTable8.getValueAt(row1, 2));
+        
+        String nic = String.valueOf(jTable8.getValueAt(row1, 1));
         jTextField2.setText(nic);
 
-        String status = String.valueOf(jTable8.getValueAt(row1, 3));
+        String status = String.valueOf(jTable8.getValueAt(row1, 2));
         jComboBox21.setSelectedItem(status);
         
-//         String amount = String.valueOf(jTable8.getValueAt(row1, 4));
-//        jTextField7.getText(amount);
 
-        String amount = String.valueOf(jTable8.getValueAt(row1, 5));
+
+        String amount = String.valueOf(jTable8.getValueAt(row1, 4));
         jTextField7.setText(amount);
 
-        String subject = String.valueOf(jTable8.getValueAt(row1, 6));
+        String subject = String.valueOf(jTable8.getValueAt(row1, 5));
         jComboBox25.setSelectedItem(subject);
 
-        String stream = String.valueOf(jTable8.getValueAt(row1, 7));
+        String stream = String.valueOf(jTable8.getValueAt(row1, 6));
         jComboBox26.setSelectedItem(stream);
 
-        String desc = String.valueOf(jTable8.getValueAt(row1, 8));
+        String desc = String.valueOf(jTable8.getValueAt(row1, 7));
         jTextArea3.setText(desc);
 
-        String month = String.valueOf(jTable8.getValueAt(row1, 9));
+        String month = String.valueOf(jTable8.getValueAt(row1, 8));
         jComboBox24.setSelectedItem(month);
 
 //        delete the rcord
@@ -6954,6 +6948,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jComboBox26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox26ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox26ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -7306,6 +7304,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }
 
     private void clear() {
+        
+        jComboBox22.setEnabled(true);
+        jButton14.setEnabled(true);
+        jComboBox23.setEnabled(true);
+        jTable8.clearSelection();
 
         jComboBox23.setSelectedIndex(0);
         jComboBox22.setSelectedIndex(0);

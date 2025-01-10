@@ -4208,7 +4208,7 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane12" alignment="0" pref="936" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane12" alignment="0" pref="932" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
@@ -4345,7 +4345,7 @@
                                       <Component id="jLabel58" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                                       <Component id="jComboBox9" min="-2" pref="153" max="-2" attributes="0"/>
-                                      <EmptySpace min="659" pref="701" max="32767" attributes="0"/>
+                                      <EmptySpace min="659" pref="697" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -4677,7 +4677,7 @@
                                   <Group type="102" attributes="0">
                                       <Component id="jScrollPane15" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jScrollPane22" pref="460" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane22" pref="456" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
