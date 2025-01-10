@@ -87,6 +87,13 @@ public class NewDashboard extends javax.swing.JFrame {
         loadAdminSheduleForSubject();
         loadAdminSheduleForReport();
         loadAdminStudentAttendanceReportTable() ;
+        
+        //Financial report load 
+        loadIncomeTable();
+        LoadExpensesTable();
+        loadSalaryDetails();
+        LoadFessDetails();
+        LoadDuesTable();
     }
 
     private void time() {
@@ -275,6 +282,156 @@ public class NewDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    
+    //Income table in admin reports
+    private void loadIncomeTable() {
+        try {
+
+            DefaultTableModel model2 = (DefaultTableModel) jTable12.getModel();
+            model2.setRowCount(0);
+
+            ResultSet resultSet3 = MySQL.executeSearch("SELECT * FROM `feepayments` INNER JOIN `students` ON `feepayments`.`students_student_id`=`students`.`student_id`"
+                    + "INNER JOIN `month` ON `feepayments`.`month_id`=`month`.`id`");
+
+            DefaultTableModel model3 = (DefaultTableModel) jTable12.getModel();
+            model3.setRowCount(0);
+
+            while (resultSet3.next()) {
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet3.getString("payment_id"));
+                vector.add(resultSet3.getString("students.first_name") + " " + (resultSet3.getString("students.last_name")));
+                vector.add(resultSet3.getString("month.month_name"));
+                vector.add(resultSet3.getString("amount_paid"));
+                model3.addRow(vector);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        getSum1();
+
+    }
+    
+    //Load expenses table in admin report
+    private void LoadExpensesTable() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_payments` INNER JOIN "
+                    + "`bill_type` ON `bill_payments`.`bill_type_id`=`bill_type`.`id` "
+                    + "INNER JOIN `vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id`"
+                    + "INNER JOIN `month` ON `bill_payments`.`month_id`=`month`.`id`"
+                    + "WHERE `payment_status_id` = '1'");
+
+            DefaultTableModel model = (DefaultTableModel) jTable9.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("bill_id"));
+                vector.add(resultSet.getString("vendor.vendor_name"));
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("amount"));
+                vector.add(resultSet.getString("month.month_name"));
+                model.addRow(vector);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        getSum2();
+
+    }
+    
+    //Load salary in admin report  
+    private void loadSalaryDetails() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `salary`"
+                    + "INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id`"
+                    + "INNER JOIN `month` ON `salary`.`month_id` = `month`.`id`"
+                    + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id`"
+                    + "INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`");
+
+            DefaultTableModel model = (DefaultTableModel) jTable10.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("id"));
+                vector.add(resultSet.getString("employee.first_name") + " " + (resultSet.getString("employee.last_name")));
+                vector.add(resultSet.getString("salary_details.base_salary"));
+                vector.add(resultSet.getString("net_amount"));
+                vector.add(resultSet.getString("month.month_name"));
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("payment_status.status"));
+                model.addRow(vector);
+
+            }
+//            getSum5();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    // LoadFessDetails in admin report 
+    private void LoadFessDetails() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch(" SELECT * FROM `feepayments` "
+                    + "INNER JOIN `payment_status` ON `feepayments`.`payment_status_id` = `payment_status`.`id` "
+                    + "INNER JOIN `subjects` ON `feepayments`.`subjects_subject_id` = `subjects`.`subject_id` "
+                    + "INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id` "
+                    + "INNER JOIN `stream` ON `feepayments`.`stream_stream_id` = `stream`.`stream_id`");
+            DefaultTableModel model = (DefaultTableModel) jTable17.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("payment_id"));
+                vector.add(resultSet.getString("students_student_id"));
+                vector.add(resultSet.getString("stream.stream_name"));
+                vector.add(resultSet.getString("subjects.subject_name"));
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("payment_status.status"));
+                vector.add(resultSet.getString("month.month_name"));
+                vector.add(resultSet.getString("amount_paid"));
+                model.addRow(vector);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    //Load dues table in admin report
+    private void LoadDuesTable() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_payments` INNER JOIN `bill_type` ON "
+                    + "`bill_payments`.`bill_type_id`=`bill_type`.`id` "
+                    + "INNER JOIN `month` ON `bill_payments`.`month_id`=`month`.`id`"
+                    + "INNER JOIN `vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id`"
+                    + "WHERE `payment_status_id` = '2'");
+
+            DefaultTableModel model = (DefaultTableModel) jTable18.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("bill_id"));
+                vector.add(resultSet.getString("vendor.vendor_name"));          
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("amount"));
+                vector.add(resultSet.getString("month.month_name"));
+                model.addRow(vector);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        getSum3();
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
