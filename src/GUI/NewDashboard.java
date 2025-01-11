@@ -12,6 +12,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
 import javax.swing.ImageIcon;
@@ -50,6 +51,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.BarRenderer3D;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
@@ -359,74 +361,145 @@ public class NewDashboard extends javax.swing.JFrame {
     }
 }
 
-    private void loadChartIntoPanel() {
+//    private void loadChartIntoPanel() {
+//    try {
+//        String query = "SELECT MONTH(payment_date) AS month, SUM(amount_paid) AS total_income "
+//                + "FROM feepayments "
+//                + "GROUP BY MONTH(payment_date) "
+//                + "ORDER BY MONTH(payment_date)";
+//        ResultSet rs = MySQL.executeSearch(query);
+//
+//        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+//        String[] months = {"January", "February", "March", "April", "May", "June", 
+//                "July", "August", "September", "October", "November", "December"};
+//
+//        while (rs.next()) {
+//            int month = rs.getInt("month");
+//            double totalIncome = rs.getDouble("total_income");
+//            if (month >= 1 && month <= 12) {
+//                dataset.addValue(totalIncome, "Income", months[month - 1]);
+//            }
+//        }
+//
+//        JFreeChart barChart = ChartFactory.createBarChart3D(
+//                "Monthly Income", // Chart title
+//                "Month", // X-axis label
+//                "Income (USD)", // Y-axis label
+//                dataset, // Dataset
+//                PlotOrientation.VERTICAL, // Vertical orientation
+//                false, // No legend needed
+//                true, // Include tooltips
+//                false // URLs not needed
+//        );
+//
+//        barChart.setBackgroundPaint(Color.WHITE);
+//
+//        // Customize the Bar Chart
+//        CategoryPlot plot = barChart.getCategoryPlot();
+//        plot.setBackgroundPaint(new Color(230, 230, 230)); // Light gray background
+//        plot.setRangeGridlinePaint(Color.BLACK); // Black gridlines
+//        plot.setDomainGridlinePaint(Color.BLACK);
+//        plot.setOutlineVisible(false);
+//
+//        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+//        renderer.setSeriesPaint(0, new Color(0, 102, 204)); // Blue bars
+//        renderer.setItemMargin(0.05); // Margin between bars
+//
+//        Font axisFont = new Font("SansSerif", Font.PLAIN, 12);
+//        plot.getDomainAxis().setLabelFont(axisFont);
+//        plot.getDomainAxis().setTickLabelFont(axisFont);
+//        plot.getRangeAxis().setLabelFont(axisFont);
+//        plot.getRangeAxis().setTickLabelFont(axisFont);
+//
+//        // Display the chart in jBar1
+//        ChartPanel chartPanel = new ChartPanel(barChart);
+//        chartPanel.setOpaque(false);
+//        chartPanel.setPreferredSize(jBar1.getSize());
+//
+//        jBar1.removeAll();
+//        jBar1.setLayout(new BorderLayout());
+//        jBar1.add(chartPanel, BorderLayout.CENTER);
+//        jBar1.revalidate();
+//        jBar1.repaint();
+//
+//    } catch (Exception e) {
+//        e.printStackTrace();
+//        JOptionPane.showMessageDialog(null, "Error creating bar chart: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//    }
+//}
+    
+ private void loadChartIntoPanel() {
+    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
     try {
-        String query = "SELECT MONTH(payment_date) AS month, SUM(amount_paid) AS total_income "
+        // Get the current year
+        int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+
+        // Execute query to get monthly total income for the current year
+        ResultSet rs = MySQL.executeSearch(
+                "SELECT MONTH(payment_date) AS month, SUM(amount_paid) AS total_income "
                 + "FROM feepayments "
+                + "WHERE YEAR(payment_date) = " + currentYear + " "
                 + "GROUP BY MONTH(payment_date) "
-                + "ORDER BY MONTH(payment_date)";
-        ResultSet rs = MySQL.executeSearch(query);
+                + "ORDER BY MONTH(payment_date)");
 
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        String[] months = {"January", "February", "March", "April", "May", "June", 
-                "July", "August", "September", "October", "November", "December"};
+        // Map of month numbers to names
+        String[] months = {"January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"};
 
+        // Populate dataset with the result set
         while (rs.next()) {
             int month = rs.getInt("month");
             double totalIncome = rs.getDouble("total_income");
+
+            // Add data to the dataset (ensure month index is valid)
             if (month >= 1 && month <= 12) {
                 dataset.addValue(totalIncome, "Income", months[month - 1]);
             }
         }
-
-        JFreeChart barChart = ChartFactory.createBarChart3D(
-                "Monthly Income", // Chart title
-                "Month", // X-axis label
-                "Income (USD)", // Y-axis label
-                dataset, // Dataset
-                PlotOrientation.VERTICAL, // Vertical orientation
-                false, // No legend needed
-                true, // Include tooltips
-                false // URLs not needed
-        );
-
-        barChart.setBackgroundPaint(Color.WHITE);
-
-        // Customize the Bar Chart
-        CategoryPlot plot = barChart.getCategoryPlot();
-        plot.setBackgroundPaint(new Color(230, 230, 230)); // Light gray background
-        plot.setRangeGridlinePaint(Color.BLACK); // Black gridlines
-        plot.setDomainGridlinePaint(Color.BLACK);
-        plot.setOutlineVisible(false);
-
-        BarRenderer renderer = (BarRenderer) plot.getRenderer();
-        renderer.setSeriesPaint(0, new Color(0, 102, 204)); // Blue bars
-        renderer.setItemMargin(0.05); // Margin between bars
-
-        Font axisFont = new Font("SansSerif", Font.PLAIN, 12);
-        plot.getDomainAxis().setLabelFont(axisFont);
-        plot.getDomainAxis().setTickLabelFont(axisFont);
-        plot.getRangeAxis().setLabelFont(axisFont);
-        plot.getRangeAxis().setTickLabelFont(axisFont);
-
-        // Display the chart in jBar1
-        ChartPanel chartPanel = new ChartPanel(barChart);
-        chartPanel.setOpaque(false);
-        chartPanel.setPreferredSize(jBar1.getSize());
-
-        jBar1.removeAll();
-        jBar1.setLayout(new BorderLayout());
-        jBar1.add(chartPanel, BorderLayout.CENTER);
-        jBar1.revalidate();
-        jBar1.repaint();
-
     } catch (Exception e) {
         e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error creating bar chart: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Error fetching income data: " + e.getMessage());
+        return;
     }
+
+    // Create the Bar Chart
+    JFreeChart barChart = ChartFactory.createBarChart(
+            "Monthly Income (" + java.util.Calendar.getInstance().get(java.util.Calendar.YEAR) + ")", // Chart title with the current year
+            "Month", // X-axis label
+            "Income (USD)", // Y-axis label
+            dataset, // Dataset
+            PlotOrientation.VERTICAL, // Chart orientation
+            true, // Include legend
+            true, // Include tooltips
+            false // Don't include URLs
+    );
+
+    // Make the chart 3D
+    CategoryPlot plot = barChart.getCategoryPlot();
+    BarRenderer3D renderer = new BarRenderer3D();
+    renderer.setItemMargin(0.02); // Optional: adjust bar spacing
+    
+    // Set the bars' color to blue
+    renderer.setSeriesPaint(0, new Color(0, 102, 204));
+
+    plot.setRenderer(renderer);
+
+    // Render the chart as a BufferedImage
+    BufferedImage chartImage = barChart.createBufferedImage(jBar1.getWidth(), jBar1.getHeight());
+
+    // Create an ImageIcon from the BufferedImage
+    ImageIcon chartIcon = new ImageIcon(chartImage);
+
+    // Add the ImageIcon to jBar1
+    JLabel chartLabel = new JLabel(chartIcon);
+    jBar1.removeAll();  // Clear existing components
+    jBar1.setLayout(new java.awt.BorderLayout());
+    jBar1.add(chartLabel, java.awt.BorderLayout.CENTER);
+    jBar1.validate();   // Refresh the panel
 }
-    
-    
+
+
     
     private void time() {
 
