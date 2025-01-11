@@ -207,7 +207,7 @@ public class AdminLogin extends javax.swing.JFrame {
                         String user = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
                         String userType = resultSet.getString("usertypes.user_type_name");
                         
-                        MySQL.executeIUD("INSERT INTO `system_logs`(`timestamp`,`description`,`user_name`,`user_type`)"
+                        MySQL.executeIUD("INSERT INTO `system_logs`(`timestamp`,`activity`,`user_name`,`user_type`)"
                                 + "VALUES ('"+ SystemDateTime +"','"+ description +"','"+ user +"','"+ userType +"')");
                     }
 

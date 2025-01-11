@@ -117,7 +117,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         loadAdminStudentEnrollmentReport();
         loadAdminSheduleForSubject();
         loadAdminSheduleForReport();
-        loadAdminStudentAttendanceReportTable() ;
+        loadAdminStudentAttendanceReportTable();
         loadAdminStudentAttendanceReportTable();
         //Financial report load 
         loadIncomeTable();
@@ -130,11 +130,13 @@ public class AdminDashboard extends javax.swing.JFrame {
         loadAdminTeacherEnrollmenrt();
         loadProfitLoss();
         loadChartIntoPanel();
-        loadPieChartIntoPanel();calculateProfit();
+        loadPieChartIntoPanel();
+        calculateProfit();
         loadTotalStudents();
         loadDues();
-         loadTotalSubjects();
-         loadTotalTeachers();
+        loadTotalSubjects();
+        loadTotalTeachers();
+        loadActivityLog();
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(SwingConstants.CENTER);
         jTable12.setDefaultRenderer(Object.class, render);
@@ -143,21 +145,21 @@ public class AdminDashboard extends javax.swing.JFrame {
         jTable17.setDefaultRenderer(Object.class, render);
         jTable18.setDefaultRenderer(Object.class, render);
         jTable8.setDefaultRenderer(Object.class, render);
-        
+
         Timer timer = new Timer(1000, e -> updateDateTime());
         timer.start();
-        
+
         updateDateTime();
     }
-    
+
     private void updateDateTime() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = currentDateTime.format(formatter);
         SystemDateTime = formattedDateTime;
     }
-    
- private void loadTotalSubjects() {
+
+    private void loadTotalSubjects() {
         int totalSubjects = 0;
 
         try {
@@ -179,7 +181,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel20.setForeground(Color.WHITE); // Set text color to white
     }
 
-  private void loadTotalTeachers() {
+    private void loadTotalTeachers() {
         int totalTeachers = 0;
 
         try {
@@ -256,8 +258,8 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         worker.execute();
     }
-     
-     private void loadTotalStudents() {
+
+    private void loadTotalStudents() {
         int totalStudents = 0;
 
         try {
@@ -279,7 +281,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel14.setForeground(Color.WHITE); // Set text color to white
     }
 
-     
     private void calculateProfit() {
         // Create a SwingWorker for the background task
         SwingWorker<Void, Void> worker = new SwingWorker<>() {
@@ -328,55 +329,54 @@ public class AdminDashboard extends javax.swing.JFrame {
         // Execute the SwingWorker
         worker.execute();
     }
-    
-    
+
     private void loadPieChartIntoPanel() {
-    try {
-        String query = "SELECT status, COUNT(*) AS count FROM student_attendance GROUP BY status";
-        ResultSet rs = MySQL.executeSearch(query);
+        try {
+            String query = "SELECT status, COUNT(*) AS count FROM student_attendance GROUP BY status";
+            ResultSet rs = MySQL.executeSearch(query);
 
-        DefaultPieDataset dataset = new DefaultPieDataset();
-        while (rs.next()) {
-            String status = rs.getString("status");
-            int count = rs.getInt("count");
-            dataset.setValue(status, count);
+            DefaultPieDataset dataset = new DefaultPieDataset();
+            while (rs.next()) {
+                String status = rs.getString("status");
+                int count = rs.getInt("count");
+                dataset.setValue(status, count);
+            }
+
+            JFreeChart pieChart = ChartFactory.createPieChart3D(
+                    "Student Attendance Distribution", // Chart title
+                    dataset, // Dataset
+                    true, // Include legend
+                    true, // Include tooltips
+                    false // URLs not needed
+            );
+
+            pieChart.setBackgroundPaint(Color.WHITE);
+
+            // Customize the Pie Chart
+            PiePlot3D plot = (PiePlot3D) pieChart.getPlot();
+            plot.setBackgroundPaint(new Color(230, 230, 230)); // Light gray background
+            plot.setOutlineVisible(false); // No outline
+            plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 12)); // Label font
+            plot.setForegroundAlpha(0.8f); // Transparency
+            plot.setSectionPaint("Present", Color.GREEN); // Green for Present
+            plot.setSectionPaint("Absent", Color.RED); // Red for Absent
+
+            // Display the chart in jPie1
+            ChartPanel chartPanel = new ChartPanel(pieChart);
+            chartPanel.setOpaque(false);
+            chartPanel.setPreferredSize(jPie1.getSize());
+
+            jPie1.removeAll();
+            jPie1.setLayout(new BorderLayout());
+            jPie1.add(chartPanel, BorderLayout.CENTER);
+            jPie1.revalidate();
+            jPie1.repaint();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error creating pie chart: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        JFreeChart pieChart = ChartFactory.createPieChart3D(
-                "Student Attendance Distribution", // Chart title
-                dataset, // Dataset
-                true, // Include legend
-                true, // Include tooltips
-                false // URLs not needed
-        );
-
-        pieChart.setBackgroundPaint(Color.WHITE);
-
-        // Customize the Pie Chart
-        PiePlot3D plot = (PiePlot3D) pieChart.getPlot();
-        plot.setBackgroundPaint(new Color(230, 230, 230)); // Light gray background
-        plot.setOutlineVisible(false); // No outline
-        plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 12)); // Label font
-        plot.setForegroundAlpha(0.8f); // Transparency
-        plot.setSectionPaint("Present", Color.GREEN); // Green for Present
-        plot.setSectionPaint("Absent", Color.RED); // Red for Absent
-
-        // Display the chart in jPie1
-        ChartPanel chartPanel = new ChartPanel(pieChart);
-        chartPanel.setOpaque(false);
-        chartPanel.setPreferredSize(jPie1.getSize());
-
-        jPie1.removeAll();
-        jPie1.setLayout(new BorderLayout());
-        jPie1.add(chartPanel, BorderLayout.CENTER);
-        jPie1.revalidate();
-        jPie1.repaint();
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error creating pie chart: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-}
 
 //    private void loadChartIntoPanel() {
 //    try {
@@ -444,80 +444,77 @@ public class AdminDashboard extends javax.swing.JFrame {
 //        JOptionPane.showMessageDialog(null, "Error creating bar chart: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 //    }
 //}
-    
- private void loadChartIntoPanel() {
-    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+    private void loadChartIntoPanel() {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-    try {
-        // Get the current year
-        int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+        try {
+            // Get the current year
+            int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
 
-        // Execute query to get monthly total income for the current year
-        ResultSet rs = MySQL.executeSearch(
-                "SELECT MONTH(payment_date) AS month, SUM(amount_paid) AS total_income "
-                + "FROM feepayments "
-                + "WHERE YEAR(payment_date) = " + currentYear + " "
-                + "GROUP BY MONTH(payment_date) "
-                + "ORDER BY MONTH(payment_date)");
+            // Execute query to get monthly total income for the current year
+            ResultSet rs = MySQL.executeSearch(
+                    "SELECT MONTH(payment_date) AS month, SUM(amount_paid) AS total_income "
+                    + "FROM feepayments "
+                    + "WHERE YEAR(payment_date) = " + currentYear + " "
+                    + "GROUP BY MONTH(payment_date) "
+                    + "ORDER BY MONTH(payment_date)");
 
-        // Map of month numbers to names
-        String[] months = {"January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"};
+            // Map of month numbers to names
+            String[] months = {"January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"};
 
-        // Populate dataset with the result set
-        while (rs.next()) {
-            int month = rs.getInt("month");
-            double totalIncome = rs.getDouble("total_income");
+            // Populate dataset with the result set
+            while (rs.next()) {
+                int month = rs.getInt("month");
+                double totalIncome = rs.getDouble("total_income");
 
-            // Add data to the dataset (ensure month index is valid)
-            if (month >= 1 && month <= 12) {
-                dataset.addValue(totalIncome, "Income", months[month - 1]);
+                // Add data to the dataset (ensure month index is valid)
+                if (month >= 1 && month <= 12) {
+                    dataset.addValue(totalIncome, "Income", months[month - 1]);
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error fetching income data: " + e.getMessage());
+            return;
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error fetching income data: " + e.getMessage());
-        return;
+
+        // Create the Bar Chart
+        JFreeChart barChart = ChartFactory.createBarChart(
+                "Monthly Income (" + java.util.Calendar.getInstance().get(java.util.Calendar.YEAR) + ")", // Chart title with the current year
+                "Month", // X-axis label
+                "Income (USD)", // Y-axis label
+                dataset, // Dataset
+                PlotOrientation.VERTICAL, // Chart orientation
+                true, // Include legend
+                true, // Include tooltips
+                false // Don't include URLs
+        );
+
+        // Make the chart 3D
+        CategoryPlot plot = barChart.getCategoryPlot();
+        BarRenderer3D renderer = new BarRenderer3D();
+        renderer.setItemMargin(0.02); // Optional: adjust bar spacing
+
+        // Set the bars' color to blue
+        renderer.setSeriesPaint(0, new Color(0, 102, 204));
+
+        plot.setRenderer(renderer);
+
+        // Render the chart as a BufferedImage
+        BufferedImage chartImage = barChart.createBufferedImage(jBar1.getWidth(), jBar1.getHeight());
+
+        // Create an ImageIcon from the BufferedImage
+        ImageIcon chartIcon = new ImageIcon(chartImage);
+
+        // Add the ImageIcon to jBar1
+        JLabel chartLabel = new JLabel(chartIcon);
+        jBar1.removeAll();  // Clear existing components
+        jBar1.setLayout(new java.awt.BorderLayout());
+        jBar1.add(chartLabel, java.awt.BorderLayout.CENTER);
+        jBar1.validate();   // Refresh the panel
     }
 
-    // Create the Bar Chart
-    JFreeChart barChart = ChartFactory.createBarChart(
-            "Monthly Income (" + java.util.Calendar.getInstance().get(java.util.Calendar.YEAR) + ")", // Chart title with the current year
-            "Month", // X-axis label
-            "Income (USD)", // Y-axis label
-            dataset, // Dataset
-            PlotOrientation.VERTICAL, // Chart orientation
-            true, // Include legend
-            true, // Include tooltips
-            false // Don't include URLs
-    );
-
-    // Make the chart 3D
-    CategoryPlot plot = barChart.getCategoryPlot();
-    BarRenderer3D renderer = new BarRenderer3D();
-    renderer.setItemMargin(0.02); // Optional: adjust bar spacing
-    
-    // Set the bars' color to blue
-    renderer.setSeriesPaint(0, new Color(0, 102, 204));
-
-    plot.setRenderer(renderer);
-
-    // Render the chart as a BufferedImage
-    BufferedImage chartImage = barChart.createBufferedImage(jBar1.getWidth(), jBar1.getHeight());
-
-    // Create an ImageIcon from the BufferedImage
-    ImageIcon chartIcon = new ImageIcon(chartImage);
-
-    // Add the ImageIcon to jBar1
-    JLabel chartLabel = new JLabel(chartIcon);
-    jBar1.removeAll();  // Clear existing components
-    jBar1.setLayout(new java.awt.BorderLayout());
-    jBar1.add(chartLabel, java.awt.BorderLayout.CENTER);
-    jBar1.validate();   // Refresh the panel
-}
-
-
-    
     private void time() {
 
         java.lang.Runnable runnable = new java.lang.Runnable() {
@@ -704,7 +701,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     //Income table in admin reports
     private void loadIncomeTable() {
         try {
@@ -734,7 +731,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 //        getSum1();
 
     }
-    
+
     //Load expenses table in admin report
     private void LoadExpensesTable() {
         try {
@@ -764,7 +761,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 //        getSum2();
 
     }
-    
+
     //Load teacher salary in admin report  
     private void loadSalaryDetailsTeacher() {
         try {
@@ -795,7 +792,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     //Load staff salary in admin report  
     private void loadSalaryDetailsStaff() {
         try {
@@ -826,8 +823,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-    
+
     // LoadFessDetails in admin report 
     private void LoadFessDetails() {
         try {
@@ -857,7 +853,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     //Load dues table in admin report
     private void LoadDuesTable() {
         try {
@@ -874,7 +870,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
                 Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("bill_id"));
-                vector.add(resultSet.getString("vendor.vendor_name"));          
+                vector.add(resultSet.getString("vendor.vendor_name"));
                 vector.add(resultSet.getString("payment_date"));
                 vector.add(resultSet.getString("amount"));
                 vector.add(resultSet.getString("month.month_name"));
@@ -886,40 +882,66 @@ public class AdminDashboard extends javax.swing.JFrame {
         }
 //        getSum3();
     }
-    
-     public void searchincome(String str) {
+
+    private void loadActivityLog() {
+        try {
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `system_logs`");
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+
+            while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("log_id"));
+                vector.add(resultSet.getString("user_name"));
+                vector.add(resultSet.getString("user_type"));
+                vector.add(resultSet.getString("activity"));
+                vector.add(resultSet.getString("timestamp"));
+                model.addRow(vector);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void searchincome(String str) {
         DefaultTableModel model = (DefaultTableModel) jTable12.getModel();
         TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
         jTable12.setRowSorter(trs);
         trs.setRowFilter(RowFilter.regexFilter(str));
     }
-     
-     public void searchexpense(String str) {
+
+    public void searchexpense(String str) {
         DefaultTableModel model = (DefaultTableModel) jTable9.getModel();
         TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
         jTable9.setRowSorter(trs);
         trs.setRowFilter(RowFilter.regexFilter(str));
     }
-     public void searchsalaryteacher(String str) {
+
+    public void searchsalaryteacher(String str) {
         DefaultTableModel model = (DefaultTableModel) jTable10.getModel();
         TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
         jTable10.setRowSorter(trs);
         trs.setRowFilter(RowFilter.regexFilter(str));
     }
-     public void searchsalarystaff(String str) {
+
+    public void searchsalarystaff(String str) {
         DefaultTableModel model = (DefaultTableModel) jTable8.getModel();
         TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
         jTable8.setRowSorter(trs);
         trs.setRowFilter(RowFilter.regexFilter(str));
     }
-     public void searchclassfees(String str) {
+
+    public void searchclassfees(String str) {
         DefaultTableModel model = (DefaultTableModel) jTable17.getModel();
         TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
         jTable17.setRowSorter(trs);
         trs.setRowFilter(RowFilter.regexFilter(str));
     }
-     
-      public void searchoutstanding(String str) {
+
+    public void searchoutstanding(String str) {
         DefaultTableModel model = (DefaultTableModel) jTable18.getModel();
         TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
         jTable18.setRowSorter(trs);
@@ -1641,7 +1663,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1832,7 +1854,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             profilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 500, Short.MAX_VALUE)
             .addGroup(profilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE))
+                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE))
         );
 
         jButton1.setBackground(new java.awt.Color(0, 52, 101));
@@ -1860,11 +1882,11 @@ public class AdminDashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "id", "User Name", "User Role", "Activity ", "Description", "Timesmap"
+                "Log ID", "User Name", "User Role", "Activity ", "Timestamp"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -2339,7 +2361,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 518, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Academic", jPanel14);
@@ -3280,7 +3302,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(managementpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
             .addGroup(changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(overviewpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 953, Short.MAX_VALUE))
+                .addComponent(overviewpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 953, Short.MAX_VALUE))
         );
         changingpanelLayout.setVerticalGroup(
             changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3306,7 +3328,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(managementpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
             .addGroup(changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(overviewpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
+                .addComponent(overviewpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -3631,7 +3653,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     String user = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
                     String userType = resultSet.getString("usertypes.user_type_name");
 
-                    MySQL.executeIUD("INSERT INTO `system_logs`(`timestamp`,`description`,`user_name`,`user_type`)"
+                    MySQL.executeIUD("INSERT INTO `system_logs`(`timestamp`,`activity`,`user_name`,`user_type`)"
                             + "VALUES ('" + SystemDateTime + "','" + description + "','" + user + "','" + userType + "')");
                 }
             } catch (Exception e) {
@@ -3760,7 +3782,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-              // Class Attendence Report :
+        // Class Attendence Report :
 
         try {
 //            long invoiceid = System.currentTimeMillis();
@@ -3797,7 +3819,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jTextField13KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField13KeyReleased
-       String searchString = jTextField13.getText();
+        String searchString = jTextField13.getText();
         searchincome(searchString);
     }//GEN-LAST:event_jTextField13KeyReleased
 
@@ -3807,12 +3829,12 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField14KeyReleased
 
     private void jTextField22KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField22KeyReleased
-     String searchString = jTextField22.getText();
+        String searchString = jTextField22.getText();
         searchsalaryteacher(searchString);
     }//GEN-LAST:event_jTextField22KeyReleased
 
     private void jTextField15KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField15KeyReleased
-      String searchString = jTextField15.getText();
+        String searchString = jTextField15.getText();
         searchsalarystaff(searchString);
     }//GEN-LAST:event_jTextField15KeyReleased
 
@@ -3822,12 +3844,12 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField16KeyReleased
 
     private void jTextField17KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField17KeyReleased
-       String searchString = jTextField17.getText();
-       searchoutstanding(searchString);
+        String searchString = jTextField17.getText();
+        searchoutstanding(searchString);
     }//GEN-LAST:event_jTextField17KeyReleased
 
     private void jTextField12KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField12KeyReleased
-               // search
+        // search
 
         try {
             String searchText = jTextField12.getText().trim().toLowerCase();
@@ -3845,11 +3867,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-          
+
     }//GEN-LAST:event_jTextField12KeyReleased
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-         // Teacher Enrollment Report:
+        // Teacher Enrollment Report:
 
         try {
 //            long invoiceid = System.currentTimeMillis();
@@ -3908,7 +3930,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField11KeyReleased
 
     private void jTextField10KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField10KeyReleased
-         // search
+        // search
 
         try {
             String searchText = jTextField10.getText().trim().toLowerCase();
@@ -3930,7 +3952,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField10KeyReleased
 
     private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
-         // search
+        // search
 
         try {
             String searchText = jTextField2.getText().trim().toLowerCase();
@@ -3952,7 +3974,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2KeyReleased
 
     private void jTextField9KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField9KeyReleased
-         // search
+        // search
 
         try {
             String searchText = jTextField9.getText().trim().toLowerCase();
@@ -3974,7 +3996,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField9KeyReleased
 
     private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
-            // profit loss Report:
+        // profit loss Report:
 
         try {
 //            long invoiceid = System.currentTimeMillis();
@@ -4326,138 +4348,149 @@ public class AdminDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     private void adjustTableHeightToFitRows(JTable table) {
-    int totalRowHeight = table.getRowCount() * table.getRowHeight(); // Calculate total height
-    Dimension tableSize = table.getPreferredSize(); // Get current table size
-    tableSize.height = totalRowHeight; // Set new height
-    table.setPreferredSize(tableSize); // Apply new size
-    table.revalidate(); // Refresh table layout
-}
-       
-private void loadProfitLoss() {
-    // Row headers as descriptions
-    String[] rowHeaders = {
-        "Total Class Fees",
-        "Total Registration Fees",
-        "Total Revenue",
-        "Total Salaries",
-        "Total Utilities",
-        "Total Expenses",
-        "Net Profit / Loss"
-    };
-
-    // Table column headers (excluding the "Description" column)
-    String[] columnHeaders = {
-        "Current Month", "Previous Month", "Budgeted Amount", "Variance / Due Amount", "% Change"
-    };
-
-    // Rows to highlight with bold text
-    Set<String> boldHeaders = new HashSet<>(Arrays.asList(
-        "Total Revenue",
-        "Total Expenses",
-        "Net Profit / Loss"
-    ));
-
-    try {
-        // Initialize table model
-        DefaultTableModel tableModel = new DefaultTableModel(columnHeaders, 0);
-        jTable16.setModel(tableModel);
-
-        // SQL queries for data
-        String[] queries = {
-            "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id != 7 AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Class Fees
-            "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id = 7 AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Registration Fees
-            "SELECT SUM(amount_paid) AS total FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Revenue
-            "SELECT SUM(net_amount) AS total FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Salaries
-            "SELECT SUM(amount) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Utilities
-            "SELECT SUM(amount) + (SELECT SUM(net_amount) FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Expenses
-            "SELECT ((SELECT SUM(amount_paid) FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) - (SELECT SUM(amount) FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) - (SELECT SUM(net_amount) FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE()))) AS total" // Net Profit/Loss
-        };
-
-        // Retrieve budgeted amounts
-        double budgetClassFees = 0;
-        double budgetRegFees = 0;
-        double budgetSalary = 0;
-        double budgetUtilities = 20000.0; // Fixed value
-        double budgetTotalRevenue;
-        double budgetTotalExpenses;
-
-        ResultSet rs = MySQL.executeSearch("SELECT SUM(amount) AS total FROM feestructure WHERE subjects_subject_id != 8");
-        if (rs.next()) budgetClassFees = rs.getDouble("total");
-        rs.close();
-
-        rs = MySQL.executeSearch("SELECT SUM(amount) AS total FROM feestructure WHERE subjects_subject_id = 8");
-        if (rs.next()) budgetRegFees = rs.getDouble("total");
-        rs.close();
-
-        rs = MySQL.executeSearch("SELECT COUNT(user_id) * 50000 AS total FROM employee");
-        if (rs.next()) budgetSalary = rs.getDouble("total");
-        rs.close();
-
-        budgetTotalRevenue = budgetClassFees + budgetRegFees;
-        budgetTotalExpenses = budgetSalary + budgetUtilities;
-
-        // Load data into the table
-        for (int i = 0; i < rowHeaders.length; i++) {
-            rs = MySQL.executeSearch(queries[i]);
-            if (rs.next()) {
-                double currentMonth = rs.getDouble("total");
-                double previousMonth = 0; // Placeholder for the previous month's data
-                double budgeted = 0;
-
-                // Assign budgeted data
-                if (i == 0) budgeted = budgetClassFees; // Total Class Fees
-                else if (i == 1) budgeted = budgetRegFees; // Total Registration Fees
-                else if (i == 2) budgeted = budgetTotalRevenue; // Total Revenue
-                else if (i == 3) budgeted = budgetSalary; // Total Salaries
-                else if (i == 4) budgeted = budgetUtilities; // Total Utilities
-                else if (i == 5) budgeted = budgetTotalExpenses; // Total Expenses
-
-                double variance = currentMonth - budgeted;
-                double percentageChange = (budgeted != 0) ? (variance / budgeted) * 100 : 0;
-
-                // Add row to table
-                tableModel.addRow(new Object[]{
-                    currentMonth, 
-                    previousMonth, 
-                    budgeted, 
-                    variance, 
-                    percentageChange
-                });
-            }
-            rs.close();
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
+        int totalRowHeight = table.getRowCount() * table.getRowHeight(); // Calculate total height
+        Dimension tableSize = table.getPreferredSize(); // Get current table size
+        tableSize.height = totalRowHeight; // Set new height
+        table.setPreferredSize(tableSize); // Apply new size
+        table.revalidate(); // Refresh table layout
     }
 
-    // Set row headers with bold styling and background highlighting
-    JList<String> rowHeaderList = new JList<>(rowHeaders);
-    rowHeaderList.setFixedCellWidth(150);
-    rowHeaderList.setFixedCellHeight(jTable16.getRowHeight());
-    rowHeaderList.setCellRenderer(new DefaultListCellRenderer(){
-        @Override
-        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            label.setFont(label.getFont().deriveFont(boldHeaders.contains(value) ? Font.BOLD : Font.PLAIN));
-            label.setBackground(new Color(173, 216, 230)); 
-            label.setOpaque(true);
-            return label;
+    private void loadProfitLoss() {
+        // Row headers as descriptions
+        String[] rowHeaders = {
+            "Total Class Fees",
+            "Total Registration Fees",
+            "Total Revenue",
+            "Total Salaries",
+            "Total Utilities",
+            "Total Expenses",
+            "Net Profit / Loss"
+        };
+
+        // Table column headers (excluding the "Description" column)
+        String[] columnHeaders = {
+            "Current Month", "Previous Month", "Budgeted Amount", "Variance / Due Amount", "% Change"
+        };
+
+        // Rows to highlight with bold text
+        Set<String> boldHeaders = new HashSet<>(Arrays.asList(
+                "Total Revenue",
+                "Total Expenses",
+                "Net Profit / Loss"
+        ));
+
+        try {
+            // Initialize table model
+            DefaultTableModel tableModel = new DefaultTableModel(columnHeaders, 0);
+            jTable16.setModel(tableModel);
+
+            // SQL queries for data
+            String[] queries = {
+                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id != 7 AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Class Fees
+                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id = 7 AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Registration Fees
+                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Revenue
+                "SELECT SUM(net_amount) AS total FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Salaries
+                "SELECT SUM(amount) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Utilities
+                "SELECT SUM(amount) + (SELECT SUM(net_amount) FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Expenses
+                "SELECT ((SELECT SUM(amount_paid) FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) - (SELECT SUM(amount) FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) - (SELECT SUM(net_amount) FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE()))) AS total" // Net Profit/Loss
+            };
+
+            // Retrieve budgeted amounts
+            double budgetClassFees = 0;
+            double budgetRegFees = 0;
+            double budgetSalary = 0;
+            double budgetUtilities = 20000.0; // Fixed value
+            double budgetTotalRevenue;
+            double budgetTotalExpenses;
+
+            ResultSet rs = MySQL.executeSearch("SELECT SUM(amount) AS total FROM feestructure WHERE subjects_subject_id != 8");
+            if (rs.next()) {
+                budgetClassFees = rs.getDouble("total");
+            }
+            rs.close();
+
+            rs = MySQL.executeSearch("SELECT SUM(amount) AS total FROM feestructure WHERE subjects_subject_id = 8");
+            if (rs.next()) {
+                budgetRegFees = rs.getDouble("total");
+            }
+            rs.close();
+
+            rs = MySQL.executeSearch("SELECT COUNT(user_id) * 50000 AS total FROM employee");
+            if (rs.next()) {
+                budgetSalary = rs.getDouble("total");
+            }
+            rs.close();
+
+            budgetTotalRevenue = budgetClassFees + budgetRegFees;
+            budgetTotalExpenses = budgetSalary + budgetUtilities;
+
+            // Load data into the table
+            for (int i = 0; i < rowHeaders.length; i++) {
+                rs = MySQL.executeSearch(queries[i]);
+                if (rs.next()) {
+                    double currentMonth = rs.getDouble("total");
+                    double previousMonth = 0; // Placeholder for the previous month's data
+                    double budgeted = 0;
+
+                    // Assign budgeted data
+                    if (i == 0) {
+                        budgeted = budgetClassFees; // Total Class Fees
+                    } else if (i == 1) {
+                        budgeted = budgetRegFees; // Total Registration Fees
+                    } else if (i == 2) {
+                        budgeted = budgetTotalRevenue; // Total Revenue
+                    } else if (i == 3) {
+                        budgeted = budgetSalary; // Total Salaries
+                    } else if (i == 4) {
+                        budgeted = budgetUtilities; // Total Utilities
+                    } else if (i == 5) {
+                        budgeted = budgetTotalExpenses; // Total Expenses
+                    }
+                    double variance = currentMonth - budgeted;
+                    double percentageChange = (budgeted != 0) ? (variance / budgeted) * 100 : 0;
+
+                    // Add row to table
+                    tableModel.addRow(new Object[]{
+                        currentMonth,
+                        previousMonth,
+                        budgeted,
+                        variance,
+                        percentageChange
+                    });
+                }
+                rs.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    });
 
-    // Set the row header view for the table
-    jScrollPane16.setRowHeaderView(rowHeaderList);
+        // Set row headers with bold styling and background highlighting
+        JList<String> rowHeaderList = new JList<>(rowHeaders);
+        rowHeaderList.setFixedCellWidth(150);
+        rowHeaderList.setFixedCellHeight(jTable16.getRowHeight());
+        rowHeaderList.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                label.setFont(label.getFont().deriveFont(boldHeaders.contains(value) ? Font.BOLD : Font.PLAIN));
+                label.setBackground(new Color(173, 216, 230));
+                label.setOpaque(true);
+                return label;
+            }
+        });
 
-    // Adjust table height to fit rows
-    adjustTableHeightToFitRows(jTable16);
+        // Set the row header view for the table
+        jScrollPane16.setRowHeaderView(rowHeaderList);
 
-    // Adjust scroll pane to ensure visibility
-    jScrollPane16.revalidate();
-    jScrollPane16.repaint();
-}
+        // Adjust table height to fit rows
+        adjustTableHeightToFitRows(jTable16);
 
+        // Adjust scroll pane to ensure visibility
+        jScrollPane16.revalidate();
+        jScrollPane16.repaint();
+    }
 
     private void loadAdminStudentAttendanceReportTable() {
         try {
@@ -4544,8 +4577,5 @@ private void loadProfitLoss() {
         }
 
     }
-
-
-    
 
 }
