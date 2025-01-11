@@ -4387,7 +4387,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         }
     }
 
-    private void adjustTableHeightToFitRows(JTable table) {
+   private void adjustTableHeightToFitRows(JTable table) {
         int totalRowHeight = table.getRowCount() * table.getRowHeight(); // Calculate total height
         Dimension tableSize = table.getPreferredSize(); // Get current table size
         tableSize.height = totalRowHeight; // Set new height
@@ -4396,140 +4396,134 @@ public class AdminDashboard extends javax.swing.JFrame {
     }
 
     private void loadProfitLoss() {
-        // Row headers as descriptions
-        String[] rowHeaders = {
-            "Total Class Fees",
-            "Total Registration Fees",
-            "Total Revenue",
-            "Total Salaries",
-            "Total Utilities",
-            "Total Expenses",
-            "Net Profit / Loss"
+    // Row headers as descriptions
+    String[] rowHeaders = {
+        "Total Class Fees",
+        "Total Registration Fees",
+        "Total Revenue",
+        "Total Salaries",
+        "Total Utilities",
+        "Total Expenses",
+        "Net Profit / Loss"
+    };
+
+    // Table column headers
+    String[] columnHeaders = {
+        "Description", "Current Month", "Previous Month", "Budgeted Amount", "Variance / Due Amount", "% Change"
+    };
+
+    // Rows to highlight with bold text
+    Set<String> boldHeaders = new HashSet<>(Arrays.asList(
+        "Total Revenue",
+        "Total Expenses",
+        "Net Profit / Loss"
+    ));
+
+    try {
+        // Initialize table model
+        DefaultTableModel tableModel = new DefaultTableModel(columnHeaders, 0);
+        jTable16.setModel(tableModel);
+
+        // SQL queries for data
+        String[] queries = {
+            "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id != 7 AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Class Fees
+            "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id = 7 AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Registration Fees
+            "SELECT SUM(amount_paid) AS total FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Revenue
+            "SELECT SUM(net_amount) AS total FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Salaries
+            "SELECT SUM(amount) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Utilities
+            "SELECT SUM(amount) + (SELECT SUM(net_amount) FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Expenses
+            "SELECT ((SELECT SUM(amount_paid) FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) - (SELECT SUM(amount) FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) - (SELECT SUM(net_amount) FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE()))) AS total" // Net Profit/Loss
         };
 
-        // Table column headers (excluding the "Description" column)
-        String[] columnHeaders = {
-            "Current Month", "Previous Month", "Budgeted Amount", "Variance / Due Amount", "% Change"
-        };
+        // Retrieve budgeted amounts
+        double budgetClassFees = 0;
+        double budgetRegFees = 0;
+        double budgetSalary = 0;
+        double budgetUtilities = 20000.0; // Fixed value
+        double budgetTotalRevenue;
+        double budgetTotalExpenses;
 
-        // Rows to highlight with bold text
-        Set<String> boldHeaders = new HashSet<>(Arrays.asList(
-                "Total Revenue",
-                "Total Expenses",
-                "Net Profit / Loss"
-        ));
+        ResultSet rs = MySQL.executeSearch("SELECT SUM(amount) AS total FROM feestructure WHERE subjects_subject_id != 8");
+        if (rs.next()) budgetClassFees = rs.getDouble("total");
+        rs.close();
 
-        try {
-            // Initialize table model
-            DefaultTableModel tableModel = new DefaultTableModel(columnHeaders, 0);
-            jTable16.setModel(tableModel);
+        rs = MySQL.executeSearch("SELECT SUM(amount) AS total FROM feestructure WHERE subjects_subject_id = 8");
+        if (rs.next()) budgetRegFees = rs.getDouble("total");
+        rs.close();
 
-            // SQL queries for data
-            String[] queries = {
-                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id != 7 AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Class Fees
-                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id = 7 AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Registration Fees
-                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Revenue
-                "SELECT SUM(net_amount) AS total FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Salaries
-                "SELECT SUM(amount) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Utilities
-                "SELECT SUM(amount) + (SELECT SUM(net_amount) FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Expenses
-                "SELECT ((SELECT SUM(amount_paid) FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) - (SELECT SUM(amount) FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) - (SELECT SUM(net_amount) FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE()))) AS total" // Net Profit/Loss
-            };
+        rs = MySQL.executeSearch("SELECT COUNT(user_id) * 50000 AS total FROM employee");
+        if (rs.next()) budgetSalary = rs.getDouble("total");
+        rs.close();
 
-            // Retrieve budgeted amounts
-            double budgetClassFees = 0;
-            double budgetRegFees = 0;
-            double budgetSalary = 0;
-            double budgetUtilities = 20000.0; // Fixed value
-            double budgetTotalRevenue;
-            double budgetTotalExpenses;
+        budgetTotalRevenue = budgetClassFees + budgetRegFees;
+        budgetTotalExpenses = budgetSalary + budgetUtilities;
 
-            ResultSet rs = MySQL.executeSearch("SELECT SUM(amount) AS total FROM feestructure WHERE subjects_subject_id != 8");
+        // Load data into the table
+        for (int i = 0; i < rowHeaders.length; i++) {
+            rs = MySQL.executeSearch(queries[i]);
             if (rs.next()) {
-                budgetClassFees = rs.getDouble("total");
+                double currentMonth = rs.getDouble("total");
+                double previousMonth = 0; // Placeholder for the previous month's data
+                double budgeted = 0;
+
+                // Assign budgeted data
+                if (i == 0) budgeted = budgetClassFees; // Total Class Fees
+                else if (i == 1) budgeted = budgetRegFees; // Total Registration Fees
+                else if (i == 2) budgeted = budgetTotalRevenue; // Total Revenue
+                else if (i == 3) budgeted = budgetSalary; // Total Salaries
+                else if (i == 4) budgeted = budgetUtilities; // Total Utilities
+                else if (i == 5) budgeted = budgetTotalExpenses; // Total Expenses
+
+                double variance = currentMonth - budgeted;
+                double percentageChange = (budgeted != 0) ? (variance / budgeted) * 100 : 0;
+
+                // Add row to table
+                tableModel.addRow(new Object[]{
+                    rowHeaders[i], 
+                    currentMonth, 
+                    previousMonth, 
+                    budgeted, 
+                    variance, 
+                    percentageChange
+                });
             }
             rs.close();
-
-            rs = MySQL.executeSearch("SELECT SUM(amount) AS total FROM feestructure WHERE subjects_subject_id = 8");
-            if (rs.next()) {
-                budgetRegFees = rs.getDouble("total");
-            }
-            rs.close();
-
-            rs = MySQL.executeSearch("SELECT COUNT(user_id) * 50000 AS total FROM employee");
-            if (rs.next()) {
-                budgetSalary = rs.getDouble("total");
-            }
-            rs.close();
-
-            budgetTotalRevenue = budgetClassFees + budgetRegFees;
-            budgetTotalExpenses = budgetSalary + budgetUtilities;
-
-            // Load data into the table
-            for (int i = 0; i < rowHeaders.length; i++) {
-                rs = MySQL.executeSearch(queries[i]);
-                if (rs.next()) {
-                    double currentMonth = rs.getDouble("total");
-                    double previousMonth = 0; // Placeholder for the previous month's data
-                    double budgeted = 0;
-
-                    // Assign budgeted data
-                    if (i == 0) {
-                        budgeted = budgetClassFees; // Total Class Fees
-                    } else if (i == 1) {
-                        budgeted = budgetRegFees; // Total Registration Fees
-                    } else if (i == 2) {
-                        budgeted = budgetTotalRevenue; // Total Revenue
-                    } else if (i == 3) {
-                        budgeted = budgetSalary; // Total Salaries
-                    } else if (i == 4) {
-                        budgeted = budgetUtilities; // Total Utilities
-                    } else if (i == 5) {
-                        budgeted = budgetTotalExpenses; // Total Expenses
-                    }
-                    double variance = currentMonth - budgeted;
-                    double percentageChange = (budgeted != 0) ? (variance / budgeted) * 100 : 0;
-
-                    // Add row to table
-                    tableModel.addRow(new Object[]{
-                        currentMonth,
-                        previousMonth,
-                        budgeted,
-                        variance,
-                        percentageChange
-                    });
-                }
-                rs.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
-        // Set row headers with bold styling and background highlighting
-        JList<String> rowHeaderList = new JList<>(rowHeaders);
-        rowHeaderList.setFixedCellWidth(150);
-        rowHeaderList.setFixedCellHeight(jTable16.getRowHeight());
-        rowHeaderList.setCellRenderer(new DefaultListCellRenderer() {
-            @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                label.setFont(label.getFont().deriveFont(boldHeaders.contains(value) ? Font.BOLD : Font.PLAIN));
-                label.setBackground(new Color(173, 216, 230));
-                label.setOpaque(true);
-                return label;
-            }
-        });
-
-        // Set the row header view for the table
-        jScrollPane16.setRowHeaderView(rowHeaderList);
-
-        // Adjust table height to fit rows
-        adjustTableHeightToFitRows(jTable16);
-
-        // Adjust scroll pane to ensure visibility
-        jScrollPane16.revalidate();
-        jScrollPane16.repaint();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
 
+    // Set row headers with bold styling and background highlighting
+    JList<String> rowHeaderList = new JList<>(rowHeaders);
+    rowHeaderList.setFixedCellWidth(150);
+    rowHeaderList.setFixedCellHeight(jTable16.getRowHeight());
+    rowHeaderList.setCellRenderer(new DefaultListCellRenderer(){
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            label.setFont(label.getFont().deriveFont(boldHeaders.contains(value) ? Font.BOLD : Font.PLAIN));
+            label.setBackground(new Color(173, 216, 230)); // Highlight background
+            label.setOpaque(true);
+            return label;
+        }
+    });
+
+    // Set the row header view for the table
+    jScrollPane31.setRowHeaderView(rowHeaderList);
+
+    // Highlight Description Column
+    jTable16.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            if (boldHeaders.contains(value)) {
+                component.setFont(component.getFont().deriveFont(Font.BOLD));
+            }
+            component.setBackground(new Color(173, 216, 230)); // Set background color
+            return component;
+        }
+    });
+} 
     private void loadAdminStudentAttendanceReportTable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) jTable7.getModel();
