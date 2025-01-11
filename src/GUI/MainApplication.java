@@ -32,6 +32,7 @@ public class MainApplication {
                 return null;
             }
 
+            
             @Override
             protected void process(java.util.List<Integer> chunks) {
                 // Update progress bar

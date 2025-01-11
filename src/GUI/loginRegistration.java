@@ -542,6 +542,7 @@ public class loginRegistration extends javax.swing.JFrame {
                 isUpdateRequired = true;
             }
 
+            
             // Remove trailing comma
             if (isUpdateRequired) {
                 query.setLength(query.length() - 1);
