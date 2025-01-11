@@ -538,7 +538,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
             String invoiceid2 = jLabel10.getText();
             String EmployeeUserName = jLabel8.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-            String imagePath = getClass().getResource("/resources/LOGO.svg").toString();
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
  
 
             // Load report file

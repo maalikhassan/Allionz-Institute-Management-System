@@ -4592,7 +4592,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Employee Id", "Employee Name", "Base Salary", "Net Amount", "Month", "Payment Date", "Status"
+                "Employee Id", "Employee Name", "Base Salary", "Net Amount", "Payment Date", "Month", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -5230,8 +5230,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
                     if (showConfirm == JOptionPane.YES_OPTION) {
                         MySQL.executeIUD("UPDATE `bill_payments` SET `bill_type_id`='" + LoadBillType.get(BillType) + "',`vendor_id`='" + LoadVendorMap.get(Vendor) + "',`description`='" + Description + "',"
-                                + "`amount`='" + Amount + "',`payment_status_id`='" + LoadStatusmap.get(Status) + "','" + LoadMonthMap.get(month) + "' "
-                                + "WHERE `bill_id`='" + BillId + "'");
+                                + "`amount`='" + Amount + "',`payment_status_id`='" + LoadStatusmap.get(Status) + "',`month_id`='" + LoadMonthMap.get(month) + "' WHERE `bill_id`='" + BillId + "'");
                         reset();
                         loadBillPayments();
                     }

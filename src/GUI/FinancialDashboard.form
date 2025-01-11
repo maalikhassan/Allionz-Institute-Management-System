@@ -2340,7 +2340,7 @@
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" pref="409" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="398" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -5059,8 +5059,8 @@
                                 <Column editable="false" title="Employee Name" type="java.lang.Object"/>
                                 <Column editable="false" title="Base Salary" type="java.lang.Object"/>
                                 <Column editable="false" title="Net Amount" type="java.lang.Object"/>
-                                <Column editable="false" title="Month" type="java.lang.Object"/>
                                 <Column editable="false" title="Payment Date" type="java.lang.Object"/>
+                                <Column editable="false" title="Month" type="java.lang.Object"/>
                                 <Column editable="false" title="Status" type="java.lang.Object"/>
                               </Table>
                             </Property>
