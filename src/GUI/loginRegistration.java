@@ -483,7 +483,7 @@ public class loginRegistration extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try {
+       try {
             String username = jTextField7.getText();
             String fname = jTextField2.getText();
             String lname = jTextField3.getText();
@@ -492,47 +492,65 @@ public class loginRegistration extends javax.swing.JFrame {
             String mobile = jTextField5.getText();
             String type = String.valueOf(jComboBox2.getSelectedItem());
 
-            if (username.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Enter Your Username", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else if (!username.matches("^[a-z]+$")) {
+            // Validation for required fields
+            if (!username.isEmpty() && !username.matches("^[a-z]+$")) {
                 JOptionPane.showMessageDialog(this, "Invalid username. Only lowercase letters are allowed", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else if (fname.isBlank()) {
-                JOptionPane.showMessageDialog(this, "Enter Your First Name", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else if (lname.isBlank()) {
-                JOptionPane.showMessageDialog(this, "Enter Your Last Name", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else if (mobile.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Enter Your Mobile", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
+                return;
+            }
+            if (!mobile.isEmpty() && !mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
                 JOptionPane.showMessageDialog(this, "Invalid Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else if (type.equals("Select")) {
-                JOptionPane.showMessageDialog(this, "Please Select a Type", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (!type.equals("Select") && userTypeMap.get(type) == null) {
+                JOptionPane.showMessageDialog(this, "Invalid Type Selected", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Check if NIC exists
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` WHERE `nic`='" + nic + "'");
+            if (!resultSet.next()) {
+                JOptionPane.showMessageDialog(this, "NIC not found. Cannot update!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Build dynamic update query
+            StringBuilder query = new StringBuilder("UPDATE `users` SET ");
+            boolean isUpdateRequired = false;
+
+            if (!username.isEmpty()) {
+                query.append("`username`='").append(username).append("',");
+                isUpdateRequired = true;
+            }
+            if (!fname.isEmpty()) {
+                query.append("`first_name`='").append(fname).append("',");
+                isUpdateRequired = true;
+            }
+            if (!lname.isEmpty()) {
+                query.append("`last_name`='").append(lname).append("',");
+                isUpdateRequired = true;
+            }
+            if (!email.isEmpty()) {
+                query.append("`email`='").append(email).append("',");
+                isUpdateRequired = true;
+            }
+            if (!mobile.isEmpty()) {
+                query.append("`mobile`='").append(mobile).append("',");
+                isUpdateRequired = true;
+            }
+            if (!type.equals("Select")) {
+                query.append("`user_id`='").append(userTypeMap.get(type)).append("',");
+                isUpdateRequired = true;
+            }
+
+            // Remove trailing comma
+            if (isUpdateRequired) {
+                query.setLength(query.length() - 1);
+                query.append(" WHERE `nic`='").append(nic).append("'");
+                MySQL.executeIUD(query.toString());
+                JOptionPane.showMessageDialog(this, "User Updated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                reset();
             } else {
-
-                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` WHERE `nic`='" + nic + "'");
-
-                boolean canUpdate = false;
-
-                if (resultSet.next()) {
-
-                    if (resultSet.getString("username").equals(username) || resultSet.getString("email").equals(email)) {
-                        JOptionPane.showMessageDialog(this, "Username or Email already exists!", "Warning", JOptionPane.WARNING_MESSAGE);
-                    } else {
-                        canUpdate = true;
-                    }
-
-                } else {
-                    canUpdate = true;
-                }
-
-                if (canUpdate) {
-                    MySQL.executeIUD("UPDATE `users` SET `username`='" + username + "', `first_name`='" + fname + "',`last_name`='" + lname + "',`email`='" + email + "',"
-                            + "`type`='" + userTypeMap.get(type) + "'");
-
-                    JOptionPane.showMessageDialog(this, "User Updated Successfully!", "Warning", JOptionPane.INFORMATION_MESSAGE);
-                    reset();
-
-                }
-
+                JOptionPane.showMessageDialog(this, "No changes detected. Nothing to update.", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -604,12 +622,22 @@ public class loginRegistration extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void reset() {
-        jTextField7.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField6.setText("");
-        jPasswordField1.setText("");
-        jComboBox1.setSelectedItem("Select");
-        jComboBox2.setSelectedItem("Select");
+        // Clear all text fields
+        jTextField7.setText(""); // Username
+        jTextField2.setText(""); // First Name
+        jTextField3.setText(""); // Last Name
+        jTextField6.setText(""); // Email
+        jTextField5.setText(""); // Mobile
+
+        // Temporarily enable jTextField4 to clear it, then disable it again
+        jTextField4.setEnabled(true);
+        jTextField4.setText(""); // NIC
+        jTextField4.setEnabled(false);
+
+        // Clear the password field
+        jPasswordField1.setText(""); // Password
+
+        // Reset other components like JComboBox if necessary
+        jComboBox2.setSelectedIndex(0); // Reset to default "Select" option
     }
 }
