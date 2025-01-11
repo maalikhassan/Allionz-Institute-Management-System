@@ -30,7 +30,7 @@ public class loginRegistration extends javax.swing.JFrame {
         initComponents();
         loadGender();
         loadType();
-        loadUsers();
+        loadUsers("");
     }
 
     private void loadGender() {
@@ -70,9 +70,9 @@ public class loginRegistration extends javax.swing.JFrame {
         }
     }
 
-    private void loadUsers() {
+    private void loadUsers(String value) {
         try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users`");
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` WHERE `username` LIKE '" + value + "%' OR `email` LIKE '" + value + "'");
 
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
@@ -104,7 +104,6 @@ public class loginRegistration extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -141,7 +140,11 @@ public class loginRegistration extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel3.setText("Welcome, Ashan");
 
-        jButton1.setText("Search");
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -209,6 +212,11 @@ public class loginRegistration extends javax.swing.JFrame {
         });
 
         jButton5.setText("Remove");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Go Back");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -308,9 +316,7 @@ public class loginRegistration extends javax.swing.JFrame {
                                 .addGap(12, 12, 12)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(244, 244, 244)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(333, 333, 333)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
@@ -325,9 +331,7 @@ public class loginRegistration extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1))
+                        .addComponent(jTextField1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -483,14 +487,13 @@ public class loginRegistration extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       try {
+        try {
             String username = jTextField7.getText();
             String fname = jTextField2.getText();
             String lname = jTextField3.getText();
             String email = jTextField6.getText();
             String nic = jTextField4.getText();
             String mobile = jTextField5.getText();
-            String type = String.valueOf(jComboBox2.getSelectedItem());
 
             // Validation for required fields
             if (!username.isEmpty() && !username.matches("^[a-z]+$")) {
@@ -499,10 +502,6 @@ public class loginRegistration extends javax.swing.JFrame {
             }
             if (!mobile.isEmpty() && !mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
                 JOptionPane.showMessageDialog(this, "Invalid Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            if (!type.equals("Select") && userTypeMap.get(type) == null) {
-                JOptionPane.showMessageDialog(this, "Invalid Type Selected", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
@@ -537,16 +536,13 @@ public class loginRegistration extends javax.swing.JFrame {
                 query.append("`mobile`='").append(mobile).append("',");
                 isUpdateRequired = true;
             }
-            if (!type.equals("Select")) {
-                query.append("`user_id`='").append(userTypeMap.get(type)).append("',");
-                isUpdateRequired = true;
-            }
 
-            
-            // Remove trailing comma
+            // Finalize and execute query
             if (isUpdateRequired) {
+                // Remove trailing comma
                 query.setLength(query.length() - 1);
                 query.append(" WHERE `nic`='").append(nic).append("'");
+                System.out.println("Generated Query: " + query.toString()); // Debugging
                 MySQL.executeIUD(query.toString());
                 JOptionPane.showMessageDialog(this, "User Updated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 reset();
@@ -555,7 +551,10 @@ public class loginRegistration extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "An error occurred. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -587,9 +586,36 @@ public class loginRegistration extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        int row = jTable1.getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please Select A Row", "Warning", JOptionPane.WARNING_MESSAGE);
+
+        } else {
+
+            try {
+
+                String userid = String.valueOf(jTable1.getValueAt(row, 0));
+
+                MySQL.executeIUD("DELETE FROM `users` WHERE `user_id`='" + userid + "'");
+                JOptionPane.showMessageDialog(this, "User Deleted Successfully!", "Warning", JOptionPane.INFORMATION_MESSAGE);
+                loadUsers("");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        String value = jTextField1.getText();
+        loadUsers(value);
+    }//GEN-LAST:event_jTextField1KeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -633,7 +659,6 @@ public class loginRegistration extends javax.swing.JFrame {
         // Temporarily enable jTextField4 to clear it, then disable it again
         jTextField4.setEnabled(true);
         jTextField4.setText(""); // NIC
-        jTextField4.setEnabled(false);
 
         // Clear the password field
         jPasswordField1.setText(""); // Password
