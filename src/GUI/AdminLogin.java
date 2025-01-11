@@ -6,10 +6,14 @@ package gui;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import model.AdminUserHandler;
 import model.AdminUserSession;
+import model.MySQL;
 
 /**
  *
@@ -18,6 +22,7 @@ import model.AdminUserSession;
 public class AdminLogin extends javax.swing.JFrame {
 
     private static String fullname;
+    private static String SystemDateTime;
 
     private void image() {
 
@@ -27,8 +32,6 @@ public class AdminLogin extends javax.swing.JFrame {
         logolabel.setIcon(icon1);
         adminlabel.setIcon(icon2);
     }
-    
-    
 
     /**
      * Creates new form AdminLogin
@@ -37,6 +40,18 @@ public class AdminLogin extends javax.swing.JFrame {
         initComponents();
         image();
         rounded();
+
+        Timer timer = new Timer(1000, e -> updateDateTime());
+        timer.start();
+
+        updateDateTime();
+    }
+
+    private void updateDateTime() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = currentDateTime.format(formatter);
+        SystemDateTime = formattedDateTime;
     }
 
     /**
@@ -181,9 +196,28 @@ public class AdminLogin extends javax.swing.JFrame {
 
             AdminUserHandler adminUserHandler = new AdminUserHandler();
             if (adminUserHandler.adminlogin(username, fullname, password)) {
+                
+                // System Log
+                try {
+                    ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` INNER JOIN `usertypes` ON"
+                            + "`users`.`user_type_id`=`usertypes`.`user_type_id` WHERE `username` = '" + AdminUserSession.getInstance().getUsername() + "'");
+
+                    if (resultSet.next()) {
+                        String description = "Admin Login";
+                        String user = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+                        String userType = resultSet.getString("usertypes.user_type_name");
+                        
+                        MySQL.executeIUD("INSERT INTO `system_logs`(`timestamp`,`description`,`user_name`,`user_type`)"
+                                + "VALUES ('"+ SystemDateTime +"','"+ description +"','"+ user +"','"+ userType +"')");
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
                 JOptionPane.showMessageDialog(this, "Welcome, '" + AdminUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
-                NewDashboard FD = new NewDashboard();
-                FD.setVisible(true);
+                AdminDashboard AD = new AdminDashboard();
+                AD.setVisible(true);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Warning", JOptionPane.WARNING_MESSAGE);

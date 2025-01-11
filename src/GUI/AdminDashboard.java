@@ -19,6 +19,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,6 +36,7 @@ import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -59,9 +62,10 @@ import org.jfree.data.general.DefaultPieDataset;
  *
  * @author Dell
  */
-public class NewDashboard extends javax.swing.JFrame {
+public class AdminDashboard extends javax.swing.JFrame {
 
     private static String userName = AdminUserSession.getInstance().getUsername();
+    private static String SystemDateTime;
     private static HashMap<String, String> streamMap = new HashMap<>();
 
     private void image() {
@@ -93,7 +97,7 @@ public class NewDashboard extends javax.swing.JFrame {
     /**
      * Creates new form NewDashboard
      */
-    public NewDashboard() {
+    public AdminDashboard() {
         initComponents();
         image();
         loadStudents("");
@@ -139,7 +143,20 @@ public class NewDashboard extends javax.swing.JFrame {
         jTable17.setDefaultRenderer(Object.class, render);
         jTable18.setDefaultRenderer(Object.class, render);
         jTable8.setDefaultRenderer(Object.class, render);
+        
+        Timer timer = new Timer(1000, e -> updateDateTime());
+        timer.start();
+        
+        updateDateTime();
     }
+    
+    private void updateDateTime() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = currentDateTime.format(formatter);
+        SystemDateTime = formattedDateTime;
+    }
+    
  private void loadTotalSubjects() {
         int totalSubjects = 0;
 
@@ -3594,10 +3611,39 @@ public class NewDashboard extends javax.swing.JFrame {
 
     private void jButton32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton32ActionPerformed
 
-        AdminUserSession.getInstance().logout();
-        this.dispose();
-        userSelection us = new userSelection();
-        us.setVisible(true);
+        // System Log
+        int response = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to log out?",
+                "Confirm Logout",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (response == JOptionPane.YES_OPTION) {
+            // System Log
+            try {
+                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` INNER JOIN `usertypes` ON "
+                        + "`users`.`user_type_id`=`usertypes`.`user_type_id` WHERE `username` = '" + AdminUserSession.getInstance().getUsername() + "'");
+
+                if (resultSet.next()) {
+                    String description = "Admin Log Out";
+                    String user = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+                    String userType = resultSet.getString("usertypes.user_type_name");
+
+                    MySQL.executeIUD("INSERT INTO `system_logs`(`timestamp`,`description`,`user_name`,`user_type`)"
+                            + "VALUES ('" + SystemDateTime + "','" + description + "','" + user + "','" + userType + "')");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Perform logout and navigation
+            AdminUserSession.getInstance().logout();
+            this.dispose();
+            userSelection us = new userSelection();
+            us.setVisible(true);
+        }
 
     }//GEN-LAST:event_jButton32ActionPerformed
 
@@ -3974,7 +4020,7 @@ public class NewDashboard extends javax.swing.JFrame {
 //        /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new NewDashboard().setVisible(true);
+//                new AdminDashboard().setVisible(true);
 //
 //            }
 //        });

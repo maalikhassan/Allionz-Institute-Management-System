@@ -8,10 +8,15 @@ import GUI.AcademicDashboard;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatLightOwlIJTheme;
+import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import model.AcademicUserHandler;
 import model.AcademicUserSession;
+import model.MySQL;
 
 /**
  *
@@ -20,12 +25,24 @@ import model.AcademicUserSession;
 public class AcademicLogin extends javax.swing.JFrame {
 
     private static String fullname;
+    private static String SystemDateTime;
 
     public AcademicLogin() {
         initComponents();
         image();
         image2();
 
+        Timer timer = new Timer(1000, e -> updateDateTime());
+        timer.start();
+        
+        updateDateTime();
+    }
+    
+    private void updateDateTime() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = currentDateTime.format(formatter);
+        SystemDateTime = formattedDateTime;
     }
 
     /**
@@ -88,6 +105,11 @@ public class AcademicLogin extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Go Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -160,8 +182,27 @@ public class AcademicLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please enter Password", "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
 
-            AcademicUserHandler financialUserHandler = new AcademicUserHandler();
-            if (financialUserHandler.academiclogin(username, fullname, password)) {
+            AcademicUserHandler academicUserHandler = new AcademicUserHandler();
+            if (academicUserHandler.academiclogin(username, fullname, password)) {
+                
+                // System Log
+                try {
+                    ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` INNER JOIN `usertypes` ON"
+                            + "`users`.`user_type_id`=`usertypes`.`user_type_id` WHERE `username` = '" + AcademicUserSession.getInstance().getUsername() + "'");
+
+                    if (resultSet.next()) {
+                        String description = "Academic Login";
+                        String user = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+                        String userType = resultSet.getString("usertypes.user_type_name");
+                        
+                        MySQL.executeIUD("INSERT INTO `system_logs`(`timestamp`,`description`,`user_name`,`user_type`)"
+                                + "VALUES ('"+ SystemDateTime +"','"+ description +"','"+ user +"','"+ userType +"')");
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
                 JOptionPane.showMessageDialog(this, "Welcome, '" + AcademicUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
                 AcademicDashboard ACD = new AcademicDashboard();
                 ACD.setVisible(true);
@@ -172,6 +213,12 @@ public class AcademicLogin extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        userSelection US = new userSelection();
+        US.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,7 +233,6 @@ public class AcademicLogin extends javax.swing.JFrame {
 //            }
 //        });
 //    }
-
     public void image() {
         FlatSVGIcon icon1 = new FlatSVGIcon("resources//academic.svg", acl.getWidth(), acl.getHeight());
         acl.setIcon(icon1);

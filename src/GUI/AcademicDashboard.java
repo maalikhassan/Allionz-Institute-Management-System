@@ -78,6 +78,9 @@ import org.jfree.data.general.DefaultPieDataset;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.Timer;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
@@ -90,7 +93,8 @@ import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 public class AcademicDashboard extends javax.swing.JFrame {
 
     private static String userName = AcademicUserSession.getInstance().getUsername();
-
+    private static String SystemDateTime;
+    
     HashMap<String, String> BatchMap = new HashMap<>();
     HashMap<String, String> StreamMap = new HashMap<>();
     HashMap<String, String> SubjectMap = new HashMap<>();
@@ -216,6 +220,17 @@ public class AcademicDashboard extends javax.swing.JFrame {
         loadStudentAttendanceReportTable();
         loadTattReportsTable();
 
+        Timer timer = new Timer(1000, e -> updateDateTime());
+        timer.start();
+        
+        updateDateTime();
+    }
+    
+    private void updateDateTime() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = currentDateTime.format(formatter);
+        SystemDateTime = formattedDateTime;
     }
 
     private void overviewSTudent() {
@@ -5506,10 +5521,39 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
-        AcademicUserSession.getInstance().logout();
-        this.dispose();
-        userSelection us = new userSelection();
-        us.setVisible(true);
+        // System Log
+        int response = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to log out?",
+                "Confirm Logout",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (response == JOptionPane.YES_OPTION) {
+            // System Log
+            try {
+                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` INNER JOIN `usertypes` ON "
+                        + "`users`.`user_type_id`=`usertypes`.`user_type_id` WHERE `username` = '" + AcademicUserSession.getInstance().getUsername() + "'");
+
+                if (resultSet.next()) {
+                    String description = "Academic Log Out";
+                    String user = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+                    String userType = resultSet.getString("usertypes.user_type_name");
+
+                    MySQL.executeIUD("INSERT INTO `system_logs`(`timestamp`,`description`,`user_name`,`user_type`)"
+                            + "VALUES ('" + SystemDateTime + "','" + description + "','" + user + "','" + userType + "')");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Perform logout and navigation
+            AcademicUserSession.getInstance().logout();
+            this.dispose();
+            userSelection us = new userSelection();
+            us.setVisible(true);
+        }
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -9681,17 +9725,17 @@ public class AcademicDashboard extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-
-        FlatMacLightLaf.setup();
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AcademicDashboard().setVisible(true);
-
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//
+//        FlatMacLightLaf.setup();
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new AcademicDashboard().setVisible(true);
+//
+//            }
+//        });
+//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Dashboardconstantpanel;
     private javax.swing.JButton browseButton;

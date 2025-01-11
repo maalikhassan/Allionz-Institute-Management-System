@@ -404,8 +404,8 @@ public class loginRegistration extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         this.dispose();
-        NewDashboard ND = new NewDashboard();
-        ND.setVisible(true);
+        AdminDashboard AD = new AdminDashboard();
+        AD.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -464,8 +464,8 @@ public class loginRegistration extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "User registered Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                     reset();
                     this.dispose();
-                    NewDashboard nd = new NewDashboard();
-                    nd.setVisible(true);
+                    AdminDashboard ad = new AdminDashboard();
+                    ad.setVisible(true);
 
                 }
             }

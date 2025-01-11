@@ -7,9 +7,14 @@ package gui;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import model.FinancialUserHandler;
 import model.FinancialUserSession;
+import model.MySQL;
 
 /**
  *
@@ -18,7 +23,8 @@ import model.FinancialUserSession;
 public class Financelogin extends javax.swing.JFrame {
 
     private static String fullname;
-    
+    private static String SystemDateTime;
+
     //employee email
     private static String employeeusername;
 
@@ -41,6 +47,18 @@ public class Financelogin extends javax.swing.JFrame {
         image1();
         image2();
         rounded();
+
+        Timer timer = new Timer(1000, e -> updateDateTime());
+        timer.start();
+
+        updateDateTime();
+    }
+
+    private void updateDateTime() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = currentDateTime.format(formatter);
+        SystemDateTime = formattedDateTime;
     }
 
     public void image1() {
@@ -238,6 +256,25 @@ public class Financelogin extends javax.swing.JFrame {
             FinancialUserHandler financialUserHandler = new FinancialUserHandler();
             if (financialUserHandler.financelogin(username, fullname, password)) {
                 JOptionPane.showMessageDialog(this, "Welcome, '" + FinancialUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
+                
+                // System Log
+                try {
+                    ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` INNER JOIN `usertypes` ON"
+                            + "`users`.`user_type_id`=`usertypes`.`user_type_id` WHERE `username` = '" + FinancialUserSession.getInstance().getUsername() + "'");
+
+                    if (resultSet.next()) {
+                        String description = "Financial Login";
+                        String user = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+                        String userType = resultSet.getString("usertypes.user_type_name");
+                        
+                        MySQL.executeIUD("INSERT INTO `system_logs`(`timestamp`,`description`,`user_name`,`user_type`)"
+                                + "VALUES ('"+ SystemDateTime +"','"+ description +"','"+ user +"','"+ userType +"')");
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
                 FinancialDashboard FD = new FinancialDashboard();
                 FD.setVisible(true);
                 this.dispose();

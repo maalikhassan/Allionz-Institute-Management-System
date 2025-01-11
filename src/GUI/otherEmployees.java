@@ -375,8 +375,8 @@ public class otherEmployees extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         this.dispose();
-        NewDashboard ND = new NewDashboard();
-        ND.setVisible(true);
+        AdminDashboard AD = new AdminDashboard();
+        AD.setVisible(true);
 
     }//GEN-LAST:event_jButton6ActionPerformed
 
