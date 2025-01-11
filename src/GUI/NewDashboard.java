@@ -6,8 +6,10 @@ package gui;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.io.File;
@@ -30,6 +32,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
+import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -40,6 +43,15 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PiePlot3D;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -59,7 +71,7 @@ public class NewDashboard extends javax.swing.JFrame {
         FlatSVGIcon icon5 = new FlatSVGIcon("resources/teacher.svg", teacherpiclabel.getWidth(), teacherpiclabel.getHeight());
         FlatSVGIcon icon6 = new FlatSVGIcon("resources/books.svg", subjectpiclabel.getWidth(), subjectpiclabel.getHeight());
         FlatSVGIcon icon7 = new FlatSVGIcon("resources/profit.svg", profitpiclabel.getWidth(), profitpiclabel.getHeight());
-        FlatSVGIcon icon8 = new FlatSVGIcon("resources/pie-graph.svg", chartpiclabel.getWidth(), chartpiclabel.getHeight());
+//        FlatSVGIcon icon8 = new FlatSVGIcon("resources/pie-graph.svg", chartpiclabel.getWidth(), chartpiclabel.getHeight());
         FlatSVGIcon icon9 = new FlatSVGIcon("resources/dues.svg", duepiclabel.getWidth(), duepiclabel.getHeight());
         FlatSVGIcon icon10 = new FlatSVGIcon("resources/profileImage.svg", profilepiclabel.getWidth(), profilepiclabel.getHeight());
 
@@ -69,7 +81,7 @@ public class NewDashboard extends javax.swing.JFrame {
         teacherpiclabel.setIcon(icon5);
         subjectpiclabel.setIcon(icon6);
         profitpiclabel.setIcon(icon7);
-        chartpiclabel.setIcon(icon8);
+//        chartpiclabel.setIcon(icon8);
         duepiclabel.setIcon(icon9);
         profilepiclabel.setIcon(icon10);
 
@@ -111,6 +123,12 @@ public class NewDashboard extends javax.swing.JFrame {
         loadProfitLoss();
         loadAdminTeacherEnrollmenrt();
         loadProfitLoss();
+        loadChartIntoPanel();
+        loadPieChartIntoPanel();calculateProfit();
+        loadTotalStudents();
+        loadDues();
+         loadTotalSubjects();
+         loadTotalTeachers();
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(SwingConstants.CENTER);
         jTable12.setDefaultRenderer(Object.class, render);
@@ -120,7 +138,296 @@ public class NewDashboard extends javax.swing.JFrame {
         jTable18.setDefaultRenderer(Object.class, render);
         jTable8.setDefaultRenderer(Object.class, render);
     }
+ private void loadTotalSubjects() {
+        int totalSubjects = 0;
 
+        try {
+            // Execute query to get the total count of subjects
+            ResultSet rs = MySQL.executeSearch("SELECT COUNT(*) AS total FROM subjects");
+
+            // Process the result set
+            if (rs.next()) {
+                totalSubjects = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error fetching total subjects: " + e.getMessage());
+            return;
+        }
+
+        // Set the total subjects count and text color to jLabel20
+        jLabel20.setText(String.valueOf(totalSubjects));
+        jLabel20.setForeground(Color.WHITE); // Set text color to white
+    }
+
+  private void loadTotalTeachers() {
+        int totalTeachers = 0;
+
+        try {
+            // Execute query to get the total count of teachers
+            ResultSet rs = MySQL.executeSearch("SELECT COUNT(*) AS total FROM teachers");
+
+            // Process the result set
+            if (rs.next()) {
+                totalTeachers = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error fetching total teachers: " + e.getMessage());
+            return;
+        }
+
+        // Set the total teachers count and text color to jLabel17
+        jLabel17.setText(String.valueOf(totalTeachers));
+        jLabel17.setForeground(Color.WHITE); // Set text color to white
+    }
+
+    private void loadDues() {
+        SwingWorker<Void, Void> worker = new SwingWorker<>() {
+            private double totalDues = 0;
+
+            @Override
+            protected Void doInBackground() {
+                try {
+                    // Fetch total pending feepayments
+                    ResultSet rsPendingFees = MySQL.executeSearch(
+                            "SELECT SUM(amount_paid) AS total_pending_fees "
+                            + "FROM feepayments "
+                            + "WHERE payment_status_id = (SELECT id FROM payment_status WHERE status = 'unpaid')"
+                    );
+                    if (rsPendingFees.next()) {
+                        totalDues += rsPendingFees.getDouble("total_pending_fees");
+                    }
+
+                    // Fetch total unpaid salaries
+                    ResultSet rsUnpaidSalaries = MySQL.executeSearch(
+                            "SELECT SUM(net_amount) AS total_unpaid_salaries "
+                            + "FROM salary "
+                            + "WHERE payment_status_id = (SELECT id FROM payment_status WHERE status = 'unpaid')"
+                    );
+                    if (rsUnpaidSalaries.next()) {
+                        totalDues += rsUnpaidSalaries.getDouble("total_unpaid_salaries");
+                    }
+
+                    // Fetch total unpaid bill payments
+                    ResultSet rsUnpaidBills = MySQL.executeSearch(
+                            "SELECT SUM(amount) AS total_unpaid_bills "
+                            + "FROM bill_payments "
+                            + "WHERE payment_status_id = (SELECT id FROM payment_status WHERE status = 'unpaid')"
+                    );
+                    if (rsUnpaidBills.next()) {
+                        totalDues += rsUnpaidBills.getDouble("total_unpaid_bills");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error fetching dues: " + e.getMessage());
+                }
+                return null;
+            }
+
+            @Override
+            protected void done() {
+
+                Color lightRed = new Color(255, 102, 102);
+                // Display dues in jLabel15
+                jLabel15.setText(String.format("%.2f", totalDues)); // Format with 2 decimal places
+                jLabel15.setForeground(totalDues > 0 ? lightRed : Color.GREEN); // Red for dues, Green if no dues
+            }
+        };
+
+        worker.execute();
+    }
+     
+     private void loadTotalStudents() {
+        int totalStudents = 0;
+
+        try {
+            // Execute query to get the total count of students
+            ResultSet rs = MySQL.executeSearch("SELECT COUNT(*) AS total FROM students");
+
+            // Process the result set
+            if (rs.next()) {
+                totalStudents = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error fetching total students: " + e.getMessage());
+            return;
+        }
+
+        // Set the total students count and text color to jLabel13
+        jLabel14.setText(String.valueOf(totalStudents));
+        jLabel14.setForeground(Color.WHITE); // Set text color to white
+    }
+
+     
+    private void calculateProfit() {
+        // Create a SwingWorker for the background task
+        SwingWorker<Void, Void> worker = new SwingWorker<>() {
+            private double totalIncome = 0;
+            private double totalExpenses = 0;
+            private double profit = 0;
+
+            @Override
+            protected Void doInBackground() {
+                try {
+                    // Fetch total income from feepayments
+                    ResultSet rsIncome = MySQL.executeSearch("SELECT SUM(amount_paid) AS total_income FROM feepayments");
+                    if (rsIncome.next()) {
+                        totalIncome = rsIncome.getDouble("total_income");
+                    }
+
+                    // Fetch total expenses from salary
+                    ResultSet rsSalary = MySQL.executeSearch("SELECT SUM(net_amount) AS total_salary FROM salary");
+                    if (rsSalary.next()) {
+                        totalExpenses += rsSalary.getDouble("total_salary");
+                    }
+
+                    // Fetch total expenses from billpayments
+                    ResultSet rsBillPayments = MySQL.executeSearch("SELECT SUM(amount) AS total_bill FROM bill_payments");
+                    if (rsBillPayments.next()) {
+                        totalExpenses += rsBillPayments.getDouble("total_bill");
+                    }
+
+                    // Calculate profit
+                    profit = totalIncome - totalExpenses;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error calculating profit: " + e.getMessage());
+                }
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                // Update the JLabel in the EDT
+                jLabel32.setText(String.format("%.2f", profit)); // Display profit with 2 decimal places
+                jLabel32.setForeground(profit >= 0 ? Color.GREEN : Color.RED); // Green for profit, Red for loss
+            }
+        };
+
+        // Execute the SwingWorker
+        worker.execute();
+    }
+    
+    
+    private void loadPieChartIntoPanel() {
+    try {
+        String query = "SELECT status, COUNT(*) AS count FROM student_attendance GROUP BY status";
+        ResultSet rs = MySQL.executeSearch(query);
+
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        while (rs.next()) {
+            String status = rs.getString("status");
+            int count = rs.getInt("count");
+            dataset.setValue(status, count);
+        }
+
+        JFreeChart pieChart = ChartFactory.createPieChart3D(
+                "Student Attendance Distribution", // Chart title
+                dataset, // Dataset
+                true, // Include legend
+                true, // Include tooltips
+                false // URLs not needed
+        );
+
+        pieChart.setBackgroundPaint(Color.WHITE);
+
+        // Customize the Pie Chart
+        PiePlot3D plot = (PiePlot3D) pieChart.getPlot();
+        plot.setBackgroundPaint(new Color(230, 230, 230)); // Light gray background
+        plot.setOutlineVisible(false); // No outline
+        plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 12)); // Label font
+        plot.setForegroundAlpha(0.8f); // Transparency
+        plot.setSectionPaint("Present", Color.GREEN); // Green for Present
+        plot.setSectionPaint("Absent", Color.RED); // Red for Absent
+
+        // Display the chart in jPie1
+        ChartPanel chartPanel = new ChartPanel(pieChart);
+        chartPanel.setOpaque(false);
+        chartPanel.setPreferredSize(jPie1.getSize());
+
+        jPie1.removeAll();
+        jPie1.setLayout(new BorderLayout());
+        jPie1.add(chartPanel, BorderLayout.CENTER);
+        jPie1.revalidate();
+        jPie1.repaint();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error creating pie chart: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+    private void loadChartIntoPanel() {
+    try {
+        String query = "SELECT MONTH(payment_date) AS month, SUM(amount_paid) AS total_income "
+                + "FROM feepayments "
+                + "GROUP BY MONTH(payment_date) "
+                + "ORDER BY MONTH(payment_date)";
+        ResultSet rs = MySQL.executeSearch(query);
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        String[] months = {"January", "February", "March", "April", "May", "June", 
+                "July", "August", "September", "October", "November", "December"};
+
+        while (rs.next()) {
+            int month = rs.getInt("month");
+            double totalIncome = rs.getDouble("total_income");
+            if (month >= 1 && month <= 12) {
+                dataset.addValue(totalIncome, "Income", months[month - 1]);
+            }
+        }
+
+        JFreeChart barChart = ChartFactory.createBarChart3D(
+                "Monthly Income", // Chart title
+                "Month", // X-axis label
+                "Income (USD)", // Y-axis label
+                dataset, // Dataset
+                PlotOrientation.VERTICAL, // Vertical orientation
+                false, // No legend needed
+                true, // Include tooltips
+                false // URLs not needed
+        );
+
+        barChart.setBackgroundPaint(Color.WHITE);
+
+        // Customize the Bar Chart
+        CategoryPlot plot = barChart.getCategoryPlot();
+        plot.setBackgroundPaint(new Color(230, 230, 230)); // Light gray background
+        plot.setRangeGridlinePaint(Color.BLACK); // Black gridlines
+        plot.setDomainGridlinePaint(Color.BLACK);
+        plot.setOutlineVisible(false);
+
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        renderer.setSeriesPaint(0, new Color(0, 102, 204)); // Blue bars
+        renderer.setItemMargin(0.05); // Margin between bars
+
+        Font axisFont = new Font("SansSerif", Font.PLAIN, 12);
+        plot.getDomainAxis().setLabelFont(axisFont);
+        plot.getDomainAxis().setTickLabelFont(axisFont);
+        plot.getRangeAxis().setLabelFont(axisFont);
+        plot.getRangeAxis().setTickLabelFont(axisFont);
+
+        // Display the chart in jBar1
+        ChartPanel chartPanel = new ChartPanel(barChart);
+        chartPanel.setOpaque(false);
+        chartPanel.setPreferredSize(jBar1.getSize());
+
+        jBar1.removeAll();
+        jBar1.setLayout(new BorderLayout());
+        jBar1.add(chartPanel, BorderLayout.CENTER);
+        jBar1.revalidate();
+        jBar1.repaint();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error creating bar chart: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+    
+    
+    
     private void time() {
 
         java.lang.Runnable runnable = new java.lang.Runnable() {
@@ -564,10 +871,6 @@ public class NewDashboard extends javax.swing.JFrame {
         studentpiclabel = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        duepiclabel = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         subjectpiclabel = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -576,16 +879,17 @@ public class NewDashboard extends javax.swing.JFrame {
         profitpiclabel = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel29 = new javax.swing.JLabel();
-        chartpiclabel = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         teacherpiclabel = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jPie1 = new javax.swing.JPanel();
+        jBar1 = new javax.swing.JPanel();
+        jPanel24 = new javax.swing.JPanel();
+        duepiclabel = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         profilepanel = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
         profilepiclabel = new javax.swing.JLabel();
@@ -612,7 +916,7 @@ public class NewDashboard extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane31 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel28 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
@@ -1018,7 +1322,7 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addComponent(studentpiclabel, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1031,43 +1335,6 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addContainerGap(28, Short.MAX_VALUE))
             .addComponent(studentpiclabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        jPanel2.setBackground(new java.awt.Color(0, 52, 101));
-        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.setPreferredSize(new java.awt.Dimension(200, 100));
-
-        jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel34.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel34.setText("DUES");
-
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("12,500 LKR");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel34, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(duepiclabel, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(duepiclabel, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         jPanel7.setBackground(new java.awt.Color(0, 52, 101));
@@ -1089,11 +1356,10 @@ public class NewDashboard extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(subjectpiclabel, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(subjectpiclabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel7Layout.setVerticalGroup(
@@ -1150,34 +1416,6 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
-        jPanel9.setBackground(new java.awt.Color(0, 52, 101));
-        jPanel9.setForeground(new java.awt.Color(255, 255, 255));
-
-        jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setText("Student Turnout");
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(chartpiclabel, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chartpiclabel, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
         jPanel10.setBackground(new java.awt.Color(0, 52, 101));
         jPanel10.setForeground(new java.awt.Color(255, 255, 255));
         jPanel10.setPreferredSize(new java.awt.Dimension(200, 100));
@@ -1200,7 +1438,7 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addComponent(teacherpiclabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
                     .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel10Layout.setVerticalGroup(
@@ -1214,50 +1452,113 @@ public class NewDashboard extends javax.swing.JFrame {
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        jPanel11.setBackground(new java.awt.Color(51, 0, 153));
+
+        javax.swing.GroupLayout jPie1Layout = new javax.swing.GroupLayout(jPie1);
+        jPie1.setLayout(jPie1Layout);
+        jPie1Layout.setHorizontalGroup(
+            jPie1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 375, Short.MAX_VALUE)
+        );
+        jPie1Layout.setVerticalGroup(
+            jPie1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jBar1Layout = new javax.swing.GroupLayout(jBar1);
+        jBar1.setLayout(jBar1Layout);
+        jBar1Layout.setHorizontalGroup(
+            jBar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jBar1Layout.setVerticalGroup(
+            jBar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 332, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPie1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPie1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jPanel24.setBackground(new java.awt.Color(0, 52, 101));
+        jPanel24.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel24.setPreferredSize(new java.awt.Dimension(200, 100));
+
+        jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel35.setText("Dues");
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("112,000 LKR");
+
+        javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
+        jPanel24.setLayout(jPanel24Layout);
+        jPanel24Layout.setHorizontalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel24Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(duepiclabel, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel24Layout.createSequentialGroup()
+                        .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
+        );
+        jPanel24Layout.setVerticalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel24Layout.createSequentialGroup()
+                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel24Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel35)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel15))
+                    .addGroup(jPanel24Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(duepiclabel, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout overviewpanelLayout = new javax.swing.GroupLayout(overviewpanel);
         overviewpanel.setLayout(overviewpanelLayout);
         overviewpanelLayout.setHorizontalGroup(
             overviewpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(overviewpanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(overviewpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(overviewpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, overviewpanelLayout.createSequentialGroup()
+                .addGroup(overviewpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(overviewpanelLayout.createSequentialGroup()
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10))
         );
         overviewpanelLayout.setVerticalGroup(
             overviewpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1267,15 +1568,10 @@ public class NewDashboard extends javax.swing.JFrame {
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(overviewpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(overviewpanelLayout.createSequentialGroup()
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel17.setPreferredSize(new java.awt.Dimension(825, 476));
@@ -1485,7 +1781,7 @@ public class NewDashboard extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane31.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -1500,7 +1796,7 @@ public class NewDashboard extends javax.swing.JFrame {
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 921, Short.MAX_VALUE))
+                    .addComponent(jScrollPane31, javax.swing.GroupLayout.DEFAULT_SIZE, 921, Short.MAX_VALUE))
                 .addGap(10, 10, 10))
         );
         jPanel6Layout.setVerticalGroup(
@@ -1512,7 +1808,7 @@ public class NewDashboard extends javax.swing.JFrame {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane31, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1594,7 +1890,7 @@ public class NewDashboard extends javax.swing.JFrame {
         activitypanel.setLayout(activitypanelLayout);
         activitypanelLayout.setHorizontalGroup(
             activitypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 923, Short.MAX_VALUE)
+            .addGap(0, 937, Short.MAX_VALUE)
             .addGroup(activitypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1953,7 +2249,7 @@ public class NewDashboard extends javax.swing.JFrame {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 518, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Academic", jPanel14);
@@ -3615,8 +3911,8 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel Dashboardconstantpanel;
     private javax.swing.JPanel activitypanel;
     private javax.swing.JPanel changingpanel;
-    private javax.swing.JLabel chartpiclabel;
     private javax.swing.JLabel duepiclabel;
+    private javax.swing.JPanel jBar1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton13;
@@ -3678,12 +3974,11 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel44;
@@ -3710,10 +4005,10 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel27;
@@ -3732,9 +4027,8 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPie1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
@@ -3743,9 +4037,9 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane16;
     private javax.swing.JScrollPane jScrollPane17;
     private javax.swing.JScrollPane jScrollPane18;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane21;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane31;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
@@ -3768,7 +4062,6 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JTable jTable16;
     private javax.swing.JTable jTable17;
     private javax.swing.JTable jTable18;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable21;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
@@ -3915,9 +4208,15 @@ public class NewDashboard extends javax.swing.JFrame {
         }
     }
     
-    
+    private void adjustTableHeightToFitRows(JTable table) {
+    int totalRowHeight = table.getRowCount() * table.getRowHeight(); // Calculate total height
+    Dimension tableSize = table.getPreferredSize(); // Get current table size
+    tableSize.height = totalRowHeight; // Set new height
+    table.setPreferredSize(tableSize); // Apply new size
+    table.revalidate(); // Refresh table layout
+}
        
- private void loadProfitLoss() {
+private void loadProfitLoss() {
     // Row headers as descriptions
     String[] rowHeaders = {
         "Total Class Fees",
@@ -3929,9 +4228,9 @@ public class NewDashboard extends javax.swing.JFrame {
         "Net Profit / Loss"
     };
 
-    // Table column headers
+    // Table column headers (excluding the "Description" column)
     String[] columnHeaders = {
-        "Description", "Current Month", "Previous Month", "Budgeted Amount", "Variance / Due Amount", "% Change"
+        "Current Month", "Previous Month", "Budgeted Amount", "Variance / Due Amount", "% Change"
     };
 
     // Rows to highlight with bold text
@@ -4001,7 +4300,6 @@ public class NewDashboard extends javax.swing.JFrame {
 
                 // Add row to table
                 tableModel.addRow(new Object[]{
-                    rowHeaders[i], 
                     currentMonth, 
                     previousMonth, 
                     budgeted, 
@@ -4024,29 +4322,22 @@ public class NewDashboard extends javax.swing.JFrame {
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             label.setFont(label.getFont().deriveFont(boldHeaders.contains(value) ? Font.BOLD : Font.PLAIN));
-            label.setBackground(Color.LIGHT_GRAY); // Highlight background
+            label.setBackground(new Color(173, 216, 230)); 
             label.setOpaque(true);
             return label;
         }
     });
 
     // Set the row header view for the table
-    jScrollPane1.setRowHeaderView(rowHeaderList);
+    jScrollPane16.setRowHeaderView(rowHeaderList);
 
-    // Highlight Description Column
-    jTable16.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            if (boldHeaders.contains(value)) {
-                component.setFont(component.getFont().deriveFont(Font.BOLD));
-            }
-            component.setBackground(Color.LIGHT_GRAY); // Set background color
-            return component;
-        }
-    });
+    // Adjust table height to fit rows
+    adjustTableHeightToFitRows(jTable16);
+
+    // Adjust scroll pane to ensure visibility
+    jScrollPane16.revalidate();
+    jScrollPane16.repaint();
 }
-
 
 
     private void loadAdminStudentAttendanceReportTable() {
