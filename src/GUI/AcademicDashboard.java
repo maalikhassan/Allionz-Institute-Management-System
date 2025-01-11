@@ -10885,8 +10885,8 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 v.add(rs.getString("total_records"));
                 v.add(rs.getString("total_absent"));
                 v.add(rs.getString("total_present"));
-                v.add(rs.getString("percentage_present"));
                 v.add(rs.getString("percentage_absent"));
+                v.add(rs.getString("percentage_present"));
 
                 dtm.addRow(v);
             }
@@ -10936,8 +10936,8 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 v.add(rs.getString("total_records"));
                 v.add(rs.getString("total_absent"));
                 v.add(rs.getString("total_present"));
-                v.add(rs.getString("percentage_present"));
                 v.add(rs.getString("percentage_absent"));
+                v.add(rs.getString("percentage_present"));
 
                 dtm.addRow(v);
             }

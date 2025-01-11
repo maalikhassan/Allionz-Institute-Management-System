@@ -5,6 +5,7 @@
 package gui;
 
 import GUI.AcademicDashboard;
+import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatLightOwlIJTheme;
@@ -31,6 +32,7 @@ public class AcademicLogin extends javax.swing.JFrame {
         initComponents();
         image();
         image2();
+        rounded();
 
         Timer timer = new Timer(1000, e -> updateDateTime());
         timer.start();
@@ -255,4 +257,15 @@ public class AcademicLogin extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel logolabel;
     // End of variables declaration//GEN-END:variables
+    private void rounded() {
+        jTextField1.putClientProperty("JComponent.roundRect", true);
+        jPasswordField1.putClientProperty("JComponent.roundRect", true);
+
+        jTextField1.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Username");
+        jPasswordField1.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Password");
+
+        jButton1.putClientProperty("JButton.buttonType", "roundRect");
+        jButton2.putClientProperty("JButton.buttonType", "roundRect");
+    }
+
 }
