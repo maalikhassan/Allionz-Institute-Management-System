@@ -650,9 +650,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jPanel8" alignment="1" pref="253" max="32767" attributes="0"/>
-                              <Component id="jPanel7" alignment="1" pref="253" max="32767" attributes="0"/>
-                              <Component id="jPanel13" alignment="1" pref="253" max="32767" attributes="0"/>
+                              <Component id="jPanel8" alignment="1" pref="258" max="32767" attributes="0"/>
+                              <Component id="jPanel7" alignment="1" pref="258" max="32767" attributes="0"/>
+                              <Component id="jPanel13" alignment="1" pref="258" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -2759,7 +2759,7 @@
                           <Component id="jLabel85" min="-2" pref="107" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                           <Component id="jLabel86" min="-2" pref="104" max="-2" attributes="0"/>
-                          <EmptySpace pref="262" max="32767" attributes="0"/>
+                          <EmptySpace pref="261" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2808,7 +2808,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jTabbedPane2" alignment="0" pref="934" max="32767" attributes="0"/>
+                      <Component id="jTabbedPane2" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -3065,7 +3065,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTabbedPane3" pref="922" max="32767" attributes="0"/>
+                                  <Component id="jTabbedPane3" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -5380,7 +5380,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <EmptySpace min="0" pref="929" max="32767" attributes="0"/>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Component id="jPanel17" alignment="0" pref="964" max="32767" attributes="0"/>
+                      <Component id="jPanel17" alignment="0" pref="967" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

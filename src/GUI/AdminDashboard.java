@@ -3762,6 +3762,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
 
         //print Report button enrollment:
+        boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -3789,16 +3790,21 @@ public class AdminDashboard extends javax.swing.JFrame {
 
             JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+           isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (jTable16.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
 
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // Class Schedule Report:
-
+boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -3826,9 +3832,14 @@ public class AdminDashboard extends javax.swing.JFrame {
 
             JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (jTable3.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
 
 
@@ -3836,7 +3847,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // Subject Management Report:
-
+boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -3864,16 +3875,21 @@ public class AdminDashboard extends javax.swing.JFrame {
 
             JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+             isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (jTable4.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
 
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         // Class Attendence Report :
-
+boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -3902,9 +3918,14 @@ public class AdminDashboard extends javax.swing.JFrame {
 
             JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (jTable7.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
     }//GEN-LAST:event_jButton17ActionPerformed
 
@@ -3962,7 +3983,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // Teacher Enrollment Report:
-
+boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -3990,9 +4011,14 @@ public class AdminDashboard extends javax.swing.JFrame {
 
             JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (jTable5.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
 
     }//GEN-LAST:event_jButton15ActionPerformed
@@ -4110,14 +4136,14 @@ public class AdminDashboard extends javax.swing.JFrame {
 
             JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
 
-            isPrinted = JasperPrintManager.printReport(report, false);
+             isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-//            if (jTable16.getRowCount() == 0) {
-//                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
-//            } else if (!isPrinted) {
-//                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
-//            }
-e.printStackTrace();
+            if (jTable16.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
     }//GEN-LAST:event_jButton36ActionPerformed
 
@@ -4854,10 +4880,10 @@ e.printStackTrace();
                 v.add(rs.getString("subject_name"));
                 v.add(rs.getString("teacher_name"));
                 v.add(rs.getString("total_records"));
-                v.add(rs.getString("total_absent"));
                 v.add(rs.getString("total_present"));
-                v.add(rs.getString("percentage_absent"));
+                v.add(rs.getString("total_absent"));
                 v.add(rs.getString("percentage_present"));
+                v.add(rs.getString("percentage_absent"));
 
                 dtm.addRow(v);
             }

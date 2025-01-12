@@ -590,6 +590,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jAllClassDetailsTable = new javax.swing.JTable();
         jLabel125 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
+        jButton13 = new javax.swing.JButton();
         jPanel73 = new javax.swing.JPanel();
         jScrollPane26 = new javax.swing.JScrollPane();
         jStAttendanceTable = new javax.swing.JTable();
@@ -720,6 +721,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         teacherClassDetails = new javax.swing.JTable();
         jLabel113 = new javax.swing.JLabel();
         jTeacherClassSearch = new javax.swing.JTextField();
+        jButton9 = new javax.swing.JButton();
         jPanel74 = new javax.swing.JPanel();
         jScrollPane10 = new javax.swing.JScrollPane();
         jteacherAttendanceTable = new javax.swing.JTable();
@@ -1389,7 +1391,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jPanel28Layout.setVerticalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton25)
@@ -1434,11 +1436,11 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jPanel37, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -1710,7 +1712,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel18Layout.setVerticalGroup(
@@ -1776,7 +1778,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
                     .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addComponent(jLabel49, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                        .addComponent(jLabel49, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(64, 64, 64)
@@ -1799,7 +1801,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel77)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1852,7 +1854,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2014,6 +2016,13 @@ public class AcademicDashboard extends javax.swing.JFrame {
             }
         });
 
+        jButton13.setText("Refresh");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel72Layout = new javax.swing.GroupLayout(jPanel72);
         jPanel72.setLayout(jPanel72Layout);
         jPanel72Layout.setHorizontalGroup(
@@ -2023,8 +2032,10 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel125)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(461, Short.MAX_VALUE))
-            .addComponent(jScrollPane25, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(jScrollPane25, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
         );
         jPanel72Layout.setVerticalGroup(
             jPanel72Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2032,7 +2043,8 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel72Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel125)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane25, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -2242,7 +2254,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             jPanel73Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel73Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jButton21, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addComponent(jButton21, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel73Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel119)
@@ -2282,12 +2294,12 @@ public class AcademicDashboard extends javax.swing.JFrame {
                         .addGap(0, 0, 0)
                         .addComponent(jstName))
                     .addComponent(jLabel124, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(jAttendanceMarkButton, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(jAttendanceMarkButton, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jAttendanceUpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addComponent(jAttendanceUpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel73Layout.createSequentialGroup()
                 .addContainerGap()
@@ -2555,7 +2567,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jPanel38Layout.setHorizontalGroup(
             jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel38Layout.createSequentialGroup()
-                .addGap(0, 394, Short.MAX_VALUE)
+                .addGap(0, 357, Short.MAX_VALUE)
                 .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64)
                 .addComponent(jLabel22)
@@ -2598,11 +2610,11 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Year", "Month", "A/L Batch", "Subject", "Teacher", "Total Records", "Total_Present", "Total_absent", "Attendance %", "Absent %"
+                "Year", "Month", "A/L Batch", "Subject", "Teacher", "Total Records", "Total_Present", "Total_Absent", "Present %", "Absent %"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, true, false, false, false, true, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -2624,7 +2636,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel51)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField41, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jScrollPane19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
+            .addComponent(jScrollPane19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
         );
         jPanel31Layout.setVerticalGroup(
             jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3292,17 +3304,26 @@ public class AcademicDashboard extends javax.swing.JFrame {
             }
         });
 
+        jButton9.setText("Refresh");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
         jPanel25.setLayout(jPanel25Layout);
         jPanel25Layout.setHorizontalGroup(
             jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel25Layout.createSequentialGroup()
-                .addGap(172, 172, 172)
+                .addContainerGap()
                 .addComponent(jLabel113)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTeacherClassSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(252, Short.MAX_VALUE))
-            .addComponent(jScrollPane24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
+            .addComponent(jScrollPane24, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE)
         );
         jPanel25Layout.setVerticalGroup(
             jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3310,7 +3331,8 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTeacherClassSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel113, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel113, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton9))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane24, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -3827,9 +3849,17 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Year", "Month", "AL_Batch", "Subject", "Teacher Name", "Total Records", "Total Attendence", "Total Absent", "Attendence %", "Absent %"
+                "Year", "Month", "AL_Batch", "Subject", "Teacher Name", "Total Records", "Total Present", "Total Absent", "Present %", "Absent %"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane15.setViewportView(jTattReportsTable);
 
         jLabel128.setText("Search");
@@ -3868,13 +3898,13 @@ public class AcademicDashboard extends javax.swing.JFrame {
             jPanel62Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel62Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 765, Short.MAX_VALUE)
+                .addComponent(jTabbedPane10)
                 .addContainerGap())
         );
         jPanel62Layout.setVerticalGroup(
             jPanel62Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel62Layout.createSequentialGroup()
-                .addComponent(jTabbedPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                .addComponent(jTabbedPane10)
                 .addContainerGap())
         );
 
@@ -4035,11 +4065,11 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel84)
                 .addGap(0, 0, 0)
                 .addComponent(jComboBox25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(jPanel66Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton57, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton69, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -4073,7 +4103,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -4307,7 +4337,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 11, Short.MAX_VALUE)
+                        .addGap(0, 48, Short.MAX_VALUE)
                         .addComponent(jButton45, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(70, 70, 70)
                         .addComponent(jLabel131, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -4516,7 +4546,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+                    .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel55)
@@ -4591,7 +4621,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE)
+                    .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton68, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -4610,14 +4640,14 @@ public class AcademicDashboard extends javax.swing.JFrame {
                     .addComponent(jTextField45)
                     .addComponent(jLabel130))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
+                .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel32Layout = new javax.swing.GroupLayout(jPanel32);
         jPanel32.setLayout(jPanel32Layout);
         jPanel32Layout.setHorizontalGroup(
             jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 752, Short.MAX_VALUE)
+            .addGap(0, 789, Short.MAX_VALUE)
             .addGroup(jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel32Layout.createSequentialGroup()
                     .addContainerGap()
@@ -4625,7 +4655,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         );
         jPanel32Layout.setVerticalGroup(
             jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 339, Short.MAX_VALUE)
+            .addGap(0, 395, Short.MAX_VALUE)
             .addGroup(jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel32Layout.createSequentialGroup()
                     .addContainerGap()
@@ -4669,7 +4699,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE)
+                    .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton71, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -4688,14 +4718,14 @@ public class AcademicDashboard extends javax.swing.JFrame {
                     .addComponent(jTextField47)
                     .addComponent(jLabel129))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
+                .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel64Layout = new javax.swing.GroupLayout(jPanel64);
         jPanel64.setLayout(jPanel64Layout);
         jPanel64Layout.setHorizontalGroup(
             jPanel64Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 752, Short.MAX_VALUE)
+            .addGap(0, 789, Short.MAX_VALUE)
             .addGroup(jPanel64Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel64Layout.createSequentialGroup()
                     .addContainerGap()
@@ -4703,7 +4733,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         );
         jPanel64Layout.setVerticalGroup(
             jPanel64Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 339, Short.MAX_VALUE)
+            .addGap(0, 395, Short.MAX_VALUE)
             .addGroup(jPanel64Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel64Layout.createSequentialGroup()
                     .addContainerGap()
@@ -4747,7 +4777,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane23, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE)
+                    .addComponent(jScrollPane23, javax.swing.GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton82, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -4766,14 +4796,14 @@ public class AcademicDashboard extends javax.swing.JFrame {
                     .addComponent(jTextField51)
                     .addComponent(jLabel127))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane23, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
+                .addComponent(jScrollPane23, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 752, Short.MAX_VALUE)
+            .addGap(0, 789, Short.MAX_VALUE)
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel10Layout.createSequentialGroup()
                     .addContainerGap()
@@ -4781,7 +4811,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 339, Short.MAX_VALUE)
+            .addGap(0, 395, Short.MAX_VALUE)
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel10Layout.createSequentialGroup()
                     .addContainerGap()
@@ -4821,7 +4851,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 421, Short.MAX_VALUE))
+                .addComponent(jTabbedPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout subjectmanagementLayout = new javax.swing.GroupLayout(subjectmanagement);
@@ -5474,7 +5504,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jComboBox8.setSelectedItem(subject);
 
     }
-    
+
     private void loadUserProfile() {
         try {
 
@@ -5785,6 +5815,8 @@ public class AcademicDashboard extends javax.swing.JFrame {
                             overviewSTudent();
                             createPieChart();
                             createBarChart();
+                            loadBarcodeTable();
+                            loadStAttendanceTable();
                         }
 
                     } catch (Exception e) {
@@ -6079,6 +6111,8 @@ public class AcademicDashboard extends javax.swing.JFrame {
             clearStudentReg();
             createPieChart();
             createBarChart();
+            loadBarcodeTable();
+            loadStAttendanceTable();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -6114,6 +6148,8 @@ public class AcademicDashboard extends javax.swing.JFrame {
                     overviewSTudent();
                     createPieChart();
                     createBarChart();
+                    loadBarcodeTable();
+                    loadStAttendanceTable();
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Student not found! Please check the NIC and First Name.");
@@ -7057,6 +7093,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                     loadTeacherViewTable();
                     teacherDetailsReset();
                     overviewTeacher();
+                    loadTBarcodeTable();
                     JOptionPane.showMessageDialog(this, "Teacher successfully registered!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                 }
@@ -7175,6 +7212,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 // Optionally Reload Data or Clear Form
                 loadTeacherViewTable();
                 teacherDetailsReset();
+                loadTBarcodeTable();
             } else {
                 JOptionPane.showMessageDialog(this, "Teacher not found or update failed!", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -7212,6 +7250,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "teacher deleted successfully!");
             loadTeacherViewTable();
             teacherDetailsReset();
+            loadTBarcodeTable();
         }
     }//GEN-LAST:event_jButton37ActionPerformed
 
@@ -7898,66 +7937,66 @@ public class AcademicDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTsearchKeyReleased
 
     private void jTeacherBarcodeScanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTeacherBarcodeScanKeyTyped
-                                          
-    // Scan barcode and load schedule for the teacher
-    String teacherBarcode = jTeacherBarcodeScan.getText(); // Get the scanned barcode
-    try {
-        // Find the teacher using the barcode
-        ResultSet rs = MySQL.executeSearch("SELECT * FROM teachers WHERE barcode_id = '" + teacherBarcode + "'");
-        if (rs.next()) {
-            String tid = rs.getString("teacher_id");
 
-            // Find the teacher's schedule for today
-            ResultSet rs1 = MySQL.executeSearch("SELECT * FROM `schedule` WHERE sheduled_date = CURDATE() AND teacher_id = '" + tid + "'");
-            if (rs1.next()) {
+        // Scan barcode and load schedule for the teacher
+        String teacherBarcode = jTeacherBarcodeScan.getText(); // Get the scanned barcode
+        try {
+            // Find the teacher using the barcode
+            ResultSet rs = MySQL.executeSearch("SELECT * FROM teachers WHERE barcode_id = '" + teacherBarcode + "'");
+            if (rs.next()) {
+                String tid = rs.getString("teacher_id");
 
-                // Get schedule details (start_time, end_time)
-                ResultSet rs2 = MySQL.executeSearch("SELECT start_time, end_time, schedule_id, "
-                        + "STR_TO_DATE(REPLACE(REPLACE(start_time, '.', ':'), ' ', ''), '%l:%i%p') AS converted_start_time, "
-                        + "STR_TO_DATE(REPLACE(REPLACE(end_time, '.', ':'), ' ', ''), '%l:%i%p') AS converted_end_time "
-                        + "FROM `schedule` WHERE `sheduled_date` = CURDATE() AND teacher_id = '" + tid + "'");
+                // Find the teacher's schedule for today
+                ResultSet rs1 = MySQL.executeSearch("SELECT * FROM `schedule` WHERE sheduled_date = CURDATE() AND teacher_id = '" + tid + "'");
+                if (rs1.next()) {
 
-                if (rs2.next()) {
-                    String startTime = rs2.getString("converted_start_time");
-                    String endTime = rs2.getString("converted_end_time");
-                    String scheduleId = rs2.getString("schedule_id");
+                    // Get schedule details (start_time, end_time)
+                    ResultSet rs2 = MySQL.executeSearch("SELECT start_time, end_time, schedule_id, "
+                            + "STR_TO_DATE(REPLACE(REPLACE(start_time, '.', ':'), ' ', ''), '%l:%i%p') AS converted_start_time, "
+                            + "STR_TO_DATE(REPLACE(REPLACE(end_time, '.', ':'), ' ', ''), '%l:%i%p') AS converted_end_time "
+                            + "FROM `schedule` WHERE `sheduled_date` = CURDATE() AND teacher_id = '" + tid + "'");
 
-                    // Get the current time and the time 30 minutes from now in Java
-                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-                    Date currentTimeDate = timeFormat.parse(timeFormat.format(new Date()));
-                    Date timePlus30MinDate = new Date(System.currentTimeMillis() + 30 * 60 * 1000); // 30 minutes from now
+                    if (rs2.next()) {
+                        String startTime = rs2.getString("converted_start_time");
+                        String endTime = rs2.getString("converted_end_time");
+                        String scheduleId = rs2.getString("schedule_id");
 
-                    // Convert start and end times to Date for comparison
-                    Date startTimeDate = timeFormat.parse(startTime);
-                    Date endTimeDate = timeFormat.parse(endTime);
+                        // Get the current time and the time 30 minutes from now in Java
+                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+                        Date currentTimeDate = timeFormat.parse(timeFormat.format(new Date()));
+                        Date timePlus30MinDate = new Date(System.currentTimeMillis() + 30 * 60 * 1000); // 30 minutes from now
 
-                    // Check if current time is between start_time and end_time (ongoing schedule)
-                    if ((currentTimeDate.after(startTimeDate) && currentTimeDate.before(endTimeDate)) || 
-                        (startTimeDate.after(currentTimeDate) && startTimeDate.before(timePlus30MinDate))) {
-                        
-                        // Mark teacher attendance as present
-                        String updateQuery = "UPDATE `teacher_attendance` SET `status` = 'Present' "
-                                + "WHERE `schedule_id` = '" + scheduleId + "' AND `teachers_teacher_id` = '" + tid + "'";
-                        MySQL.executeIUD(updateQuery);
-                        loadteacherAttendanceTable();
+                        // Convert start and end times to Date for comparison
+                        Date startTimeDate = timeFormat.parse(startTime);
+                        Date endTimeDate = timeFormat.parse(endTime);
 
-                        JOptionPane.showMessageDialog(this, "Teacher's attendance marked as Present.", "Attendance Updated", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(this, "No upcoming or ongoing schedule for this teacher.", "Error", JOptionPane.ERROR_MESSAGE);
+                        // Check if current time is between start_time and end_time (ongoing schedule)
+                        if ((currentTimeDate.after(startTimeDate) && currentTimeDate.before(endTimeDate))
+                                || (startTimeDate.after(currentTimeDate) && startTimeDate.before(timePlus30MinDate))) {
+
+                            // Mark teacher attendance as present
+                            String updateQuery = "UPDATE `teacher_attendance` SET `status` = 'Present' "
+                                    + "WHERE `schedule_id` = '" + scheduleId + "' AND `teachers_teacher_id` = '" + tid + "'";
+                            MySQL.executeIUD(updateQuery);
+                            loadteacherAttendanceTable();
+
+                            JOptionPane.showMessageDialog(this, "Teacher's attendance marked as Present.", "Attendance Updated", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No upcoming or ongoing schedule for this teacher.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "No schedule allocated for today!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
             } else {
-                JOptionPane.showMessageDialog(this, "No schedule allocated for today!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Invalid barcode!", "Error", JOptionPane.ERROR_MESSAGE);
             }
+        } catch (Exception ex) {
+            Logger.getLogger(AcademicDashboard.class.getName()).log(Level.SEVERE, null, ex);
 
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid barcode!", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (Exception ex) {
-        Logger.getLogger(AcademicDashboard.class.getName()).log(Level.SEVERE, null, ex);
-    
-}
 
     }//GEN-LAST:event_jTeacherBarcodeScanKeyTyped
 
@@ -7979,7 +8018,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             PrinterJob printerJob = PrinterJob.getPrinterJob();
             printerJob.setPrintable(new Printable() {
                 @Override
-public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+                public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
                     if (pageIndex > 0) {
                         return NO_SUCH_PAGE;
                     }
@@ -8069,8 +8108,8 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
                             jLabel111.setIcon(icon19);
                         }
                     } else {
-                        FlatSVGIcon icon19 = new FlatSVGIcon("resources//profileImage.svg", jLabel110.getWidth(), jLabel110.getHeight());
-                        jLabel110.setIcon(icon19);
+                        FlatSVGIcon icon19 = new FlatSVGIcon("resources//profileImage.svg", jLabel111.getWidth(), jLabel111.getHeight());
+                        jLabel111.setIcon(icon19);
                     }
 
                     // Load barcode
@@ -8092,12 +8131,11 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
                         FlatSVGIcon defaultIcon = new FlatSVGIcon("resources/barcode(1).svg", jLabel112.getWidth(), jLabel112.getHeight());
                         jLabel112.setIcon(defaultIcon);
 
-}
+                    }
                 }
             } catch (Exception ex) {
-                Logger.getLogger(AcademicDashboard.class  
-
-.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AcademicDashboard.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jTable14MouseClicked
@@ -8417,6 +8455,8 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
                 loadshedule();  // Refresh the schedule table
                 JOptionPane.showMessageDialog(this, "Schedule updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 resetScheduleSubject();  // Reset form fields
+                loadSTA();
+                loadteacherAttendanceTable();
 
             }
 
@@ -8471,6 +8511,8 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
                     MySQL.executeIUD("INSERT INTO `schedule` (`sheduled_date`, `AL_batch_batch_id`, `subject_id`, `teacher_id`, `stream_subject_id`, `start_time`, `end_time`) SELECT '" + formattedDate + "', '" + BatchMap.get(Batch) + "', '" + SubjectMap.get(Subject) + "', '" + TeachersMap.get(Teacher) + "', `id`, '" + startTime + "', '" + EndTime + "' FROM `stream_subject` WHERE `subjects_subject_id` = '" + SubjectMap.get(Subject) + "' AND `AL_batch_batch_id` = '" + BatchMap.get(Batch) + "'");
 
                     loadshedule();
+                    loadSTA();
+                    loadteacherAttendanceTable();
                     JOptionPane.showMessageDialog(this, "Schedule added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 }
                 resetScheduleSubject();
@@ -8543,6 +8585,8 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
                         // Refresh the table or perform any additional operations
                         loadshedule();
                         resetScheduleSubject();
+                        loadSTA();
+                        loadteacherAttendanceTable();
                         JOptionPane.showMessageDialog(this, "Schedule deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                     } catch (Exception ex) {
@@ -9188,12 +9232,11 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
                         FlatSVGIcon defaultIcon = new FlatSVGIcon("resources/barcode(1).svg", jLabel29.getWidth(), jLabel29.getHeight());
                         jLabel29.setIcon(defaultIcon);
 
-}
+                    }
                 }
             } catch (Exception ex) {
-                Logger.getLogger(AcademicDashboard.class  
-
-.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AcademicDashboard.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -9247,6 +9290,7 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
 
         //print Report button enrollment:
+        boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -9274,9 +9318,15 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
 
             JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
+
         } catch (Exception e) {
-            e.printStackTrace();
+            if (jTable14.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
 
 
@@ -9306,7 +9356,7 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
 
     private void jButton61ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton61ActionPerformed
         // Class Attendence Report :
-
+        boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -9335,9 +9385,14 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
 
             JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (jStudentAttendanceReportTable.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
     }//GEN-LAST:event_jButton61ActionPerformed
 
@@ -9365,7 +9420,7 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
 
     private void jButton50ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton50ActionPerformed
         // Teacher Enrollment Report:
-
+        boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -9393,9 +9448,14 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
 
             JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (jTable11.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
 
 
@@ -9425,7 +9485,7 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
 
     private void jButton54ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton54ActionPerformed
         // Teacher Class Attendence:
-
+        boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -9453,9 +9513,14 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
 
             JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (jTattReportsTable.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
 
 
@@ -9480,7 +9545,7 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
 
     private void jButton68ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton68ActionPerformed
         // Class Schedule Report:
-
+        boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -9508,16 +9573,21 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
 
             JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (jTable15.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
 
     }//GEN-LAST:event_jButton68ActionPerformed
 
     private void jButton71ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton71ActionPerformed
         // Subject Management Report:
-
+        boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -9545,16 +9615,21 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
 
             JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (jTable18.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
 
     }//GEN-LAST:event_jButton71ActionPerformed
 
     private void jButton82ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton82ActionPerformed
         // Matirial Report:
-
+        boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -9583,9 +9658,14 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
 
             JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (jTable20.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
     }//GEN-LAST:event_jButton82ActionPerformed
 
@@ -9704,6 +9784,14 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
 
     }//GEN-LAST:event_jTextField45KeyReleased
 
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        loadTeacherClassTable();
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        loadSTA();
+    }//GEN-LAST:event_jButton13ActionPerformed
+
     private void filterStudentsComboBox(String searchText) {
         try {
             // Query the database: show all if searchText is empty
@@ -9766,6 +9854,7 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
@@ -9816,6 +9905,7 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
     private javax.swing.JButton jButton79;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton82;
+    private javax.swing.JButton jButton9;
     private javax.swing.JPanel jChart;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox18;
@@ -10644,7 +10734,7 @@ public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws
 
             @Override
 
-public void run() {
+            public void run() {
 
                 while (true) {
 
@@ -10897,10 +10987,10 @@ public void run() {
                 v.add(rs.getString("subject_name"));
                 v.add(rs.getString("teacher_name"));
                 v.add(rs.getString("total_records"));
-                v.add(rs.getString("total_absent"));
                 v.add(rs.getString("total_present"));
-                v.add(rs.getString("percentage_absent"));
+                v.add(rs.getString("total_absent"));
                 v.add(rs.getString("percentage_present"));
+                v.add(rs.getString("percentage_absent"));
 
                 dtm.addRow(v);
             }
@@ -10948,10 +11038,10 @@ public void run() {
                 v.add(rs.getString("subject_name"));
                 v.add(rs.getString("teacher_name"));
                 v.add(rs.getString("total_records"));
-                v.add(rs.getString("total_absent"));
                 v.add(rs.getString("total_present"));
-                v.add(rs.getString("percentage_absent"));
+                v.add(rs.getString("total_absent"));
                 v.add(rs.getString("percentage_present"));
+                v.add(rs.getString("percentage_absent"));
 
                 dtm.addRow(v);
             }
