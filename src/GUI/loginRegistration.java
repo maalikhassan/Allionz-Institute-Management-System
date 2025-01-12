@@ -468,8 +468,8 @@ public class loginRegistration extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "User registered Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                     reset();
                     this.dispose();
-                    AdminDashboard ad = new AdminDashboard();
-                    ad.setVisible(true);
+                    loginRegistration loginRegister = new loginRegistration();
+                    loginRegister.setVisible(true);
 
                 }
             }
@@ -545,6 +545,10 @@ public class loginRegistration extends javax.swing.JFrame {
                 System.out.println("Generated Query: " + query.toString()); // Debugging
                 MySQL.executeIUD(query.toString());
                 JOptionPane.showMessageDialog(this, "User Updated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                loginRegistration loginRegister = new loginRegistration();
+                loginRegister.setVisible(true);
+
                 reset();
             } else {
                 JOptionPane.showMessageDialog(this, "No changes detected. Nothing to update.", "Info", JOptionPane.INFORMATION_MESSAGE);
