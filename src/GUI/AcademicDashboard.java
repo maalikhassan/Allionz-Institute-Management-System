@@ -1640,8 +1640,6 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel42)
-                        .addGap(0, 0, 0)
                         .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addGap(0, 10, Short.MAX_VALUE)
@@ -1654,7 +1652,9 @@ public class AcademicDashboard extends javax.swing.JFrame {
                                 .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(15, 15, 15)
-                        .addComponent(jLabel36)
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel36)
+                            .addComponent(jLabel42))
                         .addGap(0, 0, 0)
                         .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(15, 15, 15)
@@ -6460,6 +6460,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                     loadSelectedSubjects();  // Refresh the table
                     clearSelectedSub();      // Reset fields
                     createPieChart();
+                    loadStAttendanceTable();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -6518,6 +6519,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                     loadSelectedSubjects();  // Refresh Table
                     clearSelectedSub();  // Reset Fields
                     createPieChart();
+                    loadStAttendanceTable();
                 } else {
                     JOptionPane.showMessageDialog(this, "Update failed! Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -6558,6 +6560,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                     loadSelectedSubjects();  // Refresh table after deletion
                     clearSelectedSub();  // Reset the form fields
                     createPieChart();
+                    loadStAttendanceTable();
 
                 } else {
                     JOptionPane.showMessageDialog(this, "Deletion failed! Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
