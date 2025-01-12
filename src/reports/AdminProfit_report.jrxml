@@ -1,8 +1,15 @@
 <!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
-<jasperReport name="Monthly_income_report" language="java" columnCount="1" pageWidth="600" pageHeight="620" columnWidth="560" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc3a3fa9-c2fa-4ed7-a5bd-b7371cfe082f">
+<jasperReport name="Monthly_income_report" language="java" columnCount="1" pageWidth="842" pageHeight="800" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc3a3fa9-c2fa-4ed7-a5bd-b7371cfe082f">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<dataset name="Dataset1" uuid="159f9cb6-a7f8-4fca-8d09-1146053765c7">
 		<query language="sql"><![CDATA[]]></query>
 		<field name="COLUMN_1" class="java.lang.String"/>
@@ -21,90 +28,106 @@
 	<parameter name="IMAGE_PATH" class="java.lang.String">
 		<defaultValueExpression><![CDATA[$P{IMAGE_PATH}]]></defaultValueExpression>
 	</parameter>
-	<parameter name="Parameter4" class="java.lang.String"/>
-	<parameter name="Parameter5" class="java.lang.String"/>
-	<parameter name="Parameter6" class="java.lang.String"/>
-	<parameter name="Parameter7" class="java.lang.String"/>
 	<query language="sql"><![CDATA[]]></query>
+	<field name="COLUMN_0" class="java.lang.String"/>
+	<field name="COLUMN_1" class="java.lang.Double"/>
+	<field name="COLUMN_2" class="java.lang.Double"/>
+	<field name="COLUMN_3" class="java.lang.Double"/>
+	<field name="COLUMN_4" class="java.lang.Double"/>
+	<field name="COLUMN_5" class="java.lang.Double"/>
 	<background splitType="Stretch"/>
 	<title height="116" splitType="Stretch">
-		<element kind="staticText" uuid="d1f850ce-936a-4f01-b0c9-29f488d02a0a" x="110" y="0" width="258" height="40" forecolor="#0000FF" fontSize="26.0" bold="true">
+		<element kind="staticText" uuid="d1f850ce-936a-4f01-b0c9-29f488d02a0a" x="251" y="0" width="258" height="40" forecolor="#0000FF" fontSize="26.0" bold="true">
 			<text><![CDATA[NOVARA INSTITUTE]]></text>
 		</element>
-		<element kind="staticText" uuid="9fcb1061-3253-4ce8-bd2e-0f7e82ed1b3d" x="390" y="0" width="70" height="30" bold="true" vTextAlign="Middle">
+		<element kind="staticText" uuid="9fcb1061-3253-4ce8-bd2e-0f7e82ed1b3d" x="590" y="0" width="70" height="30" bold="true" vTextAlign="Middle">
 			<text><![CDATA[Report No :]]></text>
 		</element>
-		<element kind="staticText" uuid="63e9288c-8bc6-4170-8caf-2141230d7646" x="390" y="30" width="70" height="30" bold="true" vTextAlign="Middle">
+		<element kind="staticText" uuid="63e9288c-8bc6-4170-8caf-2141230d7646" x="590" y="30" width="70" height="30" bold="true" vTextAlign="Middle">
 			<text><![CDATA[Employee :]]></text>
 		</element>
-		<element kind="staticText" uuid="0fcb9aeb-45ad-4ee2-ad1d-b51a5ed95988" x="390" y="60" width="70" height="30" bold="true" vTextAlign="Middle">
+		<element kind="staticText" uuid="0fcb9aeb-45ad-4ee2-ad1d-b51a5ed95988" x="590" y="60" width="70" height="30" bold="true" vTextAlign="Middle">
 			<text><![CDATA[Date & Time :]]></text>
 		</element>
-		<element kind="staticText" uuid="a8b568fe-bf32-4445-8983-20cc7c4120df" x="135" y="43" width="174" height="30" fontSize="14.0" bold="true">
+		<element kind="staticText" uuid="a8b568fe-bf32-4445-8983-20cc7c4120df" x="293" y="40" width="174" height="30" fontSize="14.0" bold="true">
 			<text><![CDATA[Contact : 072 573 3695]]></text>
 		</element>
-		<element kind="staticText" uuid="bfacc031-c177-4c83-a2d8-ca5a4844b027" x="110" y="73" width="210" height="30" fontSize="14.0" bold="true">
+		<element kind="staticText" uuid="bfacc031-c177-4c83-a2d8-ca5a4844b027" x="275" y="70" width="210" height="30" fontSize="14.0" bold="true">
 			<text><![CDATA[161/E, Thalgahawila, Horana.]]></text>
 		</element>
-		<element kind="image" uuid="336fffe8-809b-463e-8c5f-643d173c6789" x="10" y="0" width="100" height="89">
+		<element kind="image" uuid="336fffe8-809b-463e-8c5f-643d173c6789" x="60" y="0" width="100" height="89">
 			<expression><![CDATA[$P{IMAGE_PATH}]]></expression>
 		</element>
-		<element kind="textField" uuid="784a4b83-e580-45b3-84e6-85a0b146edf8" x="460" y="0" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="784a4b83-e580-45b3-84e6-85a0b146edf8" x="660" y="0" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter1}]]></expression>
 		</element>
-		<element kind="textField" uuid="89da5032-3e60-49dd-81b8-c4d3e275828e" x="460" y="30" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="89da5032-3e60-49dd-81b8-c4d3e275828e" x="660" y="30" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter2}]]></expression>
 		</element>
-		<element kind="textField" uuid="95f21ade-2c80-4cee-9dea-d0c42cf673c6" x="460" y="60" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="95f21ade-2c80-4cee-9dea-d0c42cf673c6" x="660" y="60" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter3}]]></expression>
 		</element>
 	</title>
 	<pageHeader height="50">
-		<element kind="rectangle" uuid="154658cb-504d-4d77-9746-77a8541a014b" x="10" y="7" width="549" height="30" backcolor="#0000FF"/>
-		<element kind="staticText" uuid="43d5ce15-f101-497a-a805-5e8e21c5487d" x="200" y="7" width="180" height="30" forecolor="#FFFFFF" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[Monthly Profit Report]]></text>
+		<element kind="rectangle" uuid="154658cb-504d-4d77-9746-77a8541a014b" x="60" y="0" width="700" height="30" backcolor="#0000FF"/>
+		<element kind="staticText" uuid="43d5ce15-f101-497a-a805-5e8e21c5487d" x="290" y="0" width="180" height="30" forecolor="#FFFFFF" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Profit Report]]></text>
 		</element>
 	</pageHeader>
-	<columnHeader height="43" splitType="Stretch">
-		<element kind="staticText" uuid="25131f2c-1a30-4d7a-b00e-4c89e194e40c" x="10" y="5" width="36" height="30" fontSize="16.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[#]]></text>
+	<columnHeader height="37" splitType="Stretch">
+		<element kind="staticText" uuid="8e1be1f9-4bd9-47c2-a2cb-1dba08dfac25" x="60" y="6" width="150" height="30" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Description]]></text>
 		</element>
-		<element kind="staticText" uuid="8e1be1f9-4bd9-47c2-a2cb-1dba08dfac25" x="60" y="5" width="110" height="30" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[Income]]></text>
+		<element kind="staticText" uuid="2325cd08-f51a-423b-8681-fe6c930b3345" x="230" y="6" width="93" height="30" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Current Month]]></text>
 		</element>
-		<element kind="staticText" uuid="2325cd08-f51a-423b-8681-fe6c930b3345" x="190" y="6" width="110" height="30" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[Expenses]]></text>
+		<element kind="staticText" uuid="2874af27-ab31-45b7-ad50-f2bd98c313a5" x="330" y="6" width="100" height="30" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Pervious Month]]></text>
 		</element>
-		<element kind="staticText" uuid="2874af27-ab31-45b7-ad50-f2bd98c313a5" x="320" y="6" width="120" height="30" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[Profit / Loss]]></text>
-		</element>
-		<element kind="staticText" uuid="fb31b9d3-1fd8-4ba7-9b27-3e1f0d904332" x="450" y="6" width="108" height="30" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[Month]]></text>
+		<element kind="staticText" uuid="fb31b9d3-1fd8-4ba7-9b27-3e1f0d904332" x="435" y="5" width="109" height="30" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Budgeted Amount]]></text>
 			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="84d0d18e-1d27-4844-8cf0-2bc571a39340"/>
+		</element>
+		<element kind="staticText" uuid="99c738ad-f5fd-4531-a30b-551a2b2ebe0d" x="550" y="5" width="100" height="30" fontSize="12.0" bold="true" italic="false" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Variance/ Due]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0f1ecd6-3a49-47f6-a918-9d7fef4f1e81"/>
+		</element>
+		<element kind="staticText" uuid="7f1a792f-eb08-4c9f-a3a0-2b2f929fd80b" x="660" y="5" width="100" height="30" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[%Change]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5f4094f6-c741-48dd-9ca9-060244768f9a"/>
 		</element>
 	</columnHeader>
 	<detail>
-		<band height="36" splitType="Stretch">
-			<element kind="textField" uuid="0303ff13-fd9f-4232-adfa-2bcbae39b087" x="10" y="4" width="36" height="28" fontSize="9.0" hTextAlign="Center" vTextAlign="Top">
-				<expression><![CDATA[$V{PAGE_NUMBER}]]></expression>
+		<band height="35" splitType="Stretch">
+			<element kind="textField" uuid="6ed80cdc-b2a7-4411-8361-a1d10dbb931e" x="60" y="2" width="150" height="30" hTextAlign="Center">
+				<expression><![CDATA[$F{COLUMN_0}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="292948af-b29b-49ca-be2e-2f1a2b71d564"/>
 			</element>
-			<element kind="textField" uuid="7175c682-d7b5-4db6-8d84-6fd3fbd71e5a" x="60" y="3" width="110" height="30" hTextAlign="Center" vTextAlign="Middle">
-				<expression><![CDATA[$P{Parameter4}]]></expression>
+			<element kind="textField" uuid="c5ced34f-3951-4292-8619-512fd54bbd94" x="230" y="0" width="93" height="30" evaluationTime="Page" hTextAlign="Center">
+				<expression><![CDATA[$F{COLUMN_1}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="202bfd29-ea9b-4d53-aaab-6b4ea98f803c"/>
 			</element>
-			<element kind="textField" uuid="3257bae2-c701-45b5-b5fa-3afe9ee5db41" x="190" y="0" width="110" height="30" hTextAlign="Center" vTextAlign="Middle">
-				<expression><![CDATA[$P{Parameter5}]]></expression>
+			<element kind="textField" uuid="c2ef5b14-c5e9-47f6-a943-42763fa0a970" x="330" y="0" width="100" height="30" evaluationTime="Page" hTextAlign="Center">
+				<expression><![CDATA[$F{COLUMN_2}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="246e463f-084c-4a26-8f83-0d739a15b62d"/>
 			</element>
-			<element kind="textField" uuid="3445f3d5-3d7f-4d11-8d97-226b11a51457" x="320" y="3" width="120" height="30" hTextAlign="Center" vTextAlign="Middle">
-				<expression><![CDATA[$P{Parameter6}]]></expression>
+			<element kind="textField" uuid="f514a642-958c-4709-b892-069c078fdf0d" x="435" y="0" width="109" height="30" evaluationTime="Page" hTextAlign="Center">
+				<expression><![CDATA[$F{COLUMN_3}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5953c552-a051-400c-9b8e-2b197bae6354"/>
 			</element>
-			<element kind="textField" uuid="48de3cbb-b91c-40b6-9af8-4fb1fb003d69" x="450" y="3" width="108" height="30" hTextAlign="Center" vTextAlign="Middle">
-				<expression><![CDATA[$P{Parameter7}]]></expression>
+			<element kind="textField" uuid="e39fc21f-5296-4af5-87c0-a8d39d897099" x="550" y="0" width="100" height="30" evaluationTime="Page" hTextAlign="Center">
+				<expression><![CDATA[$F{COLUMN_4}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0f1ecd6-3a49-47f6-a918-9d7fef4f1e81"/>
+			</element>
+			<element kind="textField" uuid="caed5bc9-8e79-4b4d-99b0-2fcdc0a69fe7" x="660" y="0" width="100" height="30" evaluationTime="Page" hTextAlign="Center">
+				<expression><![CDATA[$F{COLUMN_5}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5f4094f6-c741-48dd-9ca9-060244768f9a"/>
 			</element>
 		</band>
 	</detail>
 	<pageFooter height="31" splitType="Stretch">
-		<element kind="rectangle" uuid="3f67d39f-55aa-48c2-91ba-a24d401fccb8" x="10" y="10" width="550" height="21" backcolor="#FA302D"/>
-		<element kind="staticText" uuid="320f5790-84e2-4c94-9ef4-075d8783c2e2" x="203" y="11" width="155" height="19" forecolor="#FFFFFF" backcolor="#FFFFFF" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="rectangle" uuid="3f67d39f-55aa-48c2-91ba-a24d401fccb8" x="60" y="10" width="700" height="21" backcolor="#FA302D"/>
+		<element kind="staticText" uuid="320f5790-84e2-4c94-9ef4-075d8783c2e2" x="303" y="11" width="155" height="19" forecolor="#FFFFFF" backcolor="#FFFFFF" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Admin Department]]></text>
 		</element>
 	</pageFooter>

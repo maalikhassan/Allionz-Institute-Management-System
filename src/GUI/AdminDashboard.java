@@ -115,7 +115,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         loadAdminStudentAttendanceReportTable();
         loadAdminStudentAttendanceReportTable();
         
-        //Financial report load 
+        //report load 
         loadIncomeTable();
         LoadExpensesTable();
         loadSalaryDetailsStaff();
@@ -123,6 +123,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         LoadFessDetails();
         LoadDuesTable();
         loadProfitLoss();
+        
         loadAdminTeacherEnrollmenrt();
         loadProfitLoss();
         loadChartIntoPanel();
@@ -133,6 +134,9 @@ public class AdminDashboard extends javax.swing.JFrame {
         loadTotalStudents();
         loadTotalTeachers();
         loadActivityLog();
+        //Set visible flase fields
+        jLabel30.setVisible(false);
+        jLabel35.setVisible(false);
 
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(SwingConstants.CENTER);
@@ -668,7 +672,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        getSum1();
+        getSum1();
 
     }
 
@@ -698,7 +702,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        getSum2();
+  getSum2();
 
     }
 
@@ -727,7 +731,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 model.addRow(vector);
 
             }
-//            getSum5();
+            getSum6();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -758,7 +762,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 model.addRow(vector);
 
             }
-//            getSum5();
+            getSum3();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -789,6 +793,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 model.addRow(vector);
 
             }
+            getSum4();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -820,8 +825,63 @@ public class AdminDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        getSum3();
+        getSum5();
     }
+    //<--get sum of the tables-->
+     //1
+    public void getSum1() {
+        int sum = 0;
+        for (int i = 0; i < jTable12.getRowCount(); i++) {
+            sum += Double.parseDouble(jTable12.getValueAt(i, 3).toString());
+        }
+        jLabel35.setText(Integer.toString(sum));
+    }
+
+    //2
+    public void getSum2() {
+        int sum = 0;
+        for (int i = 0; i < jTable9.getRowCount(); i++) {
+            sum += Double.parseDouble(jTable9.getValueAt(i, 3).toString());
+        }
+        jLabel35.setText(Integer.toString(sum));
+    }
+
+    //3
+    public void getSum3() {
+        int sum = 0;
+        for (int i = 0; i < jTable8.getRowCount(); i++) {
+            sum += Double.parseDouble(jTable8.getValueAt(i, 3).toString());
+        }
+        jLabel35.setText(Integer.toString(sum));
+    }
+
+    //4
+    public void getSum4() {
+        int sum = 0;
+        for (int i = 0; i < jTable17.getRowCount(); i++) {
+            sum += Double.parseDouble(jTable17.getValueAt(i, 7).toString());
+        }
+        jLabel35.setText(Integer.toString(sum));
+    }
+
+    //5
+    public void getSum5() {
+        int sum = 0;
+        for (int i = 0; i < jTable18.getRowCount(); i++) {
+            sum += Double.parseDouble(jTable18.getValueAt(i, 3).toString());
+        }
+        jLabel35.setText(Integer.toString(sum));
+    }
+
+    //6
+    public void getSum6() {
+        int sum = 0;
+        for (int i = 0; i < jTable10.getRowCount(); i++) {
+            sum += Double.parseDouble(jTable10.getValueAt(i, 3).toString());
+        }
+        jLabel35.setText(Integer.toString(sum));
+    }
+    //<--get sum of the tables-->
 
     private void loadActivityLog() {
         try {
@@ -2894,8 +2954,8 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addComponent(jButton36)
                 .addGap(25, 25, 25)
-                .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(178, Short.MAX_VALUE))
+                .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Profit Loss Report", jPanel12);
@@ -2918,9 +2978,9 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jTabbedPane5.addTab("Financial", jPanel30);
 
-        jLabel30.setText("jLabel30");
+        jLabel30.setText(" ");
 
-        jLabel35.setText("jLabel35");
+        jLabel35.setText(" ");
 
         javax.swing.GroupLayout reportspanelLayout = new javax.swing.GroupLayout(reportspanel);
         reportspanel.setLayout(reportspanelLayout);
@@ -4008,41 +4068,39 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField9KeyReleased
 
     private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
-        // profit loss Report:
-
+      boolean isPrinted = false;
         try {
-//            long invoiceid = System.currentTimeMillis();
-//            jLabel84.setText(String.valueOf(invoiceid));
-//            String EmployeeUserName = jLabel85.getText();
+            long invoiceid1 = System.currentTimeMillis();
+            jLabel30.setText(String.valueOf(invoiceid1));
+            String invoiceid2 = jLabel30.getText();
+            String EmployeeUserName = jLabel44.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String total = jLabel35.getText();
             String imagePath = getClass().getResource("/resources/LOGO.png").toString();
             // Load report file
-            InputStream path = this.getClass().getResourceAsStream("/reports/ProfitLostTest.jasper");
-            if (path == null) {
-                throw new RuntimeException("Report file not found at /reports/ProfitLostTest.jasper");
-            }
+            InputStream path = this.getClass().getResourceAsStream("/reports/AdminProfit_report.jasper");
 
             // Parameters for the report
-            HashMap<String, Object> parameters = new HashMap<>();
-            parameters.put("Parameter1", dateTime);
-            parameters.put("IMAGE_PATH", imagePath);
-//            params.put("Parameter2", Department);
-//            params.put("Parameter3", Basesalary);
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("Parameter1", invoiceid2);
+            params.put("Parameter2", EmployeeUserName);
+            params.put("Parameter3", dateTime);
+            params.put("IMAGE_PATH", imagePath);
+
             // Data source
-            if (jTable16.getRowCount() == 0) {
-                System.out.println("Table is empty.");
-                throw new RuntimeException("Table has no data to generate the report.");
-            }
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable16.getModel());
 
-            JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
+            JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            e.printStackTrace();
+//            if (jTable16.getRowCount() == 0) {
+//                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+//            } else if (!isPrinted) {
+//                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+//            }
+e.printStackTrace();
         }
-
-
     }//GEN-LAST:event_jButton36ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed

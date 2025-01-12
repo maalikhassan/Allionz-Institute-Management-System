@@ -3466,8 +3466,8 @@
                                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                                       <Component id="jButton36" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                                      <Component id="jScrollPane16" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <EmptySpace pref="178" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane16" min="-2" pref="330" max="-2" attributes="0"/>
+                                      <EmptySpace pref="24" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -3557,12 +3557,12 @@
             </Container>
             <Component class="javax.swing.JLabel" name="jLabel30">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel30"/>
+                <Property name="text" type="java.lang.String" value=" "/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel35">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel35"/>
+                <Property name="text" type="java.lang.String" value=" "/>
               </Properties>
             </Component>
           </SubComponents>
