@@ -77,9 +77,11 @@ import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.KeyboardFocusManager;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -94,7 +96,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
     private static String userName = AcademicUserSession.getInstance().getUsername();
     private static String SystemDateTime;
-    
+
     HashMap<String, String> BatchMap = new HashMap<>();
     HashMap<String, String> StreamMap = new HashMap<>();
     HashMap<String, String> SubjectMap = new HashMap<>();
@@ -224,10 +226,10 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
         Timer timer = new Timer(1000, e -> updateDateTime());
         timer.start();
-        
+
         updateDateTime();
     }
-    
+
     private void updateDateTime() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -6771,6 +6773,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         clearSTattendance();
     }//GEN-LAST:event_jButton18ActionPerformed
 
+
     private void jBarcodeScanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jBarcodeScanKeyTyped
 
         // Scan barcode and mark attendance
@@ -6867,7 +6870,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
         try {
 
-            String name = jLabel102.getText();
+            String name = jLabel106.getText();
             String nic = jLabel94.getText();
             Icon barcodeIcon = jLabel29.getIcon();
 
@@ -6918,7 +6921,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             if (doPrint) {
                 printerJob.print();
 
-                jLabel102.setText("Student Name");
+                jLabel106.setText("Student Name");
                 jLabel94.setText("NIC");
 
                 FlatSVGIcon icon17 = new FlatSVGIcon("resources//profileImage.svg", jLabel103.getWidth(), jLabel103.getHeight());
@@ -7895,69 +7898,67 @@ public class AcademicDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTsearchKeyReleased
 
     private void jTeacherBarcodeScanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTeacherBarcodeScanKeyTyped
-        // Scan barcode and load schedule for the teacher
-        String teacherBarcode = jTeacherBarcodeScan.getText(); // Get the scanned barcode
+                                          
+    // Scan barcode and load schedule for the teacher
+    String teacherBarcode = jTeacherBarcodeScan.getText(); // Get the scanned barcode
+    try {
+        // Find the teacher using the barcode
+        ResultSet rs = MySQL.executeSearch("SELECT * FROM teachers WHERE barcode_id = '" + teacherBarcode + "'");
+        if (rs.next()) {
+            String tid = rs.getString("teacher_id");
 
-        if (teacherBarcode.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please scan a valid barcode!", "Warning", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+            // Find the teacher's schedule for today
+            ResultSet rs1 = MySQL.executeSearch("SELECT * FROM `schedule` WHERE sheduled_date = CURDATE() AND teacher_id = '" + tid + "'");
+            if (rs1.next()) {
 
-        // Get the current date
-        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+                // Get schedule details (start_time, end_time)
+                ResultSet rs2 = MySQL.executeSearch("SELECT start_time, end_time, schedule_id, "
+                        + "STR_TO_DATE(REPLACE(REPLACE(start_time, '.', ':'), ' ', ''), '%l:%i%p') AS converted_start_time, "
+                        + "STR_TO_DATE(REPLACE(REPLACE(end_time, '.', ':'), ' ', ''), '%l:%i%p') AS converted_end_time "
+                        + "FROM `schedule` WHERE `sheduled_date` = CURDATE() AND teacher_id = '" + tid + "'");
 
-        try {
-            // Fetch teacher details based on the scanned barcode
-            ResultSet rsTeacher = model.MySQL.executeSearch(
-                    "SELECT teacher_id, first_name, last_name FROM teachers WHERE barcode_id = '" + teacherBarcode + "'");
+                if (rs2.next()) {
+                    String startTime = rs2.getString("converted_start_time");
+                    String endTime = rs2.getString("converted_end_time");
+                    String scheduleId = rs2.getString("schedule_id");
 
-            if (rsTeacher.next()) {
-                String teacherID = rsTeacher.getString("teacher_id");
-                String teacherName = rsTeacher.getString("first_name") + " " + rsTeacher.getString("last_name");
+                    // Get the current time and the time 30 minutes from now in Java
+                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+                    Date currentTimeDate = timeFormat.parse(timeFormat.format(new Date()));
+                    Date timePlus30MinDate = new Date(System.currentTimeMillis() + 30 * 60 * 1000); // 30 minutes from now
 
-                // Load schedule for the teacher for the current date
-                try {
-                    DefaultTableModel dtm = (DefaultTableModel) jteacherAttendanceTable.getModel();
-                    dtm.setRowCount(0);
+                    // Convert start and end times to Date for comparison
+                    Date startTimeDate = timeFormat.parse(startTime);
+                    Date endTimeDate = timeFormat.parse(endTime);
 
-                    // Fetch classes for the scanned teacher's barcode and current date
-                    ResultSet rs = model.MySQL.executeSearch(
-                            "SELECT * FROM `schedule` "
-                            + "INNER JOIN teachers ON teachers.teacher_id=`schedule`.teacher_id "
-                            + "INNER JOIN stream_subject ON stream_subject.id=`schedule`.stream_subject_id "
-                            + "INNER JOIN subjects ON subjects.subject_id=stream_subject.subjects_subject_id "
-                            + "INNER JOIN AL_batch ON AL_batch.batch_id=stream_subject.AL_batch_batch_id "
-                            + "INNER JOIN teacher_attendance ON teacher_attendance.schedule_id=`schedule`.schedule_id "
-                            + "WHERE teachers.barcode_id = '" + teacherBarcode + "' "
-                            + "AND `schedule`.sheduled_date = '" + currentDate + "'");
+                    // Check if current time is between start_time and end_time (ongoing schedule)
+                    if ((currentTimeDate.after(startTimeDate) && currentTimeDate.before(endTimeDate)) || 
+                        (startTimeDate.after(currentTimeDate) && startTimeDate.before(timePlus30MinDate))) {
+                        
+                        // Mark teacher attendance as present
+                        String updateQuery = "UPDATE `teacher_attendance` SET `status` = 'Present' "
+                                + "WHERE `schedule_id` = '" + scheduleId + "' AND `teachers_teacher_id` = '" + tid + "'";
+                        MySQL.executeIUD(updateQuery);
+                        loadteacherAttendanceTable();
 
-                    while (rs.next()) {
-                        Vector<String> v = new Vector<>();
-
-                        v.add(rs.getString("schedule_id"));
-                        v.add(rs.getString("teacher_id"));
-                        v.add(rs.getString("teachers.first_name") + " " + rs.getString("teachers.last_name"));
-                        v.add(rs.getString("batch_name"));
-                        v.add(rs.getString("subject_name"));
-                        v.add(rs.getString("sheduled_date"));
-                        v.add(rs.getString("start_time") + " - " + rs.getString("end_time"));
-                        v.add(rs.getString("status"));
-
-                        dtm.addRow(v);
+                        JOptionPane.showMessageDialog(this, "Teacher's attendance marked as Present.", "Attendance Updated", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No upcoming or ongoing schedule for this teacher.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace(); // Print error details
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "No teacher found for the scanned barcode!", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error occurred while processing attendance.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
 
-        // Clear the scanner input field
-        jTeacherBarcodeScan.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "No schedule allocated for today!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid barcode!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (Exception ex) {
+        Logger.getLogger(AcademicDashboard.class.getName()).log(Level.SEVERE, null, ex);
+    
+}
+
     }//GEN-LAST:event_jTeacherBarcodeScanKeyTyped
 
     private void jButton44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton44ActionPerformed
@@ -7965,9 +7966,9 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
         try {
             // Retrieve teacher details
-            String name = jLabel108.getText();
-            String nic = jLabel109.getText();
-            Icon barcodeIcon = jLabel111.getIcon();
+            String name = jLabel109.getText();
+            String nic = jLabel110.getText();
+            Icon barcodeIcon = jLabel112.getIcon();
 
             if (name.isEmpty() || nic.isEmpty() || barcodeIcon == null) {
                 JOptionPane.showMessageDialog(this, "Incomplete details or missing barcode.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -7978,7 +7979,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             PrinterJob printerJob = PrinterJob.getPrinterJob();
             printerJob.setPrintable(new Printable() {
                 @Override
-                public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
                     if (pageIndex > 0) {
                         return NO_SUCH_PAGE;
                     }
@@ -8047,7 +8048,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             String tname = String.valueOf(jTable14.getValueAt(selectedRow, 2));
             String nic = String.valueOf(jTable14.getValueAt(selectedRow, 3));
 
-           jLabel109.setText(tname);
+            jLabel109.setText(tname);
             jLabel110.setText(nic);
 
             try {
@@ -8088,12 +8089,15 @@ public class AcademicDashboard extends javax.swing.JFrame {
                         }
                     } else {
                         // Set default icon if barcode is null
-                        FlatSVGIcon defaultIcon = new FlatSVGIcon("resources/barcode(1).svg", jLabel111.getWidth(), jLabel111.getHeight());
-                        jLabel111.setIcon(defaultIcon);
-                    }
+                        FlatSVGIcon defaultIcon = new FlatSVGIcon("resources/barcode(1).svg", jLabel112.getWidth(), jLabel112.getHeight());
+                        jLabel112.setIcon(defaultIcon);
+
+}
                 }
             } catch (Exception ex) {
-                Logger.getLogger(AcademicDashboard.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AcademicDashboard.class  
+
+.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jTable14MouseClicked
@@ -9183,13 +9187,16 @@ public class AcademicDashboard extends javax.swing.JFrame {
                         // Set default icon if barcode is null
                         FlatSVGIcon defaultIcon = new FlatSVGIcon("resources/barcode(1).svg", jLabel29.getWidth(), jLabel29.getHeight());
                         jLabel29.setIcon(defaultIcon);
-                    }
+
+}
                 }
             } catch (Exception ex) {
-                Logger.getLogger(AcademicDashboard.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AcademicDashboard.class  
+
+.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
     }//GEN-LAST:event_jBarcodeTableMouseClicked
 
     private void jButton33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton33ActionPerformed
@@ -9200,16 +9207,16 @@ public class AcademicDashboard extends javax.swing.JFrame {
         //        int returnValue = fileChooser.showOpenDialog(null);
         //
         //        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            //
-            //            File selectedFile = fileChooser.getSelectedFile();
-            //            ImageIcon imageIcon = new ImageIcon(selectedFile.getPath());
-            //
-            //            Image image = imageIcon.getImage().getScaledInstance(jLabel30.getWidth(), jLabel30.getHeight(), Image.SCALE_SMOOTH);
-            //
-            //            String path = selectedFile.getAbsolutePath();
-            //            jLabel30.setIcon(new ImageIcon(image));
-            //            TimgPath = path;
-            //        }
+        //
+        //            File selectedFile = fileChooser.getSelectedFile();
+        //            ImageIcon imageIcon = new ImageIcon(selectedFile.getPath());
+        //
+        //            Image image = imageIcon.getImage().getScaledInstance(jLabel30.getWidth(), jLabel30.getHeight(), Image.SCALE_SMOOTH);
+        //
+        //            String path = selectedFile.getAbsolutePath();
+        //            jLabel30.setIcon(new ImageIcon(image));
+        //            TimgPath = path;
+        //        }
         JFileChooser fileChooser = new JFileChooser();
 
         // Set file filter to allow only PNG and JPG files
@@ -9276,7 +9283,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton27ActionPerformed
 
     private void jTextField22KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField22KeyReleased
-            // search
+        // search
 
         try {
             String searchText = jTextField22.getText().trim().toLowerCase();
@@ -9292,13 +9299,13 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
             }
         } catch (Exception e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_jTextField22KeyReleased
 
     private void jButton61ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton61ActionPerformed
-          // Class Attendence Report :
+        // Class Attendence Report :
 
         try {
 //            long invoiceid = System.currentTimeMillis();
@@ -9351,13 +9358,13 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
             }
         } catch (Exception e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_jTextField41KeyReleased
 
     private void jButton50ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton50ActionPerformed
-           // Teacher Enrollment Report:
+        // Teacher Enrollment Report:
 
         try {
 //            long invoiceid = System.currentTimeMillis();
@@ -9374,7 +9381,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             // Parameters for the report
             HashMap<String, Object> parameters = new HashMap<>();
             parameters.put("Parameter1", dateTime);
-             parameters.put("IMAGE_PATH", imagePath);
+            parameters.put("IMAGE_PATH", imagePath);
 //            params.put("Parameter2", Department);
 //            params.put("Parameter3", Basesalary);
             // Data source
@@ -9411,13 +9418,13 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
             }
         } catch (Exception e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_jTextField35KeyReleased
 
     private void jButton54ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton54ActionPerformed
-       // Teacher Class Attendence:
+        // Teacher Class Attendence:
 
         try {
 //            long invoiceid = System.currentTimeMillis();
@@ -9434,7 +9441,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             // Parameters for the report
             HashMap<String, Object> parameters = new HashMap<>();
             parameters.put("Parameter1", dateTime);
-             parameters.put("IMAGE_PATH", imagePath);
+            parameters.put("IMAGE_PATH", imagePath);
 //            params.put("Parameter2", Department);
 //            params.put("Parameter3", Basesalary);
             // Data source
@@ -9472,16 +9479,14 @@ public class AcademicDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField37KeyReleased
 
     private void jButton68ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton68ActionPerformed
-          // Class Schedule Report:
-
-
+        // Class Schedule Report:
 
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
 //            String EmployeeUserName = jLabel85.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-            String imagePath = getClass().getResource("/resources/LOGO.png").toString();  
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
             // Load report file
             InputStream path = this.getClass().getResourceAsStream("/reports/ClassSheduleTest.jasper");
             if (path == null) {
@@ -9491,7 +9496,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             // Parameters for the report
             HashMap<String, Object> parameters = new HashMap<>();
             parameters.put("Parameter1", dateTime);
-             parameters.put("IMAGE_PATH", imagePath);
+            parameters.put("IMAGE_PATH", imagePath);
 //            params.put("Parameter2", Department);
 //            params.put("Parameter3", Basesalary);
             // Data source
@@ -9518,7 +9523,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
 //            jLabel84.setText(String.valueOf(invoiceid));
 //            String EmployeeUserName = jLabel85.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-             String imagePath = getClass().getResource("/resources/LOGO.png").toString();        
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
             // Load report file
             InputStream path = this.getClass().getResourceAsStream("/reports/SubjectManagementReportTest.jasper");
             if (path == null) {
@@ -9589,7 +9594,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField12ActionPerformed
 
     private void jTextField24KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField24KeyReleased
-       // search
+        // search
 
         try {
             String searchText = jTextField24.getText().trim().toLowerCase();
@@ -9605,7 +9610,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
             }
         } catch (Exception e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_jTextField24KeyReleased
@@ -9650,7 +9655,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
             }
         } catch (Exception e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_jTextField51KeyReleased
@@ -9672,7 +9677,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
             }
         } catch (Exception e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_jTextField47KeyReleased
@@ -9694,7 +9699,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
             }
         } catch (Exception e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_jTextField45KeyReleased
@@ -10639,7 +10644,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
             @Override
 
-            public void run() {
+public void run() {
 
                 while (true) {
 
@@ -10859,7 +10864,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
     }
 
-     private void loadStudentAttendanceReportTable() {
+    private void loadStudentAttendanceReportTable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) jStudentAttendanceReportTable.getModel();
             dtm.setRowCount(0);
@@ -10904,7 +10909,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         }
     }
 
-   private void loadTattReportsTable() {
+    private void loadTattReportsTable() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) jTattReportsTable.getModel();
             dtm.setRowCount(0);
@@ -10953,6 +10958,6 @@ public class AcademicDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace(); // Print error details
         }
-    } 
-    
+    }
+
 }
