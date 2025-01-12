@@ -618,6 +618,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jTextField20 = new javax.swing.JTextField();
         jBarcodeScan = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
+        jButton14 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel39 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
@@ -2197,6 +2198,15 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
         jLabel21.setText("Scan Barcode :");
 
+        jButton14.setBackground(new java.awt.Color(0, 52, 101));
+        jButton14.setForeground(new java.awt.Color(255, 255, 255));
+        jButton14.setText("Refresh");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel73Layout = new javax.swing.GroupLayout(jPanel73);
         jPanel73.setLayout(jPanel73Layout);
         jPanel73Layout.setHorizontalGroup(
@@ -2243,7 +2253,9 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel73Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel73Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 78, Short.MAX_VALUE)
+                        .addComponent(jButton14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -2305,7 +2317,8 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel73Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19))
+                    .addComponent(jLabel19)
+                    .addComponent(jButton14))
                 .addGap(10, 10, 10)
                 .addComponent(jScrollPane26, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         );
@@ -9795,6 +9808,10 @@ public class AcademicDashboard extends javax.swing.JFrame {
         loadSTA();
     }//GEN-LAST:event_jButton13ActionPerformed
 
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        loadStAttendanceTable();
+    }//GEN-LAST:event_jButton14ActionPerformed
+
     private void filterStudentsComboBox(String searchText) {
         try {
             // Query the database: show all if searchText is empty
@@ -9858,6 +9875,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
