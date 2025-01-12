@@ -1,5 +1,5 @@
 <!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
-<jasperReport name="Monthly_income_report" language="java" columnCount="1" pageWidth="620" pageHeight="620" columnWidth="580" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc3a3fa9-c2fa-4ed7-a5bd-b7371cfe082f">
+<jasperReport name="Monthly_income_report" language="java" columnCount="1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc3a3fa9-c2fa-4ed7-a5bd-b7371cfe082f">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
@@ -33,13 +33,13 @@
 		<element kind="staticText" uuid="d1f850ce-936a-4f01-b0c9-29f488d02a0a" x="110" y="0" width="258" height="40" forecolor="#0000FF" fontSize="26.0" bold="true">
 			<text><![CDATA[NOVARA INSTITUTE]]></text>
 		</element>
-		<element kind="staticText" uuid="9fcb1061-3253-4ce8-bd2e-0f7e82ed1b3d" x="400" y="0" width="70" height="30" bold="true" vTextAlign="Middle">
+		<element kind="staticText" uuid="9fcb1061-3253-4ce8-bd2e-0f7e82ed1b3d" x="380" y="0" width="70" height="30" bold="true" vTextAlign="Middle">
 			<text><![CDATA[Report No :]]></text>
 		</element>
-		<element kind="staticText" uuid="63e9288c-8bc6-4170-8caf-2141230d7646" x="400" y="29" width="70" height="30" bold="true" vTextAlign="Middle">
+		<element kind="staticText" uuid="63e9288c-8bc6-4170-8caf-2141230d7646" x="380" y="30" width="70" height="30" bold="true" vTextAlign="Middle">
 			<text><![CDATA[Employee :]]></text>
 		</element>
-		<element kind="staticText" uuid="0fcb9aeb-45ad-4ee2-ad1d-b51a5ed95988" x="400" y="60" width="70" height="30" bold="true" vTextAlign="Middle">
+		<element kind="staticText" uuid="0fcb9aeb-45ad-4ee2-ad1d-b51a5ed95988" x="380" y="60" width="70" height="30" bold="true" vTextAlign="Middle">
 			<text><![CDATA[Date & Time :]]></text>
 		</element>
 		<element kind="staticText" uuid="a8b568fe-bf32-4445-8983-20cc7c4120df" x="110" y="43" width="174" height="30" fontSize="14.0" bold="true">
@@ -51,18 +51,18 @@
 		<element kind="image" uuid="336fffe8-809b-463e-8c5f-643d173c6789" x="10" y="0" width="100" height="89">
 			<expression><![CDATA[$P{IMAGE_PATH}]]></expression>
 		</element>
-		<element kind="textField" uuid="784a4b83-e580-45b3-84e6-85a0b146edf8" x="470" y="0" width="129" height="30" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="784a4b83-e580-45b3-84e6-85a0b146edf8" x="450" y="0" width="120" height="30" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter1}]]></expression>
 		</element>
-		<element kind="textField" uuid="89da5032-3e60-49dd-81b8-c4d3e275828e" x="470" y="30" width="129" height="30" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="89da5032-3e60-49dd-81b8-c4d3e275828e" x="450" y="29" width="120" height="30" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter2}]]></expression>
 		</element>
-		<element kind="textField" uuid="95f21ade-2c80-4cee-9dea-d0c42cf673c6" x="470" y="60" width="129" height="30" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="95f21ade-2c80-4cee-9dea-d0c42cf673c6" x="450" y="60" width="120" height="30" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter3}]]></expression>
 		</element>
 	</title>
 	<pageHeader height="50">
-		<element kind="rectangle" uuid="154658cb-504d-4d77-9746-77a8541a014b" x="10" y="7" width="569" height="30" backcolor="#0000FF"/>
+		<element kind="rectangle" uuid="154658cb-504d-4d77-9746-77a8541a014b" x="10" y="7" width="560" height="30" backcolor="#0000FF"/>
 		<element kind="staticText" uuid="43d5ce15-f101-497a-a805-5e8e21c5487d" x="200" y="7" width="180" height="30" forecolor="#FFFFFF" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Monthly Income Report]]></text>
 		</element>
@@ -87,7 +87,7 @@
 	<detail>
 		<band height="41" splitType="Stretch">
 			<element kind="textField" uuid="0303ff13-fd9f-4232-adfa-2bcbae39b087" x="10" y="4" width="36" height="28" fontSize="9.0" hTextAlign="Center" vTextAlign="Top">
-				<expression><![CDATA[$V{PAGE_NUMBER}]]></expression>
+				<expression><![CDATA[$V{COLUMN_COUNT}]]></expression>
 			</element>
 			<element kind="textField" uuid="c057db5a-909b-4d29-a658-b9ea6046804f" x="60" y="5" width="90" height="30" hTextAlign="Center">
 				<expression><![CDATA[$F{COLUMN_0}]]></expression>
@@ -107,22 +107,16 @@
 			</element>
 		</band>
 	</detail>
-	<columnFooter height="85">
+	<columnFooter height="51">
 		<element kind="staticText" uuid="c499d8f0-520c-46df-a9ab-673ae6a9a42e" x="10" y="10" width="60" height="30" fontSize="14.0" vTextAlign="Middle">
-			<text><![CDATA[Month :]]></text>
-		</element>
-		<element kind="staticText" uuid="5e901ebb-b6ca-46fb-ae09-7999f95b75f9" x="10" y="40" width="60" height="30" fontSize="14.0" vTextAlign="Middle">
-			<text><![CDATA[Total   :]]></text>
+			<text><![CDATA[Total :]]></text>
 		</element>
 		<element kind="textField" uuid="87ff24ce-a7ca-43ee-ab9b-ea872465bb0a" x="70" y="10" width="100" height="30" fontSize="10.0" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter4}]]></expression>
 		</element>
-		<element kind="textField" uuid="912de8d5-7d0b-48ec-bd34-2ca6954a5982" x="70" y="40" width="100" height="30" vTextAlign="Middle">
-			<expression><![CDATA[$P{Parameter5}]]></expression>
-		</element>
 	</columnFooter>
 	<pageFooter height="24" splitType="Stretch">
-		<element kind="rectangle" uuid="2531d5b3-6c6e-41c8-96af-f44206a3d940" x="10" y="0" width="568" height="21" backcolor="#FA302D"/>
+		<element kind="rectangle" uuid="2531d5b3-6c6e-41c8-96af-f44206a3d940" x="10" y="0" width="560" height="21" backcolor="#FA302D"/>
 		<element kind="staticText" uuid="743aa61b-bb61-4f27-b367-4e992906e1af" x="214" y="0" width="160" height="19" forecolor="#FFFFFF" backcolor="#FFFFFF" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Admin Department]]></text>
 		</element>

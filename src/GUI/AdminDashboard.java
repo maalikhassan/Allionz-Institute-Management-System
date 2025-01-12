@@ -114,6 +114,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         loadAdminSheduleForReport();
         loadAdminStudentAttendanceReportTable();
         loadAdminStudentAttendanceReportTable();
+        
         //Financial report load 
         loadIncomeTable();
         LoadExpensesTable();
@@ -1067,6 +1068,8 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton36 = new javax.swing.JButton();
         jScrollPane16 = new javax.swing.JScrollPane();
         jTable16 = new javax.swing.JTable();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
         managementpanel = new javax.swing.JPanel();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jPanel13 = new javax.swing.JPanel();
@@ -2326,7 +2329,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 518, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Academic", jPanel14);
@@ -2334,6 +2337,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton18.setBackground(new java.awt.Color(0, 52, 101));
         jButton18.setForeground(new java.awt.Color(255, 255, 255));
         jButton18.setText("Print");
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
 
         jButton19.setBackground(new java.awt.Color(0, 52, 101));
         jButton19.setForeground(new java.awt.Color(255, 255, 255));
@@ -2412,6 +2420,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton20.setBackground(new java.awt.Color(0, 52, 101));
         jButton20.setForeground(new java.awt.Color(255, 255, 255));
         jButton20.setText("Print");
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton20ActionPerformed(evt);
+            }
+        });
 
         jButton21.setBackground(new java.awt.Color(0, 52, 101));
         jButton21.setForeground(new java.awt.Color(255, 255, 255));
@@ -2517,6 +2530,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton34.setBackground(new java.awt.Color(0, 52, 101));
         jButton34.setForeground(new java.awt.Color(255, 255, 255));
         jButton34.setText("Print");
+        jButton34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton34ActionPerformed(evt);
+            }
+        });
 
         jButton35.setBackground(new java.awt.Color(0, 52, 101));
         jButton35.setForeground(new java.awt.Color(255, 255, 255));
@@ -2590,6 +2608,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton22.setBackground(new java.awt.Color(0, 52, 101));
         jButton22.setForeground(new java.awt.Color(255, 255, 255));
         jButton22.setText("Print");
+        jButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton22ActionPerformed(evt);
+            }
+        });
 
         jButton23.setBackground(new java.awt.Color(0, 52, 101));
         jButton23.setForeground(new java.awt.Color(255, 255, 255));
@@ -2662,6 +2685,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton24.setBackground(new java.awt.Color(0, 52, 101));
         jButton24.setForeground(new java.awt.Color(255, 255, 255));
         jButton24.setText("Print");
+        jButton24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton24ActionPerformed(evt);
+            }
+        });
 
         jButton25.setBackground(new java.awt.Color(0, 52, 101));
         jButton25.setForeground(new java.awt.Color(255, 255, 255));
@@ -2740,6 +2768,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton26.setBackground(new java.awt.Color(0, 52, 101));
         jButton26.setForeground(new java.awt.Color(255, 255, 255));
         jButton26.setText("Print");
+        jButton26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton26ActionPerformed(evt);
+            }
+        });
 
         jButton27.setBackground(new java.awt.Color(0, 52, 101));
         jButton27.setForeground(new java.awt.Color(255, 255, 255));
@@ -2885,17 +2918,31 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jTabbedPane5.addTab("Financial", jPanel30);
 
+        jLabel30.setText("jLabel30");
+
+        jLabel35.setText("jLabel35");
+
         javax.swing.GroupLayout reportspanelLayout = new javax.swing.GroupLayout(reportspanel);
         reportspanel.setLayout(reportspanelLayout);
         reportspanelLayout.setHorizontalGroup(
             reportspanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 937, Short.MAX_VALUE)
+            .addComponent(jTabbedPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
+            .addGroup(reportspanelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         reportspanelLayout.setVerticalGroup(
             reportspanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(reportspanelLayout.createSequentialGroup()
                 .addComponent(jTabbedPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(reportspanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel30)
+                    .addComponent(jLabel35))
+                .addContainerGap())
         );
 
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
@@ -3998,6 +4045,228 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton36ActionPerformed
 
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+         boolean isPrinted = false;
+        try {
+            long invoiceid1 = System.currentTimeMillis();
+            jLabel30.setText(String.valueOf(invoiceid1));
+            String invoiceid2 = jLabel30.getText();
+            String EmployeeUserName = jLabel44.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String total = jLabel35.getText();
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/Adminmonthly_income.jasper");
+
+            // Parameters for the report
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("Parameter1", invoiceid2);
+            params.put("Parameter2", EmployeeUserName);
+            params.put("Parameter3", dateTime);
+            params.put("Parameter4", total);
+            params.put("IMAGE_PATH", imagePath);
+
+            // Data source
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable12.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
+
+            isPrinted = JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            if (jTable12.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+    }//GEN-LAST:event_jButton18ActionPerformed
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+        boolean isPrinted = false;
+        try {
+            long invoiceid1 = System.currentTimeMillis();
+            jLabel30.setText(String.valueOf(invoiceid1));
+            String invoiceid2 = jLabel30.getText();
+            String EmployeeUserName = jLabel44.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String total = jLabel35.getText();
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/adminmonthly_expense.jasper");
+
+            // Parameters for the report
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("Parameter1", invoiceid2);
+            params.put("Parameter2", EmployeeUserName);
+            params.put("Parameter3", dateTime);
+            params.put("Parameter4", total);
+            params.put("IMAGE_PATH", imagePath);
+
+            // Data source
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable9.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
+
+            isPrinted = JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            if (jTable9.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+    }//GEN-LAST:event_jButton20ActionPerformed
+
+    private void jButton34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton34ActionPerformed
+        boolean isPrinted = false;
+        try {
+            long invoiceid1 = System.currentTimeMillis();
+            jLabel30.setText(String.valueOf(invoiceid1));
+            String invoiceid2 = jLabel30.getText();
+            String EmployeeUserName = jLabel44.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String total = jLabel35.getText();
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/AdminMonthly_salaryDetailsTeacher.jasper");
+
+            // Parameters for the report
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("Parameter1", invoiceid2);
+            params.put("Parameter2", EmployeeUserName);
+            params.put("Parameter3", dateTime);
+            params.put("Parameter4", total);
+            params.put("IMAGE_PATH", imagePath);
+
+            // Data source
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable10.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
+
+            isPrinted = JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            if (jTable10.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+    }//GEN-LAST:event_jButton34ActionPerformed
+
+    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
+      boolean isPrinted = false;
+        try {
+            long invoiceid1 = System.currentTimeMillis();
+            jLabel30.setText(String.valueOf(invoiceid1));
+            String invoiceid2 = jLabel30.getText();
+            String EmployeeUserName = jLabel44.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String total = jLabel35.getText();
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/AdminClassFeesReport.jasper");
+
+            // Parameters for the report
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("Parameter1", invoiceid2);
+            params.put("Parameter2", EmployeeUserName);
+            params.put("Parameter3", dateTime);
+            params.put("Parameter4", total);
+            params.put("IMAGE_PATH", imagePath);
+
+            // Data source
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable17.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
+
+            isPrinted = JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            if (jTable17.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+    }//GEN-LAST:event_jButton24ActionPerformed
+
+    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
+         boolean isPrinted = false;
+        try {
+            long invoiceid1 = System.currentTimeMillis();
+            jLabel30.setText(String.valueOf(invoiceid1));
+            String invoiceid2 = jLabel30.getText();
+            String EmployeeUserName = jLabel44.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String total = jLabel35.getText();
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/AdminDues_report.jasper");
+
+            // Parameters for the report
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("Parameter1", invoiceid2);
+            params.put("Parameter2", EmployeeUserName);
+            params.put("Parameter3", dateTime);
+            params.put("Parameter4", total);
+            params.put("IMAGE_PATH", imagePath);
+
+            // Data source
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable18.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
+
+            isPrinted = JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            if (jTable18.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+    }//GEN-LAST:event_jButton26ActionPerformed
+
+    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+          boolean isPrinted = false;
+        try {
+            long invoiceid1 = System.currentTimeMillis();
+            jLabel30.setText(String.valueOf(invoiceid1));
+            String invoiceid2 = jLabel30.getText();
+            String EmployeeUserName = jLabel44.getText();
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String total = jLabel35.getText();
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            // Load report file
+            InputStream path = this.getClass().getResourceAsStream("/reports/AdminMonthly_salaryDetails.jasper");
+
+            // Parameters for the report
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("Parameter1", invoiceid2);
+            params.put("Parameter2", EmployeeUserName);
+            params.put("Parameter3", dateTime);
+            params.put("Parameter4", total);
+            params.put("IMAGE_PATH", imagePath);
+
+            // Data source
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable8.getModel());
+
+            JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
+
+            isPrinted = JasperPrintManager.printReport(report, false);
+        } catch (Exception e) {
+            if (jTable8.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+    }//GEN-LAST:event_jButton22ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -4081,10 +4350,12 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel44;

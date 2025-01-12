@@ -19,7 +19,6 @@
 	<parameter name="Parameter2" class="java.lang.String"/>
 	<parameter name="Parameter3" class="java.lang.String"/>
 	<parameter name="Parameter4" class="java.lang.String"/>
-	<parameter name="Parameter5" class="java.lang.String"/>
 	<parameter name="IMAGE_PATH" class="java.lang.String">
 		<defaultValueExpression><![CDATA[$P{IMAGE_PATH}]]></defaultValueExpression>
 	</parameter>
@@ -116,18 +115,12 @@
 			</element>
 		</band>
 	</detail>
-	<columnFooter height="77">
+	<columnFooter height="51">
 		<element kind="textField" uuid="cbb4a6a4-0714-46f8-9deb-21c429ff40e8" x="70" y="10" width="110" height="30" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter4}]]></expression>
 		</element>
 		<element kind="staticText" uuid="0b4a7a4b-9a9d-474f-a8da-4606400f378a" x="10" y="10" width="60" height="30" fontSize="14.0" hTextAlign="Left" vTextAlign="Middle">
-			<text><![CDATA[Month :]]></text>
-		</element>
-		<element kind="textField" uuid="00e19349-faa5-46c7-b27c-ce4a3c7a4e47" x="70" y="40" width="110" height="30" vTextAlign="Middle">
-			<expression><![CDATA[$P{Parameter5}]]></expression>
-		</element>
-		<element kind="staticText" uuid="f1240899-f9e5-4a51-9b6c-af712580c998" x="10" y="40" width="60" height="30" fontSize="14.0" vTextAlign="Middle">
-			<text><![CDATA[Total   :]]></text>
+			<text><![CDATA[Total :]]></text>
 		</element>
 	</columnFooter>
 	<pageFooter height="31" splitType="Stretch">
