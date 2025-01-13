@@ -24,7 +24,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.data.JRTableModelDataSource;
-
+import java.util.logging.*;
 /**
  *
  * @author pramu
@@ -32,6 +32,7 @@ import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 public class Manage_Vendor extends javax.swing.JFrame {
     private static String userName = FinancialUserSession.getInstance().getUsername();
     HashMap<String, String> LoadBillTypes = new HashMap<>();
+    public static Logger logger = Logger.getLogger("Finance");
 
     /**
      * Creates new form Manage_Vendor
@@ -57,6 +58,14 @@ public class Manage_Vendor extends javax.swing.JFrame {
         jLabel10.setVisible(false);
         jLabel7.setVisible(false);
 //        jButton2.setEnabled(false);
+try {
+            FileHandler fileHandler = new FileHandler("ManageVendor.app", true);
+            fileHandler.setFormatter(new SimpleFormatter());
+            
+            logger.addHandler(fileHandler);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadVendorTable() {
@@ -531,6 +540,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       boolean isPrinted = false;
         try {
             long invoiceid1 = System.currentTimeMillis();
             jLabel10.setText(String.valueOf(invoiceid1));
@@ -562,9 +572,14 @@ public class Manage_Vendor extends javax.swing.JFrame {
 
             JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+           isPrinted =  JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (jTable1.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+              logger.log(Level.WARNING, "Error occurred when try to print vendor table.", e);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 

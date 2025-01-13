@@ -5,6 +5,7 @@
 package gui;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import static gui.FinancialDashboard.logger;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Vector;
@@ -14,6 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.MySQL;
+import java.util.logging.*;
 //import sun.awt.windows.WToolkit;
 
 /**
@@ -21,7 +23,7 @@ import model.MySQL;
  * @author pramu
  */
 public class BillType_Manage extends javax.swing.JFrame {
-
+public static Logger logger = Logger.getLogger("BillType");
     /**
      * Creates new form BillType_Manage
      */
@@ -32,6 +34,15 @@ public class BillType_Manage extends javax.swing.JFrame {
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(SwingConstants.CENTER);
         jTable1.setDefaultRenderer(Object.class, render);
+        
+         try {
+            FileHandler fileHandler = new FileHandler("BillType.app", true);
+            fileHandler.setFormatter(new SimpleFormatter());
+            
+            logger.addHandler(fileHandler);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadBillTypes() {
@@ -213,7 +224,7 @@ public class BillType_Manage extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           logger.log(Level.WARNING, "Error occurred when try to add bill type.", e);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -252,7 +263,7 @@ public class BillType_Manage extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           logger.log(Level.WARNING, "Error occurred when try to update bill type.", e);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -282,6 +293,7 @@ public class BillType_Manage extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Bill Tye Not Found", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
+            logger.log(Level.WARNING, "Error occurred when try to remove bill type.", e);
             JOptionPane.showMessageDialog(this, "This bill type cannot be deleted as it is referenced in other records (e.g., bill payments).", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton3ActionPerformed

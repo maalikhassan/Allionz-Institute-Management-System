@@ -1873,6 +1873,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jScrollPane12 = new javax.swing.JScrollPane();
         jTable11 = new javax.swing.JTable();
         jLabel122 = new javax.swing.JLabel();
+        jLabel129 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jLabel58 = new javax.swing.JLabel();
         jComboBox9 = new javax.swing.JComboBox<>();
@@ -1881,6 +1882,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel84 = new javax.swing.JLabel();
         jButton31 = new javax.swing.JButton();
         jLabel123 = new javax.swing.JLabel();
+        jLabel130 = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
         jLabel59 = new javax.swing.JLabel();
         jComboBox10 = new javax.swing.JComboBox<>();
@@ -1889,6 +1891,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel90 = new javax.swing.JLabel();
         jButton12 = new javax.swing.JButton();
         jLabel124 = new javax.swing.JLabel();
+        jLabel131 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane15 = new javax.swing.JScrollPane();
         jTable14 = new javax.swing.JTable();
@@ -1913,6 +1916,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel93 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
         jLabel125 = new javax.swing.JLabel();
+        jLabel132 = new javax.swing.JLabel();
         jPanel23 = new javax.swing.JPanel();
         jScrollPane17 = new javax.swing.JScrollPane();
         jTable16 = new javax.swing.JTable();
@@ -1921,6 +1925,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel95 = new javax.swing.JLabel();
         jComboBox6 = new javax.swing.JComboBox<>();
         jLabel126 = new javax.swing.JLabel();
+        jLabel133 = new javax.swing.JLabel();
         financialprofilepanel = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
         profilepiclabel = new javax.swing.JLabel();
@@ -3648,6 +3653,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel41.setText("Select Month");
 
         jComboBox29.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox29.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox29ItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
         jPanel29.setLayout(jPanel29Layout);
@@ -3719,6 +3729,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel55.setText("Select Month");
 
         jComboBox30.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox30.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox30ItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel30Layout = new javax.swing.GroupLayout(jPanel30);
         jPanel30.setLayout(jPanel30Layout);
@@ -3789,6 +3804,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel117.setText("Select Month");
 
         jComboBox31.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox31.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox31ItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel31Layout = new javax.swing.GroupLayout(jPanel31);
         jPanel31.setLayout(jPanel31Layout);
@@ -3859,6 +3879,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel118.setText("Select Month");
 
         jComboBox32.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox32.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox32ItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel34Layout = new javax.swing.GroupLayout(jPanel34);
         jPanel34.setLayout(jPanel34Layout);
@@ -4268,6 +4293,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jLabel122.setText(" ");
 
+        jLabel129.setText("Total Amount :");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -4285,9 +4312,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel50)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton27)
-                                .addGap(35, 35, 35)
-                                .addComponent(jLabel122, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButton27))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel129)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel122, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -4303,9 +4332,12 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel50)
-                    .addComponent(jButton27)
+                    .addComponent(jButton27))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel129)
                     .addComponent(jLabel122))
-                .addContainerGap(377, Short.MAX_VALUE))
+                .addContainerGap(350, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Monthly Income Report", jPanel3);
@@ -4353,6 +4385,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jLabel123.setText(" ");
 
+        jLabel130.setText("Total Amount :");
+
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
@@ -4372,10 +4406,14 @@ public class FinancialDashboard extends javax.swing.JFrame {
                                 .addComponent(jLabel84)
                                 .addGap(6, 6, 6)
                                 .addComponent(jButton31)
-                                .addGap(43, 43, 43)
-                                .addComponent(jLabel123, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel130)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel123, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -4393,9 +4431,12 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel84))
-                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton31)
-                        .addComponent(jLabel123))))
+                    .addComponent(jButton31))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel130)
+                    .addComponent(jLabel123))
+                .addContainerGap())
         );
 
         jTabbedPane5.addTab("Monthly Expense Report", jPanel12);
@@ -4443,6 +4484,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jLabel124.setText(" ");
 
+        jLabel131.setText("Total Amount :");
+
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
         jPanel20Layout.setHorizontalGroup(
@@ -4457,12 +4500,15 @@ public class FinancialDashboard extends javax.swing.JFrame {
                                 .addComponent(jLabel59)
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel20Layout.createSequentialGroup()
-                                .addComponent(jLabel90)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton12)
-                                .addGap(62, 62, 62)
-                                .addComponent(jLabel124, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel20Layout.createSequentialGroup()
+                                    .addComponent(jLabel131)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel124, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel20Layout.createSequentialGroup()
+                                    .addComponent(jLabel90)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jButton12))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -4478,9 +4524,12 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel90)
-                    .addComponent(jButton12)
+                    .addComponent(jButton12))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel131)
                     .addComponent(jLabel124))
-                .addContainerGap(400, Short.MAX_VALUE))
+                .addContainerGap(373, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Dues Report", jPanel20);
@@ -4622,7 +4671,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel121))
                 .addGap(26, 26, 26)
                 .addComponent(jButton25)
-                .addContainerGap(325, Short.MAX_VALUE))
+                .addContainerGap(332, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Profit Calculate", jPanel5);
@@ -4668,7 +4717,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
-        jLabel125.setText("jLabel125");
+        jLabel125.setText(" ");
+
+        jLabel132.setText("Total Amount :");
 
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
@@ -4687,9 +4738,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addGroup(jPanel22Layout.createSequentialGroup()
                                 .addComponent(jLabel91)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton32)
-                                .addGap(52, 52, 52)
-                                .addComponent(jLabel125, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButton32))
+                            .addGroup(jPanel22Layout.createSequentialGroup()
+                                .addComponent(jLabel132)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel125, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -4705,9 +4758,12 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel91)
-                    .addComponent(jButton32)
+                    .addComponent(jButton32))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel132)
                     .addComponent(jLabel125))
-                .addContainerGap(394, Short.MAX_VALUE))
+                .addContainerGap(367, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Salary Payment Report", jPanel22);
@@ -4753,7 +4809,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
-        jLabel126.setText("jLabel126");
+        jLabel126.setText(" ");
+
+        jLabel133.setText("Total Amount :");
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
@@ -4772,9 +4830,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addGroup(jPanel23Layout.createSequentialGroup()
                                 .addComponent(jLabel92)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton9)
-                                .addGap(51, 51, 51)
-                                .addComponent(jLabel126, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButton9))
+                            .addGroup(jPanel23Layout.createSequentialGroup()
+                                .addComponent(jLabel133)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel126, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -4789,11 +4849,13 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addComponent(jScrollPane17, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel92)
-                        .addComponent(jLabel126))
+                    .addComponent(jLabel92)
                     .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(391, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel133)
+                    .addComponent(jLabel126))
+                .addContainerGap(364, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Class Fee Payment", jPanel23);
@@ -5366,6 +5428,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton41ActionPerformed
+        boolean isPrinted = false;
         try {
             long invoiceid1 = System.currentTimeMillis();
             jLabel88.setText(String.valueOf(invoiceid1));
@@ -5393,10 +5456,14 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
             JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
 
-            JasperPrintManager.printReport(report, false);
+           isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-            logger.log(Level.WARNING, "Error occurred when try to print bill.", e);
-            e.printStackTrace();
+             if (jTable1.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+            }
+            logger.log(Level.WARNING, "Error occurred when try to print bill table.", e);    
         }
     }//GEN-LAST:event_jButton41ActionPerformed
 
@@ -5437,7 +5504,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Error occurred when try to remove base salary.", e); 
         }
     }//GEN-LAST:event_jButton22ActionPerformed
 
@@ -5473,7 +5540,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 //                
             }
         } catch (Exception e) {
-            e.printStackTrace();
+          logger.log(Level.WARNING, "Error occurred when try to add base salary.", e); 
         }
     }//GEN-LAST:event_jButton20ActionPerformed
 
@@ -5500,7 +5567,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 //                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+        logger.log(Level.WARNING, "Error occurred when try to update base salary.", e); 
         }
     }//GEN-LAST:event_jButton21ActionPerformed
 
@@ -5657,6 +5724,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
+             logger.log(Level.WARNING, "Error occurred when try to calculate salary and print paysheet.", e);
 
         }
 
@@ -5718,6 +5786,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
+             logger.log(Level.WARNING, "Error occurred when try to print salary details.", e);
 
         }
 
@@ -5760,7 +5829,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-
+logger.log(Level.WARNING, "Error occurred when try to print base salary details.", e); 
         }
     }//GEN-LAST:event_jButton18ActionPerformed
 
@@ -5799,7 +5868,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-
+logger.log(Level.WARNING, "Error occurred when try to print monthly expense report.", e);
         }
     }//GEN-LAST:event_jButton31ActionPerformed
 
@@ -5838,7 +5907,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-
+logger.log(Level.WARNING, "Error occurred when try to print monthly slary payment report.", e);
         }
     }//GEN-LAST:event_jButton32ActionPerformed
 
@@ -5879,6 +5948,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
+             logger.log(Level.WARNING, "Error occurred when try to print teacher salary details.", e);
         }
     }//GEN-LAST:event_jButton13ActionPerformed
 
@@ -5916,6 +5986,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
+            logger.log(Level.WARNING, "Error occurred when try to print academic salary details.", e); 
         }
     }//GEN-LAST:event_jButton11ActionPerformed
 
@@ -5952,6 +6023,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
+             logger.log(Level.WARNING, "Error occurred when try to print finance salary details.", e);
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -5991,6 +6063,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
+             logger.log(Level.WARNING, "Error occurred when try to print maintenance salary details.", e);
         }
     }//GEN-LAST:event_jButton15ActionPerformed
 
@@ -6251,7 +6324,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-
+  logger.log(Level.WARNING, "Error occurred when try to print monthly income report.", e);
         }
     }//GEN-LAST:event_jButton27ActionPerformed
 
@@ -6959,7 +7032,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-
+logger.log(Level.WARNING, "Error occurred when try to print monthly dues report.", e);
         }
     }//GEN-LAST:event_jButton12ActionPerformed
 
@@ -7009,6 +7082,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
+            logger.log(Level.WARNING, "Error occurred when try to print profit report.", e);
         }
     }//GEN-LAST:event_jButton25ActionPerformed
 
@@ -7048,7 +7122,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-
+logger.log(Level.WARNING, "Error occurred when try to print monthly class fees report.", e);
         }
     }//GEN-LAST:event_jButton9ActionPerformed
 
@@ -7108,6 +7182,181 @@ public class FinancialDashboard extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton26ActionPerformed
+
+    private void jComboBox29ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox29ItemStateChanged
+         try {
+
+            String selectedMonthName = String.valueOf(jComboBox29.getSelectedItem());
+
+            DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+            model.setRowCount(0);
+
+            String query;
+
+            if (selectedMonthName.equals("All Months")) {
+
+                query = " SELECT * FROM `salary` INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id` INNER JOIN `month` ON `salary`.`month_id` = `month`.`id` INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id` INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id` WHERE `employee`.`employee_type_id`='1'";
+            } else {
+
+                String selectedMonthId = MonthMap.get(selectedMonthName);
+                query = " SELECT * FROM `salary` INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id` INNER JOIN `month` ON `salary`.`month_id` = `month`.`id` INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id` INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
+                        + "WHERE `month`.`id` = '" + selectedMonthId + "' AND `employee`.`employee_type_id`='1'";
+            }
+
+            ResultSet resultSet = MySQL.executeSearch(query);
+
+            while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("id"));
+                vector.add(resultSet.getString("employee.first_name") + " " + (resultSet.getString("employee.last_name")));
+                vector.add(resultSet.getString("salary_details.base_salary"));
+                vector.add(resultSet.getString("net_amount"));
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("month.month_name"));
+                vector.add(resultSet.getString("payment_status.status"));
+                model.addRow(vector);
+            }
+            getSum5();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        getSum5();
+
+    }//GEN-LAST:event_jComboBox29ItemStateChanged
+
+    private void jComboBox30ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox30ItemStateChanged
+        try {
+
+            String selectedMonthName = String.valueOf(jComboBox30.getSelectedItem());
+
+            DefaultTableModel model = (DefaultTableModel) jTable4.getModel();
+            model.setRowCount(0);
+
+            String query;
+
+            if (selectedMonthName.equals("All Months")) {
+
+                query = " SELECT * FROM `salary` INNER JOIN `salary_details` ON "
+                        + "`salary`.`salary_details_id` = `salary_details`.`id` INNER JOIN `month` ON "
+                        + "`salary`.`month_id` = `month`.`id` INNER JOIN `payment_status` ON "
+                        + "`salary`.`payment_status_id` = `payment_status`.`id` INNER JOIN `employee` ON "
+                        + "`salary`.`employee_user_id` = `employee`.`user_id` WHERE `employee`.`employee_type_id`='2'";
+            } else {
+
+                String selectedMonthId = MonthMap.get(selectedMonthName);
+                query = " SELECT * FROM `salary` INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id` INNER JOIN `month` ON `salary`.`month_id` = `month`.`id` INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id` INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
+                        + "WHERE `month`.`id` = '" + selectedMonthId + "' AND `employee`.`employee_type_id`='2'";
+            }
+
+            ResultSet resultSet = MySQL.executeSearch(query);
+
+            while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("id"));
+                vector.add(resultSet.getString("employee.first_name") + " " + (resultSet.getString("employee.last_name")));
+                vector.add(resultSet.getString("salary_details.base_salary"));
+                vector.add(resultSet.getString("net_amount"));
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("month.month_name"));
+                vector.add(resultSet.getString("payment_status.status"));
+                model.addRow(vector);
+            }
+         
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+      
+
+    }//GEN-LAST:event_jComboBox30ItemStateChanged
+
+    private void jComboBox31ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox31ItemStateChanged
+        try {
+
+            String selectedMonthName = String.valueOf(jComboBox31.getSelectedItem());
+
+            DefaultTableModel model = (DefaultTableModel) jTable5.getModel();
+            model.setRowCount(0);
+
+            String query;
+
+            if (selectedMonthName.equals("All Months")) {
+
+                query = " SELECT * FROM `salary` INNER JOIN `salary_details` ON "
+                        + "`salary`.`salary_details_id` = `salary_details`.`id` INNER JOIN `month` ON "
+                        + "`salary`.`month_id` = `month`.`id` INNER JOIN `payment_status` ON "
+                        + "`salary`.`payment_status_id` = `payment_status`.`id` INNER JOIN `employee` ON "
+                        + "`salary`.`employee_user_id` = `employee`.`user_id` WHERE `employee`.`employee_type_id`='3'";
+            } else {
+
+                String selectedMonthId = MonthMap.get(selectedMonthName);
+                query = " SELECT * FROM `salary` INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id` INNER JOIN `month` ON `salary`.`month_id` = `month`.`id` INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id` INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
+                        + "WHERE `month`.`id` = '" + selectedMonthId + "' AND `employee`.`employee_type_id`='3'";
+            }
+
+            ResultSet resultSet = MySQL.executeSearch(query);
+
+            while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("id"));
+                vector.add(resultSet.getString("employee.first_name") + " " + (resultSet.getString("employee.last_name")));
+                vector.add(resultSet.getString("salary_details.base_salary"));
+                vector.add(resultSet.getString("net_amount"));
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("month.month_name"));
+                vector.add(resultSet.getString("payment_status.status"));
+                model.addRow(vector);
+            }
+         
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+      
+
+    }//GEN-LAST:event_jComboBox31ItemStateChanged
+
+    private void jComboBox32ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox32ItemStateChanged
+        try {
+
+            String selectedMonthName = String.valueOf(jComboBox32.getSelectedItem());
+
+            DefaultTableModel model = (DefaultTableModel) jTable6.getModel();
+            model.setRowCount(0);
+
+            String query;
+
+            if (selectedMonthName.equals("All Months")) {
+
+                query = " SELECT * FROM `salary` INNER JOIN `salary_details` ON "
+                        + "`salary`.`salary_details_id` = `salary_details`.`id` INNER JOIN `month` ON "
+                        + "`salary`.`month_id` = `month`.`id` INNER JOIN `payment_status` ON "
+                        + "`salary`.`payment_status_id` = `payment_status`.`id` INNER JOIN `employee` ON "
+                        + "`salary`.`employee_user_id` = `employee`.`user_id` WHERE `employee`.`employee_type_id`='4'";
+            } else {
+
+                String selectedMonthId = MonthMap.get(selectedMonthName);
+                query = " SELECT * FROM `salary` INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id` INNER JOIN `month` ON `salary`.`month_id` = `month`.`id` INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id` INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
+                        + "WHERE `month`.`id` = '" + selectedMonthId + "' AND `employee`.`employee_type_id`='4'";
+            }
+
+            ResultSet resultSet = MySQL.executeSearch(query);
+
+            while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("id"));
+                vector.add(resultSet.getString("employee.first_name") + " " + (resultSet.getString("employee.last_name")));
+                vector.add(resultSet.getString("salary_details.base_salary"));
+                vector.add(resultSet.getString("net_amount"));
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("month.month_name"));
+                vector.add(resultSet.getString("payment_status.status"));
+                model.addRow(vector);
+            }
+         
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+      
+    }//GEN-LAST:event_jComboBox32ItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -7238,7 +7487,12 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel126;
     private javax.swing.JLabel jLabel127;
     private javax.swing.JLabel jLabel128;
+    private javax.swing.JLabel jLabel129;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel130;
+    private javax.swing.JLabel jLabel131;
+    private javax.swing.JLabel jLabel132;
+    private javax.swing.JLabel jLabel133;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
