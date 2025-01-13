@@ -48,6 +48,8 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import java.util.logging.*;
+
 /**
  *
  * @author Dell
@@ -69,6 +71,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private static HashMap<String, String> LoadStatusmap = new HashMap<>();
     private static HashMap<String, String> MonthMap = new HashMap<>();
     private static HashMap<String, String> MonthMapFeePayment = new HashMap<>();
+
+    public static Logger logger = Logger.getLogger("Finance");
 
     private void image() {
 
@@ -200,13 +204,23 @@ public class FinancialDashboard extends javax.swing.JFrame {
         //Profit cal
         LoadExpensesTableProfitCal();
         loadIncomeTableProfitCal();
-        
+
         Timer timer = new Timer(1000, e -> updateDateTime());
         timer.start();
-        
+
         updateDateTime();
+
+        try {
+            FileHandler fileHandler = new FileHandler("Finance.app", true);
+            fileHandler.setFormatter(new SimpleFormatter());
+            
+            logger.addHandler(fileHandler);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
+
     private void updateDateTime() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -2474,9 +2488,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -3438,7 +3452,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel85, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jLabel86, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(261, Short.MAX_VALUE))
+                .addContainerGap(262, Short.MAX_VALUE))
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -4252,7 +4266,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         });
         jScrollPane12.setViewportView(jTable11);
 
-        jLabel122.setText("jLabel122");
+        jLabel122.setText(" ");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -4337,7 +4351,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
-        jLabel123.setText("jLabel123");
+        jLabel123.setText(" ");
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -4427,7 +4441,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
-        jLabel124.setText("jLabel124");
+        jLabel124.setText(" ");
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
@@ -5226,7 +5240,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Error occurred when try to add bill.", e);
+             
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -5266,7 +5281,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            
+            logger.log(Level.WARNING, "Error occurred when try to update bill.", e);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -5341,7 +5357,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           logger.log(Level.WARNING, "Error occurred when try to remove bill.", e);
         }
     }//GEN-LAST:event_jButton40ActionPerformed
 
@@ -5379,6 +5395,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
             JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
+            logger.log(Level.WARNING, "Error occurred when try to print bill.", e);
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton41ActionPerformed
@@ -7055,7 +7072,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPane3StateChanged
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-        
+
         // System Log
         int response = JOptionPane.showConfirmDialog(
                 this,
@@ -7089,7 +7106,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             userSelection us = new userSelection();
             us.setVisible(true);
         }
-        
+
     }//GEN-LAST:event_jButton26ActionPerformed
 
     /**

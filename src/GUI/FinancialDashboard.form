@@ -650,9 +650,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jPanel8" alignment="1" pref="258" max="32767" attributes="0"/>
-                              <Component id="jPanel7" alignment="1" pref="258" max="32767" attributes="0"/>
-                              <Component id="jPanel13" alignment="1" pref="258" max="32767" attributes="0"/>
+                              <Component id="jPanel8" alignment="1" pref="256" max="32767" attributes="0"/>
+                              <Component id="jPanel7" alignment="1" pref="256" max="32767" attributes="0"/>
+                              <Component id="jPanel13" alignment="1" pref="256" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -2759,7 +2759,7 @@
                           <Component id="jLabel85" min="-2" pref="107" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                           <Component id="jLabel86" min="-2" pref="104" max="-2" attributes="0"/>
-                          <EmptySpace pref="261" max="32767" attributes="0"/>
+                          <EmptySpace pref="262" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -4403,7 +4403,7 @@
                     </Container>
                     <Component class="javax.swing.JLabel" name="jLabel122">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="jLabel122"/>
+                        <Property name="text" type="java.lang.String" value=" "/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -4573,7 +4573,7 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel123">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="jLabel123"/>
+                        <Property name="text" type="java.lang.String" value=" "/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -4736,7 +4736,7 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel124">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="jLabel124"/>
+                        <Property name="text" type="java.lang.String" value=" "/>
                       </Properties>
                     </Component>
                   </SubComponents>
