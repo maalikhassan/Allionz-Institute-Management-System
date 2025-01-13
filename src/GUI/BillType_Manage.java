@@ -28,7 +28,7 @@ public class BillType_Manage extends javax.swing.JFrame {
     public BillType_Manage() {
         initComponents();
         loadBillTypes();
-        
+
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(SwingConstants.CENTER);
         jTable1.setDefaultRenderer(Object.class, render);
@@ -209,7 +209,7 @@ public class BillType_Manage extends javax.swing.JFrame {
                             + "VALUES('" + TypeName + "')");
                     loadBillTypes();
                     reset();
-                    JOptionPane.showMessageDialog(this, "Bill Type Added Succesfully", "Warning", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Bill Type Added Succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         } catch (Exception e) {
@@ -241,9 +241,14 @@ public class BillType_Manage extends javax.swing.JFrame {
                 if (resultSet.next()) {
                     JOptionPane.showMessageDialog(this, "Bill Type Already Exists", "Warning", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    MySQL.executeIUD("UPDATE `bill_type` SET `bill_type`='" + BillType + "' WHERE `id`='" + BillTypeId + "'");
-                    reset();
-                    loadBillTypes();
+                    int showConfirm = JOptionPane.showConfirmDialog(this, "Do you want to update this bill type?",
+                            "Update bill type", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+                    if (showConfirm == JOptionPane.YES_OPTION) {
+                        MySQL.executeIUD("UPDATE `bill_type` SET `bill_type`='" + BillType + "' WHERE `id`='" + BillTypeId + "'");
+                        reset();
+                        loadBillTypes();
+                    }
                 }
             }
         } catch (Exception e) {
@@ -255,23 +260,29 @@ public class BillType_Manage extends javax.swing.JFrame {
         //Remove Bill type
         try {
             String BillType = jTextField1.getText();
-           
+            String Id = jLabel3.getText();
 
             if (BillType.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Bill Type To Remove", "Warning", JOptionPane.WARNING_MESSAGE);
             } else {
-                ResultSet resultSet = MySQL.executeSearch("SELECT  * FROM `bill_type` WHERE `bill_type`='" + BillType + "'");
+                ResultSet resultSet = MySQL.executeSearch("SELECT  * FROM `bill_type` WHERE `bill_type`='" + BillType + "' AND `id`='" + Id + "'");
 
                 if (resultSet.next()) {
+                    int showConfirm = JOptionPane.showConfirmDialog(this, "Do you want to delete this bill type?",
+                            "Delete bill type", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
-                    MySQL.executeIUD("Delete FROM `bill_type`  WHERE  `bill_type` = '" + BillType + "' ");
-                    JOptionPane.showMessageDialog(this, "Bill Type Successfully Removed", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    reset();
-                    loadBillTypes();
+                    if (showConfirm == JOptionPane.YES_OPTION) {
+
+                        MySQL.executeIUD("Delete FROM `bill_type`  WHERE  `id` = '" + Id + "' ");
+                        JOptionPane.showMessageDialog(this, "Bill Type Successfully Removed", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        reset();
+                        loadBillTypes();
+                    }
                 }
+                JOptionPane.showMessageDialog(this, "Bill Tye Not Found", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "This bill type cannot be deleted as it is referenced in other records (e.g., bill payments).", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

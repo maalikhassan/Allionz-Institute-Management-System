@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import model.FinancialUserSession;
 import model.MySQL;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -29,7 +30,7 @@ import net.sf.jasperreports.engine.data.JRTableModelDataSource;
  * @author pramu
  */
 public class Manage_Vendor extends javax.swing.JFrame {
-
+    private static String userName = FinancialUserSession.getInstance().getUsername();
     HashMap<String, String> LoadBillTypes = new HashMap<>();
 
     /**
@@ -37,6 +38,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
      */
     public Manage_Vendor() {
         initComponents();
+        jLabel8.setText(FinancialUserSession.getInstance().getName());
         jTextField1.grabFocus();
         rounded();
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
@@ -409,7 +411,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
                 if (resultSet.next()) {
                     JOptionPane.showMessageDialog(this, "Company already exists", "Warning", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    int showConfirm = JOptionPane.showConfirmDialog(this, "Do you want to add new company '" + CompanyName + "' From The Company Table?",
+                    int showConfirm = JOptionPane.showConfirmDialog(this, "Do you want to add new company?",
                             "Add new company", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
                     if (showConfirm == JOptionPane.YES_OPTION) {
@@ -447,6 +449,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
         //Update Vendor
         int selectedRow = jTable1.getSelectedRow();
         try {
+            
             String CompanyName = jTextField1.getText();
             String Email = jTextField2.getText();
             String Mobile = jTextField3.getText();
@@ -470,12 +473,8 @@ public class Manage_Vendor extends javax.swing.JFrame {
             } else if (BillType.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Select Bill Type", "Warning", JOptionPane.WARNING_MESSAGE);
             } else {
-                ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `vendor` WHERE `vendor_name`='" + CompanyName + "'"
-                        + "AND `mobile`='" + Mobile + "'");
-                if (resultSet.next()) {
-                    JOptionPane.showMessageDialog(this, "Bill Type Already Exists", "Warning", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    int showConfirm = JOptionPane.showConfirmDialog(this, "Do you want to Update '" + CompanyName + "' From The Company Table?",
+                
+                    int showConfirm = JOptionPane.showConfirmDialog(this, "Do you want to Update this comapny details?",
                             "Update Company", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
                     if (showConfirm == JOptionPane.YES_OPTION) {
@@ -485,7 +484,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
                         reset();
                         loadVendorTable();
                     }
-                }
+                
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -614,6 +613,7 @@ public class Manage_Vendor extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void reset() {
+        jButton1.setEnabled(true);
         jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
