@@ -6926,7 +6926,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             String nic = jLabel94.getText();
             Icon barcodeIcon = jLabel29.getIcon();
 
-            if (name.isEmpty() || nic.isEmpty() || barcodeIcon == null) {
+            if (name.equals("Student Name") || nic.equals("NIC") || barcodeIcon == null) {
                 JOptionPane.showMessageDialog(this, "Incomplete details or missing barcode.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -8025,11 +8025,11 @@ public class AcademicDashboard extends javax.swing.JFrame {
             String nic = jLabel110.getText();
             Icon barcodeIcon = jLabel112.getIcon();
 
-            if (name.isEmpty() || nic.isEmpty() || barcodeIcon == null) {
+            
+            if (name.equals("Teacher Name") || nic.equals("nic")) {
                 JOptionPane.showMessageDialog(this, "Incomplete details or missing barcode.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
             // Create a printable job
             PrinterJob printerJob = PrinterJob.getPrinterJob();
             printerJob.setPrintable(new Printable() {
@@ -10599,6 +10599,8 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jLabel124.setIcon(icon14);
         jAttendanceMarkButton.setEnabled(true);
         jAttendanceUpdateButton.setEnabled(true);
+        DefaultTableModel dtm = (DefaultTableModel)jStAttendanceTable.getModel();
+        dtm.setRowCount(0);
     }
 
     private void loadStAttendanceTable() {
