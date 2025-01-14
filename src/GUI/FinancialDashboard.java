@@ -73,7 +73,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private static HashMap<String, String> LoadStatusmap = new HashMap<>();
     private static HashMap<String, String> MonthMap = new HashMap<>();
     private static HashMap<String, String> MonthMapFeePayment = new HashMap<>();
-
+    private static HashMap<String, String> LoadMonthBillPaymentMap = new HashMap<>();
     public static Logger logger = Logger.getLogger("Finance");
 
     private void image() {
@@ -193,7 +193,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         ReportLoadMonth4();
         ReportLoadMonth5();
         ReportLoadMonth6();
-        ReportLoadMonth7();
+//        ReportLoadMonth7();
         ReportLoadMonth8();
         ReportLoadMonth9();
         ReportLoadMonth10();
@@ -762,6 +762,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             DefaultComboBoxModel model = new DefaultComboBoxModel<>(vector);
             jComboBox16.setModel(model);
             jComboBox24.setModel(model);
+            jComboBox5.setModel(model);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1489,24 +1490,24 @@ public class FinancialDashboard extends javax.swing.JFrame {
     }
 
     //7
-    private void ReportLoadMonth7() {
-        try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
-
-            Vector<String> vector = new Vector<>();
-            vector.add("All Months");
-
-            while (resultSet.next()) {
-                vector.add(resultSet.getString("month_name"));
-                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
-
-            }
-            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-            jComboBox28.setModel(model);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    private void ReportLoadMonth7() {
+//        try {
+//            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+//
+//            Vector<String> vector = new Vector<>();
+//            vector.add("All Months");
+//
+//            while (resultSet.next()) {
+//                vector.add(resultSet.getString("month_name"));
+//                LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+//
+//            }
+//            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+//            jComboBox28.setModel(model);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     //Salary department month
     //8
@@ -1801,7 +1802,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jLabel89 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel128 = new javax.swing.JLabel();
-        jComboBox28 = new javax.swing.JComboBox<>();
+        jComboBox5 = new javax.swing.JComboBox<>();
         salarymanagementpanel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
         jLabel70 = new javax.swing.JLabel();
@@ -3329,7 +3330,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jLabel128.setText("Month");
 
-        jComboBox28.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -3374,7 +3375,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                                         .addComponent(jLabel88, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel89, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jComboBox28, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(jComboBox5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(jLabel36))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3406,7 +3407,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(9, 9, 9)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel18)
@@ -3445,7 +3446,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                                     .addComponent(jButton4)))
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel128)
-                                .addComponent(jComboBox28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jButton5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -3457,7 +3458,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addComponent(jButton41)
                             .addComponent(jButton19))))
                 .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -5298,16 +5299,18 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String Amount = String.valueOf(jFormattedTextField2.getText());
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String date = dateFormat.format(new Date());
-            String month = String.valueOf(jComboBox28.getSelectedItem());
+            String month = String.valueOf(jComboBox5.getSelectedItem());
             String status = String.valueOf(jComboBox12.getSelectedItem());
 
-            if (BillType.isEmpty()) {
+            if (BillType == null || BillType.equals("Select")) {
                 JOptionPane.showMessageDialog(this, "Please Enter Bill Type", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else if (Vendor.isEmpty()) {
+            } else if (Vendor == null || Vendor.equals("Select")) {
                 JOptionPane.showMessageDialog(this, "Please Enter Vendor", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (Amount.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Amount", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else if (status.isEmpty()) {
+            } else if (status == null || status.equals("Select")) {
+                JOptionPane.showMessageDialog(this, "Please Enter Status", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else if (month == null || month.equals("Select Month")) {
                 JOptionPane.showMessageDialog(this, "Please Enter Status", "Warning", JOptionPane.WARNING_MESSAGE);
             } else {
                 ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `bill_type` WHERE `bill_type`='" + BillId + "'");
@@ -5343,7 +5346,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String Description = String.valueOf(jTextArea1.getText());
             String Amount = String.valueOf(jFormattedTextField2.getText());
             String Status = String.valueOf(jComboBox12.getSelectedItem());
-            String month = String.valueOf(jComboBox28.getSelectedItem());
+            String month = String.valueOf(jComboBox5.getSelectedItem());
 
             if (BillType.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Bill Type", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -5411,7 +5414,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jComboBox12.setSelectedItem(Status);
 
         String month = String.valueOf(jTable1.getValueAt(row, 7));
-        jComboBox28.setSelectedItem(month);
+        jComboBox5.setSelectedItem(month);
 
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -5462,7 +5465,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String incoiveid2 = jLabel88.getText();
             String EmployeeUserName = jLabel27.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
             // Load report file
             InputStream path = this.getClass().getResourceAsStream("/reports/bill_payment.jasper");
             if (path == null) {
@@ -5474,6 +5477,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             params.put("Parameter1", incoiveid2);
             params.put("Parameter2", EmployeeUserName);
             params.put("Parameter3", dateTime);
+            params.put("IMAGE_PATH", imagePath);
             // Data source
             if (jTable1.getRowCount() == 0) {
                 System.out.println("Table is empty.");
@@ -6062,23 +6066,19 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String invoiceid2 = jLabel85.getText();
             String EmployeeUserName = jLabel27.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
             // Load report file
             InputStream path = this.getClass().getResourceAsStream("/reports/paysheet_maintenance.jasper");
-            if (path == null) {
-                throw new RuntimeException("Report file not found at /reports/paysheet_maintenance.jasper");
-            }
+             
 
             // Parameters for the report
             HashMap<String, Object> params = new HashMap<>();
             params.put("Parameter1", invoiceid2);
             params.put("Parameter2", EmployeeUserName);
             params.put("Parameter3", dateTime);
-
+            params.put("IMAGE_PATH", imagePath);
             // Data source
-            if (jTable6.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
-            }
+             
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable6.getModel());
 
             JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
@@ -7540,13 +7540,13 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox24;
     private javax.swing.JComboBox<String> jComboBox25;
     private javax.swing.JComboBox<String> jComboBox26;
-    private javax.swing.JComboBox<String> jComboBox28;
     private javax.swing.JComboBox<String> jComboBox29;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox30;
     private javax.swing.JComboBox<String> jComboBox31;
     private javax.swing.JComboBox<String> jComboBox32;
     private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JComboBox<String> jComboBox8;
@@ -7818,7 +7818,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
         jLabel85.setText("");
         jLabel86.setText("");
-        jComboBox28.setSelectedIndex(0);
+        jComboBox5.setSelectedIndex(0);
 
     }
 
