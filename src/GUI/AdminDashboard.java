@@ -573,11 +573,14 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     public void loadEmployee(String searchTerm) {
         try {
-
             ResultSet resultSet = MySQL.executeSearch(
-                    "SELECT * FROM `employee` "
+                    "SELECT `employee`.*, `gender`.`type` AS gender_type, `employee_type`.`type` AS employee_type "
+                    + "FROM `employee` "
                     + "INNER JOIN `gender` ON `employee`.`gender_id` = `gender`.`id` "
-                    + "INNER JOIN `employee_type` ON `employee`.`employee_type_id` = `employee_type`.`id` WHERE `mobile` LIKE '" + searchTerm + "%' OR `nic` = '" + searchTerm + "%' OR `email` LIKE '" + searchTerm + "%' "
+                    + "INNER JOIN `employee_type` ON `employee`.`employee_type_id` = `employee_type`.`id` "
+                    + "WHERE `mobile` LIKE '" + searchTerm + "%' "
+                    + "OR `nic` LIKE '" + searchTerm + "%' " // Fixed condition for NIC
+                    + "OR `email` LIKE '" + searchTerm + "%'"
             );
 
             // Get the table model and clear existing rows
@@ -593,7 +596,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 vector.add(resultSet.getString("email"));
                 vector.add(resultSet.getString("nic"));
                 vector.add(resultSet.getString("mobile"));
-                vector.add(resultSet.getString("employee_type.type"));
+                vector.add(resultSet.getString("employee_type")); // Corrected type retrieval
                 model.addRow(vector);
             }
 
