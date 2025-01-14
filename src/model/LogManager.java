@@ -11,7 +11,7 @@ public class LogManager {
     static {
         try {
             logger = Logger.getLogger("Log1");
-            handler = new FileHandler("Allionz-IMS.txt", true);
+            handler = new FileHandler("Allionz-IMS-Log.txt", true);
             handler.setFormatter(new SimpleFormatter());
             logger.addHandler(handler);
         } catch (Exception e) {
