@@ -11,6 +11,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import java.sql.ResultSet;
@@ -63,6 +65,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private static String userName = AdminUserSession.getInstance().getUsername();
     private static String SystemDateTime;
+    private String selectedImagePath; // Global variable to store the selected image path
     private static HashMap<String, String> streamMap = new HashMap<>();
 
     private void image() {
@@ -629,9 +632,11 @@ public class AdminDashboard extends javax.swing.JFrame {
     }
 
     private void loadUserProfile() {
+
         try {
 
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` WHERE `username`='" + userName + "'");
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` LEFT JOIN `img_path` ON "
+                    + "`users`.`img_path_id`=`img_path`.`id` WHERE `username`='" + userName + "'");
 
             if (resultSet.next()) {
                 jTextField18.setText(resultSet.getString("first_name"));
@@ -641,6 +646,26 @@ public class AdminDashboard extends javax.swing.JFrame {
                 jTextField3.setText(resultSet.getString("email"));
                 jTextField5.setText(resultSet.getString("nic"));
                 jTextField5.setEnabled(false);
+
+                // Load the profile image
+                FlatSVGIcon defaultIcon = new FlatSVGIcon("resources/profileImage.svg",
+                        profilepiclabel.getWidth(), profilepiclabel.getHeight());
+
+                String imgPath = resultSet.getString("path");
+                if (imgPath != null && !imgPath.isEmpty()) {
+                    File imgFile = new File(imgPath);
+                    if (imgFile.exists()) {
+                        // Load and scale the image
+                        ImageIcon imageIcon = new ImageIcon(imgFile.getAbsolutePath());
+                        Image image = imageIcon.getImage().getScaledInstance(profilepiclabel.getWidth(),
+                                profilepiclabel.getHeight(), Image.SCALE_SMOOTH);
+                        profilepiclabel.setIcon(new ImageIcon(image));
+                    } else {
+                        profilepiclabel.setIcon(defaultIcon); // Use default icon if file doesn't exist
+                    }
+                } else {
+                    profilepiclabel.setIcon(defaultIcon); // Use default icon if imgPath is null
+                }
 
             }
 
@@ -3533,23 +3558,48 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
+
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
         int returnValue = fileChooser.showOpenDialog(null);
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
+            try {
+                File selectedFile = fileChooser.getSelectedFile();
+                String fileName = selectedFile.getName();
 
-            File selectedFile = fileChooser.getSelectedFile();
-            ImageIcon imageIcon = new ImageIcon(selectedFile.getPath());
+                // Get the absolute path to the "img" folder in the project directory
+                File projectRoot = new File(System.getProperty("user.dir"));
+                File imgDirectory = new File(projectRoot, "src/img");
 
-            Image image = imageIcon.getImage().getScaledInstance(jLabel1.getWidth(), profilepiclabel.getHeight(), Image.SCALE_SMOOTH);
+                // Create the "img" folder if it doesn't exist
+                if (!imgDirectory.exists()) {
+                    imgDirectory.mkdirs();
+                }
 
-            String path = selectedFile.getAbsolutePath();
-            profilepiclabel.setIcon(new ImageIcon(image));
-            String imgPath = path;
+                // Define the target file path in the "img" folder
+                File targetFile = new File(imgDirectory, fileName);
 
+                // Copy the selected file to the "img" folder
+                Files.copy(selectedFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                // Update the relative image path for database storage
+                selectedImagePath = "src/img/" + fileName;
+
+                // Display the image in the label
+                ImageIcon imageIcon = new ImageIcon(targetFile.getAbsolutePath());
+                Image image = imageIcon.getImage().getScaledInstance(profilepiclabel.getWidth(), profilepiclabel.getHeight(), Image.SCALE_SMOOTH);
+                profilepiclabel.setIcon(new ImageIcon(image));
+
+                JOptionPane.showMessageDialog(this, "Image uploaded and moved successfully!");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error uploading image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
+
     }//GEN-LAST:event_jButton28ActionPerformed
 
     private void jTextField18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField18ActionPerformed
@@ -3581,20 +3631,37 @@ public class AdminDashboard extends javax.swing.JFrame {
         } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
             JOptionPane.showMessageDialog(this, "Please enter valid Mobile Number");
         } else {
-
             try {
+                int imgPathId = -1;
 
-                MySQL.executeIUD("UPDATE `users` SET `first_name`='" + firstName + "', `last_name`='" + lastName + "',`email`='" + email + "',"
-                        + "`mobile`='" + mobile + "' WHERE `username`='" + userName + "'");
+                // If an image path is provided, save it to the database
+                if (selectedImagePath != null) {
+                    String sqlInsert = "INSERT INTO img_path (path) VALUES ('" + selectedImagePath + "')";
+                    MySQL.executeIUD(sqlInsert);
 
+                    // Retrieve the generated img_path_id
+                    ResultSet resultSet = MySQL.executeSearch("SELECT LAST_INSERT_ID() AS id");
+                    if (resultSet.next()) {
+                        imgPathId = resultSet.getInt("id");
+                    }
+                }
+
+                // Construct the SQL update query for the user
+                String sql = "UPDATE `users` SET `first_name`='" + firstName + "', `last_name`='" + lastName + "', `email`='" + email + "', `mobile`='" + mobile + "'";
+                if (imgPathId != -1) {
+                    sql += ", `img_path_id`=" + imgPathId;
+                }
+                sql += " WHERE `username`='" + userName + "'";
+
+                MySQL.executeIUD(sql);
                 JOptionPane.showMessageDialog(this, "Update Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 AdminUserSession.getInstance().setName(firstName + " " + lastName);
                 jLabel44.setText(AdminUserSession.getInstance().getName());
 
             } catch (Exception e) {
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-
         }
     }//GEN-LAST:event_jButton30ActionPerformed
 

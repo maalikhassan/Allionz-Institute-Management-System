@@ -6,13 +6,14 @@ package gui;
 
 import java.util.Date;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,6 +57,7 @@ import java.util.logging.*;
  */
 public class FinancialDashboard extends javax.swing.JFrame {
 
+    private String selectedImagePath; // Global variable to store the selected image path
     private static String userName = FinancialUserSession.getInstance().getUsername();
     private static String SystemDateTime;
     private static HashMap<String, String> loadStreamMap = new HashMap<>();
@@ -213,13 +215,12 @@ public class FinancialDashboard extends javax.swing.JFrame {
         try {
             FileHandler fileHandler = new FileHandler("Finance.app", true);
             fileHandler.setFormatter(new SimpleFormatter());
-            
+
             logger.addHandler(fileHandler);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
 
     private void updateDateTime() {
         LocalDateTime currentDateTime = LocalDateTime.now();
@@ -1063,7 +1064,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private void loadUserProfile() {
         try {
 
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` WHERE `username`='" + userName + "'");
+            // Use LEFT JOIN to handle null img_path_id
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` "
+                    + "LEFT JOIN `img_path` ON `users`.`img_path_id`=`img_path`.`id` "
+                    + "WHERE `username`='" + userName + "'");
 
             if (resultSet.next()) {
                 jTextField18.setText(resultSet.getString("first_name"));
@@ -1073,6 +1077,26 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 jTextField3.setText(resultSet.getString("email"));
                 jTextField5.setText(resultSet.getString("nic"));
                 jTextField5.setEnabled(false);
+
+                // Load the profile image
+                FlatSVGIcon defaultIcon = new FlatSVGIcon("resources/profileImage.svg",
+                        profilepiclabel.getWidth(), profilepiclabel.getHeight());
+
+                String imgPath = resultSet.getString("path");
+                if (imgPath != null && !imgPath.isEmpty()) {
+                    File imgFile = new File(imgPath);
+                    if (imgFile.exists()) {
+                        // Load and scale the image
+                        ImageIcon imageIcon = new ImageIcon(imgFile.getAbsolutePath());
+                        Image image = imageIcon.getImage().getScaledInstance(profilepiclabel.getWidth(),
+                                profilepiclabel.getHeight(), Image.SCALE_SMOOTH);
+                        profilepiclabel.setIcon(new ImageIcon(image));
+                    } else {
+                        profilepiclabel.setIcon(defaultIcon); // Use default icon if file doesn't exist
+                    }
+                } else {
+                    profilepiclabel.setIcon(defaultIcon); // Use default icon if imgPath is null
+                }
 
             }
 
@@ -4946,50 +4970,51 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jPanel17Layout.setHorizontalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(profilepiclabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 77, Short.MAX_VALUE)
-                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12)
-                    .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextField18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel24)
-                    .addComponent(jLabel26))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel23)
-                    .addComponent(jLabel25)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27))
-            .addGroup(jPanel17Layout.createSequentialGroup()
                 .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(216, 216, 216))
+                .addGap(0, 66, Short.MAX_VALUE)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
+                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(profilepiclabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(55, 55, 55)
+                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextField18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel24)
+                            .addComponent(jLabel26))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel23)
+                            .addComponent(jLabel25)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
+                        .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(185, 185, 185)))
+                .addGap(62, 62, 62))
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel23))
+                .addGap(0, 0, 0)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel17Layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel23))
-                        .addGap(0, 0, 0)
                         .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -5012,13 +5037,12 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel17Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
                         .addComponent(profilepiclabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(82, 82, 82)
+                .addGap(32, 32, 32)
                 .addComponent(jButton30)
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addGap(145, 145, 145))
         );
 
         javax.swing.GroupLayout financialprofilepanelLayout = new javax.swing.GroupLayout(financialprofilepanel);
@@ -5306,7 +5330,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, "Error occurred when try to add bill.", e);
-             
+
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -5346,7 +5370,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            
+
             logger.log(Level.WARNING, "Error occurred when try to update bill.", e);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -5422,7 +5446,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-           logger.log(Level.WARNING, "Error occurred when try to remove bill.", e);
+            logger.log(Level.WARNING, "Error occurred when try to remove bill.", e);
         }
     }//GEN-LAST:event_jButton40ActionPerformed
 
@@ -5459,14 +5483,14 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
             JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
 
-           isPrinted = JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
-             if (jTable1.getRowCount() == 0) {
+            if (jTable1.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-            logger.log(Level.WARNING, "Error occurred when try to print bill table.", e);    
+            logger.log(Level.WARNING, "Error occurred when try to print bill table.", e);
         }
     }//GEN-LAST:event_jButton41ActionPerformed
 
@@ -5507,7 +5531,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            logger.log(Level.WARNING, "Error occurred when try to remove base salary.", e); 
+            logger.log(Level.WARNING, "Error occurred when try to remove base salary.", e);
         }
     }//GEN-LAST:event_jButton22ActionPerformed
 
@@ -5543,7 +5567,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 //                
             }
         } catch (Exception e) {
-          logger.log(Level.WARNING, "Error occurred when try to add base salary.", e); 
+            logger.log(Level.WARNING, "Error occurred when try to add base salary.", e);
         }
     }//GEN-LAST:event_jButton20ActionPerformed
 
@@ -5570,7 +5594,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 //                }
             }
         } catch (Exception e) {
-        logger.log(Level.WARNING, "Error occurred when try to update base salary.", e); 
+            logger.log(Level.WARNING, "Error occurred when try to update base salary.", e);
         }
     }//GEN-LAST:event_jButton21ActionPerformed
 
@@ -5727,7 +5751,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-             logger.log(Level.WARNING, "Error occurred when try to calculate salary and print paysheet.", e);
+            logger.log(Level.WARNING, "Error occurred when try to calculate salary and print paysheet.", e);
 
         }
 
@@ -5789,7 +5813,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-             logger.log(Level.WARNING, "Error occurred when try to print salary details.", e);
+            logger.log(Level.WARNING, "Error occurred when try to print salary details.", e);
 
         }
 
@@ -5832,7 +5856,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-logger.log(Level.WARNING, "Error occurred when try to print base salary details.", e); 
+            logger.log(Level.WARNING, "Error occurred when try to print base salary details.", e);
         }
     }//GEN-LAST:event_jButton18ActionPerformed
 
@@ -5871,7 +5895,7 @@ logger.log(Level.WARNING, "Error occurred when try to print base salary details.
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-logger.log(Level.WARNING, "Error occurred when try to print monthly expense report.", e);
+            logger.log(Level.WARNING, "Error occurred when try to print monthly expense report.", e);
         }
     }//GEN-LAST:event_jButton31ActionPerformed
 
@@ -5910,7 +5934,7 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly expense repo
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-logger.log(Level.WARNING, "Error occurred when try to print monthly slary payment report.", e);
+            logger.log(Level.WARNING, "Error occurred when try to print monthly slary payment report.", e);
         }
     }//GEN-LAST:event_jButton32ActionPerformed
 
@@ -5951,7 +5975,7 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly slary paymen
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-             logger.log(Level.WARNING, "Error occurred when try to print teacher salary details.", e);
+            logger.log(Level.WARNING, "Error occurred when try to print teacher salary details.", e);
         }
     }//GEN-LAST:event_jButton13ActionPerformed
 
@@ -5989,7 +6013,7 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly slary paymen
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-            logger.log(Level.WARNING, "Error occurred when try to print academic salary details.", e); 
+            logger.log(Level.WARNING, "Error occurred when try to print academic salary details.", e);
         }
     }//GEN-LAST:event_jButton11ActionPerformed
 
@@ -6026,7 +6050,7 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly slary paymen
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-             logger.log(Level.WARNING, "Error occurred when try to print finance salary details.", e);
+            logger.log(Level.WARNING, "Error occurred when try to print finance salary details.", e);
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -6066,7 +6090,7 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly slary paymen
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-             logger.log(Level.WARNING, "Error occurred when try to print maintenance salary details.", e);
+            logger.log(Level.WARNING, "Error occurred when try to print maintenance salary details.", e);
         }
     }//GEN-LAST:event_jButton15ActionPerformed
 
@@ -6327,7 +6351,7 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly slary paymen
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-  logger.log(Level.WARNING, "Error occurred when try to print monthly income report.", e);
+            logger.log(Level.WARNING, "Error occurred when try to print monthly income report.", e);
         }
     }//GEN-LAST:event_jButton27ActionPerformed
 
@@ -6337,6 +6361,38 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly slary paymen
     }//GEN-LAST:event_jButton34ActionPerformed
 
     private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
+//        String firstName = jTextField18.getText();
+//        String lastName = jTextField19.getText();
+//        String email = jTextField3.getText();
+//        String mobile = jTextField4.getText();
+//
+//        if (firstName.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please enter First Name", "Warning", JOptionPane.WARNING_MESSAGE);
+//        } else if (lastName.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please enter Last Name", "Warning", JOptionPane.WARNING_MESSAGE);
+//        } else if (email.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please enter Email", "Warning", JOptionPane.WARNING_MESSAGE);
+//        } else if (mobile.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please enter Mobile", "Warning", JOptionPane.WARNING_MESSAGE);
+//        } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
+//            JOptionPane.showMessageDialog(this, "Please enter valid Mobile Number");
+//        } else {
+//
+//            try {
+//
+//                MySQL.executeIUD("UPDATE `users` SET `first_name`='" + firstName + "', `last_name`='" + lastName + "',`email`='" + email + "',"
+//                        + "`mobile`='" + mobile + "' WHERE `username`='" + userName + "'");
+//
+//                JOptionPane.showMessageDialog(this, "Update Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+//                FinancialUserSession.getInstance().setName(firstName + " " + lastName);
+//                jLabel27.setText(FinancialUserSession.getInstance().getName());
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+
         String firstName = jTextField18.getText();
         String lastName = jTextField19.getText();
         String email = jTextField3.getText();
@@ -6353,20 +6409,37 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly slary paymen
         } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
             JOptionPane.showMessageDialog(this, "Please enter valid Mobile Number");
         } else {
-
             try {
+                int imgPathId = -1;
 
-                MySQL.executeIUD("UPDATE `users` SET `first_name`='" + firstName + "', `last_name`='" + lastName + "',`email`='" + email + "',"
-                        + "`mobile`='" + mobile + "' WHERE `username`='" + userName + "'");
+                // If an image path is provided, save it to the database
+                if (selectedImagePath != null) {
+                    String sqlInsert = "INSERT INTO img_path (path) VALUES ('" + selectedImagePath + "')";
+                    MySQL.executeIUD(sqlInsert);
 
+                    // Retrieve the generated img_path_id
+                    ResultSet resultSet = MySQL.executeSearch("SELECT LAST_INSERT_ID() AS id");
+                    if (resultSet.next()) {
+                        imgPathId = resultSet.getInt("id");
+                    }
+                }
+
+                // Construct the SQL update query for the user
+                String sql = "UPDATE `users` SET `first_name`='" + firstName + "', `last_name`='" + lastName + "', `email`='" + email + "', `mobile`='" + mobile + "'";
+                if (imgPathId != -1) {
+                    sql += ", `img_path_id`=" + imgPathId;
+                }
+                sql += " WHERE `username`='" + userName + "'";
+
+                MySQL.executeIUD(sql);
                 JOptionPane.showMessageDialog(this, "Update Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 FinancialUserSession.getInstance().setName(firstName + " " + lastName);
                 jLabel27.setText(FinancialUserSession.getInstance().getName());
 
             } catch (Exception e) {
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-
         }
     }//GEN-LAST:event_jButton30ActionPerformed
 
@@ -6413,16 +6486,39 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly slary paymen
         int returnValue = fileChooser.showOpenDialog(null);
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
+            try {
+                File selectedFile = fileChooser.getSelectedFile();
+                String fileName = selectedFile.getName();
 
-            File selectedFile = fileChooser.getSelectedFile();
-            ImageIcon imageIcon = new ImageIcon(selectedFile.getPath());
+                // Get the absolute path to the "img" folder in the project directory
+                File projectRoot = new File(System.getProperty("user.dir"));
+                File imgDirectory = new File(projectRoot, "src/img");
 
-            Image image = imageIcon.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
+                // Create the "img" folder if it doesn't exist
+                if (!imgDirectory.exists()) {
+                    imgDirectory.mkdirs();
+                }
 
-            String path = selectedFile.getAbsolutePath();
-            jLabel1.setIcon(new ImageIcon(image));
-            String imgPath = path;
+                // Define the target file path in the "img" folder
+                File targetFile = new File(imgDirectory, fileName);
 
+                // Copy the selected file to the "img" folder
+                Files.copy(selectedFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                // Update the relative image path for database storage
+                selectedImagePath = "src/img/" + fileName;
+
+                // Display the image in the label
+                ImageIcon imageIcon = new ImageIcon(targetFile.getAbsolutePath());
+                Image image = imageIcon.getImage().getScaledInstance(profilepiclabel.getWidth(), profilepiclabel.getHeight(), Image.SCALE_SMOOTH);
+                profilepiclabel.setIcon(new ImageIcon(image));
+
+                JOptionPane.showMessageDialog(this, "Image uploaded and moved successfully!");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error uploading image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton28ActionPerformed
 
@@ -7036,7 +7132,7 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly slary paymen
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-logger.log(Level.WARNING, "Error occurred when try to print monthly dues report.", e);
+            logger.log(Level.WARNING, "Error occurred when try to print monthly dues report.", e);
         }
     }//GEN-LAST:event_jButton12ActionPerformed
 
@@ -7126,7 +7222,7 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly dues report.
             } else if (!isPrinted) {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
-logger.log(Level.WARNING, "Error occurred when try to print monthly class fees report.", e);
+            logger.log(Level.WARNING, "Error occurred when try to print monthly class fees report.", e);
         }
     }//GEN-LAST:event_jButton9ActionPerformed
 
@@ -7188,7 +7284,7 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly class fees r
     }//GEN-LAST:event_jButton26ActionPerformed
 
     private void jComboBox29ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox29ItemStateChanged
-         try {
+        try {
 
             String selectedMonthName = String.valueOf(jComboBox29.getSelectedItem());
 
@@ -7265,11 +7361,11 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly class fees r
                 vector.add(resultSet.getString("payment_status.status"));
                 model.addRow(vector);
             }
-         
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-      
+
 
     }//GEN-LAST:event_jComboBox30ItemStateChanged
 
@@ -7310,11 +7406,11 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly class fees r
                 vector.add(resultSet.getString("payment_status.status"));
                 model.addRow(vector);
             }
-         
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-      
+
 
     }//GEN-LAST:event_jComboBox31ItemStateChanged
 
@@ -7355,11 +7451,11 @@ logger.log(Level.WARNING, "Error occurred when try to print monthly class fees r
                 vector.add(resultSet.getString("payment_status.status"));
                 model.addRow(vector);
             }
-         
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-      
+
     }//GEN-LAST:event_jComboBox32ItemStateChanged
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
