@@ -10373,7 +10373,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
     private void loadBatch() {
         try {
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `AL_batch`");
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `AL_batch` ORDER BY `batch_name` ASC");
 
             Vector vector = new Vector();
             vector.add("Select Batch");
