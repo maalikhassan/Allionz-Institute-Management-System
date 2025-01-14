@@ -1235,7 +1235,7 @@
                         </Container>
                         <Component class="javax.swing.JLabel" name="jLabel36">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Search Here"/>
+                            <Property name="text" type="java.lang.String" value="Search NIC"/>
                           </Properties>
                         </Component>
                       </SubComponents>
@@ -1368,7 +1368,7 @@
                         </Container>
                         <Component class="javax.swing.JLabel" name="jLabel37">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Search Here"/>
+                            <Property name="text" type="java.lang.String" value="Search Mobile"/>
                           </Properties>
                         </Component>
                       </SubComponents>
@@ -1416,7 +1416,7 @@
                                           <Component id="jLabel42" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Component id="jButton31" min="-2" pref="115" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jTextField20" min="-2" pref="151" max="-2" attributes="0"/>
@@ -1550,7 +1550,7 @@
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel38">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Search Here"/>
+                            <Property name="text" type="java.lang.String" value="Search Username"/>
                           </Properties>
                         </Component>
                       </SubComponents>
@@ -1597,8 +1597,8 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                           <Component id="jButton39" min="-2" pref="115" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
-                                          <Component id="jLabel39" min="-2" pref="43" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jTextField24" min="-2" pref="151" max="-2" attributes="0"/>
                                       </Group>
@@ -1712,7 +1712,7 @@
                         </Container>
                         <Component class="javax.swing.JLabel" name="jLabel39">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="jLabel39"/>
+                            <Property name="text" type="java.lang.String" value="Search NIC"/>
                           </Properties>
                         </Component>
                       </SubComponents>
@@ -3839,21 +3839,22 @@
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace pref="268" max="32767" attributes="0"/>
+                                  <EmptySpace pref="281" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jLabel22" max="32767" attributes="0"/>
+                                      <Component id="jButton3" pref="150" max="32767" attributes="0"/>
+                                  </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jButton3" min="-2" pref="150" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                                           <Component id="jButton4" min="-2" pref="150" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                                          <Component id="jLabel22" min="-2" pref="83" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
                                           <Component id="jLabel21" min="-2" pref="83" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="269" max="32767" attributes="0"/>
+                                  <EmptySpace pref="281" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>

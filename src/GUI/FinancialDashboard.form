@@ -463,19 +463,14 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel27" min="-2" pref="157" max="-2" attributes="0"/>
-                          <EmptySpace pref="364" max="32767" attributes="0"/>
-                          <Component id="jLabel10" min="-2" pref="249" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel8" min="-2" pref="214" max="-2" attributes="0"/>
-                              <Component id="jLabel102" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="jLabel8" min="-2" pref="214" max="-2" attributes="0"/>
+                      <Component id="jLabel102" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace pref="465" max="32767" attributes="0"/>
+                  <Component id="jLabel10" min="-2" pref="249" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -527,7 +522,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value=" "/>
+            <Property name="text" type="java.lang.String" value="Name"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel102">
@@ -650,9 +645,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jPanel8" alignment="1" pref="258" max="32767" attributes="0"/>
-                              <Component id="jPanel7" alignment="1" pref="258" max="32767" attributes="0"/>
-                              <Component id="jPanel13" alignment="1" pref="258" max="32767" attributes="0"/>
+                              <Component id="jPanel8" alignment="1" pref="256" max="32767" attributes="0"/>
+                              <Component id="jPanel7" alignment="1" pref="256" max="32767" attributes="0"/>
+                              <Component id="jPanel13" alignment="1" pref="256" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">

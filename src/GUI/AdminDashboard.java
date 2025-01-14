@@ -114,7 +114,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         loadAdminSheduleForReport();
         loadAdminStudentAttendanceReportTable();
         loadAdminStudentAttendanceReportTable();
-        
+
         //report load 
         loadIncomeTable();
         LoadExpensesTable();
@@ -123,7 +123,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         LoadFessDetails();
         LoadDuesTable();
         loadProfitLoss();
-        
+
         loadAdminTeacherEnrollmenrt();
         loadProfitLoss();
         loadChartIntoPanel();
@@ -705,7 +705,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-  getSum2();
+        getSum2();
 
     }
 
@@ -830,8 +830,9 @@ public class AdminDashboard extends javax.swing.JFrame {
         }
         getSum5();
     }
+
     //<--get sum of the tables-->
-     //1
+    //1
     public void getSum1() {
         int sum = 0;
         for (int i = 0; i < jTable12.getRowCount(); i++) {
@@ -1752,7 +1753,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
         jScrollPane13.setViewportView(jTable13);
 
-        jLabel36.setText("Search Here");
+        jLabel36.setText("Search NIC");
 
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
@@ -1828,7 +1829,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
         jScrollPane14.setViewportView(jTable14);
 
-        jLabel37.setText("Search Here");
+        jLabel37.setText("Search Mobile");
 
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
@@ -1919,7 +1920,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel42.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel42.setText("Login Credentials");
 
-        jLabel38.setText("Search Here");
+        jLabel38.setText("Search Username");
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
@@ -1932,7 +1933,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel42)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton31, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel38)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -2011,7 +2012,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
         jScrollPane21.setViewportView(jTable21);
 
-        jLabel39.setText("jLabel39");
+        jLabel39.setText("Search NIC");
 
         javax.swing.GroupLayout jPanel36Layout = new javax.swing.GroupLayout(jPanel36);
         jPanel36.setLayout(jPanel36Layout);
@@ -2023,8 +2024,8 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addGroup(jPanel36Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton39, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58)
-                        .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel39)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField24, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 926, Short.MAX_VALUE))
@@ -3131,18 +3132,18 @@ public class AdminDashboard extends javax.swing.JFrame {
         jPanel28Layout.setHorizontalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel28Layout.createSequentialGroup()
-                .addContainerGap(268, Short.MAX_VALUE)
+                .addContainerGap(281, Short.MAX_VALUE)
+                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel28Layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(100, 100, 100)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel28Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(154, 154, 154)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
+                        .addGap(131, 131, 131)
                         .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(269, Short.MAX_VALUE))
+                .addContainerGap(281, Short.MAX_VALUE))
         );
         jPanel28Layout.setVerticalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3519,10 +3520,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         menu2.setBackground(new Color(0, 52, 101));
     }//GEN-LAST:event_menu5MouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
@@ -3591,7 +3588,8 @@ public class AdminDashboard extends javax.swing.JFrame {
                         + "`mobile`='" + mobile + "' WHERE `username`='" + userName + "'");
 
                 JOptionPane.showMessageDialog(this, "Update Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                AdminUserSession.getInstance().setName(firstName + lastName);
+                AdminUserSession.getInstance().setName(firstName + " " + lastName);
+                jLabel44.setText(AdminUserSession.getInstance().getName());
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -3654,39 +3652,46 @@ public class AdminDashboard extends javax.swing.JFrame {
         String stream = String.valueOf(jComboBox1.getSelectedItem());
 
         try {
-            if (!stream.equals("Select")) {
-                // Define the SQL query
-                String query = "SELECT *"
+            // Define the SQL query based on the selected stream
+            String query;
+            if (stream.equals("Select") || stream.equals("All Streams")) {
+                // Query to fetch data for all students
+                query = "SELECT * "
+                        + "FROM students "
+                        + "INNER JOIN stream ON students.stream_stream_id = stream.stream_id "
+                        + "INNER JOIN AL_batch ON students.AL_batch_batch_id = AL_batch.batch_id";
+            } else {
+                // Query to fetch data for a specific stream
+                query = "SELECT * "
                         + "FROM students "
                         + "INNER JOIN stream ON students.stream_stream_id = stream.stream_id "
                         + "INNER JOIN AL_batch ON students.AL_batch_batch_id = AL_batch.batch_id "
                         + "WHERE stream.stream_name = '" + stream + "'";
+            }
 
-                // Execute the query and get the result set
-                ResultSet resultSet = MySQL.executeSearch(query);
+            // Execute the query and get the result set
+            ResultSet resultSet = MySQL.executeSearch(query);
 
-                // Fetch the table model of jTable13
-                DefaultTableModel tableModel = (DefaultTableModel) jTable13.getModel();
-                tableModel.setRowCount(0); // Clear existing rows
+            // Fetch the table model of jTable13
+            DefaultTableModel tableModel = (DefaultTableModel) jTable13.getModel();
+            tableModel.setRowCount(0); // Clear existing rows
 
-                // Populate the table using ResultSet
-                while (resultSet.next()) {
-                    Object[] rowData = {
-                        resultSet.getInt("student_id"),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("last_name"),
-                        resultSet.getString("nic"),
-                        resultSet.getString("mobile"),
-                        resultSet.getString("stream.stream_name"),
-                        resultSet.getString("AL_batch.batch_name")
-                    };
-                    tableModel.addRow(rowData);
-                }
+            // Populate the table using ResultSet
+            while (resultSet.next()) {
+                Object[] rowData = {
+                    resultSet.getInt("student_id"),
+                    resultSet.getString("first_name"),
+                    resultSet.getString("last_name"),
+                    resultSet.getString("nic"),
+                    resultSet.getString("mobile"),
+                    resultSet.getString("stream_name"), // Removed table alias for clarity
+                    resultSet.getString("batch_name") // Removed table alias for clarity
+                };
+                tableModel.addRow(rowData);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
@@ -3783,7 +3788,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
             JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
-           isPrinted = JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
             if (jTable16.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
@@ -3797,7 +3802,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // Class Schedule Report:
-boolean isPrinted = false;
+        boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -3840,7 +3845,7 @@ boolean isPrinted = false;
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // Subject Management Report:
-boolean isPrinted = false;
+        boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -3868,7 +3873,7 @@ boolean isPrinted = false;
 
             JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
 
-             isPrinted = JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
             if (jTable4.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
@@ -3882,7 +3887,7 @@ boolean isPrinted = false;
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         // Class Attendence Report :
-boolean isPrinted = false;
+        boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -3976,7 +3981,7 @@ boolean isPrinted = false;
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // Teacher Enrollment Report:
-boolean isPrinted = false;
+        boolean isPrinted = false;
         try {
 //            long invoiceid = System.currentTimeMillis();
 //            jLabel84.setText(String.valueOf(invoiceid));
@@ -4105,7 +4110,7 @@ boolean isPrinted = false;
     }//GEN-LAST:event_jTextField9KeyReleased
 
     private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
-      boolean isPrinted = false;
+        boolean isPrinted = false;
         try {
             long invoiceid1 = System.currentTimeMillis();
             jLabel30.setText(String.valueOf(invoiceid1));
@@ -4129,7 +4134,7 @@ boolean isPrinted = false;
 
             JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
 
-             isPrinted = JasperPrintManager.printReport(report, false);
+            isPrinted = JasperPrintManager.printReport(report, false);
         } catch (Exception e) {
             if (jTable16.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Table has no data to generate report", "Warning", JOptionPane.INFORMATION_MESSAGE);
@@ -4141,7 +4146,7 @@ boolean isPrinted = false;
     }//GEN-LAST:event_jButton36ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-         boolean isPrinted = false;
+        boolean isPrinted = false;
         try {
             long invoiceid1 = System.currentTimeMillis();
             jLabel30.setText(String.valueOf(invoiceid1));
@@ -4252,7 +4257,7 @@ boolean isPrinted = false;
     }//GEN-LAST:event_jButton34ActionPerformed
 
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
-      boolean isPrinted = false;
+        boolean isPrinted = false;
         try {
             long invoiceid1 = System.currentTimeMillis();
             jLabel30.setText(String.valueOf(invoiceid1));
@@ -4289,7 +4294,7 @@ boolean isPrinted = false;
     }//GEN-LAST:event_jButton24ActionPerformed
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-         boolean isPrinted = false;
+        boolean isPrinted = false;
         try {
             long invoiceid1 = System.currentTimeMillis();
             jLabel30.setText(String.valueOf(invoiceid1));
@@ -4326,7 +4331,7 @@ boolean isPrinted = false;
     }//GEN-LAST:event_jButton26ActionPerformed
 
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
-          boolean isPrinted = false;
+        boolean isPrinted = false;
         try {
             long invoiceid1 = System.currentTimeMillis();
             jLabel30.setText(String.valueOf(invoiceid1));
@@ -4386,6 +4391,10 @@ boolean isPrinted = false;
         String userName = jTextField1.getText();
         loadActivityLog(userName);
     }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -2694,7 +2694,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             studentmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentmanagementLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 479, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE))
         );
 
         teachermanagement.setPreferredSize(new java.awt.Dimension(764, 427));
@@ -4889,6 +4889,11 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jButton11.setBackground(new java.awt.Color(0, 52, 101));
         jButton11.setForeground(new java.awt.Color(255, 255, 255));
         jButton11.setText("Change Password");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         jButton15.setBackground(new java.awt.Color(0, 52, 101));
         jButton15.setForeground(new java.awt.Color(255, 255, 255));
@@ -4949,7 +4954,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                                         .addGap(23, 23, 23)
                                         .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))))
+                                            .addComponent(jPasswordField1))))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -5563,7 +5568,8 @@ public class AcademicDashboard extends javax.swing.JFrame {
                         + "`mobile`='" + mobile + "' WHERE `username`='" + userName + "'");
 
                 JOptionPane.showMessageDialog(this, "Update Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                AcademicUserSession.getInstance().setName(firstName + lastName);
+                AcademicUserSession.getInstance().setName(firstName + " " + lastName);
+                jLabel132.setText(AcademicUserSession.getInstance().getName());
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -8025,7 +8031,6 @@ public class AcademicDashboard extends javax.swing.JFrame {
             String nic = jLabel110.getText();
             Icon barcodeIcon = jLabel112.getIcon();
 
-            
             if (name.equals("Teacher Name") || nic.equals("nic")) {
                 JOptionPane.showMessageDialog(this, "Incomplete details or missing barcode.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -9812,6 +9817,31 @@ public class AcademicDashboard extends javax.swing.JFrame {
         loadStAttendanceTable();
     }//GEN-LAST:event_jButton14ActionPerformed
 
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        String password = String.valueOf(jPasswordField1.getPassword());
+
+        try {
+
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` WHERE `username`='" + userName + "'");
+
+            if (resultSet.next()) {
+
+                if (password.equals(resultSet.getString("password_hash"))) {
+                    JOptionPane.showMessageDialog(this, "Password is entered previously!", "Warning", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    MySQL.executeIUD("UPDATE `users` SET `password_hash`='" + password + "' "
+                            + "WHERE `username`='" + userName + "'");
+                    JOptionPane.showMessageDialog(this, "Password Changed!", "Success", JOptionPane.INFORMATION_MESSAGE);
+//                    jLabel27.setText(FinancialUserSession.getInstance().getName());
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton11ActionPerformed
+
     private void filterStudentsComboBox(String searchText) {
         try {
             // Query the database: show all if searchText is empty
@@ -10599,7 +10629,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jLabel124.setIcon(icon14);
         jAttendanceMarkButton.setEnabled(true);
         jAttendanceUpdateButton.setEnabled(true);
-        DefaultTableModel dtm = (DefaultTableModel)jStAttendanceTable.getModel();
+        DefaultTableModel dtm = (DefaultTableModel) jStAttendanceTable.getModel();
         dtm.setRowCount(0);
     }
 
