@@ -1356,8 +1356,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String profit = String.valueOf(total);
             jLabel121.setText(profit);
 
-            // Optional: Display the result in the console
-            System.out.println("Total Profit: " + total);
+             
         } catch (NumberFormatException e) {
             // Handle invalid input
             System.out.println("Invalid input. Please enter numeric values.");
