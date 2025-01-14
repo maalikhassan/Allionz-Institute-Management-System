@@ -1393,7 +1393,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jPanel28Layout.setVerticalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton25)
@@ -1438,11 +1438,11 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(jPanel37, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -1505,10 +1505,10 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jLabel37.setText("Class Details");
 
         jLabel45.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel45.setText("Batch");
+        jLabel45.setText("Stream");
 
         jLabel47.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel47.setText("Stream");
+        jLabel47.setText("Batch");
 
         jButton7.setBackground(new java.awt.Color(0, 52, 101));
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
@@ -1714,7 +1714,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel18Layout.setVerticalGroup(
@@ -1778,9 +1778,9 @@ public class AcademicDashboard extends javax.swing.JFrame {
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 793, Short.MAX_VALUE)
                     .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addComponent(jLabel49, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                        .addComponent(jLabel49, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(64, 64, 64)
@@ -1792,18 +1792,14 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
-                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField8)
-                            .addComponent(jLabel49)))
-                    .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel77)))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField8)
+                    .addComponent(jLabel49)
+                    .addComponent(jLabel77))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1856,7 +1852,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1915,7 +1911,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jComboBox24, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
                             .addComponent(jButton32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -2037,7 +2033,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addComponent(jScrollPane25, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
+            .addComponent(jScrollPane25, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 805, Short.MAX_VALUE)
         );
         jPanel72Layout.setVerticalGroup(
             jPanel72Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2260,14 +2256,14 @@ public class AcademicDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane26, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
+                    .addComponent(jScrollPane26, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel73Layout.setVerticalGroup(
             jPanel73Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel73Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jButton21, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addComponent(jButton21, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel73Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel119)
@@ -2307,12 +2303,12 @@ public class AcademicDashboard extends javax.swing.JFrame {
                         .addGap(0, 0, 0)
                         .addComponent(jstName))
                     .addComponent(jLabel124, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addComponent(jAttendanceMarkButton, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jAttendanceMarkButton, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jAttendanceUpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addComponent(jAttendanceUpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel73Layout.createSequentialGroup()
                 .addContainerGap()
@@ -2449,7 +2445,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addComponent(jTextField24))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel41Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE))
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
         );
         jPanel41Layout.setVerticalGroup(
             jPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2581,7 +2577,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jPanel38Layout.setHorizontalGroup(
             jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel38Layout.createSequentialGroup()
-                .addGap(0, 357, Short.MAX_VALUE)
+                .addGap(0, 398, Short.MAX_VALUE)
                 .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64)
                 .addComponent(jLabel22)
@@ -2650,7 +2646,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel51)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField41, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jScrollPane19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
+            .addComponent(jScrollPane19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 793, Short.MAX_VALUE)
         );
         jPanel31Layout.setVerticalGroup(
             jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2695,7 +2691,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             studentmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentmanagementLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 479, Short.MAX_VALUE))
         );
 
         teachermanagement.setPreferredSize(new java.awt.Dimension(764, 427));
@@ -5027,9 +5023,9 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jPanel20Layout.setHorizontalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
-                .addContainerGap(61, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel20Layout.setVerticalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -5043,13 +5039,13 @@ public class AcademicDashboard extends javax.swing.JFrame {
         profile.setLayout(profileLayout);
         profileLayout.setHorizontalGroup(
             profileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 801, Short.MAX_VALUE)
+            .addGap(0, 813, Short.MAX_VALUE)
             .addGroup(profileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         profileLayout.setVerticalGroup(
             profileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 479, Short.MAX_VALUE)
+            .addGap(0, 539, Short.MAX_VALUE)
             .addGroup(profileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(profileLayout.createSequentialGroup()
                     .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -5257,7 +5253,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             while (resultSet.next()) {
                 Vector vector = new Vector();
                 vector.add(resultSet.getString("id"));
-                vector.add(resultSet.getString("students.first_name"));
+                vector.add(resultSet.getString("students.first_name")+ " " + (resultSet.getString("students.last_name")));
                 vector.add(resultSet.getString("students.nic"));
                 vector.add(resultSet.getString("subjects.subject_name"));
 
@@ -6449,7 +6445,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             while (resultSet.next()) {
                 Vector vector = new Vector();
                 vector.add(resultSet.getString("id"));  // Subject Allocation ID
-                vector.add(resultSet.getString("first_name"));  // Student First Name
+                vector.add(resultSet.getString("first_name")+" "+(resultSet.getString("last_name")));;  // Student First Name
                 vector.add(resultSet.getString("nic"));  // Student NIC (Fixed)
                 vector.add(resultSet.getString("subject_name"));  // Subject Name
                 dtm.addRow(vector);  // Add the row with data to the table
@@ -6532,68 +6528,74 @@ public class AcademicDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // student selected subjects update button:
-        int row = selectedSubjectsTable.getSelectedRow();
+        // Student selected subjects update button
+    int row = selectedSubjectsTable.getSelectedRow();
 
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a subject allocation from the table!", "Warning", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a subject allocation from the table!", "Warning", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-        // Retrieve form values
-        String selectedSubId = String.valueOf(selectedSubjectsTable.getValueAt(row, 0));  // Primary Key
-        String studentName = jTextField2.getText();
-        String selectedSubject = String.valueOf(jComboBox18.getSelectedItem());
+    // Retrieve form values
+    String selectedSubId = String.valueOf(selectedSubjectsTable.getValueAt(row, 0));  // Primary Key
+    String studentName = jTextField2.getText().trim();  // Get full name (First Name + Last Name)
+    String selectedSubject = String.valueOf(jComboBox18.getSelectedItem());
 
-        // === Validation Checks ===
-        if (studentName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please select a student!", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (selectedSubject.equals("Select Subject")) {
-            JOptionPane.showMessageDialog(this, "Please select a subject!", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    // === Validation Checks ===
+    if (studentName.isEmpty() || !studentName.contains(" ")) {  // Ensure full name is provided
+        JOptionPane.showMessageDialog(this, "Please select a student with a valid full name (First Name and Last Name)!", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (selectedSubject.equals("Select Subject")) {
+        JOptionPane.showMessageDialog(this, "Please select a subject!", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        try {
-            // Get Subject ID from Database
-            ResultSet rs = MySQL.executeSearch("SELECT `subject_id` FROM `subjects` WHERE `subject_name` = '" + selectedSubject + "'");
+    try {
+        // Split full name into first and last name
+        String[] nameParts = studentName.split(" ", 2);
+        String firstName = nameParts[0];
+        String lastName = nameParts[1];
 
-            if (rs.next()) {
-                String subjectId = rs.getString("subject_id");
+        // Get Subject ID from Database
+        ResultSet rs = MySQL.executeSearch("SELECT `subject_id` FROM `subjects` WHERE `subject_name` = '" + selectedSubject + "'");
 
-                // Check if the subject is already allocated
-                ResultSet checkDuplicate = MySQL.executeSearch(
-                        "SELECT * FROM `students_has_subjects` WHERE `students_student_id` = (SELECT `student_id` FROM `students` WHERE `first_name` = '" + studentName + "') "
-                        + "AND `subjects_subject_id` = '" + subjectId + "'"
-                );
+        if (rs.next()) {
+            String subjectId = rs.getString("subject_id");
 
-                if (checkDuplicate.next()) {
-                    JOptionPane.showMessageDialog(this, "Subject already allocated to this student!", "Duplicate Entry", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
+            // Check if the subject is already allocated
+            ResultSet checkDuplicate = MySQL.executeSearch(
+                    "SELECT * FROM `students_has_subjects` WHERE `students_student_id` = "
+                    + "(SELECT `student_id` FROM `students` WHERE `first_name` = '" + firstName + "' AND `last_name` = '" + lastName + "') "
+                    + "AND `subjects_subject_id` = '" + subjectId + "'"
+            );
 
-                // Execute Update Query
-                int rowsAffected = MySQL.executeIUD(
-                        "UPDATE `students_has_subjects` SET `subjects_subject_id` = '" + subjectId + "' WHERE `id` = '" + selectedSubId + "'");
-
-                if (rowsAffected > 0) {
-                    JOptionPane.showMessageDialog(this, "Subject allocation updated successfully!");
-                    loadSelectedSubjects();  // Refresh Table
-                    clearSelectedSub();  // Reset Fields
-                    createPieChart();
-                    loadStAttendanceTable();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Update failed! Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Subject not found!", "Error", JOptionPane.ERROR_MESSAGE);
+            if (checkDuplicate.next()) {
+                JOptionPane.showMessageDialog(this, "Subject already allocated to this student!", "Duplicate Entry", JOptionPane.WARNING_MESSAGE);
+                return;
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "An error occurred while updating!", "Error", JOptionPane.ERROR_MESSAGE);
+            // Execute Update Query
+            int rowsAffected = MySQL.executeIUD(
+                    "UPDATE `students_has_subjects` SET `subjects_subject_id` = '" + subjectId + "' WHERE `id` = '" + selectedSubId + "'");
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(this, "Subject allocation updated successfully!");
+                loadSelectedSubjects();  // Refresh Table
+                clearSelectedSub();  // Reset Fields
+                createPieChart();
+                loadStAttendanceTable();
+            } else {
+                JOptionPane.showMessageDialog(this, "Update failed! Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Subject not found!", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "An error occurred while updating!", "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton32ActionPerformed
@@ -9922,7 +9924,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
             // Populate combo box with matching results
             while (resultSet.next()) {
-                String studentName = resultSet.getString("first_name");
+                String studentName = resultSet.getString("first_name")+" "+resultSet.getString("last_name");
                 vector.add(studentName);
                 StudentsMap.put(studentName, resultSet.getString("student_id"));
             }
