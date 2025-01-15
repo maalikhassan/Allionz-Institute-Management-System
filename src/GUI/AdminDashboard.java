@@ -67,6 +67,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private static String SystemDateTime;
     private String selectedImagePath; // Global variable to store the selected image path
     private static HashMap<String, String> streamMap = new HashMap<>();
+    private static HashMap<String, String> FinanceRportMonthMap = new HashMap<>();
 
     private void image() {
 
@@ -126,6 +127,13 @@ public class AdminDashboard extends javax.swing.JFrame {
         LoadFessDetails();
         LoadDuesTable();
         loadProfitLoss();
+        //Finance report month load 
+        ReportLoadMonth1();
+        ReportLoadMonth2();
+        ReportLoadMonth3();
+        ReportLoadMonth4();
+        ReportLoadMonth5();
+        ReportLoadMonth6();
 
         loadAdminTeacherEnrollmenrt();
         loadProfitLoss();
@@ -975,6 +983,129 @@ public class AdminDashboard extends javax.swing.JFrame {
         TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
         jTable18.setRowSorter(trs);
         trs.setRowFilter(RowFilter.regexFilter(str));
+    }
+
+    //<--Financial report month load-->
+    //1
+    private void ReportLoadMonth1() {
+        try {
+            ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector1 = new Vector<>();
+            vector1.add("All Months");
+
+            while (resultSet1.next()) {
+                vector1.add(resultSet1.getString("month_name"));
+                FinanceRportMonthMap.put(resultSet1.getString("month_name"), resultSet1.getString("id"));
+
+            }
+            DefaultComboBoxModel model1 = new DefaultComboBoxModel(vector1);
+            jComboBox4.setModel(model1);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //2
+    private void ReportLoadMonth2() {
+        try {
+            ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector1 = new Vector<>();
+            vector1.add("All Months");
+
+            while (resultSet1.next()) {
+                vector1.add(resultSet1.getString("month_name"));
+                FinanceRportMonthMap.put(resultSet1.getString("month_name"), resultSet1.getString("id"));
+
+            }
+            DefaultComboBoxModel model1 = new DefaultComboBoxModel(vector1);
+
+            jComboBox3.setModel(model1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //3
+    private void ReportLoadMonth3() {
+        try {
+            ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector1 = new Vector<>();
+            vector1.add("All Months");
+
+            while (resultSet1.next()) {
+                vector1.add(resultSet1.getString("month_name"));
+                FinanceRportMonthMap.put(resultSet1.getString("month_name"), resultSet1.getString("id"));
+
+            }
+            DefaultComboBoxModel model1 = new DefaultComboBoxModel(vector1);
+            jComboBox6.setModel(model1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //4
+    private void ReportLoadMonth4() {
+        try {
+            ResultSet resultSet1 = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector1 = new Vector<>();
+            vector1.add("All Months");
+
+            while (resultSet1.next()) {
+                vector1.add(resultSet1.getString("month_name"));
+                FinanceRportMonthMap.put(resultSet1.getString("month_name"), resultSet1.getString("id"));
+
+            }
+            DefaultComboBoxModel model1 = new DefaultComboBoxModel(vector1);
+            jComboBox7.setModel(model1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //5
+    private void ReportLoadMonth5() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector1 = new Vector<>();
+            vector1.add("All Months");
+
+            while (resultSet.next()) {
+                vector1.add(resultSet.getString("month_name"));
+                FinanceRportMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+
+            }
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector1);
+            jComboBox5.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //6
+    private void ReportLoadMonth6() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `month`");
+
+            Vector<String> vector = new Vector<>();
+            vector.add("All Months");
+
+            while (resultSet.next()) {
+                vector.add(resultSet.getString("month_name"));
+                FinanceRportMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
+
+            }
+            DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
+            jComboBox8.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -2449,7 +2580,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 518, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Academic", jPanel14);
@@ -2495,6 +2626,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel18.setText("Select Month ");
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Month", " " }));
+        jComboBox4.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox4ItemStateChanged(evt);
+            }
+        });
 
         jLabel41.setText("Search");
 
@@ -2574,6 +2710,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jScrollPane9.setViewportView(jTable9);
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Type", "Bill Payments", "Salary payments", "Maintenance" }));
+        jComboBox3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox3ItemStateChanged(evt);
+            }
+        });
         jComboBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox3ActionPerformed(evt);
@@ -2661,6 +2802,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel49.setText("Select Month");
 
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox6.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox6ItemStateChanged(evt);
+            }
+        });
 
         jLabel54.setText("Search");
 
@@ -2741,6 +2887,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel50.setText("Select Month");
 
         jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox7.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox7ItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
         jPanel26.setLayout(jPanel26Layout);
@@ -2837,6 +2988,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel48.setText("Select Month");
 
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox5.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox5ItemStateChanged(evt);
+            }
+        });
 
         jLabel55.setText("Search");
 
@@ -2918,6 +3074,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel51.setText("Select Month");
 
         jComboBox8.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox8.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox8ItemStateChanged(evt);
+            }
+        });
 
         jLabel56.setText("Search");
 
@@ -4462,6 +4623,259 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox4ItemStateChanged
+        try {
+
+            String selectedMonthName = String.valueOf(jComboBox4.getSelectedItem());
+
+            DefaultTableModel model = (DefaultTableModel) jTable12.getModel();
+            model.setRowCount(0);
+
+            String query;
+
+            if (selectedMonthName.equals("All Months")) {
+
+                query = "SELECT * FROM `feepayments` INNER JOIN `students` ON `feepayments`.`students_student_id` = `students`.`student_id` INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id`";
+            } else {
+
+                String selectedMonthId = FinanceRportMonthMap.get(selectedMonthName);
+                query = "SELECT * FROM `feepayments` INNER JOIN `students` ON `feepayments`.`students_student_id` = `students`.`student_id` INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id` WHERE `month`.`id` = '" + selectedMonthId + "'";
+            }
+
+            ResultSet resultSet = MySQL.executeSearch(query);
+
+            while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("payment_id"));
+                vector.add(resultSet.getString("students.first_name") + " " + resultSet.getString("students.last_name"));
+                vector.add(resultSet.getString("month.month_name"));
+                vector.add(resultSet.getString("amount_paid"));
+                model.addRow(vector);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jComboBox4ItemStateChanged
+
+    private void jComboBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox3ItemStateChanged
+        try {
+
+            String selectedMonthName = String.valueOf(jComboBox3.getSelectedItem());
+
+            DefaultTableModel model = (DefaultTableModel) jTable9.getModel();
+            model.setRowCount(0);
+
+            String query;
+
+            if (selectedMonthName.equals("All Months")) {
+
+                query = "SELECT * FROM `bill_payments` INNER JOIN "
+                        + "`bill_type` ON `bill_payments`.`bill_type_id`=`bill_type`.`id` "
+                        + "INNER JOIN `vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id`"
+                        + "INNER JOIN `month` ON `bill_payments`.`month_id`=`month`.`id`"
+                        + "WHERE `payment_status_id` = '1'";
+            } else {
+
+                String selectedMonthId = FinanceRportMonthMap.get(selectedMonthName);
+                query = "SELECT * FROM `bill_payments` INNER JOIN `bill_type` ON "
+                        + "`bill_payments`.`bill_type_id`=`bill_type`.`id` INNER JOIN "
+                        + "`vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id` INNER JOIN `month` ON "
+                        + "`bill_payments`.`month_id`=`month`.`id` WHERE `payment_status_id` = '1' AND `month_id`='" + selectedMonthId + "'";
+            }
+
+            ResultSet resultSet = MySQL.executeSearch(query);
+
+            while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("bill_id"));
+                vector.add(resultSet.getString("vendor.vendor_name"));
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("amount"));
+                vector.add(resultSet.getString("month.month_name"));
+                model.addRow(vector);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jComboBox3ItemStateChanged
+
+    private void jComboBox8ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox8ItemStateChanged
+        try {
+
+            String selectedMonthName = String.valueOf(jComboBox8.getSelectedItem());
+
+            DefaultTableModel model = (DefaultTableModel) jTable18.getModel();
+            model.setRowCount(0);
+
+            String query;
+
+            if (selectedMonthName.equals("All Months")) {
+
+                query = "SELECT * FROM `bill_payments` INNER JOIN "
+                        + "`bill_type` ON `bill_payments`.`bill_type_id`=`bill_type`.`id` "
+                        + "INNER JOIN `vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id`"
+                        + "INNER JOIN `month` ON `bill_payments`.`month_id`=`month`.`id`"
+                        + "WHERE `payment_status_id` = '2'";
+            } else {
+
+                String selectedMonthId = FinanceRportMonthMap.get(selectedMonthName);
+                query = "SELECT * FROM `bill_payments` INNER JOIN `bill_type` ON "
+                        + "`bill_payments`.`bill_type_id`=`bill_type`.`id` INNER JOIN "
+                        + "`vendor` ON `bill_payments`.`vendor_id`=`vendor`.`id` INNER JOIN `month` ON "
+                        + "`bill_payments`.`month_id`=`month`.`id` WHERE `payment_status_id` = '2' AND `month_id`='" + selectedMonthId + "'";
+            }
+
+            ResultSet resultSet = MySQL.executeSearch(query);
+
+            while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("bill_id"));
+                vector.add(resultSet.getString("vendor.vendor_name"));
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("amount"));
+                vector.add(resultSet.getString("month.month_name"));
+                model.addRow(vector);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jComboBox8ItemStateChanged
+
+    private void jComboBox6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox6ItemStateChanged
+        try {
+
+            String selectedMonthName = String.valueOf(jComboBox6.getSelectedItem());
+
+            DefaultTableModel model = (DefaultTableModel) jTable10.getModel();
+            model.setRowCount(0);
+
+            String query;
+
+            if (selectedMonthName.equals("All Months")) {
+
+                query = "SELECT * FROM `salary` INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id` INNER JOIN `month` ON `salary`.`month_id` = `month`.`id` INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id` INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id` WHERE `employee`.`employee_type_id`='3'";
+            } else {
+
+                String selectedMonthId = FinanceRportMonthMap.get(selectedMonthName);
+                query = " SELECT * FROM `salary` INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id` INNER JOIN `month` ON `salary`.`month_id` = `month`.`id` INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id` INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
+                        + "WHERE `month`.`id` = '" + selectedMonthId + "' AND `employee`.`employee_type_id`='3'";
+            }
+
+            ResultSet resultSet = MySQL.executeSearch(query);
+
+            while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("id"));
+                vector.add(resultSet.getString("employee.first_name") + " " + (resultSet.getString("employee.last_name")));
+                vector.add(resultSet.getString("salary_details.base_salary"));
+                vector.add(resultSet.getString("net_amount"));
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("month.month_name"));
+                vector.add(resultSet.getString("payment_status.status"));
+                model.addRow(vector);
+            }
+            getSum5();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jComboBox6ItemStateChanged
+
+    private void jComboBox7ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox7ItemStateChanged
+        try {
+
+            String selectedMonthName = String.valueOf(jComboBox7.getSelectedItem());
+
+            DefaultTableModel model = (DefaultTableModel) jTable8.getModel();
+            model.setRowCount(0);
+
+            String query;
+
+            if (selectedMonthName.equals("All Months")) {
+
+                query = "SELECT * FROM `salary`"
+                        + "INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id`"
+                        + "INNER JOIN `month` ON `salary`.`month_id` = `month`.`id`"
+                        + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id`"
+                        + "INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
+                        + "WHERE `employee`.`employee_type_id` IN ('1', '2', '4');";
+            } else {
+
+                String selectedMonthId = FinanceRportMonthMap.get(selectedMonthName);
+                query = "SELECT * FROM `salary`"
+                        + "INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id`"
+                        + "INNER JOIN `month` ON `salary`.`month_id` = `month`.`id`"
+                        + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id`"
+                        + "INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
+                        + "WHERE month_id ='"+selectedMonthId+"' AND `employee`.`employee_type_id` IN ('1', '2', '4');";
+            }
+
+            ResultSet resultSet = MySQL.executeSearch(query);
+
+            while (resultSet.next()) {
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("id"));
+                vector.add(resultSet.getString("employee.first_name") + " " + (resultSet.getString("employee.last_name")));
+                vector.add(resultSet.getString("salary_details.base_salary"));
+                vector.add(resultSet.getString("net_amount"));
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("month.month_name"));
+                vector.add(resultSet.getString("payment_status.status"));
+                model.addRow(vector);
+            }
+            getSum5();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jComboBox7ItemStateChanged
+
+    private void jComboBox5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox5ItemStateChanged
+       try {
+
+            String selectedMonthName = String.valueOf(jComboBox5.getSelectedItem());
+
+            DefaultTableModel model = (DefaultTableModel) jTable17.getModel();
+            model.setRowCount(0);
+
+            String query;
+
+            if (selectedMonthName.equals("All Months")) {
+
+                query = "SELECT * FROM `feepayments` "
+                        + "INNER JOIN `payment_status` ON `feepayments`.`payment_status_id` = `payment_status`.`id` "
+                        + "INNER JOIN `subjects` ON `feepayments`.`subjects_subject_id` = `subjects`.`subject_id` "
+                        + "INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id` "
+                        + "INNER JOIN `stream` ON `feepayments`.`stream_stream_id` = `stream`.`stream_id`";
+            } else {
+
+                String selectedMonthId = FinanceRportMonthMap.get(selectedMonthName);
+                query = "SELECT * FROM `feepayments` "
+                        + "INNER JOIN `payment_status` ON `feepayments`.`payment_status_id` = `payment_status`.`id` "
+                        + "INNER JOIN `subjects` ON `feepayments`.`subjects_subject_id` = `subjects`.`subject_id` "
+                        + "INNER JOIN `month` ON `feepayments`.`month_id` = `month`.`id` "
+                        + "INNER JOIN `stream` ON `feepayments`.`stream_stream_id` = `stream`.`stream_id`"
+                        + "WHERE `month`.`id` = '" + selectedMonthId + "'";
+            }
+
+            ResultSet resultSet = MySQL.executeSearch(query);
+
+            while (resultSet.next()) {
+
+                Vector<String> vector = new Vector<>();
+                vector.add(resultSet.getString("payment_id"));
+                vector.add(resultSet.getString("students_student_id"));
+                vector.add(resultSet.getString("stream.stream_name"));
+                vector.add(resultSet.getString("subjects.subject_name"));
+                vector.add(resultSet.getString("payment_date"));
+                vector.add(resultSet.getString("payment_status.status"));
+                vector.add(resultSet.getString("month.month_name"));
+                vector.add(resultSet.getString("amount_paid"));
+                model.addRow(vector);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jComboBox5ItemStateChanged
 
     /**
      * @param args the command line arguments
