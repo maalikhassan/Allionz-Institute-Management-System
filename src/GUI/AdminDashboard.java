@@ -1983,11 +1983,6 @@ public class AdminDashboard extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable14.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable14MouseClicked(evt);
-            }
-        });
         jScrollPane14.setViewportView(jTable14);
 
         jLabel37.setText("Search Mobile");
@@ -3331,28 +3326,25 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addContainerGap(281, Short.MAX_VALUE)
                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel28Layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(100, 100, 100)
+                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(281, Short.MAX_VALUE))
         );
         jPanel28Layout.setVerticalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel28Layout.createSequentialGroup()
-                .addGap(104, 104, 104)
+                .addContainerGap(141, Short.MAX_VALUE)
                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel21)
                     .addComponent(jLabel22))
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addContainerGap(165, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Backup", jPanel28);
@@ -4933,63 +4925,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jTable21MouseClicked
-
-    private void jTable14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable14MouseClicked
-        
-        if (evt.getClickCount() == 2) {
-            try {
-                // Get the selected row index
-                int selectedRow = jTable14.getSelectedRow();
-                if (selectedRow >= 0) {
-                    // Get the teacher_id from the selected row
-                    int teacherId = Integer.parseInt(jTable14.getValueAt(selectedRow, 0).toString()); // Assuming teacher_id is in column 0
-
-                    // Query to fetch address details
-                    String addressQuery = "SELECT `line1`, `line2` FROM `teacher_address` WHERE `teachers_teacher_id` = " + teacherId;
-                    ResultSet addressResult = MySQL.executeSearch(addressQuery);
-
-                    // Query to fetch the teacher's first name
-                    String teacherQuery = "SELECT `nic` FROM `teachers` WHERE `teacher_id` = " + teacherId;
-                    ResultSet teacherResult = MySQL.executeSearch(teacherQuery);
-
-                    // Open the TEAaddress GUI
-                    TEAaddress teaAddressGUI = new TEAaddress();
-
-                    // Set address fields if data exists
-                    if (addressResult.next()) {
-                        teaAddressGUI.setAddressLine1(addressResult.getString("line1")); // Set Address Line 1
-                        teaAddressGUI.setAddressLine2(addressResult.getString("line2")); // Set Address Line 2
-                    } else {
-                        // Clear fields if no address is found
-                        teaAddressGUI.setAddressLine1(""); // Clear Address Line 1
-                        teaAddressGUI.setAddressLine2(""); // Clear Address Line 2
-                    }
-
-                    // Set the teacher's first name in the ComboBox
-                    if (teacherResult.next()) {
-                        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
-                        comboBoxModel.addElement(teacherResult.getString("nic")); // Add teacher's first name
-                        teaAddressGUI.setComboBoxModel(comboBoxModel); // Set the ComboBox model
-                        teaAddressGUI.setSelectedTeacherId(teacherResult.getString("nic")); // Select the teacher's first name
-                    }
-
-                    // Display the GUI
-                    teaAddressGUI.setVisible(true);
-                    teaAddressGUI.loadAddress(); 
-
-                    // Close ResultSets
-                    addressResult.close();
-                    teacherResult.close();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Please select a valid row.", "Error", JOptionPane.WARNING_MESSAGE);
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "An error occurred while fetching the data: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        
-    }//GEN-LAST:event_jTable14MouseClicked
 
     /**
      * @param args the command line arguments
