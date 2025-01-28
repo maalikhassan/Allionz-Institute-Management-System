@@ -2461,11 +2461,11 @@ public class AdminDashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Teacher ID", "First Name", "Last name", "Gender", "Mobile", "Barcode ID"
+                "Teacher ID", "First Name", "Last name", "NIC", "Mobile", "Email", "Date of birth", "Enrollment Date", "Gender", "Address line 1", "Adress line 2", "Stream", "Subject"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -2585,7 +2585,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 518, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Academic", jPanel14);

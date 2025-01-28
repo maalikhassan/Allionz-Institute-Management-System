@@ -78,7 +78,12 @@ import org.jfree.data.general.DefaultPieDataset;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.KeyboardFocusManager;
+import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.SwingUtilities;
@@ -849,6 +854,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jLabel54 = new javax.swing.JLabel();
         jDateChooser3 = new com.toedter.calendar.JDateChooser();
         jButton77 = new javax.swing.JButton();
+        jButton80 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane21 = new javax.swing.JScrollPane();
         jTable19 = new javax.swing.JTable();
@@ -2691,7 +2697,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             studentmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentmanagementLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 479, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE))
         );
 
         teachermanagement.setPreferredSize(new java.awt.Dimension(764, 427));
@@ -4447,6 +4453,15 @@ public class AcademicDashboard extends javax.swing.JFrame {
             }
         });
 
+        jButton80.setBackground(new java.awt.Color(0, 52, 101));
+        jButton80.setForeground(new java.awt.Color(255, 255, 255));
+        jButton80.setText("Download Document");
+        jButton80.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton80ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel68Layout = new javax.swing.GroupLayout(jPanel68);
         jPanel68.setLayout(jPanel68Layout);
         jPanel68Layout.setHorizontalGroup(
@@ -4454,6 +4469,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             .addGroup(jPanel68Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanel68Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton80, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jComboBox30, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane22)
                     .addComponent(jTextField49)
@@ -4515,7 +4531,9 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel68Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton79)
                     .addComponent(jButton76))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton80)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jTable19.setModel(new javax.swing.table.DefaultTableModel(
@@ -4861,7 +4879,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE))
+                .addComponent(jTabbedPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 421, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout subjectmanagementLayout = new javax.swing.GroupLayout(subjectmanagement);
@@ -5253,7 +5271,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             while (resultSet.next()) {
                 Vector vector = new Vector();
                 vector.add(resultSet.getString("id"));
-                vector.add(resultSet.getString("students.first_name")+ " " + (resultSet.getString("students.last_name")));
+                vector.add(resultSet.getString("students.first_name") + " " + (resultSet.getString("students.last_name")));
                 vector.add(resultSet.getString("students.nic"));
                 vector.add(resultSet.getString("subjects.subject_name"));
 
@@ -6445,7 +6463,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             while (resultSet.next()) {
                 Vector vector = new Vector();
                 vector.add(resultSet.getString("id"));  // Subject Allocation ID
-                vector.add(resultSet.getString("first_name")+" "+(resultSet.getString("last_name")));;  // Student First Name
+                vector.add(resultSet.getString("first_name") + " " + (resultSet.getString("last_name")));;  // Student First Name
                 vector.add(resultSet.getString("nic"));  // Student NIC (Fixed)
                 vector.add(resultSet.getString("subject_name"));  // Subject Name
                 dtm.addRow(vector);  // Add the row with data to the table
@@ -6529,73 +6547,73 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // Student selected subjects update button
-    int row = selectedSubjectsTable.getSelectedRow();
+        int row = selectedSubjectsTable.getSelectedRow();
 
-    if (row == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a subject allocation from the table!", "Warning", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // Retrieve form values
-    String selectedSubId = String.valueOf(selectedSubjectsTable.getValueAt(row, 0));  // Primary Key
-    String studentName = jTextField2.getText().trim();  // Get full name (First Name + Last Name)
-    String selectedSubject = String.valueOf(jComboBox18.getSelectedItem());
-
-    // === Validation Checks ===
-    if (studentName.isEmpty() || !studentName.contains(" ")) {  // Ensure full name is provided
-        JOptionPane.showMessageDialog(this, "Please select a student with a valid full name (First Name and Last Name)!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    if (selectedSubject.equals("Select Subject")) {
-        JOptionPane.showMessageDialog(this, "Please select a subject!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    try {
-        // Split full name into first and last name
-        String[] nameParts = studentName.split(" ", 2);
-        String firstName = nameParts[0];
-        String lastName = nameParts[1];
-
-        // Get Subject ID from Database
-        ResultSet rs = MySQL.executeSearch("SELECT `subject_id` FROM `subjects` WHERE `subject_name` = '" + selectedSubject + "'");
-
-        if (rs.next()) {
-            String subjectId = rs.getString("subject_id");
-
-            // Check if the subject is already allocated
-            ResultSet checkDuplicate = MySQL.executeSearch(
-                    "SELECT * FROM `students_has_subjects` WHERE `students_student_id` = "
-                    + "(SELECT `student_id` FROM `students` WHERE `first_name` = '" + firstName + "' AND `last_name` = '" + lastName + "') "
-                    + "AND `subjects_subject_id` = '" + subjectId + "'"
-            );
-
-            if (checkDuplicate.next()) {
-                JOptionPane.showMessageDialog(this, "Subject already allocated to this student!", "Duplicate Entry", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            // Execute Update Query
-            int rowsAffected = MySQL.executeIUD(
-                    "UPDATE `students_has_subjects` SET `subjects_subject_id` = '" + subjectId + "' WHERE `id` = '" + selectedSubId + "'");
-
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(this, "Subject allocation updated successfully!");
-                loadSelectedSubjects();  // Refresh Table
-                clearSelectedSub();  // Reset Fields
-                createPieChart();
-                loadStAttendanceTable();
-            } else {
-                JOptionPane.showMessageDialog(this, "Update failed! Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Subject not found!", "Error", JOptionPane.ERROR_MESSAGE);
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a subject allocation from the table!", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
         }
 
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "An error occurred while updating!", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        // Retrieve form values
+        String selectedSubId = String.valueOf(selectedSubjectsTable.getValueAt(row, 0));  // Primary Key
+        String studentName = jTextField2.getText().trim();  // Get full name (First Name + Last Name)
+        String selectedSubject = String.valueOf(jComboBox18.getSelectedItem());
+
+        // === Validation Checks ===
+        if (studentName.isEmpty() || !studentName.contains(" ")) {  // Ensure full name is provided
+            JOptionPane.showMessageDialog(this, "Please select a student with a valid full name (First Name and Last Name)!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (selectedSubject.equals("Select Subject")) {
+            JOptionPane.showMessageDialog(this, "Please select a subject!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            // Split full name into first and last name
+            String[] nameParts = studentName.split(" ", 2);
+            String firstName = nameParts[0];
+            String lastName = nameParts[1];
+
+            // Get Subject ID from Database
+            ResultSet rs = MySQL.executeSearch("SELECT `subject_id` FROM `subjects` WHERE `subject_name` = '" + selectedSubject + "'");
+
+            if (rs.next()) {
+                String subjectId = rs.getString("subject_id");
+
+                // Check if the subject is already allocated
+                ResultSet checkDuplicate = MySQL.executeSearch(
+                        "SELECT * FROM `students_has_subjects` WHERE `students_student_id` = "
+                        + "(SELECT `student_id` FROM `students` WHERE `first_name` = '" + firstName + "' AND `last_name` = '" + lastName + "') "
+                        + "AND `subjects_subject_id` = '" + subjectId + "'"
+                );
+
+                if (checkDuplicate.next()) {
+                    JOptionPane.showMessageDialog(this, "Subject already allocated to this student!", "Duplicate Entry", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                // Execute Update Query
+                int rowsAffected = MySQL.executeIUD(
+                        "UPDATE `students_has_subjects` SET `subjects_subject_id` = '" + subjectId + "' WHERE `id` = '" + selectedSubId + "'");
+
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(this, "Subject allocation updated successfully!");
+                    loadSelectedSubjects();  // Refresh Table
+                    clearSelectedSub();  // Reset Fields
+                    createPieChart();
+                    loadStAttendanceTable();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Update failed! Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Subject not found!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "An error occurred while updating!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton32ActionPerformed
@@ -6766,11 +6784,13 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
                     //return
                     jTabbedPane2.setSelectedIndex(2);
+                    jBarcodeScan.grabFocus();
 
                     // Adjust based on your tab structure
                     jAllClassDetailsTable.removeMouseListener(this);
                 } else {
                     JOptionPane.showMessageDialog(null, "Please select a student from the table!", "Selection Error", JOptionPane.WARNING_MESSAGE);
+                    jBarcodeScan.grabFocus();
                 }
             }
         });
@@ -6807,7 +6827,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                     MySQL.executeIUD("UPDATE `student_attendance` SET `status`='" + studentAttendance + "' WHERE `schedule_id`='" + scheduleID + "' AND `students_student_id`='" + stID + "' ");
 
                     loadStAttendanceTable();
-
+                    jBarcodeScan.grabFocus();
                     JOptionPane.showMessageDialog(this, "Attendance marked successfully!", "success", JOptionPane.INFORMATION_MESSAGE);
 
                     jstName.setText("Student Name");
@@ -6863,6 +6883,8 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 jstName.setText("Student Name");
                 jstID.setText("Student ID");
                 clearSTattendance();
+                jBarcodeScan.grabFocus();
+
             }
 
         } catch (Exception ex) {
@@ -6874,7 +6896,9 @@ public class AcademicDashboard extends javax.swing.JFrame {
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
         // st attendance rest
 
+        jBarcodeScan.grabFocus();
         clearSTattendance();
+
     }//GEN-LAST:event_jButton18ActionPerformed
 
 
@@ -7893,6 +7917,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                             JOptionPane.INFORMATION_MESSAGE);
                     loadteacherAttendanceTable(); // Reload attendance table
                     teacherAttendanceRest(); // Reset form
+                    jTeacherBarcodeScan.grabFocus();
                 } else {
                     JOptionPane.showMessageDialog(this,
                             "No record found for the given Schedule ID and Teacher ID. Please check your input.",
@@ -8726,76 +8751,6 @@ public class AcademicDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton76ActionPerformed
 
     private void jButton78ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton78ActionPerformed
-        //add material button
-        //        Date uploadedDate = jDateChooser3.getDate();
-        //        String documentName = jTextField49.getText().trim();
-        //        String Description = jTextArea1.getText().trim();
-        //        String fileType = String.valueOf(jComboBox30.getSelectedItem()).trim();
-        //        String FilePath = jTextField9.getText().trim();
-        //
-        //        if (uploadedDate == null) {
-        //            JOptionPane.showMessageDialog(this, "Please select the date!");
-        //        } else if (documentName.isEmpty()) {
-        //            JOptionPane.showMessageDialog(this, "Please Enter the Document Name!");
-        //        } else if (Description.isEmpty()) {
-        //            JOptionPane.showMessageDialog(this, "Please Enter the Description!");
-        //        } else if (fileType.equals("Select File Type")) {
-        //            JOptionPane.showMessageDialog(this, "Please Select the File Type!");
-        //        } else if (FilePath.isEmpty()) {
-        //            JOptionPane.showMessageDialog(this, "Please Enter The File Path!");
-        //        } else {
-        //            String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(uploadedDate);
-        //
-        //            try {
-        //                ResultSet rs = model.MySQL.executeSearch("SELECT * FROM `documents` WHERE "
-        //                        + "file_name = '" + documentName + "' AND file_path = '" + FilePath + "' AND upload_date = '" + formattedDate + "'");
-        //
-        //                if (rs.next()) {
-        //                    JOptionPane.showMessageDialog(this, "This document already exists!", "Warning", JOptionPane.WARNING_MESSAGE);
-        //                } else {
-        //                    String resourcesPath = "src/documents";
-        //
-        //                    // Append timestamp to avoid name conflicts
-        //                    String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        //                    String newFileName = documentName + "_" + timeStamp + "." + fileType;
-        //
-        //                    File saveDir = new File(resourcesPath);
-        //                    if (!saveDir.exists()) {
-        //                        saveDir.mkdirs();
-        //                    }
-        //
-        //                    File fileToSave = new File(saveDir, newFileName);
-        //
-        //                    try {
-        //                        Path sourcePath = new File(FilePath).toPath();
-        //                        Path destinationPath = fileToSave.toPath();
-        //
-        //                        Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-        //
-        //                        String newFilePath = fileToSave.getAbsolutePath().replace("\\", "/");
-        //                        FilePath = newFilePath;
-        //
-        //                    } catch (IOException ioException) {
-        //                        JOptionPane.showMessageDialog(this, "Error saving document: " + ioException.getMessage());
-        //                    }
-        //
-        //                    try {
-        //                        model.MySQL.executeIUD("INSERT INTO `documents` (`file_name`,`description`,`document_type`,`file_path`,`upload_date`)"
-        //                                + " VALUES('" + documentName + "' ,'" + Description + "' , '" + fileType + "' ,'" + FilePath + "' , '" + formattedDate + "')");
-        //
-        //                        JOptionPane.showMessageDialog(this, "File uploaded successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        //                        loadMaterialLibraryTable();
-        //                        resetMaterial();
-        //
-        //                    } catch (Exception e) {
-        //                        e.printStackTrace();
-        //                    }
-        //                }
-        //            } catch (Exception e) {
-        //                e.printStackTrace();
-        //            }
-        //        }
-
         // Add material button
         Date uploadedDate = jDateChooser3.getDate();
         String documentName = jTextField49.getText().trim();
@@ -8847,30 +8802,45 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 return;
             }
 
-            // Prepare directory and file name
-            String resourcesPath = "src/documents";
+            // Prepare server upload URL and file name
+            String serverUploadUrl = "http://your-server-ip/documents/"; // Replace with your server's upload folder URL
             String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
             String newFileName = documentName.replaceAll("\\s+", "_") + "_" + timeStamp + "." + fileType;
 
-            File saveDir = new File(resourcesPath);
-            if (!saveDir.exists()) {
-                saveDir.mkdirs();
-            }
+            File fileToUpload = new File(filePath);
 
-            File fileToSave = new File(saveDir, newFileName);
-
-            // Copy the file to the destination
+            // Upload the file to the server
             try {
-                Path sourcePath = new File(filePath).toPath();
-                Path destinationPath = fileToSave.toPath();
+                // Create HTTP connection
+                URL url = new URL(serverUploadUrl + newFileName);
+                HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+                httpConn.setDoOutput(true);
+                httpConn.setRequestMethod("PUT"); // Use PUT or POST based on your server's configuration
+                httpConn.setRequestProperty("Content-Type", "application/octet-stream");
 
-                Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+                // Write file data
+                try (OutputStream os = httpConn.getOutputStream(); FileInputStream fis = new FileInputStream(fileToUpload)) {
 
-                // Update file path to reflect the saved location
-                filePath = fileToSave.getAbsolutePath().replace("\\", "/");
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = fis.read(buffer)) != -1) {
+                        os.write(buffer, 0, bytesRead);
+                    }
+                }
 
-            } catch (IOException ioException) {
-                JOptionPane.showMessageDialog(this, "Error saving document: " + ioException.getMessage(), "File Save Error", JOptionPane.ERROR_MESSAGE);
+                // Check response
+                int responseCode = httpConn.getResponseCode();
+                if (responseCode != HttpURLConnection.HTTP_OK && responseCode != HttpURLConnection.HTTP_CREATED) {
+                    JOptionPane.showMessageDialog(this, "Failed to upload the file to the server. Response code: " + responseCode, "Upload Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Update file path to the server URL
+                filePath = serverUploadUrl + newFileName;
+
+            } catch (Exception uploadException) {
+                JOptionPane.showMessageDialog(this, "Error uploading file to the server: " + uploadException.getMessage(), "Server Upload Error", JOptionPane.ERROR_MESSAGE);
+                uploadException.printStackTrace();
                 return;
             }
 
@@ -9906,6 +9876,37 @@ public class AcademicDashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton12ActionPerformed
 
+    private void jButton80ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton80ActionPerformed
+        try {
+            // Get the selected row
+            int selectedRow = jTable19.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a document to download.", "No Selection", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Get file path from the selected row
+            DefaultTableModel model = (DefaultTableModel) jTable19.getModel();
+            String filePath = model.getValueAt(selectedRow, 4).toString(); // Assuming column 4 contains file_path
+
+            // Open file chooser for save location
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setSelectedFile(new File(new File(filePath).getName())); // Set default file name
+            int userChoice = fileChooser.showSaveDialog(this);
+
+            if (userChoice == JFileChooser.APPROVE_OPTION) {
+                File saveFile = fileChooser.getSelectedFile();
+
+                // Copy file to the chosen location
+                Files.copy(Paths.get(filePath), saveFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                JOptionPane.showMessageDialog(this, "Document downloaded successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to download document. Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton80ActionPerformed
+
     private void filterStudentsComboBox(String searchText) {
         try {
             // Query the database: show all if searchText is empty
@@ -9924,7 +9925,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
             // Populate combo box with matching results
             while (resultSet.next()) {
-                String studentName = resultSet.getString("first_name")+" "+resultSet.getString("last_name");
+                String studentName = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
                 vector.add(studentName);
                 StudentsMap.put(studentName, resultSet.getString("student_id"));
             }
@@ -10019,6 +10020,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton78;
     private javax.swing.JButton jButton79;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton80;
     private javax.swing.JButton jButton82;
     private javax.swing.JButton jButton9;
     private javax.swing.JPanel jChart;
@@ -10677,6 +10679,8 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jTupdateButton.setEnabled(true);
         FlatSVGIcon icon15 = new FlatSVGIcon("resources//profileImage.svg", jTprofile.getWidth(), jTprofile.getHeight());
         jTprofile.setIcon(icon15);
+        jTeacherBarcodeScan.grabFocus();
+
     }
 
     // st attendance
