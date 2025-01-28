@@ -49,8 +49,8 @@ public class loadingScreen extends javax.swing.JFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("loading!!");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Novara");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 27, 54));

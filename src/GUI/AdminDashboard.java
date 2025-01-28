@@ -1983,6 +1983,11 @@ public class AdminDashboard extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable14MouseClicked(evt);
+            }
+        });
         jScrollPane14.setViewportView(jTable14);
 
         jLabel37.setText("Search Mobile");
@@ -2164,6 +2169,11 @@ public class AdminDashboard extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable21MouseClicked(evt);
             }
         });
         jScrollPane21.setViewportView(jTable21);
@@ -2580,7 +2590,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 518, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Academic", jPanel14);
@@ -3860,16 +3870,6 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void jTable15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable15MouseClicked
 
-        int row = jTable1.getSelectedRow();
-
-        if (evt.getClickCount() == 2) {
-
-            int row1 = jTable1.getSelectedRow();
-            String email1 = String.valueOf(jTable1.getValueAt(row1, 0));
-
-            AFaddress addressView = new AFaddress();
-            addressView.setVisible(true);
-        }
     }//GEN-LAST:event_jTable15MouseClicked
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
@@ -4807,7 +4807,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                         + "INNER JOIN `month` ON `salary`.`month_id` = `month`.`id`"
                         + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id`"
                         + "INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
-                        + "WHERE month_id ='"+selectedMonthId+"' AND `employee`.`employee_type_id` IN ('1', '2', '4');";
+                        + "WHERE month_id ='" + selectedMonthId + "' AND `employee`.`employee_type_id` IN ('1', '2', '4');";
             }
 
             ResultSet resultSet = MySQL.executeSearch(query);
@@ -4830,7 +4830,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox7ItemStateChanged
 
     private void jComboBox5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox5ItemStateChanged
-       try {
+        try {
 
             String selectedMonthName = String.valueOf(jComboBox5.getSelectedItem());
 
@@ -4876,6 +4876,120 @@ public class AdminDashboard extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jComboBox5ItemStateChanged
+
+    private void jTable21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable21MouseClicked
+
+        if (evt.getClickCount() == 2) {
+            try {
+                // Get the selected row index
+                int selectedRow = jTable21.getSelectedRow();
+                if (selectedRow >= 0) {
+                    // Get the employee_id from the selected row
+                    int employeeId = Integer.parseInt(jTable21.getValueAt(selectedRow, 0).toString()); // Assuming employee_id is in column 0
+
+                    // Query to fetch address details
+                    String addressQuery = "SELECT `line1`, `line2` FROM `emp_address` WHERE `employee_user_id` = " + employeeId;
+                    ResultSet addressResult = MySQL.executeSearch(addressQuery);
+
+                    // Query to fetch the employee's first name
+                    String employeeQuery = "SELECT `nic` FROM `employee` WHERE `user_id` = " + employeeId;
+                    ResultSet employeeResult = MySQL.executeSearch(employeeQuery);
+
+                    // Open the EMPaddress GUI
+                    EMPaddress empAddressGUI = new EMPaddress();
+
+                    // Set address fields if data exists
+                    if (addressResult.next()) {
+                        empAddressGUI.setAddressLineE1(addressResult.getString("line1")); // Set Address Line 1
+                        empAddressGUI.setAddressLineE2(addressResult.getString("line2")); // Set Address Line 2
+                    } else {
+                        // Clear fields if no address is found
+                        empAddressGUI.setAddressLineE1(""); // Clear Address Line 1
+                        empAddressGUI.setAddressLineE2(""); // Clear Address Line 2
+                    }
+
+                    // Set the employee's first name in the ComboBox
+                    if (employeeResult.next()) {
+                        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+                        comboBoxModel.addElement(employeeResult.getString("nic")); // Add employee's first name
+                        empAddressGUI.setComboBoxEModel(comboBoxModel); // Set the ComboBox model
+                        empAddressGUI.setSelectedEmployeeId(employeeResult.getString("nic")); // Select the employee's first name
+                    }
+
+                    // Display the GUI
+                    empAddressGUI.setVisible(true);
+                    empAddressGUI.loadEMPAddress();
+
+                    // Close ResultSets
+                    addressResult.close();
+                    employeeResult.close();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please select a valid row.", "Error", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "An error occurred while fetching the data: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+    }//GEN-LAST:event_jTable21MouseClicked
+
+    private void jTable14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable14MouseClicked
+        
+        if (evt.getClickCount() == 2) {
+            try {
+                // Get the selected row index
+                int selectedRow = jTable14.getSelectedRow();
+                if (selectedRow >= 0) {
+                    // Get the teacher_id from the selected row
+                    int teacherId = Integer.parseInt(jTable14.getValueAt(selectedRow, 0).toString()); // Assuming teacher_id is in column 0
+
+                    // Query to fetch address details
+                    String addressQuery = "SELECT `line1`, `line2` FROM `teacher_address` WHERE `teachers_teacher_id` = " + teacherId;
+                    ResultSet addressResult = MySQL.executeSearch(addressQuery);
+
+                    // Query to fetch the teacher's first name
+                    String teacherQuery = "SELECT `nic` FROM `teachers` WHERE `teacher_id` = " + teacherId;
+                    ResultSet teacherResult = MySQL.executeSearch(teacherQuery);
+
+                    // Open the TEAaddress GUI
+                    TEAaddress teaAddressGUI = new TEAaddress();
+
+                    // Set address fields if data exists
+                    if (addressResult.next()) {
+                        teaAddressGUI.setAddressLine1(addressResult.getString("line1")); // Set Address Line 1
+                        teaAddressGUI.setAddressLine2(addressResult.getString("line2")); // Set Address Line 2
+                    } else {
+                        // Clear fields if no address is found
+                        teaAddressGUI.setAddressLine1(""); // Clear Address Line 1
+                        teaAddressGUI.setAddressLine2(""); // Clear Address Line 2
+                    }
+
+                    // Set the teacher's first name in the ComboBox
+                    if (teacherResult.next()) {
+                        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+                        comboBoxModel.addElement(teacherResult.getString("nic")); // Add teacher's first name
+                        teaAddressGUI.setComboBoxModel(comboBoxModel); // Set the ComboBox model
+                        teaAddressGUI.setSelectedTeacherId(teacherResult.getString("nic")); // Select the teacher's first name
+                    }
+
+                    // Display the GUI
+                    teaAddressGUI.setVisible(true);
+                    teaAddressGUI.loadAddress(); 
+
+                    // Close ResultSets
+                    addressResult.close();
+                    teacherResult.close();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please select a valid row.", "Error", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "An error occurred while fetching the data: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+    }//GEN-LAST:event_jTable14MouseClicked
 
     /**
      * @param args the command line arguments
