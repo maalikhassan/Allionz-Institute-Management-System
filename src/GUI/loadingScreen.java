@@ -53,7 +53,7 @@ public class loadingScreen extends javax.swing.JFrame {
         setTitle("Novara");
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(0, 27, 54));
+        jPanel1.setBackground(new java.awt.Color(0, 52, 101));
 
         jLabel2.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
