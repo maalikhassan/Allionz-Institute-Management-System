@@ -1291,7 +1291,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel6 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane31 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -1983,6 +1982,11 @@ public class AdminDashboard extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable14MouseClicked(evt);
+            }
+        });
         jScrollPane14.setViewportView(jTable14);
 
         jLabel37.setText("Search Mobile");
@@ -2585,7 +2589,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 518, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Academic", jPanel14);
@@ -3221,15 +3225,6 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton1.setBackground(new java.awt.Color(0, 52, 101));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Print");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -3270,8 +3265,6 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
                         .addComponent(jLabel40)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -3284,11 +3277,10 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
                     .addComponent(jLabel40))
-                .addGap(15, 15, 15)
+                .addGap(16, 16, 16)
                 .addComponent(jScrollPane31, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Activity Log", jPanel6);
@@ -4612,10 +4604,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         loadActivityLog(userName);
     }//GEN-LAST:event_jTextField1KeyReleased
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jComboBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox4ItemStateChanged
         try {
 
@@ -4926,6 +4914,67 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTable21MouseClicked
 
+    private void jTable14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable14MouseClicked
+        
+        
+        // Check if the event is a double-click
+        if (evt.getClickCount() == 2) {
+            try {
+                // Get the selected row index
+                int selectedRow = jTable14.getSelectedRow();
+                if (selectedRow >= 0) {
+                    // Get the teacher_id from the selected row
+                    int teacherId = Integer.parseInt(jTable14.getValueAt(selectedRow, 0).toString()); // Assuming teacher_id is in column 0
+
+                    // Query to fetch address details
+                    String addressQuery = "SELECT `line1`, `line2` FROM `teacher_address` WHERE `teachers_teacher_id` = " + teacherId;
+                    ResultSet addressResult = MySQL.executeSearch(addressQuery);
+
+                    // Query to fetch the teacher's first name
+                    String teacherQuery = "SELECT `nic` FROM `teachers` WHERE `teacher_id` = " + teacherId;
+                    ResultSet teacherResult = MySQL.executeSearch(teacherQuery);
+
+                    // Open the TEAaddress GUI
+                    TEAaddress teaAddressGUI = new TEAaddress();
+
+                    // Set address fields if data exists
+                    if (addressResult.next()) {
+                        teaAddressGUI.setAddressLine1(addressResult.getString("line1")); // Set Address Line 1
+                        teaAddressGUI.setAddressLine2(addressResult.getString("line2")); // Set Address Line 2
+                    } else {
+                        // Clear fields if no address is found
+                        teaAddressGUI.setAddressLine1(""); // Clear Address Line 1
+                        teaAddressGUI.setAddressLine2(""); // Clear Address Line 2
+                    }
+
+                    // Set the teacher's first name in the ComboBox
+                    if (teacherResult.next()) {
+                        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+                        comboBoxModel.addElement(teacherResult.getString("nic")); // Add teacher's first name
+                        teaAddressGUI.setComboBoxModel(comboBoxModel); // Set the ComboBox model
+                        teaAddressGUI.setSelectedTeacherId(teacherResult.getString("nic")); // Select the teacher's first name
+                    }
+
+                    // Display the GUI
+                    teaAddressGUI.setVisible(true);
+                    teaAddressGUI.loadAddress(); 
+
+                    // Close ResultSets
+                    addressResult.close();
+                    teacherResult.close();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please select a valid row.", "Error", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "An error occurred while fetching the data: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_jTable14MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -4946,7 +4995,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel activitypanel;
     private javax.swing.JPanel changingpanel;
     private javax.swing.JLabel duepiclabel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton15;
