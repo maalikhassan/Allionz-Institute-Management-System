@@ -1,7 +1,6 @@
 package model;
 
 import java.sql.ResultSet;
-import javax.swing.JOptionPane;
 import model.MySQL;
 
 public class AdminUserHandler {

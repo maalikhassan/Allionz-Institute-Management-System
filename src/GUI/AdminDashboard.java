@@ -63,7 +63,7 @@ import org.jfree.data.general.DefaultPieDataset;
  */
 public class AdminDashboard extends javax.swing.JFrame {
 
-    private static String userName = AdminUserSession.getInstance().getUsername();
+    private String userName = AdminUserSession.getInstance().getUsername();
     private static String SystemDateTime;
     private String selectedImagePath; // Global variable to store the selected image path
     private static HashMap<String, String> streamMap = new HashMap<>();
@@ -640,6 +640,8 @@ public class AdminDashboard extends javax.swing.JFrame {
     }
 
     private void loadUserProfile() {
+        
+//        String username = AdminUserSession.getInstance().getUsername();
 
         try {
 
@@ -680,6 +682,17 @@ public class AdminDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void clearUserProfile() {
+        jTextField18.setText("");
+        jTextField19.setText("");
+        jPasswordField1.setText("");
+        jTextField4.setText("");
+        jTextField3.setText("");
+        jTextField5.setText("");
+
+        profilepiclabel.setIcon(new FlatSVGIcon("resources/profileImage.svg", profilepiclabel.getWidth(), profilepiclabel.getHeight()));
     }
 
     //Income table in admin reports
@@ -3960,11 +3973,12 @@ public class AdminDashboard extends javax.swing.JFrame {
                 e.printStackTrace();
             }
 
-            // Perform logout and navigation
             AdminUserSession.getInstance().logout();
+            clearUserProfile();
             this.dispose();
             userSelection us = new userSelection();
             us.setVisible(true);
+
         }
 
     }//GEN-LAST:event_jButton32ActionPerformed
@@ -4915,8 +4929,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable21MouseClicked
 
     private void jTable14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable14MouseClicked
-        
-        
+
         // Check if the event is a double-click
         if (evt.getClickCount() == 2) {
             try {
@@ -4957,7 +4970,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
                     // Display the GUI
                     teaAddressGUI.setVisible(true);
-                    teaAddressGUI.loadAddress(); 
+                    teaAddressGUI.loadAddress();
 
                     // Close ResultSets
                     addressResult.close();
@@ -4971,8 +4984,8 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         }
         // TODO add your handling code here:
-        
-        
+
+
     }//GEN-LAST:event_jTable14MouseClicked
 
     /**

@@ -58,7 +58,7 @@ import java.util.logging.*;
 public class FinancialDashboard extends javax.swing.JFrame {
 
     private String selectedImagePath; // Global variable to store the selected image path
-    private static String userName = FinancialUserSession.getInstance().getUsername();
+    private String userName = FinancialUserSession.getInstance().getUsername();
     private static String SystemDateTime;
     private static HashMap<String, String> loadStreamMap = new HashMap<>();
     private static HashMap<String, String> loadSubjectMap = new HashMap<>();
