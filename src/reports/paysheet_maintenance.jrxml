@@ -56,7 +56,9 @@
 		<element kind="staticText" uuid="bfacc031-c177-4c83-a2d8-ca5a4844b027" x="288" y="73" width="210" height="30" fontSize="14.0" bold="true">
 			<text><![CDATA[161/E, Thalgahawila, Horana.]]></text>
 		</element>
-		<element kind="image" uuid="336fffe8-809b-463e-8c5f-643d173c6789" x="46" y="0" width="100" height="89"/>
+		<element kind="image" uuid="336fffe8-809b-463e-8c5f-643d173c6789" x="46" y="0" width="100" height="89">
+			<expression><![CDATA[$P{IMAGE_PATH}]]></expression>
+		</element>
 		<element kind="textField" uuid="784a4b83-e580-45b3-84e6-85a0b146edf8" x="670" y="0" width="129" height="30" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{Parameter1}]]></expression>
 		</element>

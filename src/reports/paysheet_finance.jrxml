@@ -36,7 +36,6 @@
 	<field name="COLUMN_4" class="java.lang.String"/>
 	<field name="COLUMN_5" class="java.lang.String"/>
 	<field name="COLUMN_6" class="java.lang.String"/>
-	<field name="COLUMN_7" class="java.lang.String"/>
 	<background splitType="Stretch"/>
 	<title height="116" splitType="Stretch">
 		<element kind="staticText" uuid="d1f850ce-936a-4f01-b0c9-29f488d02a0a" x="259" y="3" width="258" height="40" forecolor="#0000FF" fontSize="26.0" bold="true">

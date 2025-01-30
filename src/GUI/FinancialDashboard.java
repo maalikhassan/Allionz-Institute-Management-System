@@ -1817,7 +1817,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jFormattedTextField9 = new javax.swing.JFormattedTextField();
         jButton20 = new javax.swing.JButton();
         jButton21 = new javax.swing.JButton();
-        jButton22 = new javax.swing.JButton();
         jButton23 = new javax.swing.JButton();
         jComboBox14 = new javax.swing.JComboBox<>();
         jButton18 = new javax.swing.JButton();
@@ -2238,10 +2237,10 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     .addGroup(DashboardconstantpanelLayout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel27))
+                        .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel102, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 465, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 437, Short.MAX_VALUE)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
@@ -3555,15 +3554,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
-        jButton22.setBackground(new java.awt.Color(0, 51, 101));
-        jButton22.setForeground(new java.awt.Color(255, 255, 255));
-        jButton22.setText("Remove");
-        jButton22.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton22ActionPerformed(evt);
-            }
-        });
-
         jButton23.setBackground(new java.awt.Color(0, 51, 101));
         jButton23.setForeground(new java.awt.Color(255, 255, 255));
         jButton23.setText("Reset");
@@ -3598,14 +3588,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     .addComponent(jComboBox14, 0, 175, Short.MAX_VALUE)
                     .addComponent(jFormattedTextField9)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton22, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton20, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
+                        .addComponent(jButton20, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton23, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)))
-                    .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton21, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
+                    .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
@@ -3628,13 +3615,11 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton22, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                            .addComponent(jButton23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane20, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Manage Salary Details", jPanel4);
@@ -5505,39 +5490,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField3ActionPerformed
 
-    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
-        //Remove salary details
-        try {
-            String Id = jLabel85.getText();
-            String Salary = jFormattedTextField9.getText();
-            String EmployeeId = String.valueOf(jComboBox14.getSelectedIndex());
-
-            if (Salary.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please Enter Salary To Remove", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else if (EmployeeId.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please Enter Employee Type To Remove", "Warning", JOptionPane.WARNING_MESSAGE);
-            } else {
-                ResultSet resultSet = MySQL.executeSearch("SELECT  * FROM `salary_details` WHERE `id`='" + Id + "'");
-
-                if (resultSet.next()) {
-
-                    int showConfirm = JOptionPane.showConfirmDialog(this, "Do you want to remove these salary details?",
-                            "Remove Company", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
-                    if (showConfirm == JOptionPane.YES_OPTION) {
-
-                        MySQL.executeIUD("Delete FROM `salary_details`  WHERE  `id` = '" + Id + "' ");
-                        JOptionPane.showMessageDialog(this, "Slary Details Successfully Removed", "Success", JOptionPane.INFORMATION_MESSAGE);
-                        reset();
-                        loadBaseSalary();
-                    }
-                }
-            }
-        } catch (Exception e) {
-            logger.log(Level.WARNING, "Error occurred when try to remove base salary.", e);
-        }
-    }//GEN-LAST:event_jButton22ActionPerformed
-
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         //Add base salary
         try {
@@ -5830,7 +5782,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String invoiceid2 = jLabel85.getText();
             String EmployeeUserName = jLabel27.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString(); 
+            
             // Load report file
             InputStream path = this.getClass().getResourceAsStream("/reports/base_salary.jasper");
             if (path == null) {
@@ -5842,7 +5795,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             params.put("Parameter1", invoiceid2);
             params.put("Parameter2", EmployeeUserName);
             params.put("Parameter3", dateTime);
-
+            params.put("IMAGE_PATH", imagePath);
             // Data source
             if (jTable19.getRowCount() == 0) {
 
@@ -5953,7 +5906,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String invoiceid2 = jLabel85.getText();
             String EmployeeUserName = jLabel27.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            
             // Load report file
             InputStream path = this.getClass().getResourceAsStream("/reports/paysheet_teacher.jasper");
             if (path == null) {
@@ -5965,7 +5919,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             params.put("Parameter1", invoiceid2);
             params.put("Parameter2", EmployeeUserName);
             params.put("Parameter3", dateTime);
-
+            params.put("IMAGE_PATH", imagePath);
             // Data source
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable5.getModel());
 
@@ -5979,6 +5933,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
             logger.log(Level.WARNING, "Error occurred when try to print teacher salary details.", e);
+ 
         }
     }//GEN-LAST:event_jButton13ActionPerformed
 
@@ -5990,7 +5945,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String invoiceid2 = jLabel85.getText();
             String EmployeeUserName = jLabel27.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+            
             // Load report file
             InputStream path = this.getClass().getResourceAsStream("/reports/paysheet_academic.jasper");
             if (path == null) {
@@ -6002,7 +5958,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             params.put("Parameter1", invoiceid2);
             params.put("Parameter2", EmployeeUserName);
             params.put("Parameter3", dateTime);
-
+            params.put("IMAGE PATH", imagePath);
             // Data source          
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable3.getModel());
 
@@ -6028,7 +5984,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String invoiceid2 = jLabel85.getText();
             String EmployeeUserName = jLabel27.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
             // Load report file
             InputStream path = this.getClass().getResourceAsStream("/reports/paysheet_finance.jasper");
             if (path == null) {
@@ -6040,7 +5996,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             params.put("Parameter1", invoiceid2);
             params.put("Parameter2", EmployeeUserName);
             params.put("Parameter3", dateTime);
-
+            params.put("IMAGE PATH", imagePath);
             // Data source
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable4.getModel());
 
@@ -7498,7 +7454,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;
-    private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;

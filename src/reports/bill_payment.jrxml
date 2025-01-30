@@ -1,8 +1,15 @@
 <!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
-<jasperReport name="tech_track" language="javascript" columnCount="1" pageWidth="800" pageHeight="814" columnWidth="760" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc3a3fa9-c2fa-4ed7-a5bd-b7371cfe082f">
+<jasperReport name="tech_track" language="java" columnCount="1" pageWidth="814" pageHeight="800" orientation="Landscape" columnWidth="774" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc3a3fa9-c2fa-4ed7-a5bd-b7371cfe082f">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<dataset name="Dataset1" uuid="159f9cb6-a7f8-4fca-8d09-1146053765c7">
 		<query language="sql"><![CDATA[]]></query>
 		<field name="COLUMN_1" class="java.lang.String"/>
