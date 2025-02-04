@@ -50,6 +50,7 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import java.util.logging.*;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -220,6 +221,13 @@ public class FinancialDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void searchFee(String str) {
+        DefaultTableModel model = (DefaultTableModel) jTable9.getModel();
+        TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+        jTable9.setRowSorter(trs);
+        trs.setRowFilter(RowFilter.regexFilter(str));
     }
 
     private void updateDateTime() {
@@ -1356,7 +1364,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String profit = String.valueOf(total);
             jLabel121.setText(profit);
 
-             
         } catch (NumberFormatException e) {
             // Handle invalid input
             System.out.println("Invalid input. Please enter numeric values.");
@@ -1507,7 +1514,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
 //            e.printStackTrace();
 //        }
 //    }
-
     //Salary department month
     //8
     private void ReportLoadMonth8() {
@@ -1734,6 +1740,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jScrollPane10 = new javax.swing.JScrollPane();
         jTable9 = new javax.swing.JTable();
         jButton8 = new javax.swing.JButton();
+        jTextField6 = new javax.swing.JTextField();
         jPanel16 = new javax.swing.JPanel();
         jLabel44 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
@@ -2769,6 +2776,12 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
         });
 
+        jTextField6.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField6KeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
         jPanel18Layout.setHorizontalGroup(
@@ -2778,17 +2791,21 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel18Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jScrollPane10)
+                        .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 943, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel18Layout.createSequentialGroup()
                         .addComponent(jButton8)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57))))
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jButton8)
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton8)
+                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -3619,7 +3636,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane20, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Manage Salary Details", jPanel4);
@@ -5782,8 +5799,8 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String invoiceid2 = jLabel85.getText();
             String EmployeeUserName = jLabel27.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-            String imagePath = getClass().getResource("/resources/LOGO.png").toString(); 
-            
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+
             // Load report file
             InputStream path = this.getClass().getResourceAsStream("/reports/base_salary.jasper");
             if (path == null) {
@@ -5907,7 +5924,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String EmployeeUserName = jLabel27.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             String imagePath = getClass().getResource("/resources/LOGO.png").toString();
-            
+
             // Load report file
             InputStream path = this.getClass().getResourceAsStream("/reports/paysheet_teacher.jasper");
             if (path == null) {
@@ -5933,7 +5950,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
             }
             logger.log(Level.WARNING, "Error occurred when try to print teacher salary details.", e);
- 
+
         }
     }//GEN-LAST:event_jButton13ActionPerformed
 
@@ -5946,7 +5963,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String EmployeeUserName = jLabel27.getText();
             String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             String imagePath = getClass().getResource("/resources/LOGO.png").toString();
-            
+
             // Load report file
             InputStream path = this.getClass().getResourceAsStream("/reports/paysheet_academic.jasper");
             if (path == null) {
@@ -6024,7 +6041,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String imagePath = getClass().getResource("/resources/LOGO.png").toString();
             // Load report file
             InputStream path = this.getClass().getResourceAsStream("/reports/paysheet_maintenance.jasper");
-             
 
             // Parameters for the report
             HashMap<String, Object> params = new HashMap<>();
@@ -6033,7 +6049,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             params.put("Parameter3", dateTime);
             params.put("IMAGE_PATH", imagePath);
             // Data source
-             
+
             JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable6.getModel());
 
             JasperPrint report = JasperFillManager.fillReport(path, params, dataSource);
@@ -6501,6 +6517,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 try {
                     MySQL.executeIUD("DELETE FROM `feestructure` WHERE `fee_id` = '" + id + "'");
                     loadFeeStructure();
+                     reset();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -7415,7 +7432,78 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
+        boolean isPrinted = false;
+        try {
+            // Generate a unique invoice ID
+            String invoiceid1 = String.valueOf(System.currentTimeMillis());
+            String imagePath = getClass().getResource("/resources/LOGO.png").toString();
+
+            // Check if the table and a row are valid
+            if (jTable9 == null || jTable9.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report.", "Warning", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            int selectedRow = jTable9.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a row to print.", "Warning", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            // Load the report file
+            try (InputStream path = this.getClass().getResourceAsStream("/reports/new_financial_feepayent_1.jasper")) {
+                if (path == null) {
+                    throw new RuntimeException("Report file not found at /reports/new_financial_feepayent_1.jasper");
+                }
+
+                // Parameters for the report
+                HashMap<String, Object> parameters = new HashMap<>();
+                parameters.put("Parameter1", invoiceid1);
+                parameters.put("IMAGE_PATH", imagePath);
+
+                // Get the selected row data
+                TableModel originalModel = jTable9.getModel();
+                DefaultTableModel selectedRowModel = new DefaultTableModel();
+
+                // Copy column names
+                for (int col = 0; col < originalModel.getColumnCount(); col++) {
+                    selectedRowModel.addColumn(originalModel.getColumnName(col));
+                }
+
+                // Copy data of the selected row
+                Object[] rowData = new Object[originalModel.getColumnCount()];
+                for (int col = 0; col < originalModel.getColumnCount(); col++) {
+                    rowData[col] = originalModel.getValueAt(selectedRow, col);
+                }
+                selectedRowModel.addRow(rowData);
+
+                // Create a data source for the selected row
+                JRTableModelDataSource dataSource = new JRTableModelDataSource(selectedRowModel);
+
+                // Fill the report
+                JasperPrint report = JasperFillManager.fillReport(path, parameters, dataSource);
+
+                // Print the report
+                isPrinted = JasperPrintManager.printReport(report, false);
+            }
+        } catch (Exception e) {
+            if (jTable9 != null && jTable9.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Table has no data to generate report.", "Warning", JOptionPane.INFORMATION_MESSAGE);
+                e.printStackTrace();
+            } else if (!isPrinted) {
+                JOptionPane.showMessageDialog(this, "Printing was canceled by the user.", "Printing Canceled", JOptionPane.INFORMATION_MESSAGE);
+                e.printStackTrace();
+            } else {
+                JOptionPane.showMessageDialog(this, "An error occurred while printing the report: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jTextField6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyReleased
+        // TODO add your handling code here:
+        String searchFeePay = jTextField6.getText();
+        searchFee(searchFeePay);
+    }//GEN-LAST:event_jTextField6KeyReleased
 
     /**
      * @param args the command line arguments
@@ -7735,6 +7823,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JPanel menu1;
