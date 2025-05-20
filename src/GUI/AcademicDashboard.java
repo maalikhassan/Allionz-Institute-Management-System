@@ -5890,7 +5890,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
                             MySQL.executeIUD("INSERT INTO`students` "
                                     + "(`first_name`, `last_name`, `nic`, `mobile`, `dob`, `guardian_mobile`, `enrollment_date`, `gender_id`, `address_line_1`,`address_line_2`,`AL_batch_batch_id`,`stream_stream_id`, `barcode_id`,`img_path`) "
                                     + "VALUES ('" + firstName + "', '" + lastName + "', '" + nic + "', '" + mobile + "', '" + sdf.format(dateOfBirth) + "', '" + guardianNumber + "','" + sdf.format(dateOfEnrollment) + "','" + genderId + "','" + addressLine1 + "','" + addressLine2 + "','" + BatchMap.get(batch) + "','" + StreamMap.get(stream) + "', '" + barcodeData + "','" + imgPath + "')");
-                            
+
                             JOptionPane.showMessageDialog(this, "Successfully registered", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                             loadStudents();
                             clearStudentReg();
@@ -7104,6 +7104,113 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         //teacher registration add button
+//        String fname = jTextField26.getText().trim();
+//        String lname = jTextField27.getText().trim();
+//        String nic = jTextField28.getText().trim();
+//        Date dob = jDateChooser6.getDate();
+//        Date currentDate = new Date();
+//        Date enrollmentDate = jDateChooser4.getDate();
+//        String line1 = jTextField11.getText().trim();
+//        String line2 = jTextField30.getText().trim();
+//        String mobile = jTextField29.getText().trim();
+//        String email = jTextField21.getText().trim();
+//
+//        int teacherGender = 0;
+//        if (jRadioButton3.isSelected()) {
+//            teacherGender = 1;  // Male
+//        } else if (jRadioButton4.isSelected()) {
+//            teacherGender = 2;  // Female
+//        }
+//
+//        // Validation checks
+//        if (fname.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please enter first name!", "Error", JOptionPane.ERROR_MESSAGE);
+//        } else if (lname.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please enter last name!", "Error", JOptionPane.ERROR_MESSAGE);
+//        } else if (nic.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please enter NIC!", "Error", JOptionPane.ERROR_MESSAGE);
+//        } else if (dob == null) {
+//            JOptionPane.showMessageDialog(this, "Please select the date of birth!", "Error", JOptionPane.ERROR_MESSAGE);
+//        } else if (dob.after(currentDate)) {
+//            JOptionPane.showMessageDialog(this, "Date of Birth cannot be in the future!", "Date Selection Error", JOptionPane.WARNING_MESSAGE);
+//        } else if (enrollmentDate == null) {
+//            JOptionPane.showMessageDialog(this, "Please select the date of enrollment date!", "Error", JOptionPane.ERROR_MESSAGE);
+//        } else if (teacherGender == 0) {
+//            JOptionPane.showMessageDialog(this, "Please select the gender!", "Error", JOptionPane.ERROR_MESSAGE);
+//        } else if (line1.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please fill in Address Line 1!", "Input Error", JOptionPane.ERROR_MESSAGE);
+//        } else if (line2.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please fill in Address Line 2!", "Input Error", JOptionPane.ERROR_MESSAGE);
+//        } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
+//            JOptionPane.showMessageDialog(this, "Invalid mobile Number! It should start with 07 and have 10 digits.", "Invalid Input", JOptionPane.WARNING_MESSAGE);
+//        } else if (email.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Please enter email!", "Error", JOptionPane.ERROR_MESSAGE);
+//        } else if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+//            JOptionPane.showMessageDialog(this, "Invalid email address!", "Warning", JOptionPane.WARNING_MESSAGE);
+//        } else if (TimgPath == null || TimgPath.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "No Image Selected to Save!", "Image Error", JOptionPane.WARNING_MESSAGE);
+//        } else {
+//            String formattedDob = new SimpleDateFormat("yyyy-MM-dd").format(dob);
+//            String formattedEnrollmentDate = new SimpleDateFormat("yyyy-MM-dd").format(enrollmentDate);
+//
+//            try {
+//                ResultSet rs = MySQL.executeSearch("SELECT * FROM `teachers` WHERE `nic`='" + nic + "' OR `mobile`='" + mobile + "' OR `email`='" + email + "'");
+//
+//                if (rs.next()) {
+//                    JOptionPane.showMessageDialog(this, "Teacher already exists!", "Warning", JOptionPane.WARNING_MESSAGE);
+//
+//                } else {
+//                    // Save image with teacher's name
+//                    String resourcesPath = "src/teacherImg";
+//                    String cleanName = (fname + "_" + lname).replaceAll("\\s+", "_").replaceAll("[^a-zA-Z0-9_]", "");
+//                    String newFileName = cleanName + "_" + System.currentTimeMillis() + ".jpg"; // Unique with timestamp
+//
+//                    File saveDir = new File(resourcesPath);
+//                    if (!saveDir.exists()) {
+//                        saveDir.mkdirs();
+//                    }
+//
+//                    File fileToSave = new File(saveDir, newFileName);
+//
+//                    try {
+//                        Path sourcePath = new File(TimgPath).toPath();
+//                        Path destinationPath = fileToSave.toPath();
+//
+//                        if (!new File(TimgPath).getAbsolutePath().equals(fileToSave.getAbsolutePath())) {
+//                            Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+//                        }
+//
+//                        String newFilePath = fileToSave.getAbsolutePath().replace("\\", "/");
+//                        TimgPath = newFilePath;
+//                    } catch (IOException ioException) {
+//                        ioException.printStackTrace();
+//                        JOptionPane.showMessageDialog(this,
+//                                "Error saving image. Make sure the file isn't open in another program.\n"
+//                                + "Details: " + ioException.getMessage(),
+//                                "File Error", JOptionPane.ERROR_MESSAGE);
+//                        return;
+////                        JOptionPane.showMessageDialog(this, "Error saving image: " + ioException.getMessage());
+//                    }
+//
+//                    MySQL.executeIUD("INSERT INTO `teachers` (`first_name`, `last_name`, `nic`, `mobile`, `email`, `dob`, `enrollment_date`, `gender_id`, `address_line_1`, `address_line_2`,`barcode_id`,`img_path`) "
+//                            + "VALUES ('" + fname + "', '" + lname + "', '" + nic + "', '" + mobile + "', '" + email + "', '" + formattedDob + "', '" + formattedEnrollmentDate + "', " + teacherGender + ", '" + line1 + "', '" + line2 + "' ,'1', '" + TimgPath + "')");
+//                    MySQL.executeIUD("INSERT INTO employee (first_name,last_name,email,nic,mobile,gender_id,employee_type_id,salary_details_id) VALUES('" + fname + "','" + lname + "','" + email + "','" + nic + "','" + mobile + "','" + teacherGender + "','3','9')");
+//
+//                    loadTeacherViewTable();
+//                    teacherDetailsReset();
+//                    overviewTeacher();
+//                    loadTBarcodeTable();
+//                    loadTeachers();
+//                    JOptionPane.showMessageDialog(this, "Teacher successfully registered!", "Success", JOptionPane.INFORMATION_MESSAGE);
+//
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                JOptionPane.showMessageDialog(this, "Error while registering teacher: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//            }
+//        }
+
+// Teacher registration add button
         String fname = jTextField26.getText().trim();
         String lname = jTextField27.getText().trim();
         String nic = jTextField28.getText().trim();
@@ -7117,88 +7224,102 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
         int teacherGender = 0;
         if (jRadioButton3.isSelected()) {
-            teacherGender = 1;  // Male
+            teacherGender = 1;
         } else if (jRadioButton4.isSelected()) {
-            teacherGender = 2;  // Female
+            teacherGender = 2;
         }
 
-        // Validation checks
-        if (fname.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter first name!", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (lname.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter last name!", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (nic.isEmpty()) {
+        // Validation
+        if (fname.isEmpty() || lname.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter first and last name!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (nic.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter NIC!", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (dob == null) {
-            JOptionPane.showMessageDialog(this, "Please select the date of birth!", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (dob.after(currentDate)) {
-            JOptionPane.showMessageDialog(this, "Date of Birth cannot be in the future!", "Date Selection Error", JOptionPane.WARNING_MESSAGE);
-        } else if (enrollmentDate == null) {
-            JOptionPane.showMessageDialog(this, "Please select the date of enrollment date!", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (teacherGender == 0) {
-            JOptionPane.showMessageDialog(this, "Please select the gender!", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (line1.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in Address Line 1!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        } else if (line2.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in Address Line 2!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        } else if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
-            JOptionPane.showMessageDialog(this, "Invalid mobile Number! It should start with 07 and have 10 digits.", "Invalid Input", JOptionPane.WARNING_MESSAGE);
-        } else if (email.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter email!", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-            JOptionPane.showMessageDialog(this, "Invalid email address!", "Warning", JOptionPane.WARNING_MESSAGE);
-        } else if (TimgPath == null || TimgPath.isEmpty()) {
+            return;
+        }
+        if (dob == null || dob.after(currentDate)) {
+            JOptionPane.showMessageDialog(this, "Invalid Date of Birth!", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (enrollmentDate == null || enrollmentDate.before(dob)) {
+            JOptionPane.showMessageDialog(this, "Invalid Enrollment Date!", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (teacherGender == 0) {
+            JOptionPane.showMessageDialog(this, "Please select a gender!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (line1.isEmpty() || line2.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Address fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!mobile.matches("^07[01245678]{1}[0-9]{7}$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Mobile Number!", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (email.isEmpty() || !email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            JOptionPane.showMessageDialog(this, "Invalid Email!", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (TimgPath == null || TimgPath.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No Image Selected to Save!", "Image Error", JOptionPane.WARNING_MESSAGE);
-        } else {
-            String formattedDob = new SimpleDateFormat("yyyy-MM-dd").format(dob);
-            String formattedEnrollmentDate = new SimpleDateFormat("yyyy-MM-dd").format(enrollmentDate);
+            return;
+        }
 
-            try {
-                ResultSet rs = MySQL.executeSearch("SELECT * FROM `teachers` WHERE `nic`='" + nic + "' OR `mobile`='" + mobile + "' OR `email`='" + email + "'");
+        String formattedDob = new SimpleDateFormat("yyyy-MM-dd").format(dob);
+        String formattedEnrollmentDate = new SimpleDateFormat("yyyy-MM-dd").format(enrollmentDate);
 
-                if (rs.next()) {
-                    JOptionPane.showMessageDialog(this, "Teacher already exists!", "Warning", JOptionPane.WARNING_MESSAGE);
-
-                } else {
-                    // Save image with teacher's name
-                    String resourcesPath = "src/teacherImg";
-                    String cleanName = (fname + "_" + lname).replaceAll("\\s+", "_").replaceAll("[^a-zA-Z0-9_]", "");
-                    String newFileName = cleanName + "_" + System.currentTimeMillis() + ".jpg"; // Unique with timestamp
-
-                    File saveDir = new File(resourcesPath);
-                    if (!saveDir.exists()) {
-                        saveDir.mkdirs();
-                    }
-
-                    File fileToSave = new File(saveDir, newFileName);
-
-                    try {
-                        Path sourcePath = new File(TimgPath).toPath();
-                        Path destinationPath = fileToSave.toPath();
-
-                        Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-
-                        String newFilePath = fileToSave.getAbsolutePath().replace("\\", "/");
-                        TimgPath = newFilePath;
-                    } catch (IOException ioException) {
-                        JOptionPane.showMessageDialog(this, "Error saving image: " + ioException.getMessage());
-                    }
-
-                    MySQL.executeIUD("INSERT INTO `teachers` (`first_name`, `last_name`, `nic`, `mobile`, `email`, `dob`, `enrollment_date`, `gender_id`, `address_line_1`, `address_line_2`,`barcode_id`,`img_path`) "
-                            + "VALUES ('" + fname + "', '" + lname + "', '" + nic + "', '" + mobile + "', '" + email + "', '" + formattedDob + "', '" + formattedEnrollmentDate + "', " + teacherGender + ", '" + line1 + "', '" + line2 + "' ,'1', '" + TimgPath + "')");
-
-                    loadTeacherViewTable();
-                    teacherDetailsReset();
-                    overviewTeacher();
-                    loadTBarcodeTable();
-                    loadTeachers();
-                    JOptionPane.showMessageDialog(this, "Teacher successfully registered!", "Success", JOptionPane.INFORMATION_MESSAGE);
-
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Error while registering teacher: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT * FROM teachers WHERE nic='" + nic + "' OR mobile='" + mobile + "' OR email='" + email + "'");
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(this, "Teacher already exists!", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
             }
+
+            // Save Image
+            String resourcesPath = "teacherImg";
+            String cleanName = (fname + "_" + lname).replaceAll("\\s+", "_").replaceAll("[^a-zA-Z0-9_]", "");
+            String newFileName = cleanName + "_" + System.currentTimeMillis() + ".jpg";
+
+            File saveDir = new File(resourcesPath);
+            if (!saveDir.exists()) {
+                saveDir.mkdirs();
+            }
+
+            File fileToSave = new File(saveDir, newFileName);
+            Path sourcePath = new File(TimgPath).toPath();
+            Path destinationPath = fileToSave.toPath();
+
+            if (!Files.isSameFile(sourcePath, destinationPath)) {
+                try (InputStream in = new FileInputStream(sourcePath.toFile())) {
+                    Files.copy(in, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+                }
+                TimgPath = destinationPath.toAbsolutePath().toString().replace("\\", "/");
+            }
+
+            // Insert Teacher and Employee
+            MySQL.executeIUD("INSERT INTO teachers (first_name, last_name, nic, mobile, email, dob, enrollment_date, gender_id, address_line_1, address_line_2, barcode_id, img_path) "
+                    + "VALUES ('" + fname + "', '" + lname + "', '" + nic + "', '" + mobile + "', '" + email + "', '" + formattedDob + "', '" + formattedEnrollmentDate + "', "
+                    + teacherGender + ", '" + line1 + "', '" + line2 + "', '1', '" + TimgPath + "')");
+
+            MySQL.executeIUD("INSERT INTO employee (first_name, last_name, email, nic, mobile, gender_id, employee_type_id, salary_details_id) "
+                    + "VALUES ('" + fname + "', '" + lname + "', '" + email + "', '" + nic + "', '" + mobile + "', '" + teacherGender + "', '3', '9')");
+
+            loadTeacherViewTable();
+            teacherDetailsReset();
+            overviewTeacher();
+            loadTBarcodeTable();
+            loadTeachers();
+
+            JOptionPane.showMessageDialog(this, "Teacher successfully registered!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+            JOptionPane.showMessageDialog(this, "File access error. Close the file if open and try again.\\nDetails: " + ioEx.getMessage(), "File Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error while registering teacher: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton17ActionPerformed
 
@@ -7305,6 +7426,10 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
             int rowsAffected = MySQL.executeIUD(query);
 
+            MySQL.executeIUD(" UPDATE employee SET first_name='" + fname + "' ,"
+                    + "last_name='" + lname + "' , email='" + email + "' "
+                    + " , mobile='" + mobile + "' , gender_id='" + teacherGender + "' WHERE nic='" + nic + "' ");
+
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(this, "Teacher successfully updated!", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 // Optionally Reload Data or Clear Form
@@ -7324,8 +7449,45 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
     private void jButton37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton37ActionPerformed
         // Teacher delete
+//        int row1 = teacherViewTable.getSelectedRow();
+//        String teacherID = String.valueOf(teacherViewTable.getValueAt(row1, 0));
+//        String nic = String.valueOf(teacherViewTable.getValueAt(row1, 3));
+//        int confirm = JOptionPane.showConfirmDialog(null,
+//                "Are you sure you want to delete the teacher?",
+//                "Delete Confirmation", JOptionPane.YES_NO_OPTION);
+//
+//        if (confirm == JOptionPane.YES_OPTION) {
+//            try {
+//                // Delete from the linking table first
+//                MySQL.executeIUD("DELETE FROM teachers_has_stream_subject WHERE teachers_teacher_id = '" + teacherID + "'");
+//            } catch (Exception ex) {
+//                Logger.getLogger(AcademicDashboard.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//            try {
+//                // Delete from the main teacher table
+//                MySQL.executeIUD("DELETE FROM teachers WHERE teacher_id = '" + teacherID + "'");
+//                MySQL.executeIUD("DELETE FROM employee WHERE nic='" + nic + "' AND employee_type_id='3' AND salary_details_id='9' ");
+//            } catch (Exception ex) {
+//                Logger.getLogger(AcademicDashboard.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//            JOptionPane.showMessageDialog(null, "teacher deleted successfully!");
+//            loadTeacherViewTable();
+//            teacherDetailsReset();
+//            loadTBarcodeTable();
+//            loadTeachers();
+//        }
+
         int row1 = teacherViewTable.getSelectedRow();
+
+        if (row1 == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a teacher from the table!", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         String teacherID = String.valueOf(teacherViewTable.getValueAt(row1, 0));
+        String nic = String.valueOf(teacherViewTable.getValueAt(row1, 3));
 
         int confirm = JOptionPane.showConfirmDialog(null,
                 "Are you sure you want to delete the teacher?",
@@ -7333,24 +7495,25 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
         if (confirm == JOptionPane.YES_OPTION) {
             try {
-                // Delete from the linking table first
+                // Delete from linking table
                 MySQL.executeIUD("DELETE FROM teachers_has_stream_subject WHERE teachers_teacher_id = '" + teacherID + "'");
-            } catch (Exception ex) {
-                Logger.getLogger(AcademicDashboard.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
-            try {
-                // Delete from the main teacher table
+                // Delete from teachers
                 MySQL.executeIUD("DELETE FROM teachers WHERE teacher_id = '" + teacherID + "'");
-            } catch (Exception ex) {
-                Logger.getLogger(AcademicDashboard.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
-            JOptionPane.showMessageDialog(null, "teacher deleted successfully!");
-            loadTeacherViewTable();
-            teacherDetailsReset();
-            loadTBarcodeTable();
-            loadTeachers();
+                // Delete from employee (based on matching NIC and expected fixed values)
+                MySQL.executeIUD("DELETE FROM employee WHERE nic='" + nic + "' AND employee_type_id='3' AND salary_details_id='9'");
+
+                JOptionPane.showMessageDialog(null, "Teacher deleted successfully!");
+                loadTeacherViewTable();
+                teacherDetailsReset();
+                loadTBarcodeTable();
+                loadTeachers();
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error while deleting teacher: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton37ActionPerformed
 
@@ -9916,7 +10079,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton80ActionPerformed
 
     private void jTextField38KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField38KeyReleased
-           try {
+        try {
             String searchText = jTextField38.getText().trim().toLowerCase();
 
             DefaultTableModel dtm = (DefaultTableModel) jTable14.getModel();
