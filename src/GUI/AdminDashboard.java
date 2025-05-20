@@ -105,7 +105,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         initComponents();
         image();
         loadStudents("");
-        loadTeachers("");
+        loadTeachers();
         loadLogins("");
         loadEmployee("");
         loadStream();
@@ -530,12 +530,13 @@ public class AdminDashboard extends javax.swing.JFrame {
         }
     }
 
-    public void loadTeachers(String searchTerm) {
+    public void loadTeachers() {
         try {
 
-            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `teachers` "
-                    + "INNER JOIN `gender` ON `teachers`.`gender_id` WHERE `mobile` LIKE '" + searchTerm + "%'");
+//            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `teachers` "
+//                    + "INNER JOIN `gender` ON `teachers`.`gender_id` WHERE `mobile` LIKE '" + searchTerm + "%'");
 
+ResultSet resultSet = MySQL.executeSearch("SELECT *FROM teachers INNER JOIN gender ON gender.id=teachers.gender_id");
             // Get the table model and clear existing rows
             DefaultTableModel model = (DefaultTableModel) jTable14.getModel();
             model.setRowCount(0);
@@ -1972,10 +1973,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jTable14.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Id", "First Name", "Last Name", "Mobile Number", "Gender"
@@ -3934,13 +3932,14 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private void jButton39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton39ActionPerformed
-        this.dispose();
+//        this.dispose();
         otherEmployees FR = new otherEmployees();
         FR.setVisible(true);
+        
     }//GEN-LAST:event_jButton39ActionPerformed
 
     private void jButton31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton31ActionPerformed
-        this.dispose();
+//        this.dispose();
         loginRegistration AR = new loginRegistration();
         AR.setVisible(true);
     }//GEN-LAST:event_jButton31ActionPerformed
@@ -4679,7 +4678,23 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void jTextField8KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField8KeyReleased
         String searchTerm = jTextField8.getText();
-        loadTeachers(searchTerm);
+
+           try {
+            String searchText = jTextField8.getText().trim().toLowerCase();
+
+            DefaultTableModel dtm = (DefaultTableModel) jTable14.getModel();
+            TableRowSorter<DefaultTableModel> rowSorter = new TableRowSorter<>(dtm);
+
+            jTable14.setRowSorter(rowSorter);
+
+            if (searchText.isEmpty()) {
+                rowSorter.setRowFilter(null);
+            } else {
+                rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jTextField8KeyReleased
 
     private void jTextField20KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField20KeyReleased

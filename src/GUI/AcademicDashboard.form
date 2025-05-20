@@ -4721,6 +4721,9 @@
                                       </Events>
                                     </Component>
                                     <Component class="javax.swing.JTextField" name="jTextField38">
+                                      <Events>
+                                        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextField38KeyReleased"/>
+                                      </Events>
                                     </Component>
                                     <Container class="javax.swing.JScrollPane" name="jScrollPane16">
                                       <AuxValues>

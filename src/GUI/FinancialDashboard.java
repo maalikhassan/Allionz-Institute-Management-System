@@ -546,6 +546,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             while (resultSet.next()) {
 
                 Vector<String> vector = new Vector<>();
+                
                 vector.add(resultSet.getString("id"));
                 vector.add(resultSet.getString("first_name") + " " + (resultSet.getString("last_name")));
                 vector.add(resultSet.getString("salary_details.base_salary"));

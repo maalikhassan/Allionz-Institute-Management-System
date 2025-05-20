@@ -3633,6 +3633,12 @@ public class AcademicDashboard extends javax.swing.JFrame {
             }
         });
 
+        jTextField38.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField38KeyReleased(evt);
+            }
+        });
+
         jTable14.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -5880,12 +5886,11 @@ public class AcademicDashboard extends javax.swing.JFrame {
                         //                    String newId;
                         ResultSet result1 = MySQL.executeSearch("SELECT student_id FROM students ORDER BY student_id DESC LIMIT 1");
                         if (result1.next()) {
-                            //                        String lastId = result.getString("student_id");
-                            //                        int idNum = Integer.parseInt(lastId.substring(2)) + 1;
-                            //                        newId = String.format("EM%03d", idNum);
+
                             MySQL.executeIUD("INSERT INTO`students` "
                                     + "(`first_name`, `last_name`, `nic`, `mobile`, `dob`, `guardian_mobile`, `enrollment_date`, `gender_id`, `address_line_1`,`address_line_2`,`AL_batch_batch_id`,`stream_stream_id`, `barcode_id`,`img_path`) "
                                     + "VALUES ('" + firstName + "', '" + lastName + "', '" + nic + "', '" + mobile + "', '" + sdf.format(dateOfBirth) + "', '" + guardianNumber + "','" + sdf.format(dateOfEnrollment) + "','" + genderId + "','" + addressLine1 + "','" + addressLine2 + "','" + BatchMap.get(batch) + "','" + StreamMap.get(stream) + "', '" + barcodeData + "','" + imgPath + "')");
+                            
                             JOptionPane.showMessageDialog(this, "Successfully registered", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                             loadStudents();
                             clearStudentReg();
@@ -9909,6 +9914,25 @@ public class AcademicDashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Failed to download document. Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton80ActionPerformed
+
+    private void jTextField38KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField38KeyReleased
+           try {
+            String searchText = jTextField38.getText().trim().toLowerCase();
+
+            DefaultTableModel dtm = (DefaultTableModel) jTable14.getModel();
+            TableRowSorter<DefaultTableModel> rowSorter = new TableRowSorter<>(dtm);
+
+            jTable14.setRowSorter(rowSorter);
+
+            if (searchText.isEmpty()) {
+                rowSorter.setRowFilter(null);
+            } else {
+                rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jTextField38KeyReleased
 
     private void filterStudentsComboBox(String searchText) {
         try {
