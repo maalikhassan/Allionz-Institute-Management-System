@@ -187,6 +187,8 @@ public class AcademicLogin extends javax.swing.JFrame {
             AcademicUserHandler academicUserHandler = new AcademicUserHandler();
             if (academicUserHandler.academiclogin(username, fullname, password)) {
                 
+                AcademicDashboard ACD = new AcademicDashboard();
+                this.dispose();
                 // System Log
                 try {
                     ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` INNER JOIN `usertypes` ON"
@@ -206,9 +208,9 @@ public class AcademicLogin extends javax.swing.JFrame {
                 }
                 
                 JOptionPane.showMessageDialog(this, "Welcome, '" + AcademicUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
-                AcademicDashboard ACD = new AcademicDashboard();
+               
                 ACD.setVisible(true);
-                this.dispose();
+                
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Warning", JOptionPane.WARNING_MESSAGE);
                 jPasswordField1.setText("");

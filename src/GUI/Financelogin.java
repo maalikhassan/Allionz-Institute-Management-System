@@ -255,6 +255,7 @@ public class Financelogin extends javax.swing.JFrame {
 
             FinancialUserHandler financialUserHandler = new FinancialUserHandler();
             if (financialUserHandler.financelogin(username, fullname, password)) {
+                this.dispose();
                 JOptionPane.showMessageDialog(this, "Welcome, '" + FinancialUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
                 
                 // System Log
@@ -277,7 +278,7 @@ public class Financelogin extends javax.swing.JFrame {
                 
                 FinancialDashboard FD = new FinancialDashboard();
                 FD.setVisible(true);
-                this.dispose();
+                
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Warning", JOptionPane.WARNING_MESSAGE);
                 jPasswordField1.setText("");

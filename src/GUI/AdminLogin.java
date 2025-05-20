@@ -196,6 +196,8 @@ public class AdminLogin extends javax.swing.JFrame {
 
             AdminUserHandler adminUserHandler = new AdminUserHandler();
             if (adminUserHandler.adminlogin(username, fullname, password)) {
+                AdminDashboard AD = new AdminDashboard();
+                this.dispose();
                 
                 // System Log
                 try {
@@ -206,19 +208,16 @@ public class AdminLogin extends javax.swing.JFrame {
                         String description = "Admin Login";
                         String user = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
                         String userType = resultSet.getString("usertypes.user_type_name");
-                        
+
                         MySQL.executeIUD("INSERT INTO `system_logs`(`timestamp`,`activity`,`user_name`,`user_type`)"
-                                + "VALUES ('"+ SystemDateTime +"','"+ description +"','"+ user +"','"+ userType +"')");
+                                + "VALUES ('" + SystemDateTime + "','" + description + "','" + user + "','" + userType + "')");
                     }
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                
-                JOptionPane.showMessageDialog(this, "Welcome, '" + AdminUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
-                AdminDashboard AD = new AdminDashboard();
+JOptionPane.showMessageDialog(this, "Welcome, '" + AdminUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
                 AD.setVisible(true);
-                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Warning", JOptionPane.WARNING_MESSAGE);
                 jPasswordField1.setText("");
