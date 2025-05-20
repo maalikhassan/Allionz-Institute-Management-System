@@ -198,7 +198,7 @@ public class AdminLogin extends javax.swing.JFrame {
             if (adminUserHandler.adminlogin(username, fullname, password)) {
                 AdminDashboard AD = new AdminDashboard();
                 this.dispose();
-                
+
                 // System Log
                 try {
                     ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` INNER JOIN `usertypes` ON"
@@ -216,7 +216,7 @@ public class AdminLogin extends javax.swing.JFrame {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-JOptionPane.showMessageDialog(this, "Welcome, '" + AdminUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Welcome, '" + AdminUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
                 AD.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Warning", JOptionPane.WARNING_MESSAGE);

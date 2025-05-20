@@ -255,9 +255,10 @@ public class Financelogin extends javax.swing.JFrame {
 
             FinancialUserHandler financialUserHandler = new FinancialUserHandler();
             if (financialUserHandler.financelogin(username, fullname, password)) {
-                this.dispose();
-                JOptionPane.showMessageDialog(this, "Welcome, '" + FinancialUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
                 
+                FinancialDashboard FD = new FinancialDashboard();
+                this.dispose();
+                 
                 // System Log
                 try {
                     ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` INNER JOIN `usertypes` ON"
@@ -276,8 +277,9 @@ public class Financelogin extends javax.swing.JFrame {
                     e.printStackTrace();
                 }
                 
-                FinancialDashboard FD = new FinancialDashboard();
-                FD.setVisible(true);
+               JOptionPane.showMessageDialog(this, "Welcome, '" + FinancialUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
+              
+               FD.setVisible(true);
                 
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Warning", JOptionPane.WARNING_MESSAGE);
