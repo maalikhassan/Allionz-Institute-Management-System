@@ -155,7 +155,7 @@ public class otherEmployees extends javax.swing.JFrame {
         jLabel2.setText("Other Employees");
 
         jLabel3.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        jLabel3.setText("Welcome, Ashan");
+        jLabel3.setText("Welcome, Admin");
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

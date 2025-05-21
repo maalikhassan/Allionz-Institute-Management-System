@@ -139,7 +139,7 @@ public class loginRegistration extends javax.swing.JFrame {
         jLabel2.setText("IMS Login Access");
 
         jLabel3.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        jLabel3.setText("Welcome, Ashan");
+        jLabel3.setText("Welcome, Admin");
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
