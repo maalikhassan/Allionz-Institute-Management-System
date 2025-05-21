@@ -5787,19 +5787,6 @@ public class FinancialDashboard extends javax.swing.JFrame {
             MySQL.executeIUD("INSERT INTO salary (employee_user_id, salary_details_id, net_amount, payment_date, month_id, payment_status_id, epf_etf_balance) "
                     + "VALUES ('" + employee_user_id + "', '" + salaryDetailsId + "', '" + netPay + "', '" + formattedDate + "', '" + LoadMonthMap.get(month) + "', '" + LoadStatusmap.get(status) + "', '" + savings + "')");
 
-            DefaultTableModel model = (DefaultTableModel) jTable18.getModel();
-            Vector<Object> row = new Vector<>();
-            row.add(month);
-            row.add(formattedDate.split(" ")[0]);
-            row.add(jLabel79.getText());
-            row.add(baseSalary);
-            row.add(allowance);
-            row.add(totalEarnings);
-            row.add(calc.getETF());
-            row.add(calc.getEPF());
-            row.add(netPay);
-            row.add(status);
-            model.addRow(row);
 
             int confirmPrint = JOptionPane.showConfirmDialog(this, "Do you want to print the paysheet now?", "Print Paysheet", JOptionPane.YES_NO_OPTION);
             if (confirmPrint == JOptionPane.YES_OPTION) {

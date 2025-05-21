@@ -645,9 +645,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jPanel8" alignment="1" pref="256" max="32767" attributes="0"/>
-                              <Component id="jPanel7" alignment="1" pref="256" max="32767" attributes="0"/>
-                              <Component id="jPanel13" alignment="1" pref="256" max="32767" attributes="0"/>
+                              <Component id="jPanel8" alignment="1" pref="261" max="32767" attributes="0"/>
+                              <Component id="jPanel7" alignment="1" pref="261" max="32767" attributes="0"/>
+                              <Component id="jPanel13" alignment="1" pref="261" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -5463,7 +5463,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <EmptySpace min="0" pref="929" max="32767" attributes="0"/>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Component id="jPanel17" alignment="0" pref="967" max="32767" attributes="0"/>
+                      <Component id="jPanel17" alignment="0" pref="970" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -5471,7 +5471,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <EmptySpace min="0" pref="564" max="32767" attributes="0"/>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Component id="jPanel17" alignment="0" pref="599" max="32767" attributes="0"/>
+                      <Component id="jPanel17" alignment="0" pref="613" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
