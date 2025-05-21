@@ -5741,24 +5741,65 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String baseSalaryAmount = jFormattedTextField4.getText().trim();
             String allowanceAmount = jFormattedTextField3.getText().trim();
 
+            // Basic field validation
             if (baseSalaryAmount.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please select an employee first!", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }
+
             if (jDateChooser2.getDate() == null) {
                 JOptionPane.showMessageDialog(this, "Please select a valid payment date!", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }
+
             String month = String.valueOf(jComboBox16.getSelectedItem());
             String status = String.valueOf(jComboBox17.getSelectedItem());
+
             if (month.equals("Select Month") || status.equals("Select Status")) {
                 JOptionPane.showMessageDialog(this, "Please select valid month and status!", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            double baseSalary = Double.parseDouble(baseSalaryAmount);
-            double allowance = allowanceAmount.isEmpty() ? 0.0 : Double.parseDouble(allowanceAmount);
+            // Numeric validations
+            double baseSalary;
+            double allowance = 0.0;
 
+            try {
+                baseSalary = Double.parseDouble(baseSalaryAmount);
+                if (baseSalary <= 0) {
+                    JOptionPane.showMessageDialog(this, "Base salary must be greater than zero!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Invalid base salary entered!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (!allowanceAmount.isEmpty()) {
+                try {
+                    allowance = Double.parseDouble(allowanceAmount);
+                    if (allowance < 0) {
+                        JOptionPane.showMessageDialog(this, "Allowance cannot be negative!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+
+                    // Optional: Allowance shouldn't exceed 50% of base salary
+                    if (allowance > baseSalary * 0.5) {
+                        int confirm = JOptionPane.showConfirmDialog(this,
+                                "Allowance seems unusually high (> 50% of base salary). Continue?",
+                                "Allowance Warning", JOptionPane.YES_NO_OPTION);
+                        if (confirm != JOptionPane.YES_OPTION) {
+                            return;
+                        }
+                    }
+
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Invalid allowance entered!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
+
+            // Proceed with calculation
             SalaryCalculation calc = new SalaryCalculation();
             calc.setBaseSalary(baseSalary);
             calc.setAllowance(allowance);
@@ -5775,6 +5816,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String employee_user_id = jLabel80.getText();
             String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
+            // Get salary details ID
             String salaryDetailsId = null;
             ResultSet rs = MySQL.executeSearch("SELECT id FROM salary_details WHERE base_salary = '" + baseSalary + "'");
             if (rs.next()) {
@@ -5784,10 +5826,22 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 return;
             }
 
+            // Check for duplicate salary entry for the same employee and month
+            String selectedMonthId = LoadMonthMap.get(month);
+            ResultSet checkRs = MySQL.executeSearch("SELECT * FROM salary WHERE employee_user_id = '" + employee_user_id + "' AND month_id = '" + selectedMonthId + "'");
+
+            if (checkRs.next()) {
+                JOptionPane.showMessageDialog(this,
+                        "A salary record for this employee in the selected month already exists!",
+                        "Duplicate Entry", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+// No duplicate found, proceed with insert
             MySQL.executeIUD("INSERT INTO salary (employee_user_id, salary_details_id, net_amount, payment_date, month_id, payment_status_id, epf_etf_balance) "
-                    + "VALUES ('" + employee_user_id + "', '" + salaryDetailsId + "', '" + netPay + "', '" + formattedDate + "', '" + LoadMonthMap.get(month) + "', '" + LoadStatusmap.get(status) + "', '" + savings + "')");
+                    + "VALUES ('" + employee_user_id + "', '" + salaryDetailsId + "', '" + netPay + "', '" + formattedDate + "', '" + selectedMonthId + "', '" + LoadStatusmap.get(status) + "', '" + savings + "')");
 
-
+            // Prompt for printing
             int confirmPrint = JOptionPane.showConfirmDialog(this, "Do you want to print the paysheet now?", "Print Paysheet", JOptionPane.YES_NO_OPTION);
             if (confirmPrint == JOptionPane.YES_OPTION) {
                 long invoiceId = System.currentTimeMillis();
@@ -5825,6 +5879,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             }
             logger.log(Level.SEVERE, "Failed to calculate salary or print paysheet", e);
         }
+
 
     }//GEN-LAST:event_jButton24ActionPerformed
 
@@ -7946,7 +8001,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jTextArea1.setText("");
         jFormattedTextField9.setText("");
         jComboBox14.setSelectedIndex(0);
-        
+
         jLabel103.setText("");
         jLabel75.setText("");
         jLabel79.setText("");
