@@ -352,10 +352,16 @@ public class AdminDashboard extends javax.swing.JFrame {
         int totalAbsent = 0;
 
         try {
-            // Use your MySQL.executeSearch method to retrieve data
-            ResultSet rs = MySQL.executeSearch("SELECT status, COUNT(*) AS count FROM `student_attendance` GROUP BY `status`");
+            // Query attendance counts for the current month and year
+            ResultSet rs = MySQL.executeSearch(
+                    "SELECT status, COUNT(*) AS count "
+                    + "FROM `student_attendance` "
+                    + "WHERE MONTH(`attendance_date`) = MONTH(CURRENT_DATE()) "
+                    + "AND YEAR(`attendance_date`) = YEAR(CURRENT_DATE()) "
+                    + "GROUP BY `status`"
+            );
 
-            // Process the ResultSet
+            // Process results
             while (rs.next()) {
                 String status = rs.getString("status");
                 int count = rs.getInt("count");
@@ -373,45 +379,42 @@ public class AdminDashboard extends javax.swing.JFrame {
             return;
         }
 
-        // Create the dataset for attendance
+        // Create pie chart dataset
         DefaultPieDataset dataset = new DefaultPieDataset();
         dataset.setValue("Attend", totalAttend);
         dataset.setValue("Absent", totalAbsent);
 
-        // Create the Pie Chart
+        // Create pie chart
         JFreeChart pieChart = ChartFactory.createPieChart(
-                "Attendance", // Chart title
-                dataset, // Dataset
-                true, // Include legend
-                true, // Include tooltips
-                false // Don't include URLs
+                "Monthly Attendance", // Title
+                dataset,
+                true, // Legend
+                true, // Tooltips
+                false // URLs
         );
 
-        // Customize the Pie Chart
+        // Customize chart
         PiePlot plot = (PiePlot) pieChart.getPlot();
-        plot.setSectionPaint("Attend", Color.GREEN);   // Green for Attend
-        plot.setSectionPaint("Absent", Color.RED);     // Red for Absent
+        plot.setSectionPaint("Attend", Color.GREEN);
+        plot.setSectionPaint("Absent", Color.RED);
 
-        // Render the chart as a BufferedImage
+        // Render chart to image
         BufferedImage chartImage = pieChart.createBufferedImage(jPanel9.getWidth(), jPanel9.getHeight());
-
-        // Create an ImageIcon from the BufferedImage
         ImageIcon chartIcon = new ImageIcon(chartImage);
 
-        // Add the ImageIcon to jPanel9
+        // Add chart to panel
         JLabel chartLabel = new JLabel(chartIcon);
-        jPanel9.removeAll();  // Clear existing components
+        jPanel9.removeAll();
         jPanel9.setLayout(new java.awt.BorderLayout());
         jPanel9.add(chartLabel, java.awt.BorderLayout.CENTER);
-        jPanel9.validate();   // Refresh the panel
+        jPanel9.validate();
 
-        // Set the text for jLabel28 (Attend) with dark green color
+        // Update labels
         jLabel29.setText("Attend: " + totalAttend);
-        jLabel29.setForeground(new Color(0, 100, 0));  // Dark green color
+        jLabel29.setForeground(new Color(0, 100, 0));
 
-        // Set the text for jLabel29 (Absent) with dark red color
         jLabel53.setText("Absent: " + totalAbsent);
-        jLabel53.setForeground(new Color(139, 0, 0));  // Dark red color
+        jLabel53.setForeground(new Color(139, 0, 0));
     }
 
     private void loadChartIntoPanel() {
@@ -535,8 +538,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
 //            ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `teachers` "
 //                    + "INNER JOIN `gender` ON `teachers`.`gender_id` WHERE `mobile` LIKE '" + searchTerm + "%'");
-
-ResultSet resultSet = MySQL.executeSearch("SELECT *FROM teachers INNER JOIN gender ON gender.id=teachers.gender_id");
+            ResultSet resultSet = MySQL.executeSearch("SELECT *FROM teachers INNER JOIN gender ON gender.id=teachers.gender_id");
             // Get the table model and clear existing rows
             DefaultTableModel model = (DefaultTableModel) jTable14.getModel();
             model.setRowCount(0);
@@ -3728,78 +3730,77 @@ ResultSet resultSet = MySQL.executeSearch("SELECT *FROM teachers INNER JOIN gend
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // Backup button:
         new Thread(new Runnable() {
-    @Override
-    public void run() {
-            jProgressBar1.setIndeterminate(true);
+            @Override
+            public void run() {
+                jProgressBar1.setIndeterminate(true);
 
-        try {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Select Save Location");
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                try {
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setDialogTitle("Select Save Location");
+                    fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-            // Set default file name
-            fileChooser.setSelectedFile(new java.io.File("backup.sql"));
+                    // Set default file name
+                    fileChooser.setSelectedFile(new java.io.File("backup.sql"));
 
-            int userSelection = fileChooser.showSaveDialog(null);
+                    int userSelection = fileChooser.showSaveDialog(null);
 
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                java.io.File fileToSave = fileChooser.getSelectedFile();
-                String path = fileToSave.getAbsolutePath();
+                    if (userSelection == JFileChooser.APPROVE_OPTION) {
+                        java.io.File fileToSave = fileChooser.getSelectedFile();
+                        String path = fileToSave.getAbsolutePath();
 
-                // Ensure the file has a .sql extension
-                if (!path.endsWith(".sql")) {
-                    path += ".sql";
-                }
+                        // Ensure the file has a .sql extension
+                        if (!path.endsWith(".sql")) {
+                            path += ".sql";
+                        }
 
-                String host = "mysql-2058cc20-maalikhassan132-a8e9.b.aivencloud.com"; //YourUsername
-                String port = "22390"; //Port expam
-                String database = "u272822984_ims";//Database name
-                String user = "avnadmin"; //Username
-                String password = "AVNS_bLl3HiSKuA5KERCnvCK";//Password
-                String mysqldumpPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump"; // Adjust path to mysqldump
+                        String host = "mysql-2058cc20-maalikhassan132-a8e9.b.aivencloud.com"; //YourUsername
+                        String port = "22390"; //Port expam
+                        String database = "u272822984_ims";//Database name
+                        String user = "avnadmin"; //Username
+                        String password = "AVNS_bLl3HiSKuA5KERCnvCK";//Password
+                        String mysqldumpPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump"; // Adjust path to mysqldump
 
-                // Build the command
-                List <String> command = Arrays.asList(
-                    mysqldumpPath,
-                    "-h", host,
-                    "-P", port,
-                    "-u", user,
-                    "-p" + password,
-                    database
-                );
+                        // Build the command
+                        List<String> command = Arrays.asList(
+                                mysqldumpPath,
+                                "-h", host,
+                                "-P", port,
+                                "-u", user,
+                                "-p" + password,
+                                database
+                        );
 
-                // Execute the command
-                ProcessBuilder processBuilder = new ProcessBuilder(command);
-                processBuilder.redirectErrorStream(true); // Merge stdout and stderr
-                Process process = processBuilder.start();
+                        // Execute the command
+                        ProcessBuilder processBuilder = new ProcessBuilder(command);
+                        processBuilder.redirectErrorStream(true); // Merge stdout and stderr
+                        Process process = processBuilder.start();
 
-                // Capture the output and write to the file
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                     BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        writer.write(line);
-                        writer.newLine();
+                        // Capture the output and write to the file
+                        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream())); BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                writer.write(line);
+                                writer.newLine();
+                            }
+                        }
+
+                        int exitCode = process.waitFor();
+                        if (exitCode == 0) {
+                            JOptionPane.showMessageDialog(null, "Backup Completed", "Backup", JOptionPane.INFORMATION_MESSAGE);
+                            System.out.println("Backup saved at: " + path);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Backup failed with exit code: " + exitCode, "Backup", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Backup", JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
+                } finally {
+                    jProgressBar1.setIndeterminate(false);
                 }
 
-                int exitCode = process.waitFor();
-                if (exitCode == 0) {
-                    JOptionPane.showMessageDialog(null, "Backup Completed", "Backup", JOptionPane.INFORMATION_MESSAGE);
-                    System.out.println("Backup saved at: " + path);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Backup failed with exit code: " + exitCode, "Backup", JOptionPane.ERROR_MESSAGE);
-                }
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Backup", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        } finally {
-            jProgressBar1.setIndeterminate(false);
-        }
-
-    }
-}).start();
+        }).start();
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -3935,7 +3936,7 @@ ResultSet resultSet = MySQL.executeSearch("SELECT *FROM teachers INNER JOIN gend
 //        this.dispose();
         otherEmployees FR = new otherEmployees();
         FR.setVisible(true);
-        
+
     }//GEN-LAST:event_jButton39ActionPerformed
 
     private void jButton31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton31ActionPerformed
@@ -4679,7 +4680,7 @@ ResultSet resultSet = MySQL.executeSearch("SELECT *FROM teachers INNER JOIN gend
     private void jTextField8KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField8KeyReleased
         String searchTerm = jTextField8.getText();
 
-           try {
+        try {
             String searchText = jTextField8.getText().trim().toLowerCase();
 
             DefaultTableModel dtm = (DefaultTableModel) jTable14.getModel();
