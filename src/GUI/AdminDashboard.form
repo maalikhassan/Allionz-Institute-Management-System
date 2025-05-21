@@ -3936,18 +3936,17 @@
                               <Group type="102" attributes="0">
                                   <EmptySpace pref="281" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jProgressBar1" min="-2" max="-2" attributes="0"/>
-                                      <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="jLabel22" max="32767" attributes="0"/>
-                                              <Component id="jButton3" min="-2" pref="150" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="jButton4" min="-2" pref="150" max="-2" attributes="0"/>
-                                              <Component id="jLabel21" min="-2" pref="150" max="-2" attributes="0"/>
-                                          </Group>
+                                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jLabel22" max="32767" attributes="0"/>
+                                          <Component id="jButton3" min="-2" pref="150" max="-2" attributes="0"/>
                                       </Group>
+                                      <Component id="jProgressBar1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jProgressBar2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jButton4" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Component id="jLabel21" min="-2" pref="150" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace pref="281" max="32767" attributes="0"/>
                               </Group>
@@ -3967,7 +3966,10 @@
                                       <Component id="jLabel22" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                                  <Component id="jProgressBar1" min="-2" pref="17" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jProgressBar1" pref="17" max="32767" attributes="0"/>
+                                      <Component id="jProgressBar2" max="32767" attributes="0"/>
+                                  </Group>
                                   <EmptySpace pref="113" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -4014,6 +4016,8 @@
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JProgressBar" name="jProgressBar1">
+                        </Component>
+                        <Component class="javax.swing.JProgressBar" name="jProgressBar2">
                         </Component>
                       </SubComponents>
                     </Container>

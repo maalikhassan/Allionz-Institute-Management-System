@@ -12,9 +12,12 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import javax.swing.ImageIcon;
@@ -1310,6 +1313,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
+        jProgressBar2 = new javax.swing.JProgressBar();
         profilepanel = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
         profilepiclabel = new javax.swing.JLabel();
@@ -3331,15 +3335,15 @@ public class AdminDashboard extends javax.swing.JFrame {
             .addGroup(jPanel28Layout.createSequentialGroup()
                 .addContainerGap(281, Short.MAX_VALUE)
                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel28Layout.createSequentialGroup()
-                        .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(100, 100, 100)
-                        .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(100, 100, 100)
+                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(281, Short.MAX_VALUE))
         );
         jPanel28Layout.setVerticalGroup(
@@ -3354,7 +3358,9 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel21)
                     .addComponent(jLabel22))
                 .addGap(35, 35, 35)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
+                    .addComponent(jProgressBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(113, Short.MAX_VALUE))
         );
 
@@ -3724,7 +3730,105 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        // Restore Button:
+        new Thread(() -> {
+        jProgressBar2.setIndeterminate(true);
+
+        try {
+            // Step 1: Confirm with user
+            int confirm = JOptionPane.showConfirmDialog(
+                null,
+                "WARNING: This will overwrite existing database data.\nAre you sure you want to proceed?",
+                "Confirm Restore",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            if (confirm != JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(null, "Restore cancelled.", "Cancelled", JOptionPane.INFORMATION_MESSAGE);
+                jProgressBar2.setIndeterminate(false);
+                return;
+            }
+
+            // Step 2: Choose backup .sql file
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Select SQL File to Restore");
+
+            int userSelection = fileChooser.showOpenDialog(null);
+            if (userSelection != JFileChooser.APPROVE_OPTION) {
+                jProgressBar2.setIndeterminate(false);
+                return;
+            }
+
+            java.io.File backupFile = fileChooser.getSelectedFile();
+            String filePath = backupFile.getAbsolutePath();
+
+            // Step 3: DB credentials and command
+            String host = "mysql-2058cc20-maalikhassan132-a8e9.b.aivencloud.com";
+            String port = "22390";
+            String database = "u272822984_ims";
+            String user = "avnadmin";
+            String password = "AVNS_bLl3HiSKuA5KERCnvCK";
+            String mysqlPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql";
+
+            List<String> command = Arrays.asList(
+                mysqlPath,
+                "--user=" + user,
+                "--password=" + password,
+                "--host=" + host,
+                "--port=" + port,
+                "--ssl-mode=REQUIRED",
+                database
+            );
+
+            // Step 4: Start the process
+            ProcessBuilder pb = new ProcessBuilder(command);
+            pb.redirectErrorStream(true);
+            Process process = pb.start();
+
+            // Step 5: Capture and print the error stream (important!)
+            new Thread(() -> {
+                try (BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                    String line;
+                    while ((line = errorReader.readLine()) != null) {
+                        System.out.println("MYSQL OUTPUT: " + line); // Log mysql output
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+
+            // Step 6: Write SQL file into process
+            try (
+                BufferedReader sqlReader = new BufferedReader(new FileReader(filePath));
+                BufferedWriter sqlWriter = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()))
+            ) {
+                String line;
+                while ((line = sqlReader.readLine()) != null) {
+                    sqlWriter.write(line);
+                    sqlWriter.newLine();
+                }
+                sqlWriter.flush();
+                sqlWriter.close(); // Now it’s safe to close after writing
+            }
+
+            int exitCode = process.waitFor();
+            if (exitCode == 0) {
+                JOptionPane.showMessageDialog(null, "Restore completed successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Restore failed. Exit code: " + exitCode, "Failure", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (IOException ioe) {
+            JOptionPane.showMessageDialog(null, "Restore failed due to I/O error: " + ioe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ioe.printStackTrace();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Unexpected error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        } finally {
+            jProgressBar2.setIndeterminate(false);
+        }
+    }).start();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -3762,13 +3866,20 @@ public class AdminDashboard extends javax.swing.JFrame {
 
                         // Build the command
                         List<String> command = Arrays.asList(
-                                mysqldumpPath,
-                                "-h", host,
-                                "-P", port,
-                                "-u", user,
-                                "-p" + password,
-                                database
-                        );
+                        mysqldumpPath,
+                        "--user=" + user,
+                        "--password=" + password,
+                        "--host=" + host,
+                        "--port=" + port,
+                        "--ssl-mode=REQUIRED",                 // SSL mode for Aiven
+                        "--databases", database,
+                        "--single-transaction",
+                        "--routines",
+                        "--triggers",
+                        "--events",
+                        "--complete-insert",
+                        "--set-gtid-purged=OFF"                // Avoid GTID issues
+                    );
 
                         // Execute the command
                         ProcessBuilder processBuilder = new ProcessBuilder(command);
@@ -3801,7 +3912,6 @@ public class AdminDashboard extends javax.swing.JFrame {
 
             }
         }).start();
-
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
@@ -5170,6 +5280,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
