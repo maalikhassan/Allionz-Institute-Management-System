@@ -1536,7 +1536,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addComponent(menu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(menu5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
                 .addComponent(jButton32)
                 .addGap(20, 20, 20))
         );
@@ -1565,7 +1565,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGroup(DashboardconstantpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DashboardconstantpanelLayout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(719, Short.MAX_VALUE))
+                        .addContainerGap(740, Short.MAX_VALUE))
                     .addGroup(DashboardconstantpanelLayout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1930,7 +1930,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             .addGroup(jPanel21Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 916, Short.MAX_VALUE)
+                    .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE)
                     .addGroup(jPanel21Layout.createSequentialGroup()
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -2003,7 +2003,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             .addGroup(jPanel22Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 916, Short.MAX_VALUE)
+                    .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE)
                     .addGroup(jPanel22Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel37)
@@ -2102,7 +2102,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel38)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 926, Short.MAX_VALUE))
+                    .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel23Layout.setVerticalGroup(
@@ -2198,7 +2198,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel39)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField24, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 926, Short.MAX_VALUE))
+                    .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel36Layout.setVerticalGroup(
@@ -2237,9 +2237,9 @@ public class AdminDashboard extends javax.swing.JFrame {
         managementpanelLayout.setHorizontalGroup(
             managementpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(managementpanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane4)
-                .addContainerGap())
+                .addGap(0, 0, 0)
+                .addComponent(jTabbedPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         managementpanelLayout.setVerticalGroup(
             managementpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2291,7 +2291,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE))
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE))
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton10)
@@ -2365,7 +2365,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel45)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -2426,13 +2426,13 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 570, Short.MAX_VALUE)
+                        .addGap(0, 574, Short.MAX_VALUE)
                         .addComponent(jButton6)
                         .addGap(61, 61, 61)
                         .addComponent(jLabel46)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -2493,13 +2493,13 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                        .addGap(0, 570, Short.MAX_VALUE)
+                        .addGap(0, 574, Short.MAX_VALUE)
                         .addComponent(jButton15)
                         .addGap(61, 61, 61)
                         .addComponent(jLabel33)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
@@ -2560,13 +2560,13 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel29Layout.createSequentialGroup()
-                        .addGap(0, 570, Short.MAX_VALUE)
+                        .addGap(0, 574, Short.MAX_VALUE)
                         .addComponent(jButton17)
                         .addGap(61, 61, 61)
                         .addComponent(jLabel47)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel29Layout.setVerticalGroup(
@@ -2594,7 +2594,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 518, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Academic", jPanel14);
@@ -2746,7 +2746,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel32Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
                     .addGroup(jPanel32Layout.createSequentialGroup()
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
@@ -2836,7 +2836,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel49)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 346, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 345, Short.MAX_VALUE)
                         .addComponent(jButton34)
                         .addGap(53, 53, 53)
                         .addComponent(jLabel54)
@@ -2919,7 +2919,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel50)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 315, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 323, Short.MAX_VALUE)
                         .addComponent(jButton22)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton23)
@@ -3027,7 +3027,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel55)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE))
+                    .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel34Layout.setVerticalGroup(
@@ -3102,7 +3102,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel35Layout.createSequentialGroup()
                 .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 931, Short.MAX_VALUE)
+                    .addComponent(jScrollPane18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE)
                     .addGroup(jPanel35Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -3167,7 +3167,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 925, Short.MAX_VALUE)
+                    .addComponent(jScrollPane16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton36, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -3556,7 +3556,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         changingpanel.setLayout(changingpanelLayout);
         changingpanelLayout.setHorizontalGroup(
             changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 949, Short.MAX_VALUE)
+            .addGap(0, 974, Short.MAX_VALUE)
             .addGroup(changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(changingpanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -3575,14 +3575,13 @@ public class AdminDashboard extends javax.swing.JFrame {
             .addGroup(changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(changingpanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(managementpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                    .addComponent(managementpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addGroup(changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(overviewpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         changingpanelLayout.setVerticalGroup(
             changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 517, Short.MAX_VALUE)
+            .addGap(0, 535, Short.MAX_VALUE)
             .addGroup(changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(changingpanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -3613,7 +3612,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(menupanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Dashboardconstantpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(changingpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -3623,7 +3622,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             .addComponent(menupanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(Dashboardconstantpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(changingpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
