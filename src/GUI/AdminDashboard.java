@@ -156,7 +156,10 @@ public class AdminDashboard extends javax.swing.JFrame {
         //Set visible flase fields
         jLabel30.setVisible(false);
         jLabel35.setVisible(false);
-
+        jComboBox6.setSelectedItem("All Months");
+        loadSalariesByMonth("All Months");
+        jComboBox7.setSelectedItem("All Months");
+        loadAllSalaryData();
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(SwingConstants.CENTER);
         jTable12.setDefaultRenderer(Object.class, render);
@@ -1569,7 +1572,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addGroup(DashboardconstantpanelLayout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel44)
+                        .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32))))
@@ -1584,7 +1587,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(jLabel10)
                     .addComponent(jLabel44))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         overviewpanel.setMinimumSize(new java.awt.Dimension(974, 535));
@@ -1949,7 +1952,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel36))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
@@ -2020,7 +2023,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel37))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
@@ -2120,7 +2123,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addComponent(jLabel42)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
@@ -2211,7 +2214,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel39))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane21, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
@@ -2727,11 +2730,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         jComboBox3.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox3ItemStateChanged(evt);
-            }
-        });
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
             }
         });
 
@@ -3285,7 +3283,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel40))
                 .addGap(16, 16, 16)
                 .addComponent(jScrollPane31, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Activity Log", jPanel6);
@@ -3336,7 +3334,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         jPanel28Layout.setVerticalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel28Layout.createSequentialGroup()
-                .addContainerGap(141, Short.MAX_VALUE)
+                .addContainerGap(153, Short.MAX_VALUE)
                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -3348,7 +3346,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
                     .addComponent(jProgressBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Backup", jPanel28);
@@ -3549,7 +3547,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             profilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 500, Short.MAX_VALUE)
             .addGroup(profilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE))
+                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout changingpanelLayout = new javax.swing.GroupLayout(changingpanel);
@@ -3581,7 +3579,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         );
         changingpanelLayout.setVerticalGroup(
             changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 535, Short.MAX_VALUE)
+            .addGap(0, 559, Short.MAX_VALUE)
             .addGroup(changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(changingpanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -3603,7 +3601,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addComponent(managementpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
             .addGroup(changingpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(overviewpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(overviewpanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -3718,103 +3716,101 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // Restore Button:
         new Thread(() -> {
-        jProgressBar2.setIndeterminate(true);
+            jProgressBar2.setIndeterminate(true);
 
-        try {
-            // Step 1: Confirm with user
-            int confirm = JOptionPane.showConfirmDialog(
-                null,
-                "WARNING: This will overwrite existing database data.\nAre you sure you want to proceed?",
-                "Confirm Restore",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE
-            );
+            try {
+                // Step 1: Confirm with user
+                int confirm = JOptionPane.showConfirmDialog(
+                        null,
+                        "WARNING: This will overwrite existing database data.\nAre you sure you want to proceed?",
+                        "Confirm Restore",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE
+                );
 
-            if (confirm != JOptionPane.YES_OPTION) {
-                JOptionPane.showMessageDialog(null, "Restore cancelled.", "Cancelled", JOptionPane.INFORMATION_MESSAGE);
-                jProgressBar2.setIndeterminate(false);
-                return;
-            }
+                if (confirm != JOptionPane.YES_OPTION) {
+                    JOptionPane.showMessageDialog(null, "Restore cancelled.", "Cancelled", JOptionPane.INFORMATION_MESSAGE);
+                    jProgressBar2.setIndeterminate(false);
+                    return;
+                }
 
-            // Step 2: Choose backup .sql file
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Select SQL File to Restore");
+                // Step 2: Choose backup .sql file
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setDialogTitle("Select SQL File to Restore");
 
-            int userSelection = fileChooser.showOpenDialog(null);
-            if (userSelection != JFileChooser.APPROVE_OPTION) {
-                jProgressBar2.setIndeterminate(false);
-                return;
-            }
+                int userSelection = fileChooser.showOpenDialog(null);
+                if (userSelection != JFileChooser.APPROVE_OPTION) {
+                    jProgressBar2.setIndeterminate(false);
+                    return;
+                }
 
-            java.io.File backupFile = fileChooser.getSelectedFile();
-            String filePath = backupFile.getAbsolutePath();
+                java.io.File backupFile = fileChooser.getSelectedFile();
+                String filePath = backupFile.getAbsolutePath();
 
-            // Step 3: DB credentials and command
-            String host = "mysql-2058cc20-maalikhassan132-a8e9.b.aivencloud.com";
-            String port = "22390";
-            String database = "u272822984_ims";
-            String user = "avnadmin";
-            String password = "AVNS_bLl3HiSKuA5KERCnvCK";
-            String mysqlPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql";
+                // Step 3: DB credentials and command
+                String host = "mysql-2058cc20-maalikhassan132-a8e9.b.aivencloud.com";
+                String port = "22390";
+                String database = "u272822984_ims";
+                String user = "avnadmin";
+                String password = "AVNS_bLl3HiSKuA5KERCnvCK";
+                String mysqlPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql";
 
-            List<String> command = Arrays.asList(
-                mysqlPath,
-                "--user=" + user,
-                "--password=" + password,
-                "--host=" + host,
-                "--port=" + port,
-                "--ssl-mode=REQUIRED",
-                database
-            );
+                List<String> command = Arrays.asList(
+                        mysqlPath,
+                        "--user=" + user,
+                        "--password=" + password,
+                        "--host=" + host,
+                        "--port=" + port,
+                        "--ssl-mode=REQUIRED",
+                        database
+                );
 
-            // Step 4: Start the process
-            ProcessBuilder pb = new ProcessBuilder(command);
-            pb.redirectErrorStream(true);
-            Process process = pb.start();
+                // Step 4: Start the process
+                ProcessBuilder pb = new ProcessBuilder(command);
+                pb.redirectErrorStream(true);
+                Process process = pb.start();
 
-            // Step 5: Capture and print the error stream (important!)
-            new Thread(() -> {
-                try (BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                    String line;
-                    while ((line = errorReader.readLine()) != null) {
-                        System.out.println("MYSQL OUTPUT: " + line); // Log mysql output
+                // Step 5: Capture and print the error stream (important!)
+                new Thread(() -> {
+                    try (BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                        String line;
+                        while ((line = errorReader.readLine()) != null) {
+                            System.out.println("MYSQL OUTPUT: " + line); // Log mysql output
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                }).start();
+
+                // Step 6: Write SQL file into process
+                try (
+                        BufferedReader sqlReader = new BufferedReader(new FileReader(filePath)); BufferedWriter sqlWriter = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()))) {
+                    String line;
+                    while ((line = sqlReader.readLine()) != null) {
+                        sqlWriter.write(line);
+                        sqlWriter.newLine();
+                    }
+                    sqlWriter.flush();
+                    sqlWriter.close(); // Now it’s safe to close after writing
                 }
-            }).start();
 
-            // Step 6: Write SQL file into process
-            try (
-                BufferedReader sqlReader = new BufferedReader(new FileReader(filePath));
-                BufferedWriter sqlWriter = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()))
-            ) {
-                String line;
-                while ((line = sqlReader.readLine()) != null) {
-                    sqlWriter.write(line);
-                    sqlWriter.newLine();
+                int exitCode = process.waitFor();
+                if (exitCode == 0) {
+                    JOptionPane.showMessageDialog(null, "Restore completed successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Restore failed. Exit code: " + exitCode, "Failure", JOptionPane.ERROR_MESSAGE);
                 }
-                sqlWriter.flush();
-                sqlWriter.close(); // Now it’s safe to close after writing
-            }
 
-            int exitCode = process.waitFor();
-            if (exitCode == 0) {
-                JOptionPane.showMessageDialog(null, "Restore completed successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Restore failed. Exit code: " + exitCode, "Failure", JOptionPane.ERROR_MESSAGE);
+            } catch (IOException ioe) {
+                JOptionPane.showMessageDialog(null, "Restore failed due to I/O error: " + ioe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ioe.printStackTrace();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Unexpected error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            } finally {
+                jProgressBar2.setIndeterminate(false);
             }
-
-        } catch (IOException ioe) {
-            JOptionPane.showMessageDialog(null, "Restore failed due to I/O error: " + ioe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            ioe.printStackTrace();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Unexpected error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        } finally {
-            jProgressBar2.setIndeterminate(false);
-        }
-    }).start();
+        }).start();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -3852,20 +3848,20 @@ public class AdminDashboard extends javax.swing.JFrame {
 
                         // Build the command
                         List<String> command = Arrays.asList(
-                        mysqldumpPath,
-                        "--user=" + user,
-                        "--password=" + password,
-                        "--host=" + host,
-                        "--port=" + port,
-                        "--ssl-mode=REQUIRED",                 // SSL mode for Aiven
-                        "--databases", database,
-                        "--single-transaction",
-                        "--routines",
-                        "--triggers",
-                        "--events",
-                        "--complete-insert",
-                        "--set-gtid-purged=OFF"                // Avoid GTID issues
-                    );
+                                mysqldumpPath,
+                                "--user=" + user,
+                                "--password=" + password,
+                                "--host=" + host,
+                                "--port=" + port,
+                                "--ssl-mode=REQUIRED", // SSL mode for Aiven
+                                "--databases", database,
+                                "--single-transaction",
+                                "--routines",
+                                "--triggers",
+                                "--events",
+                                "--complete-insert",
+                                "--set-gtid-purged=OFF" // Avoid GTID issues
+                        );
 
                         // Execute the command
                         ProcessBuilder processBuilder = new ProcessBuilder(command);
@@ -4023,10 +4019,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField13ActionPerformed
-
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private void jButton39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton39ActionPerformed
 //        this.dispose();
@@ -4928,23 +4920,37 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox8ItemStateChanged
 
     private void jComboBox6ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox6ItemStateChanged
+        if (evt.getStateChange() == evt.SELECTED) {
+            loadSalariesByMonth(String.valueOf(jComboBox6.getSelectedItem()));
+        }
+    }//GEN-LAST:event_jComboBox6ItemStateChanged
+
+    private void loadSalariesByMonth(String selectedMonthName) {
         try {
-
-            String selectedMonthName = String.valueOf(jComboBox6.getSelectedItem());
-
             DefaultTableModel model = (DefaultTableModel) jTable10.getModel();
             model.setRowCount(0);
 
             String query;
 
             if (selectedMonthName.equals("All Months")) {
-
-                query = "SELECT * FROM `salary` INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id` INNER JOIN `month` ON `salary`.`month_id` = `month`.`id` INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id` INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id` WHERE `employee`.`employee_type_id`='3'";
+                query = "SELECT salary.id, employee.first_name, employee.last_name, salary_details.base_salary, "
+                        + "salary.net_amount, salary.payment_date, month.month_name, payment_status.status "
+                        + "FROM salary "
+                        + "INNER JOIN salary_details ON salary.salary_details_id = salary_details.id "
+                        + "INNER JOIN month ON salary.month_id = month.id "
+                        + "INNER JOIN payment_status ON salary.payment_status_id = payment_status.id "
+                        + "INNER JOIN employee ON salary.employee_user_id = employee.user_id "
+                        + "WHERE employee.employee_type_id = '3'";
             } else {
-
                 String selectedMonthId = FinanceRportMonthMap.get(selectedMonthName);
-                query = " SELECT * FROM `salary` INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id` INNER JOIN `month` ON `salary`.`month_id` = `month`.`id` INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id` INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
-                        + "WHERE `month`.`id` = '" + selectedMonthId + "' AND `employee`.`employee_type_id`='3'";
+                query = "SELECT salary.id, employee.first_name, employee.last_name, salary_details.base_salary, "
+                        + "salary.net_amount, salary.payment_date, month.month_name, payment_status.status "
+                        + "FROM salary "
+                        + "INNER JOIN salary_details ON salary.salary_details_id = salary_details.id "
+                        + "INNER JOIN month ON salary.month_id = month.id "
+                        + "INNER JOIN payment_status ON salary.payment_status_id = payment_status.id "
+                        + "INNER JOIN employee ON salary.employee_user_id = employee.user_id "
+                        + "WHERE month.id = '" + selectedMonthId + "' AND employee.employee_type_id = '3'";
             }
 
             ResultSet resultSet = MySQL.executeSearch(query);
@@ -4952,67 +4958,103 @@ public class AdminDashboard extends javax.swing.JFrame {
             while (resultSet.next()) {
                 Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("id"));
-                vector.add(resultSet.getString("employee.first_name") + " " + (resultSet.getString("employee.last_name")));
-                vector.add(resultSet.getString("salary_details.base_salary"));
+                vector.add(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
+                vector.add(resultSet.getString("base_salary"));
                 vector.add(resultSet.getString("net_amount"));
                 vector.add(resultSet.getString("payment_date"));
-                vector.add(resultSet.getString("month.month_name"));
-                vector.add(resultSet.getString("payment_status.status"));
+                vector.add(resultSet.getString("month_name"));
+                vector.add(resultSet.getString("status"));
                 model.addRow(vector);
             }
+
             getSum5();
+
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading salary data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jComboBox6ItemStateChanged
+    }
 
     private void jComboBox7ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox7ItemStateChanged
-        try {
-
+        if (evt.getStateChange() == evt.SELECTED) {
             String selectedMonthName = String.valueOf(jComboBox7.getSelectedItem());
 
+            if (selectedMonthName.equals("All Months")) {
+                loadAllSalaryData(); 
+            } else {
+                try {
+                    String selectedMonthId = FinanceRportMonthMap.get(selectedMonthName);
+
+                    DefaultTableModel model = (DefaultTableModel) jTable8.getModel();
+                    model.setRowCount(0);
+
+                    String query = "SELECT salary.id, employee.first_name, employee.last_name, salary_details.base_salary, "
+                            + "salary.net_amount, salary.payment_date, month.month_name, payment_status.status "
+                            + "FROM salary "
+                            + "INNER JOIN salary_details ON salary.salary_details_id = salary_details.id "
+                            + "INNER JOIN month ON salary.month_id = month.id "
+                            + "INNER JOIN payment_status ON salary.payment_status_id = payment_status.id "
+                            + "INNER JOIN employee ON salary.employee_user_id = employee.user_id "
+                            + "WHERE salary.month_id = '" + selectedMonthId + "' AND employee.employee_type_id IN ('1', '2', '4')";
+
+                    ResultSet resultSet = MySQL.executeSearch(query);
+
+                    while (resultSet.next()) {
+                        Vector<String> vector = new Vector<>();
+                        vector.add(resultSet.getString("id"));
+                        vector.add(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
+                        vector.add(resultSet.getString("base_salary"));
+                        vector.add(resultSet.getString("net_amount"));
+                        vector.add(resultSet.getString("payment_date"));
+                        vector.add(resultSet.getString("month_name"));
+                        vector.add(resultSet.getString("status"));
+                        model.addRow(vector);
+                    }
+
+                    getSum5();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }//GEN-LAST:event_jComboBox7ItemStateChanged
+
+    private void loadAllSalaryData() {
+        try {
             DefaultTableModel model = (DefaultTableModel) jTable8.getModel();
             model.setRowCount(0);
 
-            String query;
-
-            if (selectedMonthName.equals("All Months")) {
-
-                query = "SELECT * FROM `salary`"
-                        + "INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id`"
-                        + "INNER JOIN `month` ON `salary`.`month_id` = `month`.`id`"
-                        + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id`"
-                        + "INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
-                        + "WHERE `employee`.`employee_type_id` IN ('1', '2', '4');";
-            } else {
-
-                String selectedMonthId = FinanceRportMonthMap.get(selectedMonthName);
-                query = "SELECT * FROM `salary`"
-                        + "INNER JOIN `salary_details` ON `salary`.`salary_details_id` = `salary_details`.`id`"
-                        + "INNER JOIN `month` ON `salary`.`month_id` = `month`.`id`"
-                        + "INNER JOIN `payment_status` ON `salary`.`payment_status_id` = `payment_status`.`id`"
-                        + "INNER JOIN `employee` ON `salary`.`employee_user_id` = `employee`.`user_id`"
-                        + "WHERE month_id ='" + selectedMonthId + "' AND `employee`.`employee_type_id` IN ('1', '2', '4');";
-            }
+            String query = "SELECT salary.id, employee.first_name, employee.last_name, salary_details.base_salary, "
+                    + "salary.net_amount, salary.payment_date, month.month_name, payment_status.status "
+                    + "FROM salary "
+                    + "INNER JOIN salary_details ON salary.salary_details_id = salary_details.id "
+                    + "INNER JOIN month ON salary.month_id = month.id "
+                    + "INNER JOIN payment_status ON salary.payment_status_id = payment_status.id "
+                    + "INNER JOIN employee ON salary.employee_user_id = employee.user_id "
+                    + "WHERE employee.employee_type_id IN ('1', '2', '4')";
 
             ResultSet resultSet = MySQL.executeSearch(query);
 
             while (resultSet.next()) {
                 Vector<String> vector = new Vector<>();
                 vector.add(resultSet.getString("id"));
-                vector.add(resultSet.getString("employee.first_name") + " " + (resultSet.getString("employee.last_name")));
-                vector.add(resultSet.getString("salary_details.base_salary"));
+                vector.add(resultSet.getString("first_name") + " " + resultSet.getString("last_name"));
+                vector.add(resultSet.getString("base_salary"));
                 vector.add(resultSet.getString("net_amount"));
                 vector.add(resultSet.getString("payment_date"));
-                vector.add(resultSet.getString("month.month_name"));
-                vector.add(resultSet.getString("payment_status.status"));
+                vector.add(resultSet.getString("month_name"));
+                vector.add(resultSet.getString("status"));
                 model.addRow(vector);
             }
+
             getSum5();
+
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading salary data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jComboBox7ItemStateChanged
+    }
 
     private void jComboBox5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox5ItemStateChanged
         try {
