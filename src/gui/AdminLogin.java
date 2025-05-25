@@ -4,42 +4,49 @@
  */
 package gui;
 
-import gui.AcademicDashboard;
 import com.formdev.flatlaf.FlatClientProperties;
-import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatLightOwlIJTheme;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
-import model.AcademicUserHandler;
-import model.AcademicUserSession;
+import model.AdminUserHandler;
+import model.AdminUserSession;
 import model.MySQL;
 
 /**
  *
  * @author Dell
  */
-public class AcademicLogin extends javax.swing.JFrame {
+public class AdminLogin extends javax.swing.JFrame {
 
     private static String fullname;
     private static String SystemDateTime;
 
-    public AcademicLogin() {
+    private void image() {
+
+        FlatSVGIcon icon1 = new FlatSVGIcon("resources//LOGOWHITE.svg", logolabel.getWidth(), logolabel.getHeight());
+        FlatSVGIcon icon2 = new FlatSVGIcon("resources//adminlogo1.svg", adminlabel.getWidth(), adminlabel.getHeight());
+
+        logolabel.setIcon(icon1);
+        adminlabel.setIcon(icon2);
+    }
+
+    /**
+     * Creates new form AdminLogin
+     */
+    public AdminLogin() {
         initComponents();
         image();
-        image2();
         rounded();
 
         Timer timer = new Timer(1000, e -> updateDateTime());
         timer.start();
-        
+
         updateDateTime();
     }
-    
+
     private void updateDateTime() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -59,7 +66,7 @@ public class AcademicLogin extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         logolabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        acl = new javax.swing.JLabel();
+        adminlabel = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
@@ -91,7 +98,7 @@ public class AcademicLogin extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 52, 101));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ACADEMIC LOGIN");
+        jLabel1.setText("ADMIN LOGIN");
 
         jButton2.setBackground(new java.awt.Color(0, 52, 101));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -130,11 +137,14 @@ public class AcademicLogin extends javax.swing.JFrame {
                             .addGap(86, 86, 86)))))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(131, 131, 131)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(acl, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(adminlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -143,7 +153,7 @@ public class AcademicLogin extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(acl, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(adminlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -184,33 +194,30 @@ public class AcademicLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please enter Password", "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
 
-            AcademicUserHandler academicUserHandler = new AcademicUserHandler();
-            if (academicUserHandler.academiclogin(username, fullname, password)) {
-                
-                AcademicDashboard ACD = new AcademicDashboard();
+            AdminUserHandler adminUserHandler = new AdminUserHandler();
+            if (adminUserHandler.adminlogin(username, fullname, password)) {
+                AdminDashboard AD = new AdminDashboard();
                 this.dispose();
+
                 // System Log
                 try {
                     ResultSet resultSet = MySQL.executeSearch("SELECT * FROM `users` INNER JOIN `usertypes` ON"
-                            + "`users`.`user_type_id`=`usertypes`.`user_type_id` WHERE `username` = '" + AcademicUserSession.getInstance().getUsername() + "'");
+                            + "`users`.`user_type_id`=`usertypes`.`user_type_id` WHERE `username` = '" + AdminUserSession.getInstance().getUsername() + "'");
 
                     if (resultSet.next()) {
-                        String description = "Academic Login";
+                        String description = "Admin Login";
                         String user = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
                         String userType = resultSet.getString("usertypes.user_type_name");
-                        
+
                         MySQL.executeIUD("INSERT INTO `system_logs`(`timestamp`,`activity`,`user_name`,`user_type`)"
-                                + "VALUES ('"+ SystemDateTime +"','"+ description +"','"+ user +"','"+ userType +"')");
+                                + "VALUES ('" + SystemDateTime + "','" + description + "','" + user + "','" + userType + "')");
                     }
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                
-                JOptionPane.showMessageDialog(this, "Welcome, '" + AcademicUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
-               
-                ACD.setVisible(true);
-                
+                JOptionPane.showMessageDialog(this, "Welcome, '" + AdminUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
+                AD.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Warning", JOptionPane.WARNING_MESSAGE);
                 jPasswordField1.setText("");
@@ -219,6 +226,7 @@ public class AcademicLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
         userSelection US = new userSelection();
         US.setVisible(true);
         this.dispose();
@@ -228,28 +236,18 @@ public class AcademicLogin extends javax.swing.JFrame {
      * @param args the command line arguments
      */
 //    public static void main(String args[]) {
-//        FlatLightLaf.setup();
+//        FlatMacLightLaf.setup();
 //
 //        /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new AcademicLogin().setVisible(true);
+//                new AdminLogin().setVisible(true);
 //            }
 //        });
 //    }
-    public void image() {
-        FlatSVGIcon icon1 = new FlatSVGIcon("resources//academic.svg", acl.getWidth(), acl.getHeight());
-        acl.setIcon(icon1);
-    }
-
-    public void image2() {
-        FlatSVGIcon icon2 = new FlatSVGIcon("resources//LOGOWHITE.svg", logolabel.getWidth(), logolabel.getHeight());
-        logolabel.setIcon(icon2);
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel acl;
+    private javax.swing.JLabel adminlabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -259,6 +257,7 @@ public class AcademicLogin extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel logolabel;
     // End of variables declaration//GEN-END:variables
+
     private void rounded() {
         jTextField1.putClientProperty("JComponent.roundRect", true);
         jPasswordField1.putClientProperty("JComponent.roundRect", true);
@@ -269,5 +268,4 @@ public class AcademicLogin extends javax.swing.JFrame {
         jButton1.putClientProperty("JButton.buttonType", "roundRect");
         jButton2.putClientProperty("JButton.buttonType", "roundRect");
     }
-
 }
