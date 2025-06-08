@@ -7280,25 +7280,49 @@ public class AcademicDashboard extends javax.swing.JFrame {
             }
 
             // Save Image
-            String resourcesPath = "teacherImg";
-            String cleanName = (fname + "_" + lname).replaceAll("\\s+", "_").replaceAll("[^a-zA-Z0-9_]", "");
-            String newFileName = cleanName + "_" + System.currentTimeMillis() + ".jpg";
+//            String resourcesPath = "src/teacherImg";
+//            String cleanName = (fname + "_" + lname).replaceAll("\\s+", "_").replaceAll("[^a-zA-Z0-9_]", "");
+//            String newFileName = cleanName + "_" + System.currentTimeMillis() + ".jpg";
+//
+//            File saveDir = new File(resourcesPath);
+//            if (!saveDir.exists()) {
+//                saveDir.mkdirs();
+//            }
+//
+//            File fileToSave = new File(saveDir, newFileName);
+//            Path sourcePath = new File(TimgPath).toPath();
+//            Path destinationPath = fileToSave.toPath();
+//
+//            if (!Files.isSameFile(sourcePath, destinationPath)) {
+//                try (InputStream in = new FileInputStream(sourcePath.toFile())) {
+//                    Files.copy(in, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+//                }
+//                TimgPath = destinationPath.toAbsolutePath().toString().replace("\\", "/");
+//            }
+                String resourcesPath = "src/teacherImg";
+                    String newFileName = UUID.randomUUID().toString() + ".jpg"; // Unique file name for the image
+                    File saveDir = new File(resourcesPath);
 
-            File saveDir = new File(resourcesPath);
-            if (!saveDir.exists()) {
-                saveDir.mkdirs();
-            }
+                    if (!saveDir.exists()) {
+                        saveDir.mkdirs();
+                    }
 
-            File fileToSave = new File(saveDir, newFileName);
-            Path sourcePath = new File(TimgPath).toPath();
-            Path destinationPath = fileToSave.toPath();
+                    File fileToSave = new File(saveDir, newFileName);
 
-            if (!Files.isSameFile(sourcePath, destinationPath)) {
-                try (InputStream in = new FileInputStream(sourcePath.toFile())) {
-                    Files.copy(in, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-                }
-                TimgPath = destinationPath.toAbsolutePath().toString().replace("\\", "/");
-            }
+                    try {
+                        Path sourcePath = new File(TimgPath).toPath();
+                        Path destinationPath = fileToSave.toPath();
+
+                        Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+                        String newFilePath = fileToSave.getAbsolutePath();
+
+                        newFilePath = newFilePath.replace("\\", "/");
+
+                        TimgPath = newFilePath;
+                    } catch (IOException ioException) {
+                        JOptionPane.showMessageDialog(this, "Error saving image: " + ioException.getMessage());
+                    }
 
             // Insert Teacher and Employee
             MySQL.executeIUD("INSERT INTO teachers (first_name, last_name, nic, mobile, email, dob, enrollment_date, gender_id, address_line_1, address_line_2, barcode_id, img_path) "
@@ -7316,10 +7340,12 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Teacher successfully registered!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-        } catch (IOException ioEx) {
-            ioEx.printStackTrace();
-            JOptionPane.showMessageDialog(this, "File access error. Close the file if open and try again.\\nDetails: " + ioEx.getMessage(), "File Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
+        } 
+//        catch (IOException ioEx) {
+//            ioEx.printStackTrace();
+//            JOptionPane.showMessageDialog(this, "File access error. Close the file if open and try again.\\nDetails: " + ioEx.getMessage(), "File Error", JOptionPane.ERROR_MESSAGE);
+//        } 
+        catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error while registering teacher: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         }
