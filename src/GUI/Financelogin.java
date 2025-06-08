@@ -62,12 +62,12 @@ public class Financelogin extends javax.swing.JFrame {
     }
 
     public void image1() {
-        FlatSVGIcon icon1 = new FlatSVGIcon("resources//LOGO WHITE.svg", jLabel1.getWidth(), jLabel1.getHeight());
+        FlatSVGIcon icon1 = new FlatSVGIcon("resources/LOGO WHITE.svg", jLabel1.getWidth(), jLabel1.getHeight());
         jLabel1.setIcon(icon1);
     }
 
     public void image2() {
-        FlatSVGIcon icon1 = new FlatSVGIcon("resources//icon.svg", jLabel2.getWidth(), jLabel2.getHeight());
+        FlatSVGIcon icon1 = new FlatSVGIcon("resources/icon.svg", jLabel2.getWidth(), jLabel2.getHeight());
         jLabel2.setIcon(icon1);
     }
 

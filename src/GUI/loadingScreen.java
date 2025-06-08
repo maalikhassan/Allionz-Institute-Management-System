@@ -14,7 +14,7 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 public class loadingScreen extends javax.swing.JFrame {
 
     private void image() {
-        FlatSVGIcon icon1 = new FlatSVGIcon("resources//logoad.svg", jLabel6.getWidth(), jLabel6.getHeight());
+        FlatSVGIcon icon1 = new FlatSVGIcon("resources/logoad.svg", jLabel6.getWidth(), jLabel6.getHeight());
 
         jLabel6.setIcon(icon1);
     }

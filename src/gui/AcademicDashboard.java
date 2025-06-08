@@ -116,44 +116,44 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
     private void image() {
 
-        FlatSVGIcon icon1 = new FlatSVGIcon("resources//LOGOWHITE.svg", jLabel6.getWidth(), jLabel6.getHeight());
+        FlatSVGIcon icon1 = new FlatSVGIcon("resources/LOGOWHITE.svg", jLabel6.getWidth(), jLabel6.getHeight());
         jLabel6.setIcon(icon1);
-        FlatSVGIcon icon2 = new FlatSVGIcon("resources//profileImage.svg", jLabel12.getWidth(), jLabel12.getHeight());
+        FlatSVGIcon icon2 = new FlatSVGIcon("resources/profileImage.svg", jLabel12.getWidth(), jLabel12.getHeight());
         jLabel12.setIcon(icon2);
-        FlatSVGIcon icon4 = new FlatSVGIcon("resources//profileImage.svg", jLabel7.getWidth(), jLabel7.getHeight());
+        FlatSVGIcon icon4 = new FlatSVGIcon("resources/profileImage.svg", jLabel7.getWidth(), jLabel7.getHeight());
         jLabel7.setIcon(icon4);
-//        FlatSVGIcon icon5 = new FlatSVGIcon("resources//barcode.svg", jLabel13.getWidth(), jLabel13.getHeight());
+//        FlatSVGIcon icon5 = new FlatSVGIcon("resources/barcode.svg", jLabel13.getWidth(), jLabel13.getHeight());
 //        jLabel13.setIcon(icon5);
-//        FlatSVGIcon icon6 = new FlatSVGIcon("resources//scan.svg", jLabel17.getWidth(), jLabel17.getHeight());
+//        FlatSVGIcon icon6 = new FlatSVGIcon("resources/scan.svg", jLabel17.getWidth(), jLabel17.getHeight());
 //        jLabel17.setIcon(icon6);
-        FlatSVGIcon icon7 = new FlatSVGIcon("resources//profileImage.svg", jLabel30.getWidth(), jLabel30.getHeight());
+        FlatSVGIcon icon7 = new FlatSVGIcon("resources/profileImage.svg", jLabel30.getWidth(), jLabel30.getHeight());
         jLabel30.setIcon(icon7);
-        FlatSVGIcon icon8 = new FlatSVGIcon("resources//barcode(1).svg", jLabel32.getWidth(), jLabel32.getHeight());
+        FlatSVGIcon icon8 = new FlatSVGIcon("resources/barcode(1).svg", jLabel32.getWidth(), jLabel32.getHeight());
         jLabel32.setIcon(icon8);
-//        FlatSVGIcon icon9 = new FlatSVGIcon("resources//scan.svg", jLabel77.getWidth(), jLabel77.getHeight());
+//        FlatSVGIcon icon9 = new FlatSVGIcon("resources/scan.svg", jLabel77.getWidth(), jLabel77.getHeight());
 //        jLabel77.setIcon(icon9);
-        FlatSVGIcon icon10 = new FlatSVGIcon("resources//studentdash.svg", jLabel66.getWidth(), jLabel66.getHeight());
+        FlatSVGIcon icon10 = new FlatSVGIcon("resources/studentdash.svg", jLabel66.getWidth(), jLabel66.getHeight());
         jLabel66.setIcon(icon10);
-        FlatSVGIcon icon11 = new FlatSVGIcon("resources//teacherdash.svg", jLabel92.getWidth(), jLabel92.getHeight());
+        FlatSVGIcon icon11 = new FlatSVGIcon("resources/teacherdash.svg", jLabel92.getWidth(), jLabel92.getHeight());
         jLabel92.setIcon(icon11);
-        FlatSVGIcon icon12 = new FlatSVGIcon("resources//subjectdash.svg", jLabel68.getWidth(), jLabel68.getHeight());
+        FlatSVGIcon icon12 = new FlatSVGIcon("resources/subjectdash.svg", jLabel68.getWidth(), jLabel68.getHeight());
         jLabel68.setIcon(icon12);
-//        FlatSVGIcon icon13 = new FlatSVGIcon("resources//piedash.svg", jLabel94.getWidth(), jLabel94.getHeight());
+//        FlatSVGIcon icon13 = new FlatSVGIcon("resources/piedash.svg", jLabel94.getWidth(), jLabel94.getHeight());
 //        jLabel94.setIcon(icon13);
 
-        FlatSVGIcon icon14 = new FlatSVGIcon("resources//profileImage.svg", jLabel124.getWidth(), jLabel124.getHeight());
+        FlatSVGIcon icon14 = new FlatSVGIcon("resources/profileImage.svg", jLabel124.getWidth(), jLabel124.getHeight());
         jLabel124.setIcon(icon14);
-        FlatSVGIcon icon15 = new FlatSVGIcon("resources//profileImage.svg", jTprofile.getWidth(), jTprofile.getHeight());
+        FlatSVGIcon icon15 = new FlatSVGIcon("resources/profileImage.svg", jTprofile.getWidth(), jTprofile.getHeight());
         jTprofile.setIcon(icon15);
-        FlatSVGIcon icon16 = new FlatSVGIcon("resources//barcode(1).svg", jLabel13.getWidth(), jLabel13.getHeight());
+        FlatSVGIcon icon16 = new FlatSVGIcon("resources/barcode(1).svg", jLabel13.getWidth(), jLabel13.getHeight());
         jLabel13.setIcon(icon16);
-        FlatSVGIcon icon17 = new FlatSVGIcon("resources//profileImage.svg", jLabel103.getWidth(), jLabel103.getHeight());
+        FlatSVGIcon icon17 = new FlatSVGIcon("resources/profileImage.svg", jLabel103.getWidth(), jLabel103.getHeight());
         jLabel103.setIcon(icon17);
-        FlatSVGIcon icon18 = new FlatSVGIcon("resources//barcode(1).svg", jLabel29.getWidth(), jLabel29.getHeight());
+        FlatSVGIcon icon18 = new FlatSVGIcon("resources/barcode(1).svg", jLabel29.getWidth(), jLabel29.getHeight());
         jLabel29.setIcon(icon18);
-        FlatSVGIcon icon19 = new FlatSVGIcon("resources//profileImage.svg", jLabel111.getWidth(), jLabel111.getHeight());
+        FlatSVGIcon icon19 = new FlatSVGIcon("resources/profileImage.svg", jLabel111.getWidth(), jLabel111.getHeight());
         jLabel111.setIcon(icon19);
-        FlatSVGIcon icon20 = new FlatSVGIcon("resources//barcode(1).svg", jLabel112.getWidth(), jLabel112.getHeight());
+        FlatSVGIcon icon20 = new FlatSVGIcon("resources/barcode(1).svg", jLabel112.getWidth(), jLabel112.getHeight());
         jLabel112.setIcon(icon20);
     }
 
@@ -4186,6 +4186,11 @@ public class AcademicDashboard extends javax.swing.JFrame {
         });
 
         jComboBox28.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox28.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox28ItemStateChanged(evt);
+            }
+        });
 
         jButton58.setBackground(new java.awt.Color(0, 52, 101));
         jButton58.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -4886,7 +4891,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE))
+                .addComponent(jTabbedPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 421, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout subjectmanagementLayout = new javax.swing.GroupLayout(subjectmanagement);
@@ -6747,22 +6752,22 @@ public class AcademicDashboard extends javax.swing.JFrame {
                             jLabel124.setIcon(new ImageIcon(image));
                         } else {
                             // Set default image if file does not exist
-                            FlatSVGIcon icon14 = new FlatSVGIcon("resources//profileImage.svg", jLabel124.getWidth(), jLabel124.getHeight());
+                            FlatSVGIcon icon14 = new FlatSVGIcon("resources/profileImage.svg", jLabel124.getWidth(), jLabel124.getHeight());
                             jLabel124.setIcon(icon14);
                         }
                     } else {
                         // Set default image if imgPath is null or empty
-                        FlatSVGIcon icon14 = new FlatSVGIcon("resources//profileImage.svg", jLabel124.getWidth(), jLabel124.getHeight());
+                        FlatSVGIcon icon14 = new FlatSVGIcon("resources/profileImage.svg", jLabel124.getWidth(), jLabel124.getHeight());
                         jLabel124.setIcon(icon14);
                     }
                 } else {
                     // Set default image if no result is found in the database
-                    FlatSVGIcon icon14 = new FlatSVGIcon("resources//profileImage.svg", jLabel124.getWidth(), jLabel124.getHeight());
+                    FlatSVGIcon icon14 = new FlatSVGIcon("resources/profileImage.svg", jLabel124.getWidth(), jLabel124.getHeight());
                     jLabel124.setIcon(icon14);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                FlatSVGIcon icon14 = new FlatSVGIcon("resources//profileImage.svg", jLabel124.getWidth(), jLabel124.getHeight());
+                FlatSVGIcon icon14 = new FlatSVGIcon("resources/profileImage.svg", jLabel124.getWidth(), jLabel124.getHeight());
                 jLabel124.setIcon(icon14); // Fallback to default image in case of error
             }
         }
@@ -7064,10 +7069,10 @@ public class AcademicDashboard extends javax.swing.JFrame {
                 jLabel106.setText("Student Name");
                 jLabel94.setText("NIC");
 
-                FlatSVGIcon icon17 = new FlatSVGIcon("resources//profileImage.svg", jLabel103.getWidth(), jLabel103.getHeight());
+                FlatSVGIcon icon17 = new FlatSVGIcon("resources/profileImage.svg", jLabel103.getWidth(), jLabel103.getHeight());
                 jLabel103.setIcon(icon17);
 
-                FlatSVGIcon icon18 = new FlatSVGIcon("resources//barcode(1).svg", jLabel29.getWidth(), jLabel29.getHeight());
+                FlatSVGIcon icon18 = new FlatSVGIcon("resources/barcode(1).svg", jLabel29.getWidth(), jLabel29.getHeight());
                 jLabel29.setIcon(icon18);
 
             }
@@ -8029,22 +8034,22 @@ public class AcademicDashboard extends javax.swing.JFrame {
                             jTprofile.setIcon(new ImageIcon(image));
                         } else {
                             // Set default image if file does not exist
-                            FlatSVGIcon icon7 = new FlatSVGIcon("resources//profileImage.svg", jTprofile.getWidth(), jTprofile.getHeight());
+                            FlatSVGIcon icon7 = new FlatSVGIcon("resources/profileImage.svg", jTprofile.getWidth(), jTprofile.getHeight());
                             jTprofile.setIcon(icon7);
                         }
                     } else {
                         // Set default image if imgPath is null or empty
-                        FlatSVGIcon icon15 = new FlatSVGIcon("resources//profileImage.svg", jTprofile.getWidth(), jTprofile.getHeight());
+                        FlatSVGIcon icon15 = new FlatSVGIcon("resources/profileImage.svg", jTprofile.getWidth(), jTprofile.getHeight());
                         jTprofile.setIcon(icon15);
                     }
                 } else {
                     // Set default image if no result is found in the database
-                    FlatSVGIcon icon15 = new FlatSVGIcon("resources//profileImage.svg", jTprofile.getWidth(), jTprofile.getHeight());
+                    FlatSVGIcon icon15 = new FlatSVGIcon("resources/profileImage.svg", jTprofile.getWidth(), jTprofile.getHeight());
                     jTprofile.setIcon(icon15);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                FlatSVGIcon icon15 = new FlatSVGIcon("resources//profileImage.svg", jTprofile.getWidth(), jTprofile.getHeight());
+                FlatSVGIcon icon15 = new FlatSVGIcon("resources/profileImage.svg", jTprofile.getWidth(), jTprofile.getHeight());
                 jTprofile.setIcon(icon15); // Fallback to default image in case of error
             }
         }
@@ -8333,9 +8338,9 @@ public class AcademicDashboard extends javax.swing.JFrame {
 
                 jLabel109.setText("NIC");
                 jLabel108.setText("Teacher Name");
-                FlatSVGIcon icon19 = new FlatSVGIcon("resources//profileImage.svg", jLabel111.getWidth(), jLabel111.getHeight());
+                FlatSVGIcon icon19 = new FlatSVGIcon("resources/profileImage.svg", jLabel111.getWidth(), jLabel111.getHeight());
                 jLabel111.setIcon(icon19);
-                FlatSVGIcon icon20 = new FlatSVGIcon("resources//barcode(1).svg", jLabel112.getWidth(), jLabel112.getHeight());
+                FlatSVGIcon icon20 = new FlatSVGIcon("resources/barcode(1).svg", jLabel112.getWidth(), jLabel112.getHeight());
                 jLabel112.setIcon(icon20);
 
             }
@@ -8376,11 +8381,11 @@ public class AcademicDashboard extends javax.swing.JFrame {
                             Image image = imageIcon.getImage().getScaledInstance(jLabel111.getWidth(), jLabel111.getHeight(), Image.SCALE_SMOOTH);
                             jLabel111.setIcon(new ImageIcon(image));
                         } else {
-                            FlatSVGIcon icon19 = new FlatSVGIcon("resources//profileImage.svg", jLabel111.getWidth(), jLabel111.getHeight());
+                            FlatSVGIcon icon19 = new FlatSVGIcon("resources/profileImage.svg", jLabel111.getWidth(), jLabel111.getHeight());
                             jLabel111.setIcon(icon19);
                         }
                     } else {
-                        FlatSVGIcon icon19 = new FlatSVGIcon("resources//profileImage.svg", jLabel111.getWidth(), jLabel111.getHeight());
+                        FlatSVGIcon icon19 = new FlatSVGIcon("resources/profileImage.svg", jLabel111.getWidth(), jLabel111.getHeight());
                         jLabel111.setIcon(icon19);
                     }
 
@@ -9043,114 +9048,113 @@ public class AcademicDashboard extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(this, "An error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 //        }
 
-
 // Add material button
-    Date uploadedDate = jDateChooser3.getDate();
-    String documentName = jTextField49.getText().trim();
-    String description = jTextArea1.getText().trim();
-    String fileType = String.valueOf(jComboBox30.getSelectedItem()).trim();
-    String filePath = jTextField9.getText().trim();
+        Date uploadedDate = jDateChooser3.getDate();
+        String documentName = jTextField49.getText().trim();
+        String description = jTextArea1.getText().trim();
+        String fileType = String.valueOf(jComboBox30.getSelectedItem()).trim();
+        String filePath = jTextField9.getText().trim();
 
-    // === Validation Checks ===
-    if (uploadedDate == null) {
-        JOptionPane.showMessageDialog(this, "Please select the upload date!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    if (documentName.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please enter the document name!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    if (description.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please enter a description!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    if (fileType.equals("Select File Type")) {
-        JOptionPane.showMessageDialog(this, "Please select a valid file type!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    if (filePath.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please provide the file path!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    if (!filePath.endsWith("." + fileType)) {
-        JOptionPane.showMessageDialog(this, "File type does not match the selected file extension!", "File Type Mismatch", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(uploadedDate);
-
-    try {
-        // Check for duplicate name or path
-        ResultSet rs = model.MySQL.executeSearch(
-            "SELECT * FROM `documents` WHERE `file_name` = '" + documentName + "' OR `file_path` = '" + filePath + "'");
-
-        if (rs.next()) {
-            String existingFileName = rs.getString("file_name");
-            String existingFilePath = rs.getString("file_path");
-
-            if (existingFileName.equals(documentName)) {
-                JOptionPane.showMessageDialog(this, "A document with this name already exists!", "Duplicate Document Name", JOptionPane.WARNING_MESSAGE);
-            } else if (existingFilePath.equals(filePath)) {
-                JOptionPane.showMessageDialog(this, "A document with this file path already exists!", "Duplicate File Path", JOptionPane.WARNING_MESSAGE);
-            }
+        // === Validation Checks ===
+        if (uploadedDate == null) {
+            JOptionPane.showMessageDialog(this, "Please select the upload date!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (documentName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter the document name!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (description.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a description!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (fileType.equals("Select File Type")) {
+            JOptionPane.showMessageDialog(this, "Please select a valid file type!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (filePath.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please provide the file path!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!filePath.endsWith("." + fileType)) {
+            JOptionPane.showMessageDialog(this, "File type does not match the selected file extension!", "File Type Mismatch", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // === Upload File ===
-        String serverUploadUrl = "http://your-server-ip/documents/"; // Change to actual server
-        String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        String newFileName = documentName.replaceAll("\\s+", "_") + "_" + timeStamp + "." + fileType;
-
-        File fileToUpload = new File(filePath);
-        String serverFilePath = serverUploadUrl + newFileName;
+        String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(uploadedDate);
 
         try {
-            URI uri = URI.create(serverFilePath);
-            URL url = uri.toURL();
-            HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-            httpConn.setDoOutput(true);
-            httpConn.setRequestMethod("PUT"); // or POST depending on server
-            httpConn.setRequestProperty("Content-Type", "application/octet-stream");
+            // Check for duplicate name or path
+            ResultSet rs = model.MySQL.executeSearch(
+                    "SELECT * FROM `documents` WHERE `file_name` = '" + documentName + "' OR `file_path` = '" + filePath + "'");
 
-            try (OutputStream os = httpConn.getOutputStream(); FileInputStream fis = new FileInputStream(fileToUpload)) {
-                byte[] buffer = new byte[4096];
-                int bytesRead;
-                while ((bytesRead = fis.read(buffer)) != -1) {
-                    os.write(buffer, 0, bytesRead);
+            if (rs.next()) {
+                String existingFileName = rs.getString("file_name");
+                String existingFilePath = rs.getString("file_path");
+
+                if (existingFileName.equals(documentName)) {
+                    JOptionPane.showMessageDialog(this, "A document with this name already exists!", "Duplicate Document Name", JOptionPane.WARNING_MESSAGE);
+                } else if (existingFilePath.equals(filePath)) {
+                    JOptionPane.showMessageDialog(this, "A document with this file path already exists!", "Duplicate File Path", JOptionPane.WARNING_MESSAGE);
                 }
-            }
-
-            int responseCode = httpConn.getResponseCode();
-            if (responseCode != HttpURLConnection.HTTP_OK && responseCode != HttpURLConnection.HTTP_CREATED) {
-                JOptionPane.showMessageDialog(this, "Failed to upload the file to the server. Response code: " + responseCode, "Upload Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-        } catch (Exception uploadException) {
-            JOptionPane.showMessageDialog(this, "Error uploading file to the server: " + uploadException.getMessage(), "Server Upload Error", JOptionPane.ERROR_MESSAGE);
-            uploadException.printStackTrace();
-            return;
-        }
+            // === Upload File ===
+            String serverUploadUrl = "http://your-server-ip/documents/"; // Change to actual server
+            String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+            String newFileName = documentName.replaceAll("\\s+", "_") + "_" + timeStamp + "." + fileType;
 
-        // === Insert Metadata into DB ===
-        try {
-            model.MySQL.executeIUD(
-                "INSERT INTO `documents` (`file_name`, `description`, `document_type`, `file_path`, `upload_date`) " +
-                "VALUES ('" + documentName + "', '" + description + "', '" + fileType + "', '" + serverFilePath + "', '" + formattedDate + "')");
+            File fileToUpload = new File(filePath);
+            String serverFilePath = serverUploadUrl + newFileName;
 
-            JOptionPane.showMessageDialog(this, "File uploaded successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            loadMaterialLibraryTable();
-            resetMaterial();
+            try {
+                URI uri = URI.create(serverFilePath);
+                URL url = uri.toURL();
+                HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+                httpConn.setDoOutput(true);
+                httpConn.setRequestMethod("PUT"); // or POST depending on server
+                httpConn.setRequestProperty("Content-Type", "application/octet-stream");
+
+                try (OutputStream os = httpConn.getOutputStream(); FileInputStream fis = new FileInputStream(fileToUpload)) {
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = fis.read(buffer)) != -1) {
+                        os.write(buffer, 0, bytesRead);
+                    }
+                }
+
+                int responseCode = httpConn.getResponseCode();
+                if (responseCode != HttpURLConnection.HTTP_OK && responseCode != HttpURLConnection.HTTP_CREATED) {
+                    JOptionPane.showMessageDialog(this, "Failed to upload the file to the server. Response code: " + responseCode, "Upload Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+            } catch (Exception uploadException) {
+                JOptionPane.showMessageDialog(this, "Error uploading file to the server: " + uploadException.getMessage(), "Server Upload Error", JOptionPane.ERROR_MESSAGE);
+                uploadException.printStackTrace();
+                return;
+            }
+
+            // === Insert Metadata into DB ===
+            try {
+                model.MySQL.executeIUD(
+                        "INSERT INTO `documents` (`file_name`, `description`, `document_type`, `file_path`, `upload_date`) "
+                        + "VALUES ('" + documentName + "', '" + description + "', '" + fileType + "', '" + serverFilePath + "', '" + formattedDate + "')");
+
+                JOptionPane.showMessageDialog(this, "File uploaded successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                loadMaterialLibraryTable();
+                resetMaterial();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error inserting document into the database: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error inserting document into the database: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "An error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "An error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
     }//GEN-LAST:event_jButton78ActionPerformed
 
     private void jButton79ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton79ActionPerformed
@@ -9531,11 +9535,11 @@ public class AcademicDashboard extends javax.swing.JFrame {
                             Image image = imageIcon.getImage().getScaledInstance(jLabel103.getWidth(), jLabel103.getHeight(), Image.SCALE_SMOOTH);
                             jLabel103.setIcon(new ImageIcon(image));
                         } else {
-                            FlatSVGIcon icon17 = new FlatSVGIcon("resources//profileImage.svg", jLabel103.getWidth(), jLabel103.getHeight());
+                            FlatSVGIcon icon17 = new FlatSVGIcon("resources/profileImage.svg", jLabel103.getWidth(), jLabel103.getHeight());
                             jLabel103.setIcon(icon17);
                         }
                     } else {
-                        FlatSVGIcon icon17 = new FlatSVGIcon("resources//profileImage.svg", jLabel103.getWidth(), jLabel103.getHeight());
+                        FlatSVGIcon icon17 = new FlatSVGIcon("resources/profileImage.svg", jLabel103.getWidth(), jLabel103.getHeight());
                         jLabel103.setIcon(icon17);
                     }
 
@@ -10215,6 +10219,34 @@ public class AcademicDashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField38KeyReleased
 
+    private void jComboBox28ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox28ItemStateChanged
+        try {
+            String selectedSubject = String.valueOf(jComboBox28.getSelectedItem());
+
+            Vector<String> vector = new Vector<>();
+            vector.add("Select Teacher");
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
+
+            String query;
+            if (selectedSubject.equals("Select Subject")) {
+                query = "SELECT * FROM `teachers`";
+            } else {
+                query = "SELECT teachers.first_name, teachers.last_name FROM teachers INNER JOIN teachers_has_stream_subject ON teachers_has_stream_subject.teachers_teacher_id=teachers.teacher_id INNER JOIN stream_subject ON stream_subject.id=teachers_has_stream_subject.stream_subject_id INNER JOIN subjects ON subjects.subject_id=stream_subject.subjects_subject_id WHERE subject_name = '" + selectedSubject + "'";
+            }
+            ResultSet rs = MySQL.executeSearch(query);
+            if (rs.next()) {
+                String fullName = rs.getString("first_name") + " " + rs.getString("last_name");
+                vector.add(fullName);
+            }
+
+            jComboBox3.setModel(model);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jComboBox28ItemStateChanged
+
     private void filterStudentsComboBox(String searchText) {
         try {
             // Query the database: show all if searchText is empty
@@ -10825,10 +10857,10 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jDateChooser2.setDate(date);
 
         // Reset the icon for jLabel30
-        FlatSVGIcon icon4 = new FlatSVGIcon("resources//profileImage.svg", jLabel7.getWidth(), jLabel7.getHeight());
+        FlatSVGIcon icon4 = new FlatSVGIcon("resources/profileImage.svg", jLabel7.getWidth(), jLabel7.getHeight());
         jLabel7.setIcon(icon4);
 
-        FlatSVGIcon icon16 = new FlatSVGIcon("resources//barcode(1).svg", jLabel13.getWidth(), jLabel13.getHeight());
+        FlatSVGIcon icon16 = new FlatSVGIcon("resources/barcode(1).svg", jLabel13.getWidth(), jLabel13.getHeight());
         jLabel13.setIcon(icon16);
 
         // Clear Radio Buttons
@@ -10910,7 +10942,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jTextField28.setEditable(true);
 
         // Reset the icon for jLabel30
-        FlatSVGIcon icon7 = new FlatSVGIcon("resources//profileImage.svg", jLabel30.getWidth(), jLabel30.getHeight());
+        FlatSVGIcon icon7 = new FlatSVGIcon("resources/profileImage.svg", jLabel30.getWidth(), jLabel30.getHeight());
         jLabel30.setIcon(icon7);
 
         buttonGroup3.clearSelection();  // Correct way to clear radio buttons
@@ -10991,7 +11023,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jTID.setText("Teacher ID");
         jTmarkButton.setEnabled(true);
         jTupdateButton.setEnabled(true);
-        FlatSVGIcon icon15 = new FlatSVGIcon("resources//profileImage.svg", jTprofile.getWidth(), jTprofile.getHeight());
+        FlatSVGIcon icon15 = new FlatSVGIcon("resources/profileImage.svg", jTprofile.getWidth(), jTprofile.getHeight());
         jTprofile.setIcon(icon15);
         jTeacherBarcodeScan.grabFocus();
 
@@ -11007,7 +11039,7 @@ public class AcademicDashboard extends javax.swing.JFrame {
         jalbatch.setText("A/L Batch");
         jTName.setText("Teacher Name");
         jSID.setText("Schedule ID");
-        FlatSVGIcon icon14 = new FlatSVGIcon("resources//profileImage.svg", jLabel124.getWidth(), jLabel124.getHeight());
+        FlatSVGIcon icon14 = new FlatSVGIcon("resources/profileImage.svg", jLabel124.getWidth(), jLabel124.getHeight());
         jLabel124.setIcon(icon14);
         jAttendanceMarkButton.setEnabled(true);
         jAttendanceUpdateButton.setEnabled(true);

@@ -15,9 +15,9 @@ public class userSelection extends javax.swing.JFrame {
     
         private void image(){
     
-        FlatSVGIcon icon1 = new FlatSVGIcon("resources//logoad.svg", jLabel6.getWidth(), jLabel6.getHeight());
-        FlatSVGIcon icon2 = new FlatSVGIcon("resources//adminlogin.svg", jButton1.getWidth(), jButton1.getHeight());
-        FlatSVGIcon icon3 = new FlatSVGIcon("resources//academiclogin.svg", jButton2.getWidth(), jButton2.getHeight());
+        FlatSVGIcon icon1 = new FlatSVGIcon("resources/logoad.svg", jLabel6.getWidth(), jLabel6.getHeight());
+        FlatSVGIcon icon2 = new FlatSVGIcon("resources/adminlogin.svg", jButton1.getWidth(), jButton1.getHeight());
+        FlatSVGIcon icon3 = new FlatSVGIcon("resources/academiclogin.svg", jButton2.getWidth(), jButton2.getHeight());
         FlatSVGIcon icon4 = new FlatSVGIcon("resources/financelogin.svg", jButton3.getWidth(), jButton3.getHeight());
 
         jLabel6.setIcon(icon1);

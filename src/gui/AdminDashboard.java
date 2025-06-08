@@ -79,9 +79,9 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void image() {
 
-        FlatSVGIcon icon1 = new FlatSVGIcon("resources//LOGOWHITE.svg", jLabel6.getWidth(), jLabel6.getHeight());
-        FlatSVGIcon icon2 = new FlatSVGIcon("resources//backup.svg", jButton3.getWidth(), jButton3.getHeight());
-        FlatSVGIcon icon3 = new FlatSVGIcon("resources//restore.svg", jButton4.getWidth(), jButton4.getHeight());
+        FlatSVGIcon icon1 = new FlatSVGIcon("resources/LOGOWHITE.svg", jLabel6.getWidth(), jLabel6.getHeight());
+        FlatSVGIcon icon2 = new FlatSVGIcon("resources/backup.svg", jButton3.getWidth(), jButton3.getHeight());
+        FlatSVGIcon icon3 = new FlatSVGIcon("resources/restore.svg", jButton4.getWidth(), jButton4.getHeight());
         FlatSVGIcon icon4 = new FlatSVGIcon("resources/student.svg", studentpiclabel.getWidth(), studentpiclabel.getHeight());
         FlatSVGIcon icon5 = new FlatSVGIcon("resources/teacher.svg", teacherpiclabel.getWidth(), teacherpiclabel.getHeight());
         FlatSVGIcon icon6 = new FlatSVGIcon("resources/books.svg", subjectpiclabel.getWidth(), subjectpiclabel.getHeight());
@@ -305,35 +305,40 @@ public class AdminDashboard extends javax.swing.JFrame {
     }
 
     private void calculateProfit() {
-        // Create a SwingWorker for the background task
         SwingWorker<Void, Void> worker = new SwingWorker<>() {
-            private double totalIncome = 0;
-            private double totalExpenses = 0;
             private double profit = 0;
 
             @Override
             protected Void doInBackground() {
                 try {
-                    // Fetch total income from feepayments
-                    ResultSet rsIncome = MySQL.executeSearch("SELECT SUM(amount_paid) AS total_income FROM feepayments");
-                    if (rsIncome.next()) {
-                        totalIncome = rsIncome.getDouble("total_income");
-                    }
+                    // Query to calculate current month profit
+                    String query = """
+                    SELECT (
+                        (SELECT IFNULL(SUM(amount_paid), 0) FROM feepayments 
+                         WHERE fee_id != 24 
+                           AND MONTH(payment_date) = MONTH(CURDATE()) 
+                           AND YEAR(payment_date) = YEAR(CURDATE()))
+                        +
+                        (SELECT IFNULL(SUM(amount_paid), 0) FROM feepayments 
+                         WHERE fee_id = 24 
+                           AND MONTH(payment_date) = MONTH(CURDATE()) 
+                           AND YEAR(payment_date) = YEAR(CURDATE()))
+                        -
+                        (SELECT IFNULL(SUM(net_amount), 0) FROM salary 
+                         WHERE MONTH(payment_date) = MONTH(CURDATE()) 
+                           AND YEAR(payment_date) = YEAR(CURDATE()))
+                        -
+                        (SELECT IFNULL(SUM(amount), 0) FROM bill_payments 
+                         WHERE MONTH(payment_date) = MONTH(CURDATE()) 
+                           AND YEAR(payment_date) = YEAR(CURDATE()))
+                    ) AS profit;
+                """;
 
-                    // Fetch total expenses from salary
-                    ResultSet rsSalary = MySQL.executeSearch("SELECT SUM(net_amount) AS total_salary FROM salary");
-                    if (rsSalary.next()) {
-                        totalExpenses += rsSalary.getDouble("total_salary");
+                    ResultSet rs = MySQL.executeSearch(query);
+                    if (rs.next()) {
+                        profit = rs.getDouble("profit");
                     }
-
-                    // Fetch total expenses from billpayments
-                    ResultSet rsBillPayments = MySQL.executeSearch("SELECT SUM(amount) AS total_bill FROM bill_payments");
-                    if (rsBillPayments.next()) {
-                        totalExpenses += rsBillPayments.getDouble("total_bill");
-                    }
-
-                    // Calculate profit
-                    profit = totalIncome - totalExpenses;
+                    rs.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Error calculating profit: " + e.getMessage());
@@ -343,13 +348,11 @@ public class AdminDashboard extends javax.swing.JFrame {
 
             @Override
             protected void done() {
-                // Update the JLabel in the EDT
-                jLabel32.setText(String.format("%.2f", profit)); // Display profit with 2 decimal places
-                jLabel32.setForeground(profit >= 0 ? Color.GREEN : Color.RED); // Green for profit, Red for loss
+                jLabel32.setText(String.format("%.2f", profit));
+                jLabel32.setForeground(profit >= 0 ? Color.GREEN : Color.RED);
             }
         };
 
-        // Execute the SwingWorker
         worker.execute();
     }
 
@@ -644,7 +647,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 streamMap.put(resultSet.getString("stream_name"), resultSet.getString("stream_id"));
             }
 
-           DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
             jComboBox1.setModel(model);
 
         } catch (Exception e) {
@@ -1013,7 +1016,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 FinanceRportMonthMap.put(resultSet1.getString("month_name"), resultSet1.getString("id"));
 
             }
-           DefaultComboBoxModel<String> model1 = new DefaultComboBoxModel<>(vector1);
+            DefaultComboBoxModel<String> model1 = new DefaultComboBoxModel<>(vector1);
             jComboBox4.setModel(model1);
 
         } catch (Exception e) {
@@ -1034,7 +1037,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 FinanceRportMonthMap.put(resultSet1.getString("month_name"), resultSet1.getString("id"));
 
             }
-           DefaultComboBoxModel<String> model1 = new DefaultComboBoxModel<>(vector1);
+            DefaultComboBoxModel<String> model1 = new DefaultComboBoxModel<>(vector1);
 
             jComboBox3.setModel(model1);
         } catch (Exception e) {
@@ -1055,7 +1058,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 FinanceRportMonthMap.put(resultSet1.getString("month_name"), resultSet1.getString("id"));
 
             }
-           DefaultComboBoxModel<String> model1 = new DefaultComboBoxModel<>(vector1);
+            DefaultComboBoxModel<String> model1 = new DefaultComboBoxModel<>(vector1);
             jComboBox6.setModel(model1);
         } catch (Exception e) {
             e.printStackTrace();
@@ -4980,7 +4983,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             String selectedMonthName = String.valueOf(jComboBox7.getSelectedItem());
 
             if (selectedMonthName.equals("All Months")) {
-                loadAllSalaryData(); 
+                loadAllSalaryData();
             } else {
                 try {
                     String selectedMonthId = FinanceRportMonthMap.get(selectedMonthName);
@@ -5395,7 +5398,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             model.setRowCount(0);
 
             while (resultSet.next()) {
-                                Vector<String> vector = new Vector<>();
+                Vector<String> vector = new Vector<>();
 
                 vector.add(resultSet.getString("student_id"));
                 vector.add(resultSet.getString("first_name"));
@@ -5493,7 +5496,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     }
 
     private void loadProfitLoss() {
-        // Row headers as descriptions
         String[] rowHeaders = {
             "Total Class Fees",
             "Total Registration Fees",
@@ -5504,12 +5506,10 @@ public class AdminDashboard extends javax.swing.JFrame {
             "Net Profit / Loss"
         };
 
-        // Table column headers
         String[] columnHeaders = {
             "Description", "Current Month", "Previous Month", "Budgeted Amount", "Variance / Due Amount", "% Change"
         };
 
-        // Rows to highlight with bold text
         Set<String> boldHeaders = new HashSet<>(Arrays.asList(
                 "Total Revenue",
                 "Total Expenses",
@@ -5517,100 +5517,222 @@ public class AdminDashboard extends javax.swing.JFrame {
         ));
 
         try {
-            // Initialize table model
             DefaultTableModel tableModel = new DefaultTableModel(columnHeaders, 0);
             jTable16.setModel(tableModel);
 
-            // SQL queries for data
-            String[] queries = {
-                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id != 7 AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Class Fees
-                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id = 7 AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Registration Fees
-                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Revenue
-                "SELECT SUM(net_amount) AS total FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Salaries
-                "SELECT SUM(amount) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Utilities
-                "SELECT SUM(amount) + (SELECT SUM(net_amount) FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())", // Total Expenses
-                "SELECT ((SELECT SUM(amount_paid) FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) - (SELECT SUM(amount) FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) - (SELECT SUM(net_amount) FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE()))) AS total" // Net Profit/Loss
+            // Current month queries (first 6 rows)
+            String[] currentMonthQueries = {
+                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id != 24 AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())",
+                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id = 24 AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())",
+                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())",
+                "SELECT SUM(net_amount) AS total FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())",
+                "SELECT SUM(amount) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())",
+                "SELECT SUM(amount) + (SELECT SUM(net_amount) FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())"
+            };
+
+            // Previous month queries (first 6 rows)
+            String[] previousMonthQueries = {
+                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id != 24 AND MONTH(payment_date) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(payment_date) = YEAR(CURDATE() - INTERVAL 1 MONTH)",
+                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE fee_id = 24 AND MONTH(payment_date) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(payment_date) = YEAR(CURDATE() - INTERVAL 1 MONTH)",
+                "SELECT SUM(amount_paid) AS total FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(payment_date) = YEAR(CURDATE() - INTERVAL 1 MONTH)",
+                "SELECT SUM(net_amount) AS total FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(payment_date) = YEAR(CURDATE() - INTERVAL 1 MONTH)",
+                "SELECT SUM(amount) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(payment_date) = YEAR(CURDATE() - INTERVAL 1 MONTH)",
+                "SELECT SUM(amount) + (SELECT SUM(net_amount) FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(payment_date) = YEAR(CURDATE() - INTERVAL 1 MONTH)) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(payment_date) = YEAR(CURDATE() - INTERVAL 1 MONTH)"
             };
 
             // Retrieve budgeted amounts
             double budgetClassFees = 0;
             double budgetRegFees = 0;
             double budgetSalary = 0;
-            double budgetUtilities = 20000.0; // Fixed value
+            double budgetUtilities = 20000.0;
             double budgetTotalRevenue;
             double budgetTotalExpenses;
 
             ResultSet rs = MySQL.executeSearch("SELECT SUM(amount) AS total FROM feestructure WHERE subjects_subject_id != 8");
             if (rs.next()) {
                 budgetClassFees = rs.getDouble("total");
+                if (rs.wasNull()) {
+                    budgetClassFees = 0;
+                }
             }
             rs.close();
 
             rs = MySQL.executeSearch("SELECT SUM(amount) AS total FROM feestructure WHERE subjects_subject_id = 8");
             if (rs.next()) {
                 budgetRegFees = rs.getDouble("total");
+                if (rs.wasNull()) {
+                    budgetRegFees = 0;
+                }
             }
             rs.close();
 
             rs = MySQL.executeSearch("SELECT COUNT(user_id) * 50000 AS total FROM employee");
             if (rs.next()) {
                 budgetSalary = rs.getDouble("total");
+                if (rs.wasNull()) {
+                    budgetSalary = 0;
+                }
             }
             rs.close();
 
             budgetTotalRevenue = budgetClassFees + budgetRegFees;
             budgetTotalExpenses = budgetSalary + budgetUtilities;
 
-            // Load data into the table
-            for (int i = 0; i < rowHeaders.length; i++) {
-                rs = MySQL.executeSearch(queries[i]);
+            // Loop for first 6 rows to fetch current and previous month data
+            for (int i = 0; i < rowHeaders.length - 1; i++) {
+                // Current month
+                rs = MySQL.executeSearch(currentMonthQueries[i]);
+                double currentMonth = 0;
                 if (rs.next()) {
-                    double currentMonth = rs.getDouble("total");
-                    double previousMonth = 0; // Placeholder for the previous month's data
-                    double budgeted = 0;
-
-                    // Assign budgeted data
-                    if (i == 0) {
-                        budgeted = budgetClassFees; // Total Class Fees
-                    } else if (i == 1) {
-                        budgeted = budgetRegFees; // Total Registration Fees
-                    } else if (i == 2) {
-                        budgeted = budgetTotalRevenue; // Total Revenue
-                    } else if (i == 3) {
-                        budgeted = budgetSalary; // Total Salaries
-                    } else if (i == 4) {
-                        budgeted = budgetUtilities; // Total Utilities
-                    } else if (i == 5) {
-                        budgeted = budgetTotalExpenses; // Total Expenses
+                    currentMonth = rs.getDouble("total");
+                    if (rs.wasNull()) {
+                        currentMonth = 0;
                     }
-                    double variance = currentMonth - budgeted;
-                    double percentageChange = (budgeted != 0) ? (variance / budgeted) * 100 : 0;
-
-                    // Add row to table
-                    tableModel.addRow(new Object[]{
-                        rowHeaders[i],
-                        currentMonth,
-                        previousMonth,
-                        budgeted,
-                        variance,
-                        percentageChange
-                    });
                 }
                 rs.close();
+
+                // Previous month
+                rs = MySQL.executeSearch(previousMonthQueries[i]);
+                double previousMonth = 0;
+                if (rs.next()) {
+                    previousMonth = rs.getDouble("total");
+                    if (rs.wasNull()) {
+                        previousMonth = 0;
+                    }
+                }
+                rs.close();
+
+                double budgeted = switch (i) {
+                    case 0 ->
+                        budgetClassFees;
+                    case 1 ->
+                        budgetRegFees;
+                    case 2 ->
+                        budgetTotalRevenue;
+                    case 3 ->
+                        budgetSalary;
+                    case 4 ->
+                        budgetUtilities;
+                    case 5 ->
+                        budgetTotalExpenses;
+                    default ->
+                        0;
+                };
+
+                double variance = currentMonth - budgeted;
+                double percentageChange = (budgeted != 0) ? (variance / budgeted) * 100 : 0;
+                String percentageChangeStr = String.format("%.2f", percentageChange);
+
+                tableModel.addRow(new Object[]{
+                    rowHeaders[i],
+                    currentMonth,
+                    previousMonth,
+                    budgeted,
+                    variance,
+                    percentageChangeStr
+                });
             }
+
+            // Calculate net profit/loss for current month
+            double totalRevenueCurr = 0;
+            rs = MySQL.executeSearch("SELECT SUM(amount_paid) AS total FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())");
+            if (rs.next()) {
+                totalRevenueCurr = rs.getDouble("total");
+                if (rs.wasNull()) {
+                    totalRevenueCurr = 0;
+                }
+            }
+            rs.close();
+
+            double totalSalaryCurr = 0;
+            rs = MySQL.executeSearch("SELECT SUM(net_amount) AS total FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())");
+            if (rs.next()) {
+                totalSalaryCurr = rs.getDouble("total");
+                if (rs.wasNull()) {
+                    totalSalaryCurr = 0;
+                }
+            }
+            rs.close();
+
+            double totalUtilitiesCurr = 0;
+            rs = MySQL.executeSearch("SELECT SUM(amount) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())");
+            if (rs.next()) {
+                totalUtilitiesCurr = rs.getDouble("total");
+                if (rs.wasNull()) {
+                    totalUtilitiesCurr = 0;
+                }
+            }
+            rs.close();
+
+            double totalExpensesCurr = totalSalaryCurr + totalUtilitiesCurr;
+            double netProfitLossCurr = totalRevenueCurr - totalExpensesCurr;
+
+            // Calculate net profit/loss for previous month
+            double totalRevenuePrev = 0;
+            rs = MySQL.executeSearch("SELECT SUM(amount_paid) AS total FROM feepayments WHERE MONTH(payment_date) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(payment_date) = YEAR(CURDATE() - INTERVAL 1 MONTH)");
+            if (rs.next()) {
+                totalRevenuePrev = rs.getDouble("total");
+                if (rs.wasNull()) {
+                    totalRevenuePrev = 0;
+                }
+            }
+            rs.close();
+
+            double totalSalaryPrev = 0;
+            rs = MySQL.executeSearch("SELECT SUM(net_amount) AS total FROM salary WHERE MONTH(payment_date) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(payment_date) = YEAR(CURDATE() - INTERVAL 1 MONTH)");
+            if (rs.next()) {
+                totalSalaryPrev = rs.getDouble("total");
+                if (rs.wasNull()) {
+                    totalSalaryPrev = 0;
+                }
+            }
+            rs.close();
+
+            double totalUtilitiesPrev = 0;
+            rs = MySQL.executeSearch("SELECT SUM(amount) AS total FROM bill_payments WHERE MONTH(payment_date) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(payment_date) = YEAR(CURDATE() - INTERVAL 1 MONTH)");
+            if (rs.next()) {
+                totalUtilitiesPrev = rs.getDouble("total");
+                if (rs.wasNull()) {
+                    totalUtilitiesPrev = 0;
+                }
+            }
+            rs.close();
+
+            double totalExpensesPrev = totalSalaryPrev + totalUtilitiesPrev;
+            double netProfitLossPrev = totalRevenuePrev - totalExpensesPrev;
+
+            double budgeted = 0;
+            double variance = netProfitLossCurr - budgeted;
+            String percentageChangeStr = "N/A";
+
+            tableModel.addRow(new Object[]{
+                rowHeaders[6],
+                netProfitLossCurr,
+                netProfitLossPrev,
+                budgeted,
+                variance,
+                percentageChangeStr
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Highlight Description Column
         jTable16.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus,
+                    int row, int column) {
                 Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                Set<String> boldHeaders = new HashSet<>(Arrays.asList(
+                        "Total Revenue",
+                        "Total Expenses",
+                        "Net Profit / Loss"
+                ));
                 if (boldHeaders.contains(value)) {
                     component.setFont(component.getFont().deriveFont(Font.BOLD));
                 }
-                component.setBackground(new Color(173, 216, 230)); // Set background color
+                component.setBackground(new Color(173, 216, 230));
                 return component;
             }
         });
@@ -5677,7 +5799,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
             while (rs.next()) {
 
-                                Vector<String> v = new Vector<>();
+                Vector<String> v = new Vector<>();
 
                 v.add(rs.getString("teacher_id"));
                 v.add(rs.getString("first_name"));

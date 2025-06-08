@@ -2,7 +2,9 @@ package gui;
 
 import java.util.Date;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -47,6 +49,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import java.util.logging.*;
 import javax.swing.table.TableModel;
+import org.jfree.chart.ChartPanel;
 
 /**
  *
@@ -75,7 +78,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
     private void image() {
 
-        FlatSVGIcon icon1 = new FlatSVGIcon("resources//LOGOWHITE.svg", jLabel6.getWidth(), jLabel6.getHeight());
+        FlatSVGIcon icon1 = new FlatSVGIcon("resources/LOGOWHITE.svg", jLabel6.getWidth(), jLabel6.getHeight());
 //        FlatSVGIcon icon2 = new FlatSVGIcon("resources//backup.svg", jButton3.getWidth(), jButton3.getHeight());
 //        FlatSVGIcon icon3 = new FlatSVGIcon("resources//restore.svg", jButton4.getWidth(), jButton4.getHeight());
 //        FlatSVGIcon icon4 = new FlatSVGIcon("resources/student.svg", studentpiclabel.getWidth(), studentpiclabel.getHeight());
@@ -319,7 +322,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
             // Execute query to get monthly total income for the current year
             ResultSet rs = MySQL.executeSearch("SELECT MONTH(payment_date) AS month, SUM(amount_paid) AS total_income "
                     + "FROM feepayments "
-                    + "WHERE YEAR(payment_date) = YEAR(CURDATE()) " // Filter for the current year
+                    + "WHERE YEAR(payment_date) = YEAR(CURDATE()) "
                     + "GROUP BY MONTH(payment_date) "
                     + "ORDER BY MONTH(payment_date)");
 
@@ -334,12 +337,14 @@ public class FinancialDashboard extends javax.swing.JFrame {
                     dataset.addValue(totalIncome, "Income", months[month - 1]);
                 }
             }
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error fetching income data: " + e.getMessage());
             return;
         }
 
+        // Create bar chart
         JFreeChart barChart = ChartFactory.createBarChart(
                 "Monthly Income - Current Year",
                 "Month",
@@ -351,13 +356,15 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 false
         );
 
-        CategoryPlot plot = (CategoryPlot) barChart.getPlot();
-        plot.setBackgroundPaint(new Color(240, 240, 240));
-        plot.setDomainGridlinePaint(Color.BLACK);
-        plot.setRangeGridlinePaint(Color.BLACK);
+        // Styling
+        CategoryPlot plot = barChart.getCategoryPlot();
+        plot.setBackgroundPaint(new Color(245, 245, 245));
+        plot.setDomainGridlinePaint(Color.GRAY);
+        plot.setRangeGridlinePaint(Color.GRAY);
 
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
-        renderer.setItemMargin(0.02);
+        renderer.setItemMargin(0.02f);
+        renderer.setMaximumBarWidth(0.1);
 
         Font axisFont = new Font("SansSerif", Font.PLAIN, 10);
         plot.getDomainAxis().setLabelFont(axisFont);
@@ -365,14 +372,17 @@ public class FinancialDashboard extends javax.swing.JFrame {
         plot.getRangeAxis().setLabelFont(axisFont);
         plot.getRangeAxis().setTickLabelFont(axisFont);
 
-        BufferedImage chartImage = barChart.createBufferedImage(jPanel9.getWidth(), jPanel9.getHeight());
+        // Use ChartPanel instead of rendering to an image
+        ChartPanel chartPanel = new ChartPanel(barChart);
+        chartPanel.setPreferredSize(new Dimension(jPanel9.getWidth(), jPanel9.getHeight()));
+        chartPanel.setMouseWheelEnabled(true);
+        chartPanel.setDomainZoomable(true);
+        chartPanel.setRangeZoomable(true);
 
-        ImageIcon chartIcon = new ImageIcon(chartImage);
-
-        JLabel chartLabel = new JLabel(chartIcon);
+        // Display chart
         jPanel9.removeAll();
-        jPanel9.setLayout(new java.awt.BorderLayout());
-        jPanel9.add(chartLabel, java.awt.BorderLayout.CENTER);
+        jPanel9.setLayout(new BorderLayout());
+        jPanel9.add(chartPanel, BorderLayout.CENTER);
         jPanel9.validate();
     }
 
@@ -656,7 +666,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 vector.add(resultSet.getString("status"));
                 LoadstatusMap.put(resultSet.getString("status"), resultSet.getString("id"));
             }
-           DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
             jComboBox12.setModel(model);
         } catch (Exception e) {
             e.printStackTrace();
@@ -728,7 +738,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 vector.add(resultSet.getString("type"));
                 LoadEmployeeType.put(resultSet.getString("type"), resultSet.getString("id"));
             }
-           DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
             jComboBox14.setModel(model);
         } catch (Exception e) {
             e.printStackTrace();
@@ -780,7 +790,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 vector.add(resultSet.getString("status"));
                 LoadStatusmap.put(resultSet.getString("status"), resultSet.getString("id"));
             }
-           DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
             jComboBox17.setModel(model);
         } catch (Exception e) {
             e.printStackTrace();
@@ -850,7 +860,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 loadSubjectMap.put(resultSet.getString("subject_name"), resultSet.getString("subject_id"));
             }
 
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
             jComboBox2.setModel(model);
             jComboBox25.setModel(model);
 
@@ -970,7 +980,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 loadStudentMap.put(fullName, resultSet.getString("student_id"));
             }
 
-          DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
             jComboBox22.setModel(model);
 
         } catch (Exception e) {
@@ -1026,7 +1036,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 loadStatusMap.put(resultSet.getString("status"), resultSet.getString("id"));
             }
 
-           DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
             jComboBox21.setModel(model);
             jComboBox3.setModel(model);
 
@@ -1036,33 +1046,33 @@ public class FinancialDashboard extends javax.swing.JFrame {
 
     }
 
-   private void loadFeeId() {
-    try {
-        ResultSet resultSet = MySQL.executeSearch(
-            "SELECT * FROM `feestructure` " +
-            "INNER JOIN `subjects` ON `feestructure`.subjects_subject_id = `subjects`.`subject_id` " +
-            "INNER JOIN `stream` ON `feestructure`.`stream_stream_id` = `stream`.`stream_id` " +
-            "ORDER BY `stream`.`stream_name`, `subjects`.`subject_name`" 
-        );
+    private void loadFeeId() {
+        try {
+            ResultSet resultSet = MySQL.executeSearch(
+                    "SELECT * FROM `feestructure` "
+                    + "INNER JOIN `subjects` ON `feestructure`.subjects_subject_id = `subjects`.`subject_id` "
+                    + "INNER JOIN `stream` ON `feestructure`.`stream_stream_id` = `stream`.`stream_id` "
+                    + "ORDER BY `stream`.`stream_name`, `subjects`.`subject_name`"
+            );
 
-        Vector<String> vector = new Vector<>();
-        vector.add("Select Fee");
+            Vector<String> vector = new Vector<>();
+            vector.add("Select Fee");
 
-        while (resultSet.next()) {
-            String displayText = resultSet.getString("stream.stream_name") + " -> " + resultSet.getString("subjects.subject_name");
-            String feeId = resultSet.getString("fee_id");
+            while (resultSet.next()) {
+                String displayText = resultSet.getString("stream.stream_name") + " -> " + resultSet.getString("subjects.subject_name");
+                String feeId = resultSet.getString("fee_id");
 
-            vector.add(displayText);
-            feeMap.put(displayText, feeId);
+                vector.add(displayText);
+                feeMap.put(displayText, feeId);
+            }
+
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
+            jComboBox23.setModel(model);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
-        jComboBox23.setModel(model);
-
-    } catch (Exception e) {
-        e.printStackTrace();
     }
-}
 
     private void loadUserProfile() {
         try {
@@ -1380,7 +1390,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 LoadMonthMap.put(resultSet1.getString("month_name"), resultSet1.getString("id"));
 
             }
-           DefaultComboBoxModel<String> model1 = new DefaultComboBoxModel<>(vector1);
+            DefaultComboBoxModel<String> model1 = new DefaultComboBoxModel<>(vector1);
             jComboBox8.setModel(model1);
 
         } catch (Exception e) {
@@ -1482,7 +1492,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
 
             }
-           DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
             jComboBox6.setModel(model);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1522,7 +1532,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
 
             }
-             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
             jComboBox29.setModel(model);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1542,7 +1552,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
 
             }
-          DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
             jComboBox30.setModel(model);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1562,7 +1572,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                 LoadMonthMap.put(resultSet.getString("month_name"), resultSet.getString("id"));
 
             }
-             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(vector);
             jComboBox31.setModel(model);
         } catch (Exception e) {
             e.printStackTrace();
@@ -2520,9 +2530,9 @@ public class FinancialDashboard extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -2541,7 +2551,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jPanel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -3431,7 +3441,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                             .addComponent(jButton41)
                             .addComponent(jButton19))))
                 .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
 
@@ -3556,20 +3566,20 @@ public class FinancialDashboard extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel73, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel74, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(37, 37, 37)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox14, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jFormattedTextField9)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel73, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel74, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBox14, 0, 156, Short.MAX_VALUE)
+                            .addComponent(jFormattedTextField9)))
+                    .addComponent(jButton20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton23, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane20)
+                .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
         );
         jPanel4Layout.setVerticalGroup(
@@ -3585,16 +3595,17 @@ public class FinancialDashboard extends javax.swing.JFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jComboBox14, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel74))
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane20, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jTabbedPane2.addTab("Manage Salary Details", jPanel4);
@@ -4188,7 +4199,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
                         .addGroup(jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButton24, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel32Layout.createSequentialGroup()
                         .addGroup(jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -5138,13 +5149,13 @@ public class FinancialDashboard extends javax.swing.JFrame {
             financialprofilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 929, Short.MAX_VALUE)
             .addGroup(financialprofilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE))
+                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 957, Short.MAX_VALUE))
         );
         financialprofilepanelLayout.setVerticalGroup(
             financialprofilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 564, Short.MAX_VALUE)
             .addGroup(financialprofilepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE))
+                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout changingpanelLayout = new javax.swing.GroupLayout(changingpanel);
@@ -5437,13 +5448,13 @@ public class FinancialDashboard extends javax.swing.JFrame {
             String Status = String.valueOf(jComboBox12.getSelectedItem());
             String month = String.valueOf(jComboBox5.getSelectedItem());
             Date selectedDate = jDateChooser1.getDate();
-            
+
             if (BillType.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Bill Type", "Warning", JOptionPane.WARNING_MESSAGE);
-            }else if (selectedDate == null) {
-                                JOptionPane.showMessageDialog(this, "Please select date", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else if (selectedDate == null) {
+                JOptionPane.showMessageDialog(this, "Please select date", "Warning", JOptionPane.WARNING_MESSAGE);
 
-            }  else if (Vendor.isEmpty()) {
+            } else if (Vendor.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please Enter Vendor", "Warning", JOptionPane.WARNING_MESSAGE);
             } else if (month.equals("Select Month")) {
                 JOptionPane.showMessageDialog(this, "Please Enter month", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -7665,132 +7676,131 @@ public class FinancialDashboard extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(this, "Error while updating salary record: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
 //        }
 
+        int row = jTable17.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a record from the table to update.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-  int row = jTable17.getSelectedRow();
-    if (row == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a record from the table to update.", "Warning", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+        String id = String.valueOf(jTable17.getValueAt(row, 0));
+        String userId = String.valueOf(jTable17.getValueAt(row, 1));
 
-    String id = String.valueOf(jTable17.getValueAt(row, 0));
-    String userId = String.valueOf(jTable17.getValueAt(row, 1));
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT * FROM salary WHERE id='" + id + "' AND employee_user_id='" + userId + "'");
+            if (rs.next()) {
+                String baseSalaryAmount = jFormattedTextField4.getText().trim();
+                String allowanceAmount = jFormattedTextField3.getText().trim();
 
-    try {
-        ResultSet rs = MySQL.executeSearch("SELECT * FROM salary WHERE id='" + id + "' AND employee_user_id='" + userId + "'");
-        if (rs.next()) {
-            String baseSalaryAmount = jFormattedTextField4.getText().trim();
-            String allowanceAmount = jFormattedTextField3.getText().trim();
-
-            if (baseSalaryAmount.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Base salary cannot be empty!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            double baseSalary;
-            double allowance = 0.0;
-
-            try {
-                baseSalary = Double.parseDouble(baseSalaryAmount);
-                if (baseSalary <= 0) {
-                    JOptionPane.showMessageDialog(this, "Base salary must be greater than zero!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+                if (baseSalaryAmount.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Base salary cannot be empty!", "Validation Error", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Invalid base salary entered!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
 
-            if (!allowanceAmount.isEmpty()) {
+                double baseSalary;
+                double allowance = 0.0;
+
                 try {
-                    allowance = Double.parseDouble(allowanceAmount);
-                    if (allowance < 0) {
-                        JOptionPane.showMessageDialog(this, "Allowance cannot be negative!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+                    baseSalary = Double.parseDouble(baseSalaryAmount);
+                    if (baseSalary <= 0) {
+                        JOptionPane.showMessageDialog(this, "Base salary must be greater than zero!", "Validation Error", JOptionPane.WARNING_MESSAGE);
                         return;
                     }
-                    if (allowance > baseSalary * 0.5) {
-                        int confirm = JOptionPane.showConfirmDialog(this,
-                                "Allowance seems unusually high (> 50% of base salary). Continue?",
-                                "Allowance Warning", JOptionPane.YES_NO_OPTION);
-                        if (confirm != JOptionPane.YES_OPTION) {
-                            return;
-                        }
-                    }
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "Invalid allowance entered!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Invalid base salary entered!", "Validation Error", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-            }
 
-            String month = String.valueOf(jComboBox16.getSelectedItem());
-            String status = String.valueOf(jComboBox17.getSelectedItem());
-
-            if (month.equals("Select Month") || status.equals("Select Status")) {
-                JOptionPane.showMessageDialog(this, "Please select a valid month and status!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            Date date = jDateChooser2.getDate();
-            if (date == null) {
-                JOptionPane.showMessageDialog(this, "Please select a valid payment date!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            SalaryCalculation calc = new SalaryCalculation();
-            calc.setBaseSalary(baseSalary);
-            calc.setAllowance(allowance);
-            calc.calculate();
-
-            double netPay = calc.getNetPay();
-            double savings = calc.getEPF() + calc.getEPFEmployer() + calc.getETF();
-            String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-
-            String newStatusId = LoadStatusmap.get(status);
-            String newMonthId = LoadMonthMap.get(month);
-
-            String updateQuery = "UPDATE salary SET net_amount='" + netPay + "', payment_date='" + formattedDate
-                    + "', month_id='" + newMonthId + "', payment_status_id='" + newStatusId
-                    + "', epf_etf_balance='" + savings + "' WHERE id='" + id + "' AND employee_user_id='" + userId + "'";
-
-            MySQL.executeIUD(updateQuery);
-
-            // ✅ Always ask to print if marked as paid
-            if (status.equalsIgnoreCase("paid")) {
-                int confirm = JOptionPane.showConfirmDialog(this, "This salary is marked as PAID. Do you want to print the paysheet now?", "Print Confirmation", JOptionPane.YES_NO_OPTION);
-                if (confirm == JOptionPane.YES_OPTION) {
-                    long invoiceId = System.currentTimeMillis();
-                    jLabel85.setText(String.valueOf(invoiceId));
-
-                    HashMap<String, Object> params = new HashMap<>();
-                    params.put("Parameter1", jLabel85.getText());
-                    params.put("Parameter2", jLabel27.getText());
-                    params.put("Parameter3", formattedDate);
-                    params.put("Parameter4", userId);
-                    params.put("Parameter5", jLabel79.getText());
-                    params.put("Parameter6", jLabel71.getText());
-                    params.put("Parameter7", formattedDate);
-                    params.put("Parameter8", month);
-                    params.put("Parameter9", String.valueOf(baseSalary));
-                    params.put("Parameter10", String.format("%.2f", savings));
-                    params.put("Parameter11", String.format("%.2f", netPay));
-                    params.put("Parameter12", status);
-
-                    InputStream stream = getClass().getResourceAsStream("/reports/paysheet_1.jasper");
-                    JasperPrint print = JasperFillManager.fillReport(stream, params, new JREmptyDataSource());
-                    JasperPrintManager.printReport(print, false);
+                if (!allowanceAmount.isEmpty()) {
+                    try {
+                        allowance = Double.parseDouble(allowanceAmount);
+                        if (allowance < 0) {
+                            JOptionPane.showMessageDialog(this, "Allowance cannot be negative!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+                            return;
+                        }
+                        if (allowance > baseSalary * 0.5) {
+                            int confirm = JOptionPane.showConfirmDialog(this,
+                                    "Allowance seems unusually high (> 50% of base salary). Continue?",
+                                    "Allowance Warning", JOptionPane.YES_NO_OPTION);
+                            if (confirm != JOptionPane.YES_OPTION) {
+                                return;
+                            }
+                        }
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(this, "Invalid allowance entered!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
                 }
+
+                String month = String.valueOf(jComboBox16.getSelectedItem());
+                String status = String.valueOf(jComboBox17.getSelectedItem());
+
+                if (month.equals("Select Month") || status.equals("Select Status")) {
+                    JOptionPane.showMessageDialog(this, "Please select a valid month and status!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                Date date = jDateChooser2.getDate();
+                if (date == null) {
+                    JOptionPane.showMessageDialog(this, "Please select a valid payment date!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                SalaryCalculation calc = new SalaryCalculation();
+                calc.setBaseSalary(baseSalary);
+                calc.setAllowance(allowance);
+                calc.calculate();
+
+                double netPay = calc.getNetPay();
+                double savings = calc.getEPF() + calc.getEPFEmployer() + calc.getETF();
+                String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+
+                String newStatusId = LoadStatusmap.get(status);
+                String newMonthId = LoadMonthMap.get(month);
+
+                String updateQuery = "UPDATE salary SET net_amount='" + netPay + "', payment_date='" + formattedDate
+                        + "', month_id='" + newMonthId + "', payment_status_id='" + newStatusId
+                        + "', epf_etf_balance='" + savings + "' WHERE id='" + id + "' AND employee_user_id='" + userId + "'";
+
+                MySQL.executeIUD(updateQuery);
+
+                // ✅ Always ask to print if marked as paid
+                if (status.equalsIgnoreCase("paid")) {
+                    int confirm = JOptionPane.showConfirmDialog(this, "This salary is marked as PAID. Do you want to print the paysheet now?", "Print Confirmation", JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        long invoiceId = System.currentTimeMillis();
+                        jLabel85.setText(String.valueOf(invoiceId));
+
+                        HashMap<String, Object> params = new HashMap<>();
+                        params.put("Parameter1", jLabel85.getText());
+                        params.put("Parameter2", jLabel27.getText());
+                        params.put("Parameter3", formattedDate);
+                        params.put("Parameter4", userId);
+                        params.put("Parameter5", jLabel79.getText());
+                        params.put("Parameter6", jLabel71.getText());
+                        params.put("Parameter7", formattedDate);
+                        params.put("Parameter8", month);
+                        params.put("Parameter9", String.valueOf(baseSalary));
+                        params.put("Parameter10", String.format("%.2f", savings));
+                        params.put("Parameter11", String.format("%.2f", netPay));
+                        params.put("Parameter12", status);
+
+                        InputStream stream = getClass().getResourceAsStream("/reports/paysheet_1.jasper");
+                        JasperPrint print = JasperFillManager.fillReport(stream, params, new JREmptyDataSource());
+                        JasperPrintManager.printReport(print, false);
+                    }
+                }
+
+                JOptionPane.showMessageDialog(this, "Salary record updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                Loadpaysheet();
+                reset();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Selected salary record not found.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-
-            JOptionPane.showMessageDialog(this, "Salary record updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            Loadpaysheet();
-            reset();
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Selected salary record not found.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error while updating salary record: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error while updating salary record: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-    }
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void jTable17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable17MouseClicked
@@ -8234,7 +8244,7 @@ public class FinancialDashboard extends javax.swing.JFrame {
         jTextArea1.setText("");
         jFormattedTextField9.setText("");
         jComboBox14.setSelectedIndex(0);
-            jButton24.setEnabled(true);
+        jButton24.setEnabled(true);
 
         jLabel103.setText("");
         jLabel75.setText("");

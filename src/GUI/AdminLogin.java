@@ -26,8 +26,8 @@ public class AdminLogin extends javax.swing.JFrame {
 
     private void image() {
 
-        FlatSVGIcon icon1 = new FlatSVGIcon("resources//LOGOWHITE.svg", logolabel.getWidth(), logolabel.getHeight());
-        FlatSVGIcon icon2 = new FlatSVGIcon("resources//adminlogo1.svg", adminlabel.getWidth(), adminlabel.getHeight());
+        FlatSVGIcon icon1 = new FlatSVGIcon("resources/LOGOWHITE.svg", logolabel.getWidth(), logolabel.getHeight());
+        FlatSVGIcon icon2 = new FlatSVGIcon("resources/adminlogo1.svg", adminlabel.getWidth(), adminlabel.getHeight());
 
         logolabel.setIcon(icon1);
         adminlabel.setIcon(icon2);

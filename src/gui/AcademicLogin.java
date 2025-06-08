@@ -238,12 +238,12 @@ public class AcademicLogin extends javax.swing.JFrame {
 //        });
 //    }
     public void image() {
-        FlatSVGIcon icon1 = new FlatSVGIcon("resources//academic.svg", acl.getWidth(), acl.getHeight());
+        FlatSVGIcon icon1 = new FlatSVGIcon("resources/academic.svg", acl.getWidth(), acl.getHeight());
         acl.setIcon(icon1);
     }
 
     public void image2() {
-        FlatSVGIcon icon2 = new FlatSVGIcon("resources//LOGOWHITE.svg", logolabel.getWidth(), logolabel.getHeight());
+        FlatSVGIcon icon2 = new FlatSVGIcon("resources/LOGOWHITE.svg", logolabel.getWidth(), logolabel.getHeight());
         logolabel.setIcon(icon2);
     }
 
