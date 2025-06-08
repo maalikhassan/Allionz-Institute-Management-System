@@ -6,6 +6,7 @@ package gui;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import static gui.userSelection.logger;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,12 +15,17 @@ import javax.swing.Timer;
 import model.AdminUserHandler;
 import model.AdminUserSession;
 import model.MySQL;
+import java.util.logging.Logger;
+import java.util.logging.FileHandler;
+import java.util.logging.*;
 
 /**
  *
  * @author Dell
  */
 public class AdminLogin extends javax.swing.JFrame {
+    
+    public static Logger logger = Logger.getLogger("Allionz-IMS");
 
     private static String fullname;
     private static String SystemDateTime;
@@ -45,7 +51,18 @@ public class AdminLogin extends javax.swing.JFrame {
         timer.start();
 
         updateDateTime();
+        
+        try {
+            FileHandler fileHandler = new FileHandler("app.log", true);
+            fileHandler.setFormatter(new SimpleFormatter());
+            logger.addHandler(fileHandler);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    
+    String location = null;
+    String filename;
 
     private void updateDateTime() {
         LocalDateTime currentDateTime = LocalDateTime.now();
@@ -215,6 +232,7 @@ public class AdminLogin extends javax.swing.JFrame {
 
                 } catch (Exception e) {
                     e.printStackTrace();
+                    logger.log(Level.INFO, "log", e);
                 }
                 JOptionPane.showMessageDialog(this, "Welcome, '" + AdminUserSession.getInstance().getName() + "'", "Success", JOptionPane.INFORMATION_MESSAGE);
                 AD.setVisible(true);

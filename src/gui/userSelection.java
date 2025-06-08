@@ -6,12 +6,13 @@ package gui;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import java.util.logging.Logger;
+import java.util.logging.FileHandler;
+import java.util.logging.*;
 
-/**
- *
- * @author Dell
- */
 public class userSelection extends javax.swing.JFrame {
+    
+        public static Logger logger = Logger.getLogger("Allionz-IMS");
     
         private void image(){
     
@@ -33,7 +34,19 @@ public class userSelection extends javax.swing.JFrame {
     public userSelection() {
         initComponents();
         image();
+        
+        try {
+            FileHandler fileHandler = new FileHandler("app.log", true);
+            fileHandler.setFormatter(new SimpleFormatter());
+            logger.addHandler(fileHandler);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    
+    String location = null;
+    String filename;
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -189,6 +202,8 @@ public class userSelection extends javax.swing.JFrame {
         this.dispose();
         AdminLogin AL = new AdminLogin();
         AL.setVisible(true);
+        
+        logger.log(Level.INFO, "loggerWorks");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
