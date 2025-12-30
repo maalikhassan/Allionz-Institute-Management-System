@@ -1,6 +1,6 @@
-# 🎓 Allionz Institute Management System (IMS)
-
 <div align="center">
+
+# 🎓 Allionz Institute Management System (IMS)
 
 ![Java](https://img.shields.io/badge/Java-SE--17-007396?style=for-the-badge&logo=java&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
