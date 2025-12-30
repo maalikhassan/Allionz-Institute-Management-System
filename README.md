@@ -11,6 +11,10 @@
 
 [Features](#-key-features) • [Installation](#-installation) • [Architecture](#-system-architecture) • [Documentation](#-documentation) • [Team](#-team)
 
+---
+
+> 🔒 **Security Note:** This is a demo/portfolio project. The database shown in git history is no longer active and credentials have been changed. All sensitive configuration is now externalized via properties files.
+
 </div>
 
 ---
@@ -198,14 +202,24 @@ The system uses a normalized relational database with the following key entities
 
 3. **Configure Database Connection**
    
-   Update the database credentials in `src/model/MySQL.java`:
-   ```java
-   connection = DriverManager.getConnection(
-       "jdbc:mysql://localhost:3306/institute_management_system",
-       "your_username",
-       "your_password"
-   );
+   Create a `database.properties` file in the project root directory:
+   ```properties
+   # Database Configuration
+   db.host=localhost
+   db.port=3306
+   db.name=institute_management_system
+   db.username=your_username
+   db.password=your_password
+   db.ssl.mode=DISABLED
+   
+   # MySQL Paths (adjust according to your system)
+   mysql.bin.path=C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql
+   mysqldump.bin.path=C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump
    ```
+   
+   > **Note:** A template file `database.properties.example` is provided. Copy it to `database.properties` and update with your credentials.
+   > 
+   > ⚠️ **Never commit `database.properties` to version control!** It's already included in `.gitignore`
 
 4. **Add External Libraries**
    

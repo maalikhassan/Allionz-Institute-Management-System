@@ -20,6 +20,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Properties;
+import java.io.FileInputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import java.sql.ResultSet;
@@ -76,6 +78,25 @@ public class AdminDashboard extends javax.swing.JFrame {
     private String selectedImagePath; // Global variable to store the selected image path
     private static HashMap<String, String> streamMap = new HashMap<>();
     private static HashMap<String, String> FinanceRportMonthMap = new HashMap<>();
+
+    // Helper method to load database properties
+    private Properties loadDatabaseProperties() {
+        Properties props = new Properties();
+        try (FileInputStream fis = new FileInputStream("database.properties")) {
+            props.load(fis);
+        } catch (IOException e) {
+            System.err.println("Warning: Could not load database.properties file. Using defaults.");
+            // Set default values
+            props.setProperty("db.host", "localhost");
+            props.setProperty("db.port", "3306");
+            props.setProperty("db.name", "ims");
+            props.setProperty("db.username", "root");
+            props.setProperty("db.password", "");
+            props.setProperty("mysql.bin.path", "C:\\\\Program Files\\\\MySQL\\\\MySQL Server 8.0\\\\bin\\\\mysql");
+            props.setProperty("mysqldump.bin.path", "C:\\\\Program Files\\\\MySQL\\\\MySQL Server 8.0\\\\bin\\\\mysqldump");
+        }
+        return props;
+    }
 
     private void image() {
 
@@ -3750,13 +3771,14 @@ public class AdminDashboard extends javax.swing.JFrame {
                 java.io.File backupFile = fileChooser.getSelectedFile();
                 String filePath = backupFile.getAbsolutePath();
 
-                // Step 3: DB credentials and command
-                String host = "mysql-2058cc20-maalikhassan132-a8e9.b.aivencloud.com";
-                String port = "22390";
-                String database = "u272822984_ims";
-                String user = "avnadmin";
-                String password = "AVNS_bLl3HiSKuA5KERCnvCK";
-                String mysqlPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql";
+                // Step 3: Load DB credentials from properties
+                Properties dbProps = loadDatabaseProperties();
+                String host = dbProps.getProperty("db.host", "localhost");
+                String port = dbProps.getProperty("db.port", "3306");
+                String database = dbProps.getProperty("db.name", "ims");
+                String user = dbProps.getProperty("db.username", "root");
+                String password = dbProps.getProperty("db.password", "");
+                String mysqlPath = dbProps.getProperty("mysql.bin.path", "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql");
 
                 List<String> command = Arrays.asList(
                         mysqlPath,
@@ -3842,12 +3864,14 @@ public class AdminDashboard extends javax.swing.JFrame {
                             path += ".sql";
                         }
 
-                        String host = "mysql-2058cc20-maalikhassan132-a8e9.b.aivencloud.com"; //YourUsername
-                        String port = "22390"; //Port expam
-                        String database = "u272822984_ims";//Database name
-                        String user = "avnadmin"; //Username
-                        String password = "AVNS_bLl3HiSKuA5KERCnvCK";//Password
-                        String mysqldumpPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump"; // Adjust path to mysqldump
+                        // Load DB credentials from properties
+                        Properties dbProps = loadDatabaseProperties();
+                        String host = dbProps.getProperty("db.host", "localhost");
+                        String port = dbProps.getProperty("db.port", "3306");
+                        String database = dbProps.getProperty("db.name", "ims");
+                        String user = dbProps.getProperty("db.username", "root");
+                        String password = dbProps.getProperty("db.password", "");
+                        String mysqldumpPath = dbProps.getProperty("mysqldump.bin.path", "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump");
 
                         // Build the command
                         List<String> command = Arrays.asList(

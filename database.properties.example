@@ -1,0 +1,14 @@
+# Database Configuration
+# Copy this file to 'database.properties' and fill in your actual credentials
+# NEVER commit the database.properties file to version control
+
+db.host=your-database-host.com
+db.port=22390
+db.name=your_database_name
+db.username=your_username
+db.password=your_password
+db.ssl.mode=REQUIRED
+
+# MySQL Paths (adjust according to your system)
+mysql.bin.path=C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql
+mysqldump.bin.path=C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump
