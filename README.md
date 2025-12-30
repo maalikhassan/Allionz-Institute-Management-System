@@ -241,7 +241,7 @@ The system uses a normalized relational database with the following key entities
 | Academic | academic | academic123 |
 | Finance | finance | finance123 |
 
-> ⚠️ **Security Note:** Change default passwords immediately after first login.
+> ⚠️ **Security Note:** Change default passwords immediately after first login. Login might not work as its currently linked to an online database thats powered off
 
 ---
 
@@ -394,14 +394,14 @@ Selected JasperReports for:
 
 | Role | Member | Responsibilities |
 |------|--------|------------------|
-| **Team Leader & Project Manager** | [Your Name] | Overall coordination, SDLC management, system architecture |
-| Full Stack Developer | Team Member 1 | Academic module development |
-| Full Stack Developer | Team Member 2 | Financial module development |
-| Backend Developer | Team Member 3 | Database design and optimization |
-| Frontend Developer | Team Member 4 | UI/UX design and implementation |
-| QA Engineer | Team Member 5 | Testing and quality assurance |
-| Documentation Specialist | Team Member 6 | User manuals and technical docs |
-| Database Administrator | Team Member 7 | Database management and reporting |
+| **Team Leader & Project Manager** | Maalik Hassan | Overall coordination, SDLC management, system architecture |
+| Full Stack Developer | Vishmika Sewmini | Academic module development |
+| Full Stack Developer | Pawan Sarathchandra | Financial module development |
+| Backend Developer | Pramuditha Lakshan | Database design and optimization |
+| Frontend Developer | Ashan Sanchitha  | UI/UX design and implementation |
+| QA Engineer | Pasindu Madhuwantha | Testing and quality assurance |
+| Documentation Specialist | Shehan Sandaruwan  | User manuals and technical docs |
+| Database Administrator | Anuradha Prasadanie  | Database management and reporting |
 
 ---
 
@@ -427,9 +427,9 @@ This project was developed as part of an academic course and is intended for edu
 
 For any questions or inquiries about this project:
 
-- **Email:** [your.email@example.com]
-- **LinkedIn:** [Your LinkedIn Profile]
-- **GitHub:** [@yourusername](https://github.com/yourusername)
+- **Email:** maalikhassan1@gmail.com
+- **LinkedIn:** www.linkedin.com/in/maalik-hassan
+- **GitHub:** https://github.com/maalikhassan
 
 ---
 
