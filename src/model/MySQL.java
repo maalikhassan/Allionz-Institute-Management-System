@@ -12,7 +12,7 @@ public class MySQL {
         try {
             if (connection == null) {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://avnadmin:AVNS_bLl3HiSKuA5KERCnvCK@mysql-2058cc20-maalikhassan132-a8e9.b.aivencloud.com:22390/u272822984_ims?ssl-mode=REQUIRED", "avnadmin", "AVNS_bLl3HiSKuA5KERCnvCK");
+                connection = DriverManager.getConnection("jdbc:mysql://avnadmin:*************@mysql-2058cc20-maalikhassan132-a8e9.b.aivencloud.com:22390/u272822984_ims?ssl-mode=REQUIRED", "****", "*************");
             }
         } catch (Exception e) {
             // new Connection_faild().setV
